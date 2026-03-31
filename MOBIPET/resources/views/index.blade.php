@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/mobipet.png" rel="icon">
+  <link href="assets/img/mobipet_icon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -29,15 +29,9 @@
 
   <!-- Main CSS File -->
   <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/css/estilo.css')}}" rel="stylesheet">
   
 
-  <!-- =======================================================
-  * Template Name: Clinic
-  * Template URL: https://bootstrapmade.com/clinic-bootstrap-template/
-  * Updated: Jul 23 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="index-page">
@@ -109,27 +103,27 @@
 
               <div class="hero-stats mb-4" data-aos="fade-right" data-aos-delay="500">
                 <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2"
+                  <h3><span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="2"
                       class="purecounter"></span>+</h3>
-                  <p>Years Experience</p>
+                  <p>Anos de Experiência</p>
                 </div>
                 <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="5000" data-purecounter-duration="2"
+                  <h3><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2"
                       class="purecounter"></span>+</h3>
-                  <p>Patients Treated</p>
+                  <p>Funcionaidades</p>
                 </div>
                 <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="2"
-                      class="purecounter"></span>+</h3>
-                  <p>Medical Experts</p>
+                  <h3><span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="2"
+                      class="purecounter"></span></h3>
+                  <p>Desenvolvedores</p>
                 </div>
               </div>
 
               <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
-                <a href="appointment.html" class="btn btn-primary">Book Appointment</a>
-                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="btn btn-outline glightbox">
-                  <i class="bi bi-play-circle me-2"></i>
-                  Watch Our Story
+                <a href="appointment.html" class="btn btn-primary">Agendar Agora  <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="{{route('sobre')}}" class="btn btn-outline">
+                  <i class="fa-solid fa-angles-right"></i>
+                  Conhecer nossos Serviços
                 </a>
               </div>
 
@@ -138,15 +132,15 @@
                   <i class="bi bi-telephone-fill"></i>
                 </div>
                 <div class="emergency-info">
-                  <small>Emergency Hotline</small>
-                  <strong>+1 (555) 911-2468</strong>
+                  <small>Nosso Contato</small>
+                  <strong>+55 (19) 9999-8888</strong>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="col-lg-6">
-            <div class="hero-visual" data-aos="fade-left" data-aos-delay="400">
+            <div class="hero-visual" data-aos="fade-left" data-aos-delay="400" style="margin-top: 100px">
               <div class="main-image">
                 <img src="{{asset('assets/img/home-page.png')}}" alt="Modern Healthcare Facility" class="img-fluid">
                 

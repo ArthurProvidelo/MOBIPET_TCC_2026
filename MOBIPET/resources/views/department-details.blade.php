@@ -47,8 +47,8 @@
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+              href="mailto:contact@example.com">Mobipet@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19) 9999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
@@ -65,7 +65,7 @@
         <a href="index.html" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Clinic</h1>
+          <h1 class="sitename">Mobipet</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
@@ -191,16 +191,8 @@
           <div class="col-xl-6 col-lg-5">
             <div class="department-visual" data-aos="fade-left" data-aos-delay="300">
               <div class="image-container">
-                <img src="assets/img/health/neurology-2.webp" alt="Neurology Department"
+                <img src="https://wordpress-cms-gc-prod-assets.quero.space/uploads/2019/01/medicina-veterinaria.jpeg" alt="Neurology Department"
                   class="img-fluid primary-image">
-                <div class="floating-card" data-aos="zoom-in" data-aos-delay="500">
-                  <div class="card-icon">
-                    <i class="bi bi-brain"></i>
-                  </div>
-                  <div class="card-content">
-                    <h4>Brain Health Experts</h4>
-                    <p>Comprehensive neurological assessment and treatment</p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -224,8 +216,8 @@
                 <div class="service-icon">
                   <i class="bi bi-lightning-charge"></i>
                 </div>
-                <h4>Epilepsy Treatment</h4>
-                <p>Nulla porttitor accumsan tincidunt. Cras ultricies ligula sed magna dictum porta.</p>
+                <h4>Tratamento</h4>
+                <p>Cuidamos da saúde do seu pet com atenção e carinho, oferecendo tratamentos eficazes para diversas doenças, sempre buscando o bem-estar e a recuperação rápida.</p>
               </div>
             </div>
 
@@ -234,8 +226,8 @@
                 <div class="service-icon">
                   <i class="bi bi-search"></i>
                 </div>
-                <h4>Diagnostic Imaging</h4>
-                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis.</p>
+                <h4>Diagnóstico por Imagem</h4>
+                <p>Realizamos exames como raio-X e ultrassom para identificar problemas com precisão e garantir um diagnóstico seguro para o seu pet.</p>
               </div>
             </div>
 
@@ -244,8 +236,8 @@
                 <div class="service-icon">
                   <i class="bi bi-heart-pulse"></i>
                 </div>
-                <h4>Stroke Prevention</h4>
-                <p>Donec sollicitudin molestie malesuada. Proin eget tortor risus cras ultricies ligula.</p>
+                <h4>Prevenção de Doenças</h4>
+                <p>A prevenção é essencial! Trabalhamos com vacinas e acompanhamento regular para manter seu pet saudável e protegido.</p>
               </div>
             </div>
 
@@ -254,8 +246,8 @@
                 <div class="service-icon">
                   <i class="bi bi-person-gear"></i>
                 </div>
-                <h4>Movement Disorders</h4>
-                <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.</p>
+                <h4>Distúrbios de Movimento</h4>
+                <p>Tratamos problemas nas articulações, ossos e músculos, ajudando seu pet a se movimentar melhor e sem dor.</p>
               </div>
             </div>
 
@@ -264,8 +256,8 @@
                 <div class="service-icon">
                   <i class="bi bi-moon"></i>
                 </div>
-                <h4>Sleep Disorders</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
+                <h4>Distúrbios do Sono</h4>
+                <p>Avaliamos alterações no sono do seu pet, identificando possíveis causas e oferecendo soluções para melhorar sua qualidade de vida.</p>
               </div>
             </div>
 
@@ -274,8 +266,8 @@
                 <div class="service-icon">
                   <i class="bi bi-shield-check"></i>
                 </div>
-                <h4>Memory Care</h4>
-                <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a vestibulum ac diam.</p>
+                <h4>Cuidados com Memória </h4>
+                <p>Acompanhamos pets idosos com atenção especial, ajudando a prevenir e tratar problemas cognitivos e de comportamento.</p>
               </div>
             </div>
           </div>
@@ -285,7 +277,7 @@
           <div class="row align-items-center">
             <div class="col-lg-5" data-aos="fade-right" data-aos-delay="900">
               <div class="expert-image">
-                <img src="assets/img/health/neurology-4.webp" alt="Neurological Expert" class="img-fluid">
+                <img src="" alt="Neurological Expert" class="img-fluid">
               </div>
             </div>
 
@@ -318,15 +310,16 @@
                   <div class="contact-item">
                     <i class="bi bi-telephone"></i>
                     <div>
-                      <span class="contact-label">Emergency Neurology</span>
-                      <span class="contact-value">+1 (555) 234-5678</span>
+                      <span class="contact-label">Numero de Emergência</span>
+                      <span class="contact-value">+1 (555) 987-6543</span>
                     </div>
                   </div>
                   <div class="contact-item">
                     <i class="bi bi-calendar-check"></i>
                     <div>
                       <span class="contact-label">Appointments</span>
-                      <span class="contact-value">Mon - Fri, 8:00 AM - 6:00 PM</span>
+                      <span class="contact-value">Segunda-Sexta: 7:00 AM - 5:00 PM</span>
+                      <span class="contact-value">  Sabado: 7:00 AM - 12:00 PM</span>
                     </div>
                   </div>
                 </div>
@@ -359,7 +352,7 @@
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>123 Creative Boulevard, Design District, NY 10012</span>
+                  <span>Rua das Palmeiras, 245 - Jardim Primavera, Campinas - SP, 1</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
@@ -367,7 +360,7 @@
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
-                  <span>hello@designstudio.com</span>
+                  <span>Mobipet@gmail.com</span>
                 </div>
               </div>
             </div>
@@ -445,7 +438,7 @@
 
             <div class="col-lg-6">
               <div class="copyright">
-                <p>© <span class="sitename">Clinic</span>. All rights reserved.</p>
+                <p>© <span class="sitename">Mobipet</span>. All rights reserved.</p>
               </div>
             </div>
 

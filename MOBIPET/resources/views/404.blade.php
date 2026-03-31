@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>404 - Clinic Bootstrap Template</title>
+  <title>404 - Mobipet</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -51,10 +51,8 @@
           <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
           <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#!" class="linkedin"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </div><!-- End Top Bar -->
@@ -70,7 +68,7 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">Home <i class="fa-solid fa-xmark"></i></a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="departments.html">Departments</a></li>
             <li><a href="services.html">Services</a></li>

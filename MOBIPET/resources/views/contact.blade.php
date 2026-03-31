@@ -65,7 +65,7 @@
         <a href="index.html" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Clinic</h1>
+          <h1 class="sitename">MobiPet</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
@@ -108,7 +108,7 @@
                 <li><a href="#">Dropdown 4</a></li>
               </ul>
             </li>
-            <li><a href="contact.html" class="active">Contact</a></li>
+            <li><a href="contact.html" class="active">Contatos</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -127,12 +127,11 @@
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1 class="heading-title">Contact</h1>
+              <h1 class="heading-title">Contato</h1>
               <p class="mb-0">
-                Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo
-                odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum
-                debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat
-                ipsum dolorem.
+         Estamos sempre prontos para cuidar do seu melhor amigo com carinho e dedicação.
+         Fale com a gente pelos nossos canais de atendimento ou venha nos visitar. 
+             Será um prazer receber você e seu pet!
               </p>
             </div>
           </div>
@@ -160,8 +159,8 @@
                   <i class="bi bi-geo-alt"></i>
                 </div>
                 <div class="info-content">
-                  <h3>Our Address</h3>
-                  <p>1842 Maple Avenue, Portland, Oregon 97204</p>
+                  <h3>Localização</h3>
+                  <p>Rua Bela Vista, 100 - Centro, Tambaú - SP</p>
                 </div>
               </div>
 
@@ -170,9 +169,8 @@
                   <i class="bi bi-envelope"></i>
                 </div>
                 <div class="info-content">
-                  <h3>Email Address</h3>
-                  <p>info@example.com</p>
-                  <p>contact@example.com</p>
+                  <h3>Email</h3>
+                  <p>mobipet@gmail.com</p>
                 </div>
               </div>
 
@@ -181,9 +179,9 @@
                   <i class="bi bi-headset"></i>
                 </div>
                 <div class="info-content">
-                  <h3>Hours of Operation</h3>
-                  <p>Sunday-Fri: 9 AM - 6 PM</p>
-                  <p>Saturday: 9 AM - 4 PM</p>
+                  <h3>Horário de funcionamento</h3>
+                  <p>Seg - Sex: 8:00 - 17:00</p>
+                  <p>Sabádo: 8:00 - 14:00</p>
                 </div>
               </div>
             </div>
@@ -191,39 +189,39 @@
 
           <div class="col-lg-7">
             <div class="contact-form-card" data-aos="fade-up" data-aos-delay="200">
-              <h2>Send us a Message</h2>
-              <p class="mb-4">Have questions or want to learn more? Reach out to us and our team will get back to you
-                shortly.</p>
+              <h2>Mande sua dúvida!</h2>
+              <p class="mb-4">
+              Tem dúvidas ou quer saber mais? Entre em contato conosco e nossa equipe retornará em breve.</p>
 
               <form action="forms/contact.php" method="post" class="php-email-form">
                 <div class="row g-4">
                   <div class="col-md-6">
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required="">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Nome" required="">
                   </div>
 
                   <div class="col-md-6">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email"
                       required="">
                   </div>
 
                   <div class="col-12">
-                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
+                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Assunto"
                       required="">
                   </div>
 
                   <div class="col-12">
-                    <textarea class="form-control" name="message" id="message" placeholder="Your Message" rows="6"
+                    <textarea class="form-control" name="message" id="message" placeholder="Mensagem" rows="6"
                       required=""></textarea>
                   </div>
 
                   <div class="col-12">
-                    <div class="loading">Loading</div>
+                    <div class="loading">Carregando...</div>
                     <div class="error-message"></div>
-                    <div class="sent-message">Your message has been sent. Thank you!</div>
+                    <div class="sent-message">Sua mensagem foi enviada, em breve retornaremos!</div>
                   </div>
 
                   <div class="col-12">
-                    <button type="submit" class="btn btn-submit">Send Message</button>
+                    <button type="submit" class="btn btn-submit">Enviar</button>
                   </div>
                 </div>
               </form>
@@ -235,7 +233,7 @@
       <div class="container-fluid map-container" data-aos="fade-up" data-aos-delay="200">
         <div class="map-overlay"></div>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus"
+          src="https://share.google/nCnEkNBihwe3Ht1r0"
           width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
@@ -251,86 +249,16 @@
       <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
         <div class="row align-items-start">
 
-          <div class="col-lg-5">
-            <div class="brand-section">
-              <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Clinic</span>
-              </a>
-              <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
-                innovative solutions that elevate your brand presence.</p>
-
-              <div class="contact-info mt-5">
-                <div class="contact-item">
-                  <i class="bi bi-geo-alt"></i>
-                  <span>123 Creative Boulevard, Design District, NY 10012</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 987-6543</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-envelope"></i>
-                  <span>hello@designstudio.com</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          
 
           <div class="col-lg-7">
             <div class="footer-nav-wrapper">
               <div class="row">
 
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Studio</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Our Story</a>
-                      <a href="#!">Design Process</a>
-                      <a href="#!">Portfolio</a>
-                      <a href="#!">Case Studies</a>
-                      <a href="#!">Awards</a>
-                    </nav>
-                  </div>
-                </div>
 
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Services</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Brand Identity</a>
-                      <a href="#!">Web Design</a>
-                      <a href="#!">Mobile Apps</a>
-                      <a href="#!">Digital Strategy</a>
-                      <a href="#!">Consultation</a>
-                    </nav>
-                  </div>
-                </div>
+            <!-- Img aqui!! -->
+             <img src="{{ asset('img/contatos.png') }}" alt="Imagem Página Contato">
 
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Resources</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Design Blog</a>
-                      <a href="#!">Style Guide</a>
-                      <a href="#!">Free Assets</a>
-                      <a href="#!">Tutorials</a>
-                      <a href="#!">Inspiration</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Connect</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Start Project</a>
-                      <a href="#!">Schedule Call</a>
-                      <a href="#!">Join Newsletter</a>
-                      <a href="#!">Follow Updates</a>
-                      <a href="#!">Partnership</a>
-                    </nav>
-                  </div>
-                </div>
 
               </div>
             </div>
@@ -357,17 +285,10 @@
                 <a href="#!">Privacy Policy</a>
                 <a href="#!">Terms of Service</a>
                 <a href="#!">Cookie Policy</a>
-                <div class="credits">
-                  <!-- All the links in the footer should remain intact. -->
-                  <!-- You can delete the links only if you've purchased the pro version. -->
-                  <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                  <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>. Distributed by <a
-                    href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                
                 </div>
               </div>
-            </div>
-
+           
           </div>
         </div>
       </div>

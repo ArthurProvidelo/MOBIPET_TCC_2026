@@ -64,12 +64,12 @@
         <a href="index.html" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename"><img src="assets/img/person/logo_projeto-removebg-preview.png" class="img-logo" alt=""></h1>
+          <h1 class="sitename">Mobipet</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html">Início</a></li>
             <li><a href="about.html" class="active">Sobre-nós</a></li>
             <li><a href="services.html">Serviços</a></li>
             <li><a href="doctors.html">Desenvolvedores</a></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
@@ -97,10 +97,8 @@
             <div class="col-lg-8">
               <h1 class="heading-title">Como funciona nossos atendimentos?</h1>
               <p class="mb-0">
-                Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo
-                odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum
-                debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat
-                ipsum dolorem.
+                Trabalhamos com um atendimento profissional e humanizado, priorizando a segurança,
+                 a saúde e o bem-estar do seu pet em todas as etapas do serviço.
               </p>
             </div>
           </div>
@@ -109,8 +107,8 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">About</li>
+            <li><a href="index.html">Início</a></li>
+            <li class="current">Sobre-nós</li>
           </ol>
         </div>
       </nav>
@@ -121,42 +119,30 @@
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="row align-items-center">
-          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-            <div class="about-content">
-              <h2>Acompanhe todos os detalhes pelo vidro</h2>
-              <p class="lead"><p>
+      <div class="row align-items-center">
 
-              <p>Cuidado, higiene e bem-estar para o seu pet em cada detalhe.</p>
+  <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+    <div class="about-content">
+      <h2>Acompanhe todos os detalhes pelo vidro</h2>
 
-              <div class="stats-grid">
-                <div class="stat-item">
-                  <span class="stat-number" data-purecounter-start="0" data-purecounter-end="15000"
-                    data-purecounter-duration="2">15000</span>
-                  <span class="stat-label">Patients Treated</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-number" data-purecounter-start="0" data-purecounter-end="25"
-                    data-purecounter-duration="2">25</span>
-                  <span class="stat-label">Years Experience</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-number" data-purecounter-start="0" data-purecounter-end="50"
-                    data-purecounter-duration="2">50</span>
-                  <span class="stat-label">Medical Specialists</span>
-                </div>
-              </div><!-- End Stats Grid -->
-            </div><!-- End About Content -->
-          </div>
+      <p class="lead">
+        Nosso atendimento é realizado de forma cuidadosa e transparente, 
+        permitindo que você acompanhe cada etapa do processo com total confiança.
+      </p>
 
-          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-            <div class="image-wrapper">
-              <img src="assets/img/petshop.jpg" class="img-fluid main-image" alt="Healthcare facility">
-          
-              </div>
-            </div><!-- End Image Wrapper -->
-          </div>
-        </div>
+      <p>
+        Cuidado, higiene e bem-estar para o seu pet em cada detalhe.
+      </p>
+    </div>
+  </div>
+
+  <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+    <div class="image-wrapper">
+      <img src="assets/img/petshop.jpg" class="img-fluid main-image" alt="Pet shop atendimento">
+    </div>
+  </div>
+
+</div>
 
         <div class="values-section" data-aos="fade-up" data-aos-delay="300">
           <div class="row">
@@ -167,77 +153,74 @@
           </div>
 
           <div class="row">
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="100">
               <div class="value-item">
                 <div class="value-icon">
-                  <i class="bi bi-heart-pulse"></i>
+                  <i class="bi bi-water"></i>
                 </div>
                 <h4>Banho</h4>
               </div>
             </div>
 
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="200">
               <div class="value-item">
                 <div class="value-icon">
-                  <i class="bi bi-shield-check"></i>
+                  <i class="bi bi-droplet"></i>
+                </div>
+                <h4>Hidratação</h4>
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="value-item">
+                <div class="value-icon">
+                  <i class="bi bi-wind"></i>
                 </div>
                 <h4>Secagem</h4>
               </div>
             </div>
 
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="400">
               <div class="value-item">
                 <div class="value-icon">
-                  <i class="bi bi-people"></i>
+                  <i class="fa-solid fa-brush"></i>
                 </div>
                 <h4>Escova na pelagem</h4>
               </div>
             </div>
 
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="400">
               <div class="value-item">
                 <div class="value-icon">
-                  <i class="bi bi-lightbulb"></i>
+                  <i class="bi bi-ear"></i>
                 </div>
                 <h4>Limpeza de ouvidos</h4>
               </div>
             </div>
+
+            <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="value-item">
+                <div class="value-icon">
+                  <i class="bi bi-scissors"></i>
+                </div>
+                <h4>Corte de unhas</h4>
+              </div>
+            </div>
           </div><!-- End Values Row -->
         </div><!-- End Values Section -->
+        
 
         <div class="certifications-section" data-aos="fade-up" data-aos-delay="400">
           <div class="row">
             <div class="col-lg-12 text-center">
-              <h3>Accreditations &amp; Certifications</h3>
-              <p class="section-description">Recognized by leading healthcare organizations for our commitment to
-                quality care</p>
+              <h3>Colaboradores</h3>
             </div>
           </div>
 
           <div class="row justify-content-center">
             <div class="col-lg-2 col-md-3 col-sm-4 col-6" data-aos="zoom-in" data-aos-delay="100">
               <div class="certification-item">
-                <img src="assets/img/clients/clients-1.webp" class="img-fluid" alt="Healthcare certification">
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 col-6" data-aos="zoom-in" data-aos-delay="200">
-              <div class="certification-item">
-                <img src="assets/img/clients/clients-2.webp" class="img-fluid" alt="Medical accreditation">
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 col-6" data-aos="zoom-in" data-aos-delay="300">
-              <div class="certification-item">
-                <img src="assets/img/clients/clients-3.webp" class="img-fluid" alt="Healthcare certification">
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 col-6" data-aos="zoom-in" data-aos-delay="400">
-              <div class="certification-item">
-                <img src="assets/img/clients/clients-4.webp" class="img-fluid" alt="Medical certification">
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 col-6" data-aos="zoom-in" data-aos-delay="500">
-              <div class="certification-item">
-                <img src="assets/img/clients/clients-5.webp" class="img-fluid" alt="Healthcare accreditation">
+                <img src="https://cdn.bs9.com.br/upload/dn_arquivo/2024/05/37.jpg" class="img-fluid" alt="Healthcare certification">
               </div>
             </div>
           </div><!-- End Certifications Row -->
@@ -259,88 +242,32 @@
           <div class="col-lg-5">
             <div class="brand-section">
               <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Clinic</span>
+                <span class="sitename">Mobipet</span>
               </a>
-              <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
-                innovative solutions that elevate your brand presence.</p>
+              <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
 
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>123 Creative Boulevard, Design District, NY 10012</span>
+                  <span>Rua das Palmeiras, 245 – Jardim Primavera, Campinas – SP, 13045-678</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 987-6543</span>
+                  <span> (19)9999-8888</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
-                  <span>hello@designstudio.com</span>
+                  <span>mobipet@gmail.com</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Studio</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Our Story</a>
-                      <a href="#!">Design Process</a>
-                      <a href="#!">Portfolio</a>
-                      <a href="#!">Case Studies</a>
-                      <a href="#!">Awards</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Services</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Brand Identity</a>
-                      <a href="#!">Web Design</a>
-                      <a href="#!">Mobile Apps</a>
-                      <a href="#!">Digital Strategy</a>
-                      <a href="#!">Consultation</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Resources</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Design Blog</a>
-                      <a href="#!">Style Guide</a>
-                      <a href="#!">Free Assets</a>
-                      <a href="#!">Tutorials</a>
-                      <a href="#!">Inspiration</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Connect</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Start Project</a>
-                      <a href="#!">Schedule Call</a>
-                      <a href="#!">Join Newsletter</a>
-                      <a href="#!">Follow Updates</a>
-                      <a href="#!">Partnership</a>
-                    </nav>
-                  </div>
-                </div>
-
-              </div>
+           <div class="col-lg-5">
+            <div class="brand-section">
+              <img src="assets/img/gemini.jpg" class="gemini" alt="">
             </div>
           </div>
-
         </div>
       </div>
 
@@ -352,23 +279,8 @@
           <div class="row align-items-center">
 
             <div class="col-lg-6">
-              <div class="copyright">
-                <p>© <span class="sitename">Clinic</span>. All rights reserved.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
               <div class="legal-links">
-                <a href="#!">Privacy Policy</a>
-                <a href="#!">Terms of Service</a>
-                <a href="#!">Cookie Policy</a>
                 <div class="credits">
-                  <!-- All the links in the footer should remain intact. -->
-                  <!-- You can delete the links only if you've purchased the pro version. -->
-                  <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                  <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>. Distributed by <a
-                    href="https://themewagon.com" target="_blank">ThemeWagon</a>
                 </div>
               </div>
             </div>
