@@ -68,12 +68,13 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home <i class="fa-solid fa-xmark"></i></a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="departments.html">Departments</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="doctors.html">Doctors</a></li>
-            <li class="dropdown"><a href="#"><span>More Pages</span> <i
+             <li><a href="index.html" class="active">Início</a></li>
+            <li><a href="about.html">Sobre nós</a></li>
+            <li><a href="services.html">Serviços</a></li>
+            <li><a href="devs.html">Desenvolvedores</a></li>
+            <li><a href="devs.html">Agendamento</a></li>
+            <li><a href="contact.html">Contato</a></li>
+            <li><a href="#">Perfil</a></li>
                   class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="department-details.html">Department Details</a></li>

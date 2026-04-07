@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Contact - Clinic Bootstrap Template</title>
+  <title>contato - MobiPet</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -29,6 +29,7 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/estilo.css">
 
   <!-- =======================================================
   * Template Name: Clinic
@@ -40,6 +41,12 @@
 </head>
 
 <body class="contact-page">
+    <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
 
   <header id="header" class="header fixed-top">
 
@@ -47,8 +54,8 @@
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
@@ -70,48 +77,18 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="departments.html">Departments</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="doctors.html">Doctors</a></li>
-            <li class="dropdown"><a href="#"><span>More Pages</span> <i
-                  class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="department-details.html">Department Details</a></li>
-                <li><a href="service-details.html">Service Details</a></li>
-                <li><a href="appointment.html">Appointment</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="faq.html">Frequently Asked Questions</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="terms.html">Terms</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
-                <li><a href="404.html">404</a></li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i
-                  class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                      class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li>
-            <li><a href="contact.html" class="active">Contatos</a></li>
+            <li><a href="{{route('index')}}" >Início</a></li>
+            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+            <li><a href="{{route('services')}}">Serviços</a></li>
+            <li><a href="{{route('devs')}}">Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
+            <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+            <li><a href="{{route('contact')}}"class="active">Contato</a></li>
+            <li><a href="{{route('department-details')}}">Produtos</a></li>
+            <li><a href="">Perfil</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
+
 
       </div>
 
@@ -140,8 +117,8 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Contact</li>
+            <li><a href="index.html">Inicio</a></li>
+            <li class="current">Contato</li>
           </ol>
         </div>
       </nav>
@@ -230,14 +207,6 @@
         </div>
       </div>
 
-      <div class="container-fluid map-container" data-aos="fade-up" data-aos-delay="200">
-        <div class="map-overlay"></div>
-        <iframe
-          src="https://share.google/nCnEkNBihwe3Ht1r0"
-          width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-
     </section><!-- /Contact Section -->
 
   </main>
@@ -256,10 +225,6 @@
               <div class="row">
 
 
-            <!-- Img aqui!! -->
-             <img src="{{ asset('img/contatos.png') }}" alt="Imagem Página Contato">
-
-
               </div>
             </div>
           </div>
@@ -276,7 +241,7 @@
 
             <div class="col-lg-6">
               <div class="copyright">
-                <p>© <span class="sitename">Clinic</span>. All rights reserved.</p>
+                <p>© <span class="sitename">MobiPet</span>.</p>
               </div>
             </div>
 
@@ -314,6 +279,10 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
+   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 
 </html>

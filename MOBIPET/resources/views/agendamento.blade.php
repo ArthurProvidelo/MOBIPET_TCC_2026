@@ -9,13 +9,13 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/mobipet_icon.png" rel="icon">
+  <link href="assets/img/mobipet_icon.png" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
+  <l
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
 
@@ -31,13 +31,7 @@
   <link href="assets/css/main.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/estilo.css">
 
-  <!-- =======================================================
-  * Template Name: Clinic
-  * Template URL: https://bootstrapmade.com/clinic-bootstrap-template/
-  * Updated: Jul 23 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
 </head>
 
 <body class="appointment-page">
@@ -71,14 +65,14 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="about.html" >Sobre-nós</a></li>
-            <li><a href="services.html">Serviços</a></li>
-            <li><a href="doctors.html">Desenvolvedores</a></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
-            </li>
-            <li><a href="#" class="active">Agendamento</a></li>
-            <li><a href="contact.html">Contato</a></li>
-            <li><a href="#">Perfil</a></li>
+            <li><a href="{{route('index')}}" >Início</a></li>
+            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+            <li><a href="{{route('services')}}">Serviços</a></li>
+            <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+            <li><a href="{{route('agendamento')}}" class="active">Agendamento</a></li>
+            <li><a href="{{route('contact')}}">Contato</a></li>
+            <li><a href="{{route('department-details')}}">Produtos</a></li>
+            <li><a href="">Perfil</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -105,7 +99,7 @@
               </p>
             </div>
           </div>
-        </div>
+</div>
       </div>
       <nav class="breadcrumbs">
         <div class="container">
@@ -126,8 +120,8 @@
           <div class="col-lg-8 mx-auto">
             <div class="booking-wrapper">
               <div class="booking-header text-center" data-aos="fade-up" data-aos-delay="200">
-                <h2>Agenda</h2>
-                <p>Estamos à disposição para oferecer o melhor atendimento possível.p>
+                <h2>Agendamento</h2>
+                <p>Estamos à disposição para oferecer o melhor atendimento possível.</p>
               </div>
 
               <div class="booking-steps" data-aos="fade-up" data-aos-delay="300">
@@ -302,6 +296,13 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
+   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+     <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 
-</html>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>

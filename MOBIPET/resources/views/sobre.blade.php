@@ -4,14 +4,12 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Mobipet</title>
+  <title>Sobre nós</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
+  <link href="assets/img/mobipet_icon.png" rel="icon">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -31,13 +29,6 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/estilo.css">
 
-  <!-- =======================================================
-  * Template Name: Clinic
-  * Template URL: https://bootstrapmade.com/clinic-bootstrap-template/
-  * Updated: Jul 23 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="about-page">
@@ -69,14 +60,14 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="about.html" class="active">Sobre-nós</a></li>
-            <li><a href="services.html">Serviços</a></li>
-            <li><a href="doctors.html">Desenvolvedores</a></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
-            </li>
-            <li><a href="#">Agendamento</a></li>
-            <li><a href="contact.html">Contato</a></li>
-            <li><a href="#">Perfil</a></li>
+            <li><a href="{{route('index')}}" class="active">Início</a></li>
+            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+            <li><a href="{{route('services')}}">Serviços</a></li>
+            <li><a href="{{route('devs')}}">Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
+            <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+            <li><a href="{{route('contact')}}">Contato</a></li>
+            <li><a href="{{route('department-details')}}">Departamento</a></li>
+            <li><a href="">Perfil</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -249,7 +240,7 @@
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>Rua das Palmeiras, 245 – Jardim Primavera, Campinas – SP, 13045-678</span>
+                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>

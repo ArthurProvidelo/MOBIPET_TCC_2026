@@ -30,13 +30,7 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Clinic
-  * Template URL: https://bootstrapmade.com/clinic-bootstrap-template/
-  * Updated: Jul 23 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
 </head>
 
 <body class="doctors-page">
@@ -63,50 +57,24 @@
         <a href="index.html" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Clinic</h1>
+          <h1 class="sitename">Mobipet</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">Sobre nós</a></li>
-            <li><a href="departments.html">Departments</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="doctors.html" class="active">Doctors</a></li>
-            <li class="dropdown"><a href="#"><span>More Pages</span> <i
-                  class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="department-details.html">Department Details</a></li>
-                <li><a href="service-details.html">Service Details</a></li>
-                <li><a href="appointment.html">Appointment</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="faq.html">Frequently Asked Questions</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="terms.html">Terms</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
-                <li><a href="404.html">404</a></li>
+           <li><a href="{{route('index')}}" >Início</a></li>
+            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+            <li><a href="{{route('services')}}">Serviços</a></li>
+            <li><a href="{{route('devs')}}" >Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
+            <li><a href="{{route('agendamento')}}" >Agendamento</a></li>
+            <li><a href="{{route('contact')}}">Contato</a></li>
+            <li><a href="{{route('department-details')}}">Detalhes</a></li>
+            <li><a href="">Perfil</a></li>
+                  
+            </li>
               </ul>
             </li>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i
-                  class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                      class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li>
-            <li><a href="contact.html">Contact</a></li>
+            
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -125,12 +93,11 @@
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1 class="heading-title">Doctors</h1>
+              <h1 class="heading-title">Desenvolvedores</h1>
               <p class="mb-0">
-                Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo
-                odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum
-                debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat
-                ipsum dolorem.
+               A página de desenvolvedores apresenta a equipe responsável pela criação e manutenção do site. Formada por alunos do curso do SENAI há dois anos, 
+               o grupo reúne conhecimentos técnicos em programação, design e desenvolvimento web. Ao longo desse período, os estudantes vêm adquirindo experiência prática, 
+               trabalhando de forma colaborativa e aplicando boas práticas para entregar soluções eficientes e inovadoras.
               </p>
             </div>
           </div>
@@ -139,8 +106,8 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Doctors</li>
+            <li><a href="index.html">Inicio</a></li>
+            <li class="current">Desenvolvedores</li>
           </ol>
         </div>
       </nav>
@@ -166,8 +133,8 @@
                 </div>
               </div>
               <div class="doctor-content">
-                <h4>Dr. Marcus Johnson</h4>
-                <span class="specialty">Cardiologist</span>
+                <h4>Arthur Barbosa</h4>
+                <span class="specialty">Programador Front-End</span>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
                   et dolore magna aliqua.</p>
                 <div class="doctor-meta">
@@ -198,7 +165,7 @@
                 </div>
               </div>
               <div class="doctor-content">
-                <h4>Dr. Sarah Williams</h4>
+                <h4>Arthur Providello</h4>
                 <span class="specialty">Neurologist</span>
                 <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                   consequat.</p>
@@ -230,8 +197,8 @@
                 </div>
               </div>
               <div class="doctor-content">
-                <h4>Dr. Michael Chen</h4>
-                <span class="specialty">Orthopedic Surgeon</span>
+                <h4>Kaila Silva</h4>
+                <span class="specialty">Programador Back-End</span>
                 <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
                   pariatur.</p>
                 <div class="doctor-meta">
@@ -262,8 +229,8 @@
                 </div>
               </div>
               <div class="doctor-content">
-                <h4>Dr. Emily Rodriguez</h4>
-                <span class="specialty">Pediatrician</span>
+                <h4>Kauan Ferreira</h4>
+                <span class="specialty">Programador Front-End e Banco de dados</span>
                 <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
                   laborum.</p>
                 <div class="doctor-meta">
@@ -294,8 +261,9 @@
                 </div>
               </div>
               <div class="doctor-content">
-                <h4>Dr. David Thompson</h4>
-                <span class="specialty">Dermatologist</span>
+                <h4>Lorena Thomaz</h4>
+                <span class="specialty">Programador Front-End 
+                  e Banco de dados</span>
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
                 <div class="doctor-meta">
                   <div class="experience">
@@ -325,8 +293,8 @@
                 </div>
               </div>
               <div class="doctor-content">
-                <h4>Dr. Lisa Anderson</h4>
-                <span class="specialty">Oncologist</span>
+                <h4>Maria Fernanda Galdino</h4>
+                <span class="specialty">Programador Back-End</span>
                 <p>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
                   sunt.</p>
                 <div class="doctor-meta">
@@ -344,68 +312,7 @@
             </div>
           </div><!-- End Doctor Card -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="doctor-card">
-              <div class="doctor-image">
-                <img src="assets/img/health/staff-7.webp" alt="Dr. Robert Martinez" class="img-fluid">
-                <div class="doctor-overlay">
-                  <div class="social-links">
-                    <a href="#!"><i class="bi bi-linkedin"></i></a>
-                    <a href="#!"><i class="bi bi-envelope"></i></a>
-                    <a href="#!"><i class="bi bi-phone"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="doctor-content">
-                <h4>Dr. Robert Martinez</h4>
-                <span class="specialty">Emergency Medicine</span>
-                <p>Explicabo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                  consequuntur.</p>
-                <div class="doctor-meta">
-                  <div class="experience">
-                    <i class="bi bi-award"></i>
-                    <span>11+ Years Experience</span>
-                  </div>
-                  <div class="department">
-                    <i class="bi bi-building"></i>
-                    <span>Emergency Dept.</span>
-                  </div>
-                </div>
-                <a href="appointment.html" class="btn-appointment">Book Appointment</a>
-              </div>
-            </div>
-          </div><!-- End Doctor Card -->
-
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="doctor-card">
-              <div class="doctor-image">
-                <img src="assets/img/health/staff-8.webp" alt="Dr. Jennifer Lee" class="img-fluid">
-                <div class="doctor-overlay">
-                  <div class="social-links">
-                    <a href="#!"><i class="bi bi-linkedin"></i></a>
-                    <a href="#!"><i class="bi bi-envelope"></i></a>
-                    <a href="#!"><i class="bi bi-phone"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="doctor-content">
-                <h4>Dr. Jennifer Lee</h4>
-                <span class="specialty">Radiologist</span>
-                <p>Magni dolores eos qui ratione voluptatem sequi nesciunt neque porro quisquam est qui dolorem.</p>
-                <div class="doctor-meta">
-                  <div class="experience">
-                    <i class="bi bi-award"></i>
-                    <span>13+ Years Experience</span>
-                  </div>
-                  <div class="department">
-                    <i class="bi bi-building"></i>
-                    <span>Radiology Dept.</span>
-                  </div>
-                </div>
-                <a href="appointment.html" class="btn-appointment">Book Appointment</a>
-              </div>
-            </div>
-          </div><!-- End Doctor Card -->
+         
 
         </div>
 

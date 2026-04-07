@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Department Details - Clinic Bootstrap Template</title>
+  <title>Mobipet</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -29,15 +29,9 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/estilo.css">
 
-  <!-- =======================================================
-  * Template Name: Clinic
-  * Template URL: https://bootstrapmade.com/clinic-bootstrap-template/
-  * Updated: Jul 23 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+
 
 <body class="department-details-page">
 
@@ -47,7 +41,7 @@
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">Mobipet@gmail.com</a></i>
+              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
           <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19) 9999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
@@ -70,48 +64,22 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="departments.html">Departments</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="doctors.html">Doctors</a></li>
-            <li class="dropdown"><a href="#"><span>More Pages</span> <i
-                  class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="department-details.html" class="active">Department Details</a></li>
-                <li><a href="service-details.html">Service Details</a></li>
-                <li><a href="appointment.html">Appointment</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="faq.html">Frequently Asked Questions</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="terms.html">Terms</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
-                <li><a href="404.html">404</a></li>
-              </ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="about.html" >Sobre-nós</a></li>
+            <li><a href="services.html">Serviços</a></li>
+            <li><a href="doctors.html">Desenvolvedores</a></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
             </li>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i
-                  class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                      class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Agendamento</a></li>
+            <li><a href="contact.html">Contato</a></li>
+            <li><a href="{{route('produtos')}}" class="active">Produtos</a></li>
+            <li><a href="#">Perfil</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
+
+      </div>
+
+    </div>
 
       </div>
 
@@ -127,12 +95,9 @@
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1 class="heading-title">Department Details</h1>
+              <h1 class="heading-title">Produtos</h1>
               <p class="mb-0">
-                Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo
-                odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum
-                debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat
-                ipsum dolorem.
+                Produtos seguros para uma rotina mais saudável.
               </p>
             </div>
           </div>
@@ -141,8 +106,8 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Department Details</li>
+            <li><a href="index.html">Inicio</a></li>
+            <li class="current">Produtos</li>
           </ol>
         </div>
       </nav>
@@ -191,8 +156,7 @@
           <div class="col-xl-6 col-lg-5">
             <div class="department-visual" data-aos="fade-left" data-aos-delay="300">
               <div class="image-container">
-                <img src="https://wordpress-cms-gc-prod-assets.quero.space/uploads/2019/01/medicina-veterinaria.jpeg" alt="Neurology Department"
-                  class="img-fluid primary-image">
+                <img src="{{asset('assets/img/produtos_img_deitada.png')}}" alt="produtos e pets" class="img-fluid primary-image">
                 </div>
               </div>
             </div>
@@ -211,63 +175,63 @@
           </div>
 
           <div class="row gy-4 services-grid">
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-              <div class="service-item">
+            <div class="col-lg-4 col-md-6 pl-2" data-aos="fade-up" data-aos-delay="500">
+              <div class="service-item card-informacao">
                 <div class="service-icon">
-                  <i class="bi bi-lightning-charge"></i>
+                  <i class="fas fa-dog"></i>
                 </div>
-                <h4>Tratamento</h4>
-                <p>Cuidamos da saúde do seu pet com atenção e carinho, oferecendo tratamentos eficazes para diversas doenças, sempre buscando o bem-estar e a recuperação rápida.</p>
+                <h4>Rações</h4>
+                <p>Cuidamos da saúde do seu pet com rações premium e natural.</p>
               </div>
             </div>
 
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="550">
               <div class="service-item">
                 <div class="service-icon">
-                  <i class="bi bi-search"></i>
+                  <i class="fas fa-bone"></i>
                 </div>
-                <h4>Diagnóstico por Imagem</h4>
-                <p>Realizamos exames como raio-X e ultrassom para identificar problemas com precisão e garantir um diagnóstico seguro para o seu pet.</p>
+                <h4>Petiscos</h4>
+                <p>Mais que um agrado, um cuidado com a saúde do seu pet.</p>
               </div>
             </div>
 
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
               <div class="service-item">
                 <div class="service-icon">
-                  <i class="bi bi-heart-pulse"></i>
+                  <i class="fas fa-shapes"></i>
                 </div>
-                <h4>Prevenção de Doenças</h4>
-                <p>A prevenção é essencial! Trabalhamos com vacinas e acompanhamento regular para manter seu pet saudável e protegido.</p>
+                <h4>Brinquedos</h4>
+                <p>Diversão garantida para o bem-estar do seu pet.</p>
               </div>
             </div>
 
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="650">
-              <div class="service-item">
+              <div class="service-item card-informacao">
                 <div class="service-icon">
-                  <i class="bi bi-person-gear"></i>
+                  <i class="fas fa-paw"></i>
                 </div>
-                <h4>Distúrbios de Movimento</h4>
-                <p>Tratamos problemas nas articulações, ossos e músculos, ajudando seu pet a se movimentar melhor e sem dor.</p>
+                <h4>Acessórios</h4>
+                <p>Estilo, conforto e praticidade para o seu pet.</p>
               </div>
             </div>
 
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
               <div class="service-item">
                 <div class="service-icon">
-                  <i class="bi bi-moon"></i>
+                  <i class="fas fa-pump-soap"></i>
                 </div>
-                <h4>Distúrbios do Sono</h4>
-                <p>Avaliamos alterações no sono do seu pet, identificando possíveis causas e oferecendo soluções para melhorar sua qualidade de vida.</p>
+                <h4>Higiene</h4>
+                <p>Cuidado e limpeza com produtos de alta qualidade.</p>
               </div>
             </div>
 
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="750">
               <div class="service-item">
                 <div class="service-icon">
-                  <i class="bi bi-shield-check"></i>
+                  <i class="fas fa-bath"></i>
                 </div>
-                <h4>Cuidados com Memória </h4>
-                <p>Acompanhamos pets idosos com atenção especial, ajudando a prevenir e tratar problemas cognitivos e de comportamento.</p>
+                <h4>Banho e tosa </h4>
+                <p>Beleza, cuidado e bem-estar em cada atendimento.</p>
               </div>
             </div>
           </div>
@@ -277,7 +241,7 @@
           <div class="row align-items-center">
             <div class="col-lg-5" data-aos="fade-right" data-aos-delay="900">
               <div class="expert-image">
-                <img src="" alt="Neurological Expert" class="img-fluid">
+                <img src="{{ asset('assets/img/produtos_img_empe.png') }}" alt="pets deitados na caminha e com produtos" class="img-fluid">
               </div>
             </div>
 
@@ -311,7 +275,7 @@
                     <i class="bi bi-telephone"></i>
                     <div>
                       <span class="contact-label">Numero de Emergência</span>
-                      <span class="contact-value">+1 (555) 987-6543</span>
+                      <span class="contact-value">(19) 9999-8888</span>
                     </div>
                   </div>
                   <div class="contact-item">
@@ -344,19 +308,18 @@
           <div class="col-lg-5">
             <div class="brand-section">
               <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Clinic</span>
+                <span class="sitename">Mobipet</span>
               </a>
-              <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
-                innovative solutions that elevate your brand presence.</p>
+              <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
 
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>Rua das Palmeiras, 245 - Jardim Primavera, Campinas - SP, 1</span>
+                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 987-6543</span>
+                  <span>(19) 9999-8888</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
@@ -365,62 +328,6 @@
               </div>
             </div>
           </div>
-
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Studio</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Our Story</a>
-                      <a href="#!">Design Process</a>
-                      <a href="#!">Portfolio</a>
-                      <a href="#!">Case Studies</a>
-                      <a href="#!">Awards</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Services</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Brand Identity</a>
-                      <a href="#!">Web Design</a>
-                      <a href="#!">Mobile Apps</a>
-                      <a href="#!">Digital Strategy</a>
-                      <a href="#!">Consultation</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Resources</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Design Blog</a>
-                      <a href="#!">Style Guide</a>
-                      <a href="#!">Free Assets</a>
-                      <a href="#!">Tutorials</a>
-                      <a href="#!">Inspiration</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Connect</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Start Project</a>
-                      <a href="#!">Schedule Call</a>
-                      <a href="#!">Join Newsletter</a>
-                      <a href="#!">Follow Updates</a>
-                      <a href="#!">Partnership</a>
-                    </nav>
-                  </div>
-                </div>
 
               </div>
             </div>
@@ -439,22 +346,6 @@
             <div class="col-lg-6">
               <div class="copyright">
                 <p>© <span class="sitename">Mobipet</span>. All rights reserved.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="legal-links">
-                <a href="#!">Privacy Policy</a>
-                <a href="#!">Terms of Service</a>
-                <a href="#!">Cookie Policy</a>
-                <div class="credits">
-                  <!-- All the links in the footer should remain intact. -->
-                  <!-- You can delete the links only if you've purchased the pro version. -->
-                  <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                  <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>. Distributed by <a
-                    href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </div>
               </div>
             </div>
 

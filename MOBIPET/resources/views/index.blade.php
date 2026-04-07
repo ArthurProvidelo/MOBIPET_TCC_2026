@@ -1,865 +1,406 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+  <!DOCTYPE html>
+  <html lang="pt-br">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Página inicial</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Página inicial</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
 
-  <!-- Favicons -->
-  <link href="assets/img/mobipet_icon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="assets/img/mobipet_icon.png" rel="icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-    rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/css/estilo.css')}}" rel="stylesheet">
-  
+    <!-- Main CSS File -->
+    <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/estilo.css')}}" rel="stylesheet">
+    
 
-</head>
+  </head>
 
-<body class="index-page">
+  <body class="index-page">
 
-  <header id="header" class="header fixed-top">
+    <header id="header" class="header fixed-top">
 
-    <div class="topbar d-flex align-items-center dark-background">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-        <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+19 99999-8888</span></i>
+      <div class="topbar d-flex align-items-center dark-background">
+        <div class="container d-flex justify-content-center justify-content-md-between">
+          <div class="contact-info d-flex align-items-center">
+            <i class="bi bi-envelope d-flex align-items-center"><a
+                href="mailto:contact@example.com">mobipet@gmail.com</a></i>
+            <i class="bi bi-phone d-flex align-items-center ms-4"><span>+19 99999-8888</span></i>
+          </div>
+          <div class="social-links d-none d-md-flex align-items-center">
+            <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
+          </div>
         </div>
-        <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
+      </div><!-- End Top Bar -->
+
+      <div class="branding d-flex align-items-cente">
+
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.webp" alt=""> -->
+            <h1 class="sitename">Mobipet</h1>
+          </a>
+
+          <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="{{route('index')}}" class="active">Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+              <li><a href="{{route('contact')}}">Contato</a></li>
+              <li><a href="{{route('department-details')}}">Departamento</a></li>
+              <li><a href="{{route('perfil')}}">Perfil</a></li>
+              
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+
         </div>
+
       </div>
-    </div><!-- End Top Bar -->
 
-    <div class="branding d-flex align-items-cente">
+    </header>
 
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Mobipet</h1>
-        </a>
+    <main class="main">
 
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="index.html" class="active">Início</a></li>
-            <li><a href="about.html">Sobre nós</a></li>
-            <li><a href="services.html">Serviços</a></li>
-            <li><a href="devs.html">Desenvolvedores</a></li>
-            <li><a href="devs.html">Agendamento</a></li>
-            <li><a href="contact.html">Contato</a></li>
-            <li><a href="#">Perfil</a></li>
-            
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+      <!-- Hero Section -->
+      <section id="hero" class="hero section">
 
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="hero-content">
+                
+
+                <h1 class="banho-tosa" data-aos="fade-right" data-aos-delay="300">
+                  Banho <span class="highlight">&</span> Tosa
+                </h1>
+
+                <p class="hero-description text-dark" data-aos="fade-right" data-aos-delay="400">
+                Seu pet está sendo monitorado com <span class="laranja"> tecnologia, cuidado, segurança e carinho.</span>
+                </p>
+
+                <div class="hero-stats mb-4" data-aos="fade-right" data-aos-delay="500">
+                  <div class="stat-item">
+                    <h3><span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="2"
+                        class="purecounter"></span>+</h3>
+                    <p>Anos de Experiência</p>
+                  </div>
+                  <div class="stat-item">
+                    <h3><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2"
+                        class="purecounter"></span>+</h3>
+                    <p>Funcionaidades</p>
+                  </div>
+                  <div class="stat-item">
+                    <h3><span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="2"
+                        class="purecounter"></span></h3>
+                    <p>Desenvolvedores</p>
+                  </div>
+                </div>
+
+                <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
+                  <a href="{{route('agendamento')}}" class="btn btn-primary">Agendar Agora  <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="{{route('sobre')}}" class="btn btn-outline">
+                    <i class="fa-solid fa-angles-right"></i>
+                    Conhecer nossos Serviços
+                  </a>
+                </div>
+
+                <div class="emergency-contact" data-aos="fade-right" data-aos-delay="700">
+                  <div class="emergency-icon">
+                    <i class="bi bi-telephone-fill"></i>
+                  </div>
+                  <div class="emergency-info">
+                    <small>Nosso Contato</small>
+                    <strong>+55 (19) 9999-8888</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="hero-visual" data-aos="fade-left" data-aos-delay="400" style="margin-top: 100px">
+                <div class="main-image">
+                  <img src="{{asset('assets/img/home-page.png')}}" alt="Modern Healthcare Facility" class="img-fluid">
+                  
+                <div class="background-elements">
+                  <div class="element element-1"></div>
+                  <div class="element element-2"></div>
+                  <div class="element element-3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section><!-- /Hero Section -->
+
+      <!-- Home About Section -->
+      <section id="home-about" class="home-about section">
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
+          <div class="about-content">
+            <h2 class="section-heading">Tecnologia e cuidado para o seu pet</h2>
+
+            <p class="lead-text">
+              Acompanhe em tempo real tudo o que acontece com seu pet durante o banho e tosa.
+              Com a MobiPet, você tem mais segurança, transparência e tranquilidade, mesmo à distância.
+            </p>
+
+            <p>
+              Nosso sistema foi desenvolvido para modernizar o atendimento em petshops, permitindo
+              agendamentos digitais, notificações automáticas e monitoramento completo de cada etapa
+              do serviço. Aqui, você sabe exatamente como seu pet está sendo cuidado, do início ao fim.
+            </p>
+
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="100"
+                  data-purecounter-duration="1"></div>
+                <div class="stat-label">Pets monitorados</div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="100"
+                  data-purecounter-duration="1"></div>
+                <div class="stat-label">% Transparência</div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="24"
+                  data-purecounter-duration="1"></div>
+                <div class="stat-label">Monitoramento contínuo</div>
+              </div>
+            </div>
+
+            <div class="cta-section">
+              <a href="about.html" class="btn-primary">Ver como funciona</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+          <div class="about-visual">
+            <div class="main-image">
+              <img src="assets/img/health/facilities-9.webp" alt="Pet sendo cuidado" class="img-fluid">
+            </div>
+
+            <div class="floating-card">
+              <div class="card-content">
+                <div class="icon">
+                  <i class="bi bi-camera-video"></i>
+                </div>
+                <div class="card-text">
+                  <h4>Monitoramento em tempo real</h4>
+                  <p>Acompanhe cada etapa do seu pet ao vivo</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="experience-badge">
+              <div class="badge-content">
+                <span class="years">100%</span>
+                <span class="text">Transparência no cuidado</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
 
-  </header>
+  </section><!-- /Home About Section -->
 
-  <main class="main">
+      <!-- Featured Departments Section -->
+      <!-- Featured Departments Section -->
+<section id="featured-departments" class="featured-departments section">
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero section">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Funcionalidades do Sistema</h2>
+    <p>Conheça os principais recursos do Mobipet para monitoramento e gestão de banho e tosa</p>
+  </div>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row g-5">
 
-        <div class="row align-items-center">
-          <div class="col-lg-6">
-            <div class="hero-content">
-              
-
-              <h1 class="banho-tosa" data-aos="fade-right" data-aos-delay="300">
-                Banho <span class="highlight">&</span> Tosa
-              </h1>
-
-              <p class="hero-description text-dark" data-aos="fade-right" data-aos-delay="400">
-              Seu pet está sendo monitorado com <span class="laranja"> tecnologia, cuidado, segurança e carinho.</span>
-              </p>
-
-              <div class="hero-stats mb-4" data-aos="fade-right" data-aos-delay="500">
-                <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="2"
-                      class="purecounter"></span>+</h3>
-                  <p>Anos de Experiência</p>
-                </div>
-                <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2"
-                      class="purecounter"></span>+</h3>
-                  <p>Funcionaidades</p>
-                </div>
-                <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="2"
-                      class="purecounter"></span></h3>
-                  <p>Desenvolvedores</p>
-                </div>
-              </div>
-
-              <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
-                <a href="appointment.html" class="btn btn-primary">Agendar Agora  <i class="fa-solid fa-arrow-right"></i></a>
-                <a href="{{route('sobre')}}" class="btn btn-outline">
-                  <i class="fa-solid fa-angles-right"></i>
-                  Conhecer nossos Serviços
-                </a>
-              </div>
-
-              <div class="emergency-contact" data-aos="fade-right" data-aos-delay="700">
-                <div class="emergency-icon">
-                  <i class="bi bi-telephone-fill"></i>
-                </div>
-                <div class="emergency-info">
-                  <small>Nosso Contato</small>
-                  <strong>+55 (19) 9999-8888</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="hero-visual" data-aos="fade-left" data-aos-delay="400" style="margin-top: 100px">
-              <div class="main-image">
-                <img src="{{asset('assets/img/home-page.png')}}" alt="Modern Healthcare Facility" class="img-fluid">
-                
-              <div class="background-elements">
-                <div class="element element-1"></div>
-                <div class="element element-2"></div>
-                <div class="element element-3"></div>
-              </div>
-            </div>
+      <div class="col-lg-6">
+        <div class="specialty-card">
+          <div class="specialty-content">
+            <span class="specialty-label">Monitoramento</span>
+            <h3>Acompanhamento em Tempo Real</h3>
+            <p>Visualize cada etapa do banho e tosa do seu pet com atualizações instantâneas.</p>
+            <span><i class="bi bi-check-circle-fill"></i> Atualizações ao vivo</span>
+            <span><i class="bi bi-check-circle-fill"></i> Status em tempo real</span>
+            <a href="#" class="specialty-link">Ver monitoramento</a>
           </div>
         </div>
-
       </div>
 
-    </section><!-- /Hero Section -->
-
-    <!-- Home About Section -->
-    <section id="home-about" class="home-about section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row align-items-center">
-          <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
-            <div class="about-content">
-              <h2 class="section-heading">Compassionate Care, Advanced Medicine</h2>
-              <p class="lead-text">For over two decades, we've been dedicated to providing exceptional healthcare that
-                combines cutting-edge medical technology with the personal touch our patients deserve.</p>
-
-              <p>Our multidisciplinary team of specialists works collaboratively to ensure every patient receives
-                comprehensive care tailored to their unique needs. From preventive services to complex procedures, we
-                maintain the highest standards of medical excellence while fostering an environment of trust and
-                healing.</p>
-
-              <div class="stats-grid">
-                <div class="stat-item">
-                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="15000"
-                    data-purecounter-duration="1"></div>
-                  <div class="stat-label">Patients Served</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="25"
-                    data-purecounter-duration="1"></div>
-                  <div class="stat-label">Years of Excellence</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="50"
-                    data-purecounter-duration="1"></div>
-                  <div class="stat-label">Medical Specialists</div>
-                </div>
-              </div>
-
-              <div class="cta-section">
-                <a href="about.html" class="btn-primary">Learn More About Us</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
-            <div class="about-visual">
-              <div class="main-image">
-                <img src="assets/img/health/facilities-9.webp" alt="Modern medical facility" class="img-fluid">
-              </div>
-              <div class="floating-card">
-                <div class="card-content">
-                  <div class="icon">
-                    <i class="bi bi-heart-pulse"></i>
-                  </div>
-                  <div class="card-text">
-                    <h4>24/7 Emergency Care</h4>
-                    <p>Always here when you need us most</p>
-                  </div>
-                </div>
-              </div>
-              <div class="experience-badge">
-                <div class="badge-content">
-                  <span class="years">25+</span>
-                  <span class="text">Years of Trusted Care</span>
-                </div>
-              </div>
-            </div>
+      <div class="col-lg-6">
+        <div class="specialty-card">
+          <div class="specialty-content">
+            <span class="specialty-label">Tecnologia</span>
+            <h3>Notificações Inteligentes</h3>
+            <p>Receba alertas automáticos a cada etapa concluída do serviço.</p>
+            <span><i class="bi bi-check-circle-fill"></i> Alertas automáticos</span>
+            <span><i class="bi bi-check-circle-fill"></i> Comunicação em tempo real</span>
+            <a href="#" class="specialty-link">Ver notificações</a>
           </div>
         </div>
-
       </div>
 
-    </section><!-- /Home About Section -->
-
-    <!-- Featured Departments Section -->
-    <section id="featured-departments" class="featured-departments section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Featured Departments</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row g-5">
-
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
-            <div class="specialty-card">
-              <div class="specialty-content">
-                <div class="specialty-meta">
-                  <span class="specialty-label">Specialized Care</span>
-                </div>
-                <h3>Cardiovascular Medicine</h3>
-                <p>Advanced diagnostic imaging and interventional procedures for comprehensive heart health management
-                  with personalized treatment protocols.</p>
-                <div class="specialty-features">
-                  <span><i class="bi bi-check-circle-fill"></i>24/7 Emergency Cardiac Care</span>
-                  <span><i class="bi bi-check-circle-fill"></i>Minimally Invasive Procedures</span>
-                </div>
-                <a href="department-details.html" class="specialty-link">
-                  Explore Cardiology <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
-              <div class="specialty-visual">
-                <img src="assets/img/health/cardiology-1.webp" alt="Cardiovascular Medicine" class="img-fluid">
-                <div class="visual-overlay">
-                  <i class="bi bi-heart-pulse"></i>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Specialty Card -->
-
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="200">
-            <div class="specialty-card">
-              <div class="specialty-content">
-                <div class="specialty-meta">
-                  <span class="specialty-label">Expert Care</span>
-                </div>
-                <h3>Neurological Sciences</h3>
-                <p>Cutting-edge neuroimaging and neurosurgical expertise for complex brain and spinal cord conditions
-                  with innovative treatment approaches.</p>
-                <div class="specialty-features">
-                  <span><i class="bi bi-check-circle-fill"></i>Advanced Brain Imaging</span>
-                  <span><i class="bi bi-check-circle-fill"></i>Robotic Surgery</span>
-                </div>
-                <a href="department-details.html" class="specialty-link">
-                  Explore Neurology <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
-              <div class="specialty-visual">
-                <img src="assets/img/health/neurology-4.webp" alt="Neurological Sciences" class="img-fluid">
-                <div class="visual-overlay">
-                  <i class="bi bi-cpu"></i>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Specialty Card -->
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="department-highlight">
-              <div class="highlight-icon">
-                <i class="bi bi-shield-plus"></i>
-              </div>
-              <h4>Orthopedic Surgery</h4>
-              <p>Comprehensive musculoskeletal care utilizing advanced arthroscopic techniques and joint replacement
-                procedures.</p>
-              <ul class="highlight-list">
-                <li>Sports Medicine</li>
-                <li>Joint Replacement</li>
-                <li>Spine Surgery</li>
-              </ul>
-              <a href="department-details.html" class="highlight-cta">Learn More</a>
-            </div>
-          </div><!-- End Department Highlight -->
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="department-highlight">
-              <div class="highlight-icon">
-                <i class="bi bi-people"></i>
-              </div>
-              <h4>Pediatric Care</h4>
-              <p>Child-centered healthcare services from newborn to adolescence with family-focused treatment
-                approaches.</p>
-              <ul class="highlight-list">
-                <li>Neonatal Intensive Care</li>
-                <li>Developmental Pediatrics</li>
-                <li>Pediatric Surgery</li>
-              </ul>
-              <a href="department-details.html" class="highlight-cta">Learn More</a>
-            </div>
-          </div><!-- End Department Highlight -->
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="department-highlight">
-              <div class="highlight-icon">
-                <i class="bi bi-activity"></i>
-              </div>
-              <h4>Cancer Treatment</h4>
-              <p>Multidisciplinary oncology program offering personalized cancer care with latest therapeutic
-                innovations.</p>
-              <ul class="highlight-list">
-                <li>Precision Medicine</li>
-                <li>Immunotherapy</li>
-                <li>Radiation Oncology</li>
-              </ul>
-              <a href="department-details.html" class="highlight-cta">Learn More</a>
-            </div>
-          </div><!-- End Department Highlight -->
-
+      <div class="col-lg-4">
+        <div class="department-highlight">
+          <h4>Agendamento Online</h4>
+          <p>Marque serviços de forma rápida e prática.</p>
+          <ul>
+            <li>Interface simples</li>
+            <li>Disponibilidade em tempo real</li>
+            <li>Confirmação automática</li>
+          </ul>
         </div>
-
-        <div class="emergency-banner" data-aos="fade-up" data-aos-delay="400">
-          <div class="row align-items-center">
-            <div class="col-lg-8">
-              <div class="emergency-content">
-                <h3>Emergency Services Available 24/7</h3>
-                <p>Our emergency department is equipped with state-of-the-art technology and staffed by board-certified
-                  emergency physicians ready to provide immediate care.</p>
-              </div>
-            </div>
-            <div class="col-lg-4 text-lg-end">
-              <a href="tel:+15551234567" class="emergency-btn">
-                <i class="bi bi-telephone-fill"></i>
-                Call Emergency: (555) 123-4567
-              </a>
-            </div>
-          </div>
-        </div>
-
       </div>
 
-    </section><!-- /Featured Departments Section -->
-
-    <!-- Featured Services Section -->
-    <section id="featured-services" class="featured-services section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Featured Services</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row g-0">
-
-          <div class="col-lg-8" data-aos="fade-right" data-aos-delay="200">
-            <div class="featured-service-main">
-              <div class="service-image-wrapper">
-                <img src="assets/img/health/consultation-4.webp" alt="Premier Healthcare Services" class="img-fluid"
-                  loading="lazy">
-                <div class="service-overlay">
-                  <div class="service-badge">
-                    <i class="bi bi-heart-pulse"></i>
-                    <span>Emergency Care</span>
-                  </div>
-                </div>
-              </div>
-              <div class="service-details">
-                <h2>Comprehensive Healthcare Excellence</h2>
-                <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ante ipsum primis in faucibus
-                  orci luctus et ultrices posuere cubilia curae donec velit neque.</p>
-                <a href="#!" class="main-cta">Explore Our Services</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="300">
-            <div class="services-sidebar">
-
-              <div class="service-item" data-aos="fade-up" data-aos-delay="400">
-                <div class="service-icon-wrapper">
-                  <i class="bi bi-capsule"></i>
-                </div>
-                <div class="service-info">
-                  <h4>Dermatology Clinic</h4>
-                  <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                  <a href="#!" class="service-link">Learn More</a>
-                </div>
-              </div>
-
-              <div class="service-item" data-aos="fade-up" data-aos-delay="500">
-                <div class="service-icon-wrapper">
-                  <i class="bi bi-bandaid"></i>
-                </div>
-                <div class="service-info">
-                  <h4>Surgery Center</h4>
-                  <p>Donec rutrum congue leo eget malesuada curabitur arcu erat accumsan id imperdiet et porttitor at
-                    sem.</p>
-                  <a href="#!" class="service-link">Learn More</a>
-                </div>
-              </div>
-
-              <div class="service-item" data-aos="fade-up" data-aos-delay="600">
-                <div class="service-icon-wrapper">
-                  <i class="bi bi-activity"></i>
-                </div>
-                <div class="service-info">
-                  <h4>Diagnostics Lab</h4>
-                  <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui cras ultricies ligula sed
-                    magna.</p>
-                  <a href="#!" class="service-link">Learn More</a>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
+      <div class="col-lg-4">
+        <div class="department-highlight">
+          <h4>Histórico do Pet</h4>
+          <p>Acompanhe todos os atendimentos realizados.</p>
+          <ul>
+            <li>Registro completo</li>
+            <li>Consultas rápidas</li>
+            <li>Dados organizados</li>
+          </ul>
         </div>
-
-        <div class="specialties-grid" data-aos="fade-up" data-aos-delay="300">
-          <div class="row align-items-center">
-
-            <div class="col-lg-3 col-md-6">
-              <div class="specialty-card">
-                <div class="specialty-image">
-                  <img src="assets/img/health/maternal-2.webp" alt="Maternal Care" class="img-fluid" loading="lazy">
-                </div>
-                <div class="specialty-content">
-                  <h5>Maternal Care</h5>
-                  <span>Expert pregnancy &amp; delivery support</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-              <div class="specialty-card">
-                <div class="specialty-image">
-                  <img src="assets/img/health/vaccination-3.webp" alt="Vaccination" class="img-fluid" loading="lazy">
-                </div>
-                <div class="specialty-content">
-                  <h5>Vaccination</h5>
-                  <span>Complete immunization programs</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-              <div class="specialty-card">
-                <div class="specialty-image">
-                  <img src="assets/img/health/emergency-1.webp" alt="Emergency Care" class="img-fluid" loading="lazy">
-                </div>
-                <div class="specialty-content">
-                  <h5>Emergency Care</h5>
-                  <span>24/7 critical care services</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-              <div class="specialty-card">
-                <div class="specialty-image">
-                  <img src="assets/img/health/facilities-6.webp" alt="Advanced Tech" class="img-fluid" loading="lazy">
-                </div>
-                <div class="specialty-content">
-                  <h5>Advanced Technology</h5>
-                  <span>State-of-the-art medical equipment</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
       </div>
 
-    </section><!-- /Featured Services Section -->
-
-    <!-- Find A Doctor Section -->
-    <section id="find-a-doctor" class="find-a-doctor section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Find A Doctor</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row justify-content-center mb-5" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-lg-8 text-center">
-            <div class="search-section">
-              <h3 class="search-title">Find Your Perfect Healthcare Provider</h3>
-              <p class="search-subtitle">Search through our comprehensive directory of experienced medical professionals
-              </p>
-              <form class="search-form" action="#!" method="#">
-                <div class="search-input-group">
-                  <div class="input-wrapper">
-                    <i class="bi bi-person"></i>
-                    <input type="text" class="form-control" name="doctor_name" placeholder="Enter doctor name">
-                  </div>
-                  <div class="select-wrapper">
-                    <i class="bi bi-heart-pulse"></i>
-                    <select class="form-select" name="specialty">
-                      <option value="">All Specialties</option>
-                      <option value="cardiology">Cardiology</option>
-                      <option value="neurology">Neurology</option>
-                      <option value="orthopedics">Orthopedics</option>
-                      <option value="pediatrics">Pediatrics</option>
-                      <option value="dermatology">Dermatology</option>
-                      <option value="oncology">Oncology</option>
-                    </select>
-                  </div>
-                  <button type="submit" class="search-btn">
-                    <i class="bi bi-search"></i>
-                    Find Doctors
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+      <div class="col-lg-4">
+        <div class="department-highlight">
+          <h4>Gestão para Petshops</h4>
+          <p>Controle completo dos serviços e clientes.</p>
+          <ul>
+            <li>Controle de serviços</li>
+            <li>Gestão de clientes</li>
+            <li>Otimização do atendimento</li>
+          </ul>
         </div>
-
-        <div class="doctors-grid" data-aos="fade-up" data-aos-delay="300">
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="100">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="assets/img/health/staff-2.webp" alt="Dr. Amanda Foster" class="img-fluid">
-                <div class="status-indicator available"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Amanda Foster</h4>
-                <span class="specialty-tag">Cardiology Specialist</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>14 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
-              <span class="rating-score">4.9</span>
-              <span class="review-count">(127 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Book Now</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="200">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="assets/img/health/staff-6.webp" alt="Dr. Marcus Johnson" class="img-fluid">
-                <div class="status-indicator busy"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Marcus Johnson</h4>
-                <span class="specialty-tag">Neurology Expert</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>16 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-              </div>
-              <span class="rating-score">4.8</span>
-              <span class="review-count">(89 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Schedule</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="300">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="assets/img/health/staff-4.webp" alt="Dr. Rachel Williams" class="img-fluid">
-                <div class="status-indicator available"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Rachel Williams</h4>
-                <span class="specialty-tag">Pediatrics Care</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>11 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
-              <span class="rating-score">5.0</span>
-              <span class="review-count">(203 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Book Now</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="400">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="assets/img/health/staff-8.webp" alt="Dr. David Chen" class="img-fluid">
-                <div class="status-indicator offline"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. David Chen</h4>
-                <span class="specialty-tag">Orthopedic Surgery</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>22 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-              </div>
-              <span class="rating-score">4.7</span>
-              <span class="review-count">(156 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Schedule</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="500">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="assets/img/health/staff-11.webp" alt="Dr. Victoria Torres" class="img-fluid">
-                <div class="status-indicator available"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Victoria Torres</h4>
-                <span class="specialty-tag">Dermatology Care</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>9 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star"></i>
-              </div>
-              <span class="rating-score">4.5</span>
-              <span class="review-count">(74 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Book Now</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="600">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="assets/img/health/staff-14.webp" alt="Dr. Benjamin Lee" class="img-fluid">
-                <div class="status-indicator available"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Benjamin Lee</h4>
-                <span class="specialty-tag">Oncology Treatment</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>19 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
-              <span class="rating-score">4.9</span>
-              <span class="review-count">(194 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Schedule</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-        </div>
-
-        <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="700">
-          <a href="doctors.html" class="btn-view-all">
-            View All Doctors
-            <i class="bi bi-arrow-right"></i>
-          </a>
-        </div>
-
       </div>
 
-    </section><!-- /Find A Doctor Section -->
+    </div>
 
-    <!-- Call To Action Section -->
-    <section id="call-to-action" class="call-to-action section light-background">
+    <div class="emergency-banner mt-5">
+      <h3>Sistema disponível em tempo integral</h3>
+      <p>O Mobipet funciona 24 horas para acompanhamento e gestão.</p>
+      <a href="#" class="emergency-btn"><i class="fa-brands fa-whatsapp"></i>Agendar</a>
+    </div>
+  </div>
+</section>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+<!-- Featured Services Section -->
+<section id="featured-services" class="featured-services section">
 
-        <div class="hero-content">
-          <div class="row align-items-center">
+  <div class="container section-title">
+    <h2>Serviços do Mobipet</h2>
+    <p>Soluções completas para o monitoramento e gestão de banho e tosa</p>
+  </div>
 
-            <div class="col-lg-6">
-              <div class="content-wrapper" data-aos="fade-up" data-aos-delay="200">
-                <h1>Excellence in Medical Care, Every Day</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
-                  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+  <div class="container">
+    <div class="row g-0">
 
-                <div class="cta-wrapper">
-                  <a href="appointment.html" class="primary-cta">
-                    <span>Schedule Consultation</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
-                  <a href="services.html" class="secondary-cta">
-                    <span>Explore Services</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="image-container" data-aos="fade-left" data-aos-delay="300">
-                <img src="assets/img/health/facilities-9.webp" alt="Medical Excellence" class="img-fluid">
-              </div>
-            </div>
-
+      <div class="col-lg-8">
+        <div class="featured-service-main">
+          <div class="service-details">
+            <h2>Gestão Inteligente de Banho e Tosa</h2>
+            <p>Integramos tecnologia e cuidado para oferecer mais segurança e transparência.</p>
+            <a href="{{route('services')}}" class="main-cta">Explorar funcionalidades</a>
           </div>
         </div>
-
-        <div class="features-section">
-
-          <div class="row g-0">
-
-            <div class="col-lg-4">
-              <div class="feature-block" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                  <i class="bi bi-shield-check"></i>
-                </div>
-                <h3>Advanced Technology</h3>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                  laborum.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="feature-block" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-icon">
-                  <i class="bi bi-clock"></i>
-                </div>
-                <h3>24/7 Availability</h3>
-                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
-                  excepteur.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="feature-block" data-aos="fade-up" data-aos-delay="400">
-                <div class="feature-icon">
-                  <i class="bi bi-people"></i>
-                </div>
-                <h3>Expert Team</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium
-                  totam rem.</p>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="contact-block">
-          <div class="row">
-
-            <div class="col-lg-8">
-              <div class="contact-content" data-aos="fade-up" data-aos-delay="200">
-                <h2>Need Immediate Medical Assistance?</h2>
-                <p>Our emergency response team is available around the clock to provide immediate medical support when
-                  you need it most.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="contact-actions" data-aos="fade-up" data-aos-delay="300">
-                <a href="tel:5551234567" class="emergency-call">
-                  <i class="bi bi-telephone"></i>
-                  <span>(555) 123-4567</span>
-                </a>
-                <a href="contact.html" class="contact-link">Find Location</a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
       </div>
 
-    </section><!-- /Call To Action Section -->
+      <div class="col-lg-4">
+        <div class="services-sidebar">
 
-  </main>
+          <div class="service-item">
+            <h4>Monitoramento ao Vivo</h4>
+            <p>Acompanhe seu pet em tempo real.</p>
+          </div>
+
+          <div class="service-item">
+            <h4>Agendamento Digital</h4>
+            <p>Agende serviços com facilidade.</p>
+          </div>
+
+          <div class="service-item">
+            <h4>Relatórios e Controle</h4>
+            <p>Acesse histórico completo dos atendimentos.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Find Section -->
+<section class="section">
+
+  <div class="container section-title">
+    <h2>Acompanhar Atendimento</h2>
+    <p>Consulte o status do seu pet em tempo real</p>
+  </div>
+
+  <div class="container text-center">
+    <h3>Acompanhe seu pet</h3>
+    <p>Digite o nome do pet para visualizar o andamento</p>
+
+    <input type="text" value="Rex" readonly class="form-control mb-3">
+
+    <button class="btn btn-primary">Acompanhar</button>
+
+    <div class="mt-5">
+      <h4>Rex</h4>
+      <p><i class="fa-solid fa-square-poll-vertical"></i> Status: Banho em andamento</p>
+      <p><i class="fa-solid fa-clock"></i> Tempo estimado: 20 minutos</p>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- Call To Action -->
+<section class="call-to-action section">
+
+  <div class="container text-center">
+    <h1>Mais segurança e transparência para o seu pet</h1>
+    <p>Acompanhe cada etapa do atendimento com total confiança.</p>
+
+  </div>
 
   <footer id="footer" class="footer-16 footer position-relative">
 
@@ -871,144 +412,58 @@
           <div class="col-lg-5">
             <div class="brand-section">
               <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Clinic</span>
+                <span class="sitename">Mobipet</span>
               </a>
-              <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
-                innovative solutions that elevate your brand presence.</p>
+              <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
 
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>123 Creative Boulevard, Design District, NY 10012</span>
+                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 987-6543</span>
+                  <span> (19)9999-8888</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
-                  <span>hello@designstudio.com</span>
+                  <span>mobipet@gmail.com</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Studio</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Our Story</a>
-                      <a href="#!">Design Process</a>
-                      <a href="#!">Portfolio</a>
-                      <a href="#!">Case Studies</a>
-                      <a href="#!">Awards</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Services</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Brand Identity</a>
-                      <a href="#!">Web Design</a>
-                      <a href="#!">Mobile Apps</a>
-                      <a href="#!">Digital Strategy</a>
-                      <a href="#!">Consultation</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Resources</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Design Blog</a>
-                      <a href="#!">Style Guide</a>
-                      <a href="#!">Free Assets</a>
-                      <a href="#!">Tutorials</a>
-                      <a href="#!">Inspiration</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Connect</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Start Project</a>
-                      <a href="#!">Schedule Call</a>
-                      <a href="#!">Join Newsletter</a>
-                      <a href="#!">Follow Updates</a>
-                      <a href="#!">Partnership</a>
-                    </nav>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
     </div>
 
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
-          <div class="row align-items-center">
 
-            <div class="col-lg-6">
-              <div class="copyright">
-                <p>© <span class="sitename">Clinic</span>. All rights reserved.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="legal-links">
-                <a href="#!">Privacy Policy</a>
-                <a href="#!">Terms of Service</a>
-                <a href="#!">Cookie Policy</a>
-                <div class="credits">
-                  <!-- All the links in the footer should remain intact. -->
-                  <!-- You can delete the links only if you've purchased the pro version. -->
-                  <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                  <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>. Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
 
   </footer>
 
-  <!-- Scroll Top -->
-  <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+</section>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+    </footer>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!-- Scroll Top -->
+    <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+    <!-- Preloader -->
+    <div id="preloader"></div>
 
-</body>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-</html>
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    
+  </body>
+
+  </html>
