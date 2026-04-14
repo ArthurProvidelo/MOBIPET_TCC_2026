@@ -29,6 +29,7 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/estilo.css">
 
 
 </head>
@@ -41,11 +42,11 @@
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
         </div>
       </div>
@@ -65,10 +66,10 @@
            <li><a href="{{route('index')}}" >Início</a></li>
             <li><a href="{{route('sobre')}}">Sobre nós</a></li>
             <li><a href="{{route('services')}}">Serviços</a></li>
-            <li><a href="{{route('devs')}}" >Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
+            <li><a href="{{route('devs')}}" class="active" >Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
             <li><a href="{{route('agendamento')}}" >Agendamento</a></li>
             <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('department-details')}}">Detalhes</a></li>
+           <li><a href="{{route('departments')}}">Departamento</a></li>
             <li><a href="">Perfil</a></li>
                   
             </li>
@@ -116,198 +117,180 @@
     <!-- Doctors Section -->
     <section id="doctors" class="doctors section">
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-aos="fade-up" data-aos-delay="300">
 
         <div class="row gy-4">
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="" data-aos="fade-up" data-aos-delay="300">
             <div class="doctor-card">
               <div class="doctor-image">
                 <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
                 <div class="doctor-overlay">
-                  <div class="social-links">
-                    <a href="#!"><i class="bi bi-linkedin"></i></a>
-                    <a href="#!"><i class="bi bi-envelope"></i></a>
-                    <a href="#!"><i class="bi bi-phone"></i></a>
-                  </div>
                 </div>
               </div>
               <div class="doctor-content">
                 <h4>Arthur Barbosa</h4>
-                <span class="specialty">Programador Front-End</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
-                  et dolore magna aliqua.</p>
+                <span class="specialty">Desenvolvedor Front-end</span>
+                <p>
+                Responsável pela interface do usuário, focando em usabilidade, design e 
+                experiência visual do sistema.</p>
                 <div class="doctor-meta">
                   <div class="experience">
                     <i class="bi bi-award"></i>
-                    <span>15+ Years Experience</span>
-                  </div>
-                  <div class="department">
-                    <i class="bi bi-building"></i>
-                    <span>Cardiology Dept.</span>
                   </div>
                 </div>
-                <a href="appointment.html" class="btn-appointment">Book Appointment</a>
+                <a href="" class="btn-appointment">SESI/SENAI</a>
               </div>
             </div>
           </div><!-- End Doctor Card -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <section id="doctors" class="doctors section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="300">
+
+        <div class="row gy-4">
+
+          <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-2.webp" alt="Dr. Sarah Williams" class="img-fluid">
+                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
                 <div class="doctor-overlay">
-                  <div class="social-links">
-                    <a href="#!"><i class="bi bi-linkedin"></i></a>
-                    <a href="#!"><i class="bi bi-envelope"></i></a>
-                    <a href="#!"><i class="bi bi-phone"></i></a>
-                  </div>
                 </div>
               </div>
               <div class="doctor-content">
                 <h4>Arthur Providello</h4>
-                <span class="specialty">Neurologist</span>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat.</p>
+                <span class="specialty">Desenvolvedor Full Stack</span>
+                <p>
+               Trabalha tanto no front-end quanto no back-end, contribuindo em diversas etapas do desenvolvimento.</p>
                 <div class="doctor-meta">
                   <div class="experience">
                     <i class="bi bi-award"></i>
-                    <span>12+ Years Experience</span>
-                  </div>
-                  <div class="department">
-                    <i class="bi bi-building"></i>
-                    <span>Neurology Dept.</span>
                   </div>
                 </div>
-                <a href="appointment.html" class="btn-appointment">Book Appointment</a>
+                <a href="" class="btn-appointment">SESI/SENAI</a>
               </div>
             </div>
           </div><!-- End Doctor Card -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+       
+         <section id="doctors" class="doctors section">
+
+
+      <div class="container" data-aos="fade-up" data-aos-delay="300">
+
+        <div class="row gy-4">
+
+          <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-3.webp" alt="Dr. Michael Chen" class="img-fluid">
+                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
                 <div class="doctor-overlay">
-                  <div class="social-links">
-                    <a href="#!"><i class="bi bi-linkedin"></i></a>
-                    <a href="#!"><i class="bi bi-envelope"></i></a>
-                    <a href="#!"><i class="bi bi-phone"></i></a>
-                  </div>
                 </div>
               </div>
               <div class="doctor-content">
                 <h4>Kaila Silva</h4>
-                <span class="specialty">Programador Back-End</span>
-                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                  pariatur.</p>
+                <span class="specialty">Desenvolvedor Back-end</span>
+                <p>
+              Atua na lógica do sistema, integração com banco de dados e funcionamento interno da aplicação.</p>
                 <div class="doctor-meta">
                   <div class="experience">
                     <i class="bi bi-award"></i>
-                    <span>18+ Years Experience</span>
-                  </div>
-                  <div class="department">
-                    <i class="bi bi-building"></i>
-                    <span>Orthopedics Dept.</span>
                   </div>
                 </div>
-                <a href="appointment.html" class="btn-appointment">Book Appointment</a>
+                <a href="" class="btn-appointment">SESI/SENAI</a>
               </div>
             </div>
           </div><!-- End Doctor Card -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+
+ <section id="doctors" class="doctors section">
+
+
+
+      <div class="container" data-aos="fade-up" data-aos-delay="300">
+
+        <div class="row gy-4">
+
+          <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-4.webp" alt="Dr. Emily Rodriguez" class="img-fluid">
+                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
                 <div class="doctor-overlay">
-                  <div class="social-links">
-                    <a href="#!"><i class="bi bi-linkedin"></i></a>
-                    <a href="#!"><i class="bi bi-envelope"></i></a>
-                    <a href="#!"><i class="bi bi-phone"></i></a>
-                  </div>
                 </div>
               </div>
               <div class="doctor-content">
                 <h4>Kauan Ferreira</h4>
-                <span class="specialty">Programador Front-End e Banco de dados</span>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                  laborum.</p>
+                <span class="specialty">Desenvolvedor Front-end</span>
+                <p>
+              Responsável pela interface do usuário, focando em usabilidade, design e experiência visual do sistema.</p>
                 <div class="doctor-meta">
                   <div class="experience">
                     <i class="bi bi-award"></i>
-                    <span>10+ Years Experience</span>
-                  </div>
-                  <div class="department">
-                    <i class="bi bi-building"></i>
-                    <span>Pediatrics Dept.</span>
                   </div>
                 </div>
-                <a href="appointment.html" class="btn-appointment">Book Appointment</a>
+                <a href="" class="btn-appointment">SESI/SENAI</a>
               </div>
             </div>
           </div><!-- End Doctor Card -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="500">
+
+
+           <section id="doctors" class="doctors section">
+
+
+  <div class="container" data-aos="fade-up" data-aos-delay="300">
+
+        <div class="row gy-4">
+
+          <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-5.webp" alt="Dr. David Thompson" class="img-fluid">
+                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
                 <div class="doctor-overlay">
-                  <div class="social-links">
-                    <a href="#!"><i class="bi bi-linkedin"></i></a>
-                    <a href="#!"><i class="bi bi-envelope"></i></a>
-                    <a href="#!"><i class="bi bi-phone"></i></a>
-                  </div>
                 </div>
               </div>
               <div class="doctor-content">
                 <h4>Lorena Thomaz</h4>
-                <span class="specialty">Programador Front-End 
-                  e Banco de dados</span>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                <span class="specialty">Desenvolvedor Front-end</span>
+                <p>
+              Responsável pela interface do usuário, focando em usabilidade, design e experiência visual do sistema.</p>
                 <div class="doctor-meta">
                   <div class="experience">
                     <i class="bi bi-award"></i>
-                    <span>14+ Years Experience</span>
-                  </div>
-                  <div class="department">
-                    <i class="bi bi-building"></i>
-                    <span>Dermatology Dept.</span>
                   </div>
                 </div>
-                <a href="appointment.html" class="btn-appointment">Book Appointment</a>
+                <a href="" class="btn-appointment">SESI/SENAI</a>
               </div>
             </div>
           </div><!-- End Doctor Card -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+
+               <section id="doctors" class="doctors section">
+
+
+
+           <div class="container" data-aos="fade-up" data-aos-delay="300">
+
+        <div class="row gy-4">
+
+          <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-6.webp" alt="Dr. Lisa Anderson" class="img-fluid">
+                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
                 <div class="doctor-overlay">
-                  <div class="social-links">
-                    <a href="#!"><i class="bi bi-linkedin"></i></a>
-                    <a href="#!"><i class="bi bi-envelope"></i></a>
-                    <a href="#!"><i class="bi bi-phone"></i></a>
-                  </div>
                 </div>
               </div>
               <div class="doctor-content">
-                <h4>Maria Fernanda Galdino</h4>
-                <span class="specialty">Programador Back-End</span>
-                <p>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-                  sunt.</p>
+                <h4>Maria Fernanda Galdino </h4>
+                <span class="specialty">Desenvolvedor Back-end</span>
+                <p>
+           Atua na lógica do sistema, integração com banco de dados e funcionamento interno da aplicação.</p>
                 <div class="doctor-meta">
                   <div class="experience">
                     <i class="bi bi-award"></i>
-                    <span>16+ Years Experience</span>
-                  </div>
-                  <div class="department">
-                    <i class="bi bi-building"></i>
-                    <span>Oncology Dept.</span>
                   </div>
                 </div>
-                <a href="appointment.html" class="btn-appointment">Book Appointment</a>
+                <a href="" class="btn-appointment">SESI/SENAI</a>
               </div>
             </div>
           </div><!-- End Doctor Card -->
@@ -332,125 +315,40 @@
           <div class="col-lg-5">
             <div class="brand-section">
               <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Clinic</span>
+                <span class="sitename">Mobipet</span>
               </a>
-              <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
-                innovative solutions that elevate your brand presence.</p>
+              <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
 
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>123 Creative Boulevard, Design District, NY 10012</span>
+                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 987-6543</span>
+                  <span>(19)9999-8888</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
-                  <span>hello@designstudio.com</span>
+                  <span>mobipet@gmail.com</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Studio</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Our Story</a>
-                      <a href="#!">Design Process</a>
-                      <a href="#!">Portfolio</a>
-                      <a href="#!">Case Studies</a>
-                      <a href="#!">Awards</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Services</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Brand Identity</a>
-                      <a href="#!">Web Design</a>
-                      <a href="#!">Mobile Apps</a>
-                      <a href="#!">Digital Strategy</a>
-                      <a href="#!">Consultation</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Resources</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Design Blog</a>
-                      <a href="#!">Style Guide</a>
-                      <a href="#!">Free Assets</a>
-                      <a href="#!">Tutorials</a>
-                      <a href="#!">Inspiration</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Connect</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Start Project</a>
-                      <a href="#!">Schedule Call</a>
-                      <a href="#!">Join Newsletter</a>
-                      <a href="#!">Follow Updates</a>
-                      <a href="#!">Partnership</a>
-                    </nav>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
+          <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
         </div>
-      </div>
-
     </div>
 
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
-          <div class="row align-items-center">
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
-            <div class="col-lg-6">
-              <div class="copyright">
-                <p>© <span class="sitename">Clinic</span>. All rights reserved.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="legal-links">
-                <a href="#!">Privacy Policy</a>
-                <a href="#!">Terms of Service</a>
-                <a href="#!">Cookie Policy</a>
-                <div class="credits">
-                  <!-- All the links in the footer should remain intact. -->
-                  <!-- You can delete the links only if you've purchased the pro version. -->
-                  <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                  <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>. Distributed by <a
-                    href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
+       
   </footer>
 
   <!-- Scroll Top -->

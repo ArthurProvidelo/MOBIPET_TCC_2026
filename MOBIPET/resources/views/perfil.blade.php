@@ -15,7 +15,7 @@
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/css/main.css" rel="stylesheet">
-  <link href="assets/css/estilo.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 
 <body>
@@ -108,6 +108,18 @@
       </div>
     </div>
   </section>
+
+  <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
 </main>
 

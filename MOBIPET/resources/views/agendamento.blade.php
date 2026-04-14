@@ -14,10 +14,10 @@
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <l
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-    rel="stylesheet">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -46,10 +46,8 @@
           <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#!" class="linkedin"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </div><!-- End Top Bar -->
@@ -71,7 +69,7 @@
             <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
             <li><a href="{{route('agendamento')}}" class="active">Agendamento</a></li>
             <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('department-details')}}">Produtos</a></li>
+            <li><a href="{{route('departments')}}">Produtos</a></li>
             <li><a href="">Perfil</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -284,6 +282,18 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

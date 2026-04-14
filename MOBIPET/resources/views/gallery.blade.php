@@ -51,10 +51,8 @@
           <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#!" class="linkedin"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </div><!-- End Top Bar -->
@@ -379,6 +377,18 @@
         </div>
       </div>
     </div>
+
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
   </footer>
 

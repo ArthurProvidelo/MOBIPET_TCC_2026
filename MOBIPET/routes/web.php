@@ -32,7 +32,7 @@ Route::get('/contact', function () {
 
 Route::get('/departments', function () {
     return view('departments');
-})->name('departaments');
+})->name('departments');
 
 Route::get('/produtos', function () {
     return view('produtos');

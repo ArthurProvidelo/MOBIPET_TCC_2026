@@ -1171,6 +1171,7 @@ section,
 .hero .hero-content .hero-actions .btn.btn-primary {
   background: var(--accent-color);
   color: var(--contrast-color);
+  border-radius: 50px;
 }
 
 .hero .hero-content .hero-actions .btn.btn-primary:hover {
@@ -1557,16 +1558,98 @@ section,
   position: relative;
 }
 
+/* Container pai que segura tudo */
+.about-visual {
+    position: relative;
+    padding: 30px; /* Espaço para os cards não cortarem nas bordas da coluna */
+}
+
+/* Moldura da Imagem */
 .home-about .about-visual .main-image {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px color-mix(in srgb, var(--default-color), transparent 85%);
+    border-radius: 20px;
+    overflow: hidden; /* Aqui ele corta apenas a imagem dentro do raio */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
 }
 
 .home-about .about-visual .main-image img {
-  width: 100%;
-  height: auto;
-  transition: transform 0.3s ease;
+    width: 100%;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Card Branco (Monitoramento) */
+.floating-card {
+    position: absolute;
+    bottom: 10px;    /* Ajuste para descer mais ou menos */
+    left: -10px;     /* Faz sair para a esquerda */
+    background: white;
+    padding: 15px 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    max-width: 280px;
+}
+
+.card-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.card-content .icon {
+    background: #eef3ff;
+    color: #0151fe;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+}
+
+.card-text h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #031437;
+}
+
+.card-text p {
+    margin: 0;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.experience-badge {
+    position: absolute;
+    top: 10px;      
+    right: -5px;    
+    background: #0151fe;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(1, 81, 254, 0.3);
+    z-index: 2;
+}
+
+.badge-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.badge-content .years {
+    font-size: 28px;
+    font-weight: 800;
+    display: block;
+    line-height: 1;
+}
+
+.badge-content .text {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
 }
 
 .home-about .about-visual .main-image:hover img {

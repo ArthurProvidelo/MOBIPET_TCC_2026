@@ -45,8 +45,8 @@
             <i class="bi bi-phone d-flex align-items-center ms-4"><span>+19 99999-8888</span></i>
           </div>
           <div class="social-links d-none d-md-flex align-items-center">
-            <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
           </div>
         </div>
       </div><!-- End Top Bar -->
@@ -68,7 +68,7 @@
               <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
               <li><a href="{{route('agendamento')}}">Agendamento</a></li>
               <li><a href="{{route('contact')}}">Contato</a></li>
-              <li><a href="{{route('department-details')}}">Departamento</a></li>
+              <li><a href="{{route('departments')}}">Produtos</a></li>
               <li><a href="{{route('perfil')}}">Perfil</a></li>
               
             </ul>
@@ -142,7 +142,7 @@
             <div class="col-lg-6">
               <div class="hero-visual" data-aos="fade-left" data-aos-delay="400" style="margin-top: 100px">
                 <div class="main-image">
-                  <img src="{{asset('assets/img/home-page.png')}}" alt="Modern Healthcare Facility" class="img-fluid">
+                  <img src="{{asset('assets/img/pet_sendo_cuidado.png')}}" alt="pet recebendo cuidados" class="img-chowchow">
                   
                 <div class="background-elements">
                   <div class="element element-1"></div>
@@ -165,7 +165,7 @@
       <div class="row align-items-center">
         <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
           <div class="about-content">
-            <h2 class="section-heading">Tecnologia e cuidado para o seu pet</h2>
+            <h2 class="section-heading"><b>Tecnologia e cuidado para o seu pet</b></h2>
 
             <p class="lead-text">
               Acompanhe em tempo real tudo o que acontece com seu pet durante o banho e tosa.
@@ -207,13 +207,13 @@
         <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
           <div class="about-visual">
             <div class="main-image">
-              <img src="assets/img/health/facilities-9.webp" alt="Pet sendo cuidado" class="img-fluid">
+              <img src="{{ asset('assets/img/cuidado_tecnologia.png') }}" alt="Pet sendo cuidado" class="img-fluid">
             </div>
 
             <div class="floating-card">
               <div class="card-content">
                 <div class="icon">
-                  <i class="bi bi-camera-video"></i>
+                  <i class="fa-regular fa-eye"></i>
                 </div>
                 <div class="card-text">
                   <h4>Monitoramento em tempo real</h4>
@@ -311,13 +311,15 @@
       </div>
 
     </div>
+    <br><br><br>
 
-    <div class="emergency-banner mt-5">
-      <h3>Sistema disponível em tempo integral</h3>
-      <p>O Mobipet funciona 24 horas para acompanhamento e gestão.</p>
-      <a href="#" class="emergency-btn"><i class="fa-brands fa-whatsapp"></i>Agendar</a>
-    </div>
-  </div>
+    <div class="banner-funcionamento">
+  <h3>Sistema disponível em tempo integral</h3>
+  <p>O Mobipet funciona 24 horas para acompanhamento e gestão.</p>
+  <a href="#" class="emergency-btn">
+    <i class="fa-brands fa-whatsapp"></i> Agendar
+  </a>
+</div>
 </section>
 
 <!-- Featured Services Section -->
@@ -436,6 +438,17 @@
       </div>
 
     </div>
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
 
 

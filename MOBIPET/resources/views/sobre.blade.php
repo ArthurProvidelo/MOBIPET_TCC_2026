@@ -43,7 +43,7 @@
           <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
         </div>
       </div>
@@ -60,13 +60,13 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="{{route('index')}}" class="active">Início</a></li>
-            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+            <li><a href="{{route('index')}}" >Início</a></li>
+            <li><a href="{{route('sobre')}}" class="active">Sobre nós</a></li>
             <li><a href="{{route('services')}}">Serviços</a></li>
             <li><a href="{{route('devs')}}">Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
             <li><a href="{{route('agendamento')}}">Agendamento</a></li>
             <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('department-details')}}">Departamento</a></li>
+            <li><a href="{{route('produtos')}}">Produtos</a></li>
             <li><a href="">Perfil</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -129,7 +129,7 @@
 
   <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
     <div class="image-wrapper">
-      <img src="assets/img/petshop.jpg" class="img-fluid main-image" alt="Pet shop atendimento">
+      <img src="assets/img/image2.png" class="imgbanho" alt="Pet shop atendimento">
     </div>
   </div>
 
@@ -280,6 +280,18 @@
         </div>
       </div>
     </div>
+
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
   </footer>
 

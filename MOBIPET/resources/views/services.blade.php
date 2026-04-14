@@ -44,10 +44,8 @@
           <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#!" class="linkedin"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </div><!-- End Top Bar -->
@@ -63,13 +61,13 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="{{route('index')}}" class="active">Início</a></li>
+            <li><a href="{{route('index')}}" >Início</a></li>
             <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-            <li><a href="{{route('services')}}">Serviços</a></li>
+            <li><a href="{{route('services')}}" class="active">Serviços</a></li>
             <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
             <li><a href="{{route('agendamento')}}">Agendamento</a></li>
             <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('department-details')}}">Produtos</a></li>
+            <li><a href="{{route('departments')}}">Produtos</a></li>
             <li><a href="">Perfil</a></li>
 
           </ul>
@@ -406,6 +404,18 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

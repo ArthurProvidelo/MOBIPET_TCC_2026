@@ -45,10 +45,9 @@
           <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19) 9999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#!" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          
         </div>
       </div>
     </div><!-- End Top Bar -->
@@ -122,32 +121,29 @@
           <div class="col-xl-6 col-lg-7">
             <div class="department-hero" data-aos="fade-right" data-aos-delay="200">
               <div class="badge-wrap">
-                <span class="specialty-badge">Neurology</span>
+               
               </div>
-              <h1 class="department-title">Advanced Neurological Care</h1>
-              <p class="department-intro">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-                cubilia curae. Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.</p>
+              <h1 class="department-title">Cuidados com seu pet</h1>
+              <p class="department-intro">Banhos, escovação e um ambiente limpo fazem toda a diferença para a saúde e bem-estar.</p>
 
               <div class="key-highlights">
                 <div class="highlight-item">
-                  <span class="highlight-number">24/7</span>
-                  <span class="highlight-text">Emergency Neurology</span>
+                  <span class="highlight-number">100%</span>
+                  <span class="highlight-text">Qualidade nos produtos</span>
                 </div>
                 <div class="highlight-item">
                   <span class="highlight-number">15+</span>
-                  <span class="highlight-text">Specialist Neurologists</span>
+                  <span class="highlight-text">Especialistas na área</span>
                 </div>
                 <div class="highlight-item">
                   <span class="highlight-number">95%</span>
-                  <span class="highlight-text">Patient Satisfaction</span>
+                  <span class="highlight-text">Satisfação do cliente</span>
                 </div>
               </div>
 
               <div class="action-group">
-                <a href="appointment.html" class="btn-primary">Schedule Consultation</a>
+                <a href="{{route('agendamento')}}" class="btn-primary">Agendar<i class="fas fa-arrow-right"></i></a>
                 <a href="services.html" class="btn-secondary">
-                  <span>View All Services</span>
-                  <i class="bi bi-arrow-right"></i>
                 </a>
               </div>
             </div>
@@ -167,9 +163,8 @@
           <div class="row justify-content-center">
             <div class="col-lg-8">
               <div class="overview-header">
-                <h3>Our Neurological Services</h3>
-                <p>Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-                  tincidunt nibh pulvinar a.</p>
+                <h3>Nossos produtos</h3>
+               
               </div>
             </div>
           </div>
@@ -247,26 +242,25 @@
 
             <div class="col-lg-7" data-aos="fade-left" data-aos-delay="900">
               <div class="expert-content">
-                <h3>Leading Neurological Expertise</h3>
-                <p class="lead">Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Sed porttitor
-                  lectus nibh donec rutrum congue leo eget malesuada.</p>
+                <h3>Bem-estar e saúde em primeiro lugar</h3>
+                <p class="lead">Pets precisam de interação, carinho e tempo de qualidade com o tutor.</p>
 
                 <div class="expertise-list">
                   <div class="expertise-item">
                     <i class="bi bi-check2"></i>
-                    <span>Board-certified neurologists and neurosurgeons</span>
+                    <span>Produtos selecionados para garantir saúde e bem-estar ao seu pet.</span>
                   </div>
                   <div class="expertise-item">
                     <i class="bi bi-check2"></i>
-                    <span>State-of-the-art diagnostic equipment and facilities</span>
+                    <span>Qualidade premium para quem cuida com excelência.</span>
                   </div>
                   <div class="expertise-item">
                     <i class="bi bi-check2"></i>
-                    <span>Comprehensive care from diagnosis to rehabilitation</span>
+                    <span>O melhor para o seu pet, com confiança e segurança.</span>
                   </div>
                   <div class="expertise-item">
                     <i class="bi bi-check2"></i>
-                    <span>Personalized treatment plans for every patient</span>
+                    <span>Cuidado que você vê, qualidade que seu pet sente.</span>
                   </div>
                 </div>
 
@@ -274,7 +268,7 @@
                   <div class="contact-item">
                     <i class="bi bi-telephone"></i>
                     <div>
-                      <span class="contact-label">Numero de Emergência</span>
+                      <span class="contact-label">Número de Emergência</span>
                       <span class="contact-value">(19) 9999-8888</span>
                     </div>
                   </div>
@@ -283,7 +277,7 @@
                     <div>
                       <span class="contact-label">Appointments</span>
                       <span class="contact-value">Segunda-Sexta: 7:00 AM - 5:00 PM</span>
-                      <span class="contact-value">  Sabado: 7:00 AM - 12:00 PM</span>
+                      <span class="contact-value">  Sábado: 7:00 AM - 12:00 PM</span>
                     </div>
                   </div>
                 </div>
@@ -345,7 +339,7 @@
 
             <div class="col-lg-6">
               <div class="copyright">
-                <p>© <span class="sitename">Mobipet</span>. All rights reserved.</p>
+                <p> <span class="sitename"></span></p>
               </div>
             </div>
 
@@ -362,6 +356,18 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
