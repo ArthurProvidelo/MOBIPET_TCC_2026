@@ -70,6 +70,7 @@
               <li><a href="{{route('contact')}}">Contato</a></li>
               <li><a href="{{route('departments')}}">Produtos</a></li>
               <li><a href="{{route('perfil')}}">Perfil</a></li>
+              <li><a href="{{route('painel-controle')}}">Painel</a></li>
               
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -133,7 +134,7 @@
                   </div>
                   <div class="emergency-info">
                     <small>Nosso Contato</small>
-                    <strong>+55 (19) 9999-8888</strong>
+                    <strong>(19)99999-8888</strong>
                   </div>
                 </div>
               </div>
@@ -207,7 +208,7 @@
         <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
           <div class="about-visual">
             <div class="main-image">
-              <img src="{{ asset('assets/img/cuidado_tecnologia.png') }}" alt="Pet sendo cuidado" class="img-fluid">
+              <img src="{{ asset('assets/img/cuidado_tecnologia.png') }}" alt="Pet sendo cuidado" class="img-pet">
             </div>
 
             <div class="floating-card">

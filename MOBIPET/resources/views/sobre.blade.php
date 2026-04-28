@@ -67,7 +67,7 @@
             <li><a href="{{route('agendamento')}}">Agendamento</a></li>
             <li><a href="{{route('contact')}}">Contato</a></li>
             <li><a href="{{route('produtos')}}">Produtos</a></li>
-            <li><a href="">Perfil</a></li>
+            <li><a href="{{route('perfil')}}">Perfil</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

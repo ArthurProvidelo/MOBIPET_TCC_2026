@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Services - Clinic Bootstrap Template</title>
+  <title>Serviços</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -29,6 +29,7 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link href="{{asset('assets/css/estilo.css')}}" rel="stylesheet">
 
 </head>
 
@@ -40,8 +41,8 @@
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
@@ -56,7 +57,7 @@
         <a href="index.html" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Clinic</h1>
+          <h1 class="sitename">Mobipet</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
@@ -68,7 +69,7 @@
             <li><a href="{{route('agendamento')}}">Agendamento</a></li>
             <li><a href="{{route('contact')}}">Contato</a></li>
             <li><a href="{{route('departments')}}">Produtos</a></li>
-            <li><a href="">Perfil</a></li>
+            <li><a href="{{route('perfil')}}">Perfil</a></li>
 
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -88,12 +89,9 @@
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1 class="heading-title">Services</h1>
+              <h1 class="heading-title">Serviços</h1>
               <p class="mb-0">
-                Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo
-                odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum
-                debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat
-                ipsum dolorem.
+               Oferecer cuidado dedicado ao seu pet é a essência do nosso serviço.
               </p>
             </div>
           </div>
@@ -102,8 +100,8 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Services</li>
+            <li><a href="index.html">Início</a></li>
+            <li class="current">Serviços</li>
           </ol>
         </div>
       </nav>
@@ -119,23 +117,18 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item">
               <div class="service-image">
-                <img src="assets/img/health/cardiology-2.webp" alt="Cardiology Services" class="img-fluid">
+                <img src="assets/img/banho_servicos.png" alt="Cardiology Services" class="banho_servicos">
                 <div class="service-overlay">
-                  <i class="fas fa-heartbeat"></i>
+                  <i class="fa-solid fa-shower"></i>
                 </div>
               </div>
               <div class="service-content">
-                <h3>Cardiology</h3>
-                <p>Comprehensive heart care with advanced diagnostic tools and treatment options for cardiovascular
-                  conditions.</p>
+                <h3>Banho</h3>
+                <p>Banho profissional que garante conforto, limpeza e carinho em cada detalhe.</p>
                 <div class="service-features">
-                  <span class="feature-item"><i class="fas fa-check"></i> ECG Testing</span>
-                  <span class="feature-item"><i class="fas fa-check"></i> Heart Surgery</span>
-                </div>
-                <a href="service-details.html" class="service-btn">
-                  <span>Learn More</span>
-                  <i class="fas fa-arrow-right"></i>
-                </a>
+                  <span class="feature-item"><i class="fas fa-check"></i> Produtos de qualidade</span>
+                  <span class="feature-item"><i class="fas fa-check"></i> Cuidado e carinho</span>
+                </div>            
               </div>
             </div>
           </div><!-- End Service Item -->
@@ -143,22 +136,17 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
             <div class="service-item">
               <div class="service-image">
-                <img src="assets/img/health/neurology-3.webp" alt="Neurology Services" class="img-fluid">
+                <img src="assets/img/hidratacao_servicos.png" alt="Neurology Services" class="hidratacao_servicos">
                 <div class="service-overlay">
-                  <i class="fas fa-brain"></i>
+                 <i class="fa-solid fa-bottle-droplet"></i>
                 </div>
               </div>
               <div class="service-content">
-                <h3>Neurology</h3>
-                <p>Expert neurological care for brain and nervous system disorders with state-of-the-art imaging
-                  technology.</p>
+                <h3>Hidratação</h3>
+                <p>Cuidado intensivo que devolve vida e brilho à pelagem do seu pet.</p>
                 <div class="service-features">
-                  <span class="feature-item"><i class="fas fa-check"></i> MRI Scans</span>
-                  <span class="feature-item"><i class="fas fa-check"></i> Stroke Care</span>
+                  <span class="feature-item"><i class="fas fa-check"></i> Tecnologia e carinho para restaurar a beleza natural da pelagem.</span>
                 </div>
-                <a href="service-details.html" class="service-btn">
-                  <span>Learn More</span>
-                  <i class="fas fa-arrow-right"></i>
                 </a>
               </div>
             </div>
@@ -167,22 +155,19 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="service-item">
               <div class="service-image">
-                <img src="assets/img/health/orthopedics-1.webp" alt="Orthopedics Services" class="img-fluid">
+                <img src="assets/img/secagem_servicos.png" alt="Orthopedics Services" class="secagem_servicos">
                 <div class="service-overlay">
-                  <i class="fas fa-bone"></i>
+                  <i class="fa-solid fa-wind"></i>
                 </div>
               </div>
               <div class="service-content">
-                <h3>Orthopedics</h3>
-                <p>Specialized bone and joint treatment including sports medicine and reconstructive surgery procedures.
+                <h3>Secagem</h3>
+                <p>Secagem cuidadosa e eficiente para garantir conforto, saúde e bem-estar ao seu pet.
                 </p>
                 <div class="service-features">
-                  <span class="feature-item"><i class="fas fa-check"></i> Joint Replacement</span>
-                  <span class="feature-item"><i class="fas fa-check"></i> Sports Medicine</span>
+                  <span class="feature-item"><i class="fas fa-check"></i> Rápido </span>
+                  <span class="feature-item"><i class="fas fa-check"></i> Eficaz</span>
                 </div>
-                <a href="service-details.html" class="service-btn">
-                  <span>Learn More</span>
-                  <i class="fas fa-arrow-right"></i>
                 </a>
               </div>
             </div>
@@ -191,22 +176,18 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
             <div class="service-item">
               <div class="service-image">
-                <img src="assets/img/health/pediatrics-4.webp" alt="Pediatrics Services" class="img-fluid">
+                <img src="assets/img/escova_servicos.png" alt="Pediatrics Services" class="escova">
                 <div class="service-overlay">
-                  <i class="fas fa-child"></i>
+                  <i class="fa-solid fa-brush"></i>
                 </div>
               </div>
               <div class="service-content">
-                <h3>Pediatrics</h3>
-                <p>Dedicated healthcare for children from infancy through adolescence with specialized treatment
-                  protocols.</p>
+                <h3>Escova na pelagem</h3>
+                <p>Cuidado diário com escovação para pelos mais macios e sem nós.</p>
                 <div class="service-features">
-                  <span class="feature-item"><i class="fas fa-check"></i> Well-Child Visits</span>
-                  <span class="feature-item"><i class="fas fa-check"></i> Immunizations</span>
+                  <span class="feature-item"><i class="fas fa-check"></i> Cuidado</span>
+                  <span class="feature-item"><i class="fas fa-check"></i> Amor</span>
                 </div>
-                <a href="service-details.html" class="service-btn">
-                  <span>Learn More</span>
-                  <i class="fas fa-arrow-right"></i>
                 </a>
               </div>
             </div>
@@ -215,21 +196,17 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="service-item">
               <div class="service-image">
-                <img src="assets/img/health/emergency-2.webp" alt="Emergency Services" class="img-fluid">
+                <img src="assets/img/limpeza_servicos.png" alt="Emergency Services" class="limpeza">
                 <div class="service-overlay">
-                  <i class="fas fa-ambulance"></i>
+                  <i class="fa-solid fa-ear-listen"></i>
                 </div>
               </div>
               <div class="service-content">
-                <h3>Emergency Care</h3>
-                <p>24/7 emergency medical services with rapid response teams and critical care capabilities.</p>
+                <h3>Limpeza de ouvidos</h3>
+                <p>Limpeza segura e eficiente para o conforto do seu melhor amigo.</p>
                 <div class="service-features">
-                  <span class="feature-item"><i class="fas fa-check"></i> Trauma Center</span>
-                  <span class="feature-item"><i class="fas fa-check"></i> Critical Care</span>
+                  <span class="feature-item"><i class="fas fa-check"></i>Higienização auricular que previne desconfortos e mantém o bem-estar.</span>
                 </div>
-                <a href="service-details.html" class="service-btn">
-                  <span>Learn More</span>
-                  <i class="fas fa-arrow-right"></i>
                 </a>
               </div>
             </div>
@@ -238,22 +215,18 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="450">
             <div class="service-item">
               <div class="service-image">
-                <img src="assets/img/health/laboratory-3.webp" alt="Laboratory Services" class="img-fluid">
+                <img src="assets/img/corte_servicos.png" alt="Laboratory Services" class="corte">
                 <div class="service-overlay">
-                  <i class="fas fa-microscope"></i>
+                  <i class="fa-solid fa-scissors"></i>
                 </div>
               </div>
               <div class="service-content">
-                <h3>Laboratory Testing</h3>
-                <p>Advanced diagnostic laboratory services with comprehensive testing panels and rapid result delivery.
+                <h3>Corte de unhas</h3>
+                <p>Corte de unhas feito com técnica, calma e carinho.
                 </p>
                 <div class="service-features">
-                  <span class="feature-item"><i class="fas fa-check"></i> Blood Tests</span>
-                  <span class="feature-item"><i class="fas fa-check"></i> Pathology</span>
+                  <span class="feature-item"><i class="fas fa-check"></i> Corte de unhas com precisão e segurança para o conforto do seu pet.</span>
                 </div>
-                <a href="service-details.html" class="service-btn">
-                  <span>Learn More</span>
-                  <i class="fas fa-arrow-right"></i>
                 </a>
               </div>
             </div>
@@ -277,83 +250,26 @@
           <div class="col-lg-5">
             <div class="brand-section">
               <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Clinic</span>
+                <span class="sitename">Mobipet</span>
               </a>
-              <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
-                innovative solutions that elevate your brand presence.</p>
+              <p class="brand-description">Agradecemos a sua atenção e confiança em nossos serviços.</p>
 
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>123 Creative Boulevard, Design District, NY 10012</span>
+                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 987-6543</span>
+                  <span>(19)99999-8888</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
-                  <span>hello@designstudio.com</span>
+                  <span>mobipet@gmail.com</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Studio</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Our Story</a>
-                      <a href="#!">Design Process</a>
-                      <a href="#!">Portfolio</a>
-                      <a href="#!">Case Studies</a>
-                      <a href="#!">Awards</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Services</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Brand Identity</a>
-                      <a href="#!">Web Design</a>
-                      <a href="#!">Mobile Apps</a>
-                      <a href="#!">Digital Strategy</a>
-                      <a href="#!">Consultation</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Resources</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Design Blog</a>
-                      <a href="#!">Style Guide</a>
-                      <a href="#!">Free Assets</a>
-                      <a href="#!">Tutorials</a>
-                      <a href="#!">Inspiration</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Connect</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Start Project</a>
-                      <a href="#!">Schedule Call</a>
-                      <a href="#!">Join Newsletter</a>
-                      <a href="#!">Follow Updates</a>
-                      <a href="#!">Partnership</a>
-                    </nav>
-                  </div>
-                </div>
 
               </div>
             </div>
@@ -368,25 +284,11 @@
       <div class="container">
         <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
           <div class="row align-items-center">
-
-            <div class="col-lg-6">
-              <div class="copyright">
-                <p>© <span class="sitename">Clinic</span>. All rights reserved.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="legal-links">
-                <a href="#!">Privacy Policy</a>
-                <a href="#!">Terms of Service</a>
-                <a href="#!">Cookie Policy</a>
-                <div class="credits">
                   <!-- All the links in the footer should remain intact. -->
                   <!-- You can delete the links only if you've purchased the pro version. -->
                   <!-- Licensing information: https://bootstrapmade.com/license/ -->
                   <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>. Distributed by <a
-                    href="https://themewagon.com" target="_blank">ThemeWagon</a>
+            
                 </div>
               </div>
             </div>

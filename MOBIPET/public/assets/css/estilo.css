@@ -30,7 +30,6 @@
     width: 500px !important;
     height: 600px !important;
     border-radius: 20px !important;
-    margin-left: 70px !important;
 }
 
 .btn-primary{
@@ -38,8 +37,8 @@
 }
 
 .imgbanho{
-    width: 600px !important;
-    height: 250px !important;
+    width: 1000 !important;
+    height: 500px !important;
 }
 
 .img-chowchow{
@@ -78,3 +77,41 @@
    font-size: 1.2rem;
 }
 
+.img-pet {
+     width: 800 !important;
+    height: 500 !important;
+}
+
+.pets-deitados{
+    margin-left: 60px !important;
+    border-radius: 20px !important;
+}
+
+.banho_servicos{
+    width: 500px !important;
+    height: 250px !important;
+}
+
+.hidratacao_servicos{
+    width: 500px !important;
+    height: 250px !important;
+}
+
+.secagem_servicos{
+    width: 500px !important;
+    height: 250px !important;
+}
+
+.escova{
+    width: 500px !important;
+    height: 250px !important;
+}
+.limpeza{
+    width: 500px !important;
+    height: 250px !important;
+}
+
+.corte{
+    width: 500px !important;
+    height: 250px !important;
+}

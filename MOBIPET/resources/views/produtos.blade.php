@@ -68,10 +68,10 @@
             <li><a href="services.html">Serviços</a></li>
             <li><a href="doctors.html">Desenvolvedores</a></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
             </li>
-            <li><a href="#">Agendamento</a></li>
+            <li><a href="{{route('agendamento')}}">Agendamento</a></li>
             <li><a href="contact.html">Contato</a></li>
             <li><a href="{{route('produtos')}}" class="active">Produtos</a></li>
-            <li><a href="#">Perfil</a></li>
+            <li><a href="{{route('perfil')}}">Perfil</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -236,7 +236,7 @@
           <div class="row align-items-center">
             <div class="col-lg-5" data-aos="fade-right" data-aos-delay="900">
               <div class="expert-image">
-                <img src="{{ asset('assets/img/produtos_img_empe.png') }}" alt="pets deitados na caminha e com produtos" class="img-fluid">
+                <img src="{{ asset('assets/img/produtos_img_empe.png') }}" alt="pets deitados na caminha e com produtos" class="pets-deitados">
               </div>
             </div>
 

@@ -15,8 +15,6 @@ Route::get('404', function () {
     return view('404');
 })->name('404');
 
-// mudar estas rotas de acordo com os nomes dos aqruivos
-// DAQUI PARA BAIXO
 Route::get('/sobre', function () {  
     return view('sobre');
 })->name('sobre');
@@ -62,3 +60,7 @@ Route::get('/services', function () {
 Route::get('/perfil', function () {
     return view('perfil');
 })->name('perfil');
+
+Route::get('/painel-controle', function () {
+    return view('painel-controle');
+})->name('painel-controle');

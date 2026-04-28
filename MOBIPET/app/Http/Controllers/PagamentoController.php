@@ -36,7 +36,7 @@ class PagamentoController extends Controller
         ]);
 
         return redirect()->route('pagamentos.index')
-                         ->with('success', 'Pagamento registrado com sucesso!');
+        ->with('success', 'Pagamento registrado com sucesso!');
     }
 
     // Visualizar pagamento
@@ -88,6 +88,6 @@ class PagamentoController extends Controller
             ->delete();
 
         return redirect()->route('pagamentos.index')
-                         ->with('success', 'Pagamento excluído com sucesso!');
+        ->with('success', 'Pagamento excluído com sucesso!');
     }
 }

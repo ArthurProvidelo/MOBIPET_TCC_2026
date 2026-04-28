@@ -70,7 +70,7 @@
             <li><a href="{{route('agendamento')}}" >Agendamento</a></li>
             <li><a href="{{route('contact')}}">Contato</a></li>
            <li><a href="{{route('departments')}}">Departamento</a></li>
-            <li><a href="">Perfil</a></li>
+            <li><a href="{{route('perfil')}}">Perfil</a></li>
                   
             </li>
               </ul>
