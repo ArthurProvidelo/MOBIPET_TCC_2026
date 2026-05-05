@@ -10,7 +10,6 @@
 
   <!-- Favicons -->
   <link href="assets/img/mobipet_icon.png" rel="icon">
-  <link href="assets/img/mobipet_icon.png" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">

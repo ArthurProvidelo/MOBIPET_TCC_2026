@@ -14,7 +14,7 @@
   <!-- CSS -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 
@@ -23,6 +23,19 @@
 <header class="header fixed-top">
   <div class="container d-flex justify-content-between align-items-center">
     <h1>Mobipet</h1>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="{{route('index')}}" >Início</a></li>
+        <li><a href="{{route('sobre')}}" >Sobre nós</a></li>
+        <li><a href="{{route('services')}}">Serviços</a></li>
+        <li><a href="{{route('devs')}}">Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
+        <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+        <li><a href="{{route('contact')}}">Contato</a></li>
+        <li><a href="{{route('produtos')}}">Produtos</a></li>
+        <li><a href="{{route('perfil')}}" class="active">Perfil</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
   </div>
 </header>
 

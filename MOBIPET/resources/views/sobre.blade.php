@@ -127,9 +127,9 @@
     </div>
   </div>
 
-  <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-    <div class="image-wrapper">
-      <img src="assets/img/image2.png" class="imgbanho" alt="Pet shop atendimento">
+  <div class="col-lg-6 " data-aos="fade-left" data-aos-delay="200">
+    <div class="image-wrapper ">
+      <img src="assets/img/image2.png" class="imgbanho rounded-4" alt="Pet shop atendimento">
     </div>
   </div>
 

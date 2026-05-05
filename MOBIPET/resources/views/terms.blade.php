@@ -9,8 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/mobipet_icon.png" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -47,8 +46,8 @@
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
@@ -323,11 +322,11 @@
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 987-6543</span>
+                  <span>(19)99999-8888</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
-                  <span>hello@designstudio.com</span>
+                  <span>mobipet@gamil.com</span>
                 </div>
               </div>
             </div>

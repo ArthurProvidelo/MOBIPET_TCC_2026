@@ -3,90 +3,81 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Agendamento;
 
 class AgendamentoController extends Controller
 {
-    // Listar todos os agendamentos
+    // Listar todos
     public function index()
     {
-        $agendamentos = DB::table('agendamentos')->get();
+        $agendamentos = Agendamento::all();
         return view('agendamentos.index', compact('agendamentos'));
     }
 
+    // Formulário de criação
     public function create()
     {
         return view('agendamentos.create');
     }
 
-    // Salvar novo agendamento
+    // Salvar
     public function store(Request $request)
     {
         $request->validate([
+            'nome_pet' => 'required|string|max:255',
+            'raca' => 'required|string|max:255',
+            'tipo_servico' => 'required|string|max:255',
             'data_agendamento' => 'required|date',
             'horario' => 'required',
-            'status_agendamento' => 'required|string|max:255',
+            'observacoes' => 'nullable|string',
         ]);
 
-        DB::table('agendamentos')->insert([
-            'data_agendamento' => $request->data_agendamento,
-            'horario' => $request->horario,
-            'status_agendamento' => $request->status_agendamento,
-        ]);
+        Agendamento::create($request->all());
 
         return redirect()->route('agendamentos.index')
-                         ->with('success', 'Agendamento criado com sucesso!');
+            ->with('success', 'Agendamento criado com sucesso!');
     }
 
-    // Mostrar um agendamento específico
+    // Mostrar um
     public function show($id)
     {
-        $agendamento = DB::table('agendamentos')
-            ->where('id_agendamento', $id)
-            ->first();
-
+        $agendamento = Agendamento::findOrFail($id);
         return view('agendamentos.show', compact('agendamento'));
     }
 
-    // Mostrar formulário de edição
+    // Editar
     public function edit($id)
     {
-        $agendamento = DB::table('agendamentos')
-            ->where('id_agendamento', $id)
-            ->first();
-
+        $agendamento = Agendamento::findOrFail($id);
         return view('agendamentos.edit', compact('agendamento'));
     }
 
-    // Atualizar agendamento
+    // Atualizar
     public function update(Request $request, $id)
     {
         $request->validate([
+            'nome_pet' => 'required|string|max:255',
+            'raca' => 'required|string|max:255',
+            'tipo_servico' => 'required|string|max:255',
             'data_agendamento' => 'required|date',
             'horario' => 'required',
-            'status_agendamento' => 'required|string|max:255',
+            'observacoes' => 'nullable|string',
         ]);
 
-        DB::table('agendamentos')
-            ->where('id_agendamento', $id)
-            ->update([
-                'data_agendamento' => $request->data_agendamento,
-                'horario' => $request->horario,
-                'status_agendamento' => $request->status_agendamento,
-            ]);
+        $agendamento = Agendamento::findOrFail($id);
+        $agendamento->update($request->all());
 
         return redirect()->route('agendamentos.index')
-                         ->with('success', 'Agendamento atualizado com sucesso!');
+            ->with('success', 'Agendamento atualizado com sucesso!');
     }
 
-    // Deletar agendamento
+    // Deletar
     public function destroy($id)
     {
-        DB::table('agendamentos')
-            ->where('id_agendamento', $id)
-            ->delete();
+        $agendamento = Agendamento::findOrFail($id);
+        $agendamento->delete();
 
         return redirect()->route('agendamentos.index')
-                         ->with('success', 'Agendamento excluído com sucesso!');
+            ->with('success', 'Agendamento excluído com sucesso!');
     }
 }

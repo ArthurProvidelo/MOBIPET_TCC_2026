@@ -115,3 +115,7 @@
     width: 500px !important;
     height: 250px !important;
 }
+
+.active{
+    color: #497baf !important;
+}

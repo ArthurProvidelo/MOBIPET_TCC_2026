@@ -200,7 +200,7 @@
             </div>
 
             <div class="cta-section">
-              <a href="about.html" class="btn-primary">Ver como funciona</a>
+              <a href="{{route('sobre')}}" class="btn-primary">Ver como funciona</a>
             </div>
           </div>
         </div>
@@ -217,7 +217,7 @@
                   <i class="fa-regular fa-eye"></i>
                 </div>
                 <div class="card-text">
-                  <h4>Monitoramento em tempo real</h4>
+                  <h4>Monitoramento em tempo real</h4
                   <p>Acompanhe cada etapa do seu pet ao vivo</p>
                 </div>
               </div>
@@ -257,7 +257,7 @@
             <p>Visualize cada etapa do banho e tosa do seu pet com atualizações instantâneas.</p>
             <span><i class="bi bi-check-circle-fill"></i> Atualizações ao vivo</span>
             <span><i class="bi bi-check-circle-fill"></i> Status em tempo real</span>
-            <a href="#" class="specialty-link">Ver monitoramento</a>
+            <a href="{{route('agendamento')}}" class="specialty-link">Ver monitoramento</a>
           </div>
         </div>
       </div>
@@ -270,7 +270,7 @@
             <p>Receba alertas automáticos a cada etapa concluída do serviço.</p>
             <span><i class="bi bi-check-circle-fill"></i> Alertas automáticos</span>
             <span><i class="bi bi-check-circle-fill"></i> Comunicação em tempo real</span>
-            <a href="#" class="specialty-link">Ver notificações</a>
+            <a href="{{route('sobre')}}" class="specialty-link">Ver notificações</a>
           </div>
         </div>
       </div>
@@ -317,7 +317,7 @@
     <div class="banner-funcionamento">
   <h3>Sistema disponível em tempo integral</h3>
   <p>O Mobipet funciona 24 horas para acompanhamento e gestão.</p>
-  <a href="#" class="emergency-btn">
+  <a href="https://wa.me/5519989432384?text=Quero%20agendar%20um%20servi%C3%A7o%20para%20meu%20pet%20%F0%9F%90%B6" class="emergency-btn">
     <i class="fa-brands fa-whatsapp"></i> Agendar
   </a>
 </div>

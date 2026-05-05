@@ -9,8 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/mobipet_icon.png" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -124,7 +123,7 @@
           <div class="" data-aos="fade-up" data-aos-delay="300">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
+                <img src="assets/img/arthurbarbosa.png">
                 <div class="doctor-overlay">
                 </div>
               </div>
@@ -153,7 +152,7 @@
           <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
+                <img src="assets/img/arthurprovidelo.png">
                 <div class="doctor-overlay">
                 </div>
               </div>
@@ -183,7 +182,7 @@
           <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
+                <img src="assets/img/kailasilva.png" >
                 <div class="doctor-overlay">
                 </div>
               </div>
@@ -214,7 +213,7 @@
           <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
+                <img src="assets/img/kauanferreira.png">
                 <div class="doctor-overlay">
                 </div>
               </div>
@@ -245,7 +244,7 @@
           <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
+                <img src="assets/img/lorenaprofissional.png">
                 <div class="doctor-overlay">
                 </div>
               </div>
@@ -276,7 +275,7 @@
           <div class="" data-aos="fade-up" data-aos-delay="100">
             <div class="doctor-card">
               <div class="doctor-image">
-                <img src="assets/img/health/staff-1.webp" alt="Dr. Marcus Johnson" class="img-fluid">
+                <img src="assets/img/mariafernanda.png">
                 <div class="doctor-overlay">
                 </div>
               </div>
