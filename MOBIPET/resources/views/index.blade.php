@@ -51,6 +51,10 @@
         </div>
       </div><!-- End Top Bar -->
 
+      <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+
       <div class="branding d-flex align-items-cente">
 
         <div class="container position-relative d-flex align-items-center justify-content-between">
