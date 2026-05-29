@@ -59,21 +59,18 @@
     <div class="branding d-flex align-items-cente">
 
         <div class="container position-relative d-flex align-items-center justify-content-between">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="assets/img/logo.webp" alt=""> -->
-            <h1 class="sitename">Mobipet</h1>
-          </a>
+          <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+          <h1 class="sitename">Mobipet</h1>
+        </a>
 
           <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="{{route('index')}}" class="active">Início</a></li>
+              <li><a href="{{route('index')}}">Início</a></li>
               <li><a href="{{route('sobre')}}">Sobre nós</a></li>
               <li><a href="{{route('services')}}">Serviços</a></li>
               <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
               <li><a href="{{route('agendamento')}}">Agendamento</a></li>
               <li><a href="{{route('contact')}}">Contato</a></li>
-              <li><a href="{{route('departments')}}">Produtos</a></li>
               <li><a href="{{route('perfil')}}">Perfil</a></li>
               <li><a href="{{route('painel-controle')}}">Painel</a></li>
               

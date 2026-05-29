@@ -54,9 +54,7 @@
       <div class="branding d-flex align-items-cente">
 
         <div class="container position-relative d-flex align-items-center justify-content-between">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="assets/img/logo.webp" alt=""> -->
+          <a href="{{route('index')}}" class="logo d-flex align-items-center">
             <h1 class="sitename">Mobipet</h1>
           </a>
 
@@ -68,9 +66,7 @@
               <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
               <li><a href="{{route('agendamento')}}">Agendamento</a></li>
               <li><a href="{{route('contact')}}">Contato</a></li>
-              <li><a href="{{route('departments')}}">Produtos</a></li>
               <li><a href="{{route('perfil')}}">Perfil</a></li>
-              <li><a href="{{route('painel-controle')}}">Painel</a></li>
               
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -95,21 +91,16 @@
                 
 
                 <h1 class="banho-tosa" data-aos="fade-right" data-aos-delay="300">
-                  Banho <span class="highlight">&</span> Tosa
+                  Monitoramento <br><span class="highlight">&</span> Qualidade
                 </h1>
 
-                <p class="hero-description text-dark" data-aos="fade-right" data-aos-delay="400">
-                Seu pet está sendo monitorado com <span class="laranja"> tecnologia, cuidado, segurança e carinho.</span>
+                <p class="hero-description text-dark fw-bold" data-aos="fade-right" data-aos-delay="400">
+                Agende banho, tosa e consultas em segundos, <span class="laranja fw-bold"> e acompanhe tudo em tempo real pelo app.</span>
                 </p>
 
                 <div class="hero-stats mb-4" data-aos="fade-right" data-aos-delay="500">
                   <div class="stat-item">
-                    <h3><span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="2"
-                        class="purecounter"></span>+</h3>
-                    <p>Anos de Experiência</p>
-                  </div>
-                  <div class="stat-item">
-                    <h3><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2"
+                    <h3><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2.5"
                         class="purecounter"></span>+</h3>
                     <p>Funcionaidades</p>
                   </div>
@@ -117,6 +108,11 @@
                     <h3><span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="2"
                         class="purecounter"></span></h3>
                     <p>Desenvolvedores</p>
+                  </div>
+                  <div class="stat-item">
+                    <h3><span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="1.4"
+                        class="purecounter"></span></h3>
+                    <p>Anos de Experiência</p>
                   </div>
                 </div>
 
@@ -126,16 +122,6 @@
                     <i class="fa-solid fa-angles-right"></i>
                     Conhecer nossos Serviços
                   </a>
-                </div>
-
-                <div class="emergency-contact" data-aos="fade-right" data-aos-delay="700">
-                  <div class="emergency-icon">
-                    <i class="bi bi-telephone-fill"></i>
-                  </div>
-                  <div class="emergency-info">
-                    <small>Nosso Contato</small>
-                    <strong>(19)99999-8888</strong>
-                  </div>
                 </div>
               </div>
             </div>
@@ -160,291 +146,317 @@
 
       <!-- Home About Section -->
       <section id="home-about" class="home-about section">
+        <div class="container">
+          <div class="row align-items-center gy-5">
 
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <!-- TEXTO -->
+            <div class="col-lg-12">
+              <div class="about-content">
+                <h2 class="section-heading fw-bold">
+                  Tecnologia e cuidado para o seu pet
+                </h2>
 
-      <div class="row align-items-center">
-        <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
-          <div class="about-content">
-            <h2 class="section-heading"><b>Tecnologia e cuidado para o seu pet</b></h2>
+                <p class="lead-text">
+                  Acompanhe em tempo real tudo o que acontece com seu pet
+                  durante as etapas do petshop com transparência e segurança.
+                </p>
 
-            <p class="lead-text">
-              Acompanhe em tempo real tudo o que acontece com seu pet durante o banho e tosa.
-              Com a MobiPet, você tem mais segurança, transparência e tranquilidade, mesmo à distância.
-            </p>
+                <p>
+                  O Mobipet moderniza o atendimento dos petshops através
+                  de monitoramento inteligente, notificações automáticas
+                  e agendamento digital.
+                </p>
 
-            <p>
-              Nosso sistema foi desenvolvido para modernizar o atendimento em petshops, permitindo
-              agendamentos digitais, notificações automáticas e monitoramento completo de cada etapa
-              do serviço. Aqui, você sabe exatamente como seu pet está sendo cuidado, do início ao fim.
-            </p>
+                <!-- ESTATÍSTICAS -->
+                <div class="stats-grid">
 
-            <div class="stats-grid">
-              <div class="stat-item">
-                <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="100"
-                  data-purecounter-duration="1"></div>
-                <div class="stat-label">Pets monitorados</div>
-              </div>
+                  <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">
+                      Pets Monitorados
+                    </div>
+                  </div>
 
-              <div class="stat-item">
-                <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="100"
-                  data-purecounter-duration="1"></div>
-                <div class="stat-label">% Transparência</div>
-              </div>
+                  <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">
+                      Transparência
+                    </div>
+                  </div>
 
-              <div class="stat-item">
-                <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="24"
-                  data-purecounter-duration="1"></div>
-                <div class="stat-label">Monitoramento contínuo</div>
-              </div>
-            </div>
+                  <div class="stat-item">
+                    <div class="stat-number">24h</div>
+                    <div class="stat-label">
+                      Sistema Online
+                    </div>
+                  </div>
 
-            <div class="cta-section">
-              <a href="{{route('sobre')}}" class="btn-primary">Ver como funciona</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
-          <div class="about-visual">
-            <div class="main-image">
-              <img src="{{ asset('assets/img/cuidado_tecnologia.png') }}" alt="Pet sendo cuidado" class="img-pet">
-            </div>
-
-            <div class="floating-card">
-              <div class="card-content">
-                <div class="icon">
-                  <i class="fa-regular fa-eye"></i>
-                </div>
-                <div class="card-text">
-                  <h4>Monitoramento em tempo real</h4
-                  <p>Acompanhe cada etapa do seu pet ao vivo</p>
                 </div>
               </div>
             </div>
-
-            <div class="experience-badge">
-              <div class="badge-content">
-                <span class="years">100%</span>
-                <span class="text">Transparência no cuidado</span>
-              </div>
             </div>
           </div>
         </div>
-      </div>
 
-    </div>
-
-  </section><!-- /Home About Section -->
+      </section>
+ <!-- /Home About Section -->
 
       <!-- Featured Departments Section -->
-      <!-- Featured Departments Section -->
-<section id="featured-departments" class="featured-departments section">
 
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Funcionalidades do Sistema</h2>
-    <p>Conheça os principais recursos do Mobipet para monitoramento e gestão de banho e tosa</p>
-  </div>
-
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row g-5">
-
-      <div class="col-lg-6">
-        <div class="specialty-card">
-          <div class="specialty-content">
-            <span class="specialty-label">Monitoramento</span>
-            <h3>Acompanhamento em Tempo Real</h3>
-            <p>Visualize cada etapa do banho e tosa do seu pet com atualizações instantâneas.</p>
-            <span><i class="bi bi-check-circle-fill"></i> Atualizações ao vivo</span>
-            <span><i class="bi bi-check-circle-fill"></i> Status em tempo real</span>
-            <a href="{{route('agendamento')}}" class="specialty-link">Ver monitoramento</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-6">
-        <div class="specialty-card">
-          <div class="specialty-content">
-            <span class="specialty-label">Tecnologia</span>
-            <h3>Notificações Inteligentes</h3>
-            <p>Receba alertas automáticos a cada etapa concluída do serviço.</p>
-            <span><i class="bi bi-check-circle-fill"></i> Alertas automáticos</span>
-            <span><i class="bi bi-check-circle-fill"></i> Comunicação em tempo real</span>
-            <a href="{{route('sobre')}}" class="specialty-link">Ver notificações</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="department-highlight">
-          <h4>Agendamento Online</h4>
-          <p>Marque serviços de forma rápida e prática.</p>
-          <ul>
-            <li>Interface simples</li>
-            <li>Disponibilidade em tempo real</li>
-            <li>Confirmação automática</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="department-highlight">
-          <h4>Histórico do Pet</h4>
-          <p>Acompanhe todos os atendimentos realizados.</p>
-          <ul>
-            <li>Registro completo</li>
-            <li>Consultas rápidas</li>
-            <li>Dados organizados</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="department-highlight">
-          <h4>Gestão para Petshops</h4>
-          <p>Controle completo dos serviços e clientes.</p>
-          <ul>
-            <li>Controle de serviços</li>
-            <li>Gestão de clientes</li>
-            <li>Otimização do atendimento</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-    <br><br><br>
-
-    <div class="banner-funcionamento">
-  <h3>Sistema disponível em tempo integral</h3>
-  <p>O Mobipet funciona 24 horas para acompanhamento e gestão.</p>
-  <a href="https://wa.me/5519989432384?text=Quero%20agendar%20um%20servi%C3%A7o%20para%20meu%20pet%20%F0%9F%90%B6" class="emergency-btn">
-    <i class="fa-brands fa-whatsapp"></i> Agendar
-  </a>
-</div>
-</section>
-
-<!-- Featured Services Section -->
-<section id="featured-services" class="featured-services section">
-
-  <div class="container section-title">
-    <h2>Serviços do Mobipet</h2>
-    <p>Soluções completas para o monitoramento e gestão de banho e tosa</p>
-  </div>
+<!-- BENEFÍCIOS -->
+<section class="py-5 bg-light">
 
   <div class="container">
-    <div class="row g-0">
 
-      <div class="col-lg-8">
-        <div class="featured-service-main">
-          <div class="service-details">
-            <h2>Gestão Inteligente de Banho e Tosa</h2>
-            <p>Integramos tecnologia e cuidado para oferecer mais segurança e transparência.</p>
-            <a href="{{route('services')}}" class="main-cta">Explorar funcionalidades</a>
-          </div>
-        </div>
-      </div>
+    <div class="text-center mb-5">
 
+      <h2 class="fw-bold display-5">
+        Tudo que seu petshop precisa
+      </h2>
+
+      <p class="text-secondary">
+        Tecnologia inteligente para transformar a experiência do banho e tosa.
+      </p>
+
+    </div>
+
+    <div class="row g-4">
+
+      <!-- CARD -->
       <div class="col-lg-4">
-        <div class="services-sidebar">
 
-          <div class="service-item">
-            <h4>Monitoramento ao Vivo</h4>
-            <p>Acompanhe seu pet em tempo real.</p>
+        <div class="feature-card h-100">
+
+          <div class="feature-icon bg-primary">
+            <i class="bi bi-camera-video-fill"></i>
           </div>
 
-          <div class="service-item">
-            <h4>Agendamento Digital</h4>
-            <p>Agende serviços com facilidade.</p>
-          </div>
+          <h4 class="fw-bold mt-4">
+            Monitoramento ao vivo
+          </h4>
 
-          <div class="service-item">
-            <h4>Relatórios e Controle</h4>
-            <p>Acesse histórico completo dos atendimentos.</p>
-          </div>
+          <p class="text-secondary">
+            Acompanhe cada etapa do atendimento do seu pet em tempo real,
+            garantindo mais transparência, segurança e tranquilidade.
+          </p>
 
         </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="col-lg-4">
+
+        <div class="feature-card h-100">
+
+          <div class="feature-icon bg-success">
+            <i class="bi bi-calendar-check-fill"></i>
+          </div>
+
+          <h4 class="fw-bold mt-4">
+            Agendamento Inteligente
+          </h4>
+
+         <p class="text-secondary">
+            Organize agendamentos, horários e serviços de forma prática,
+            evitando atrasos, conflitos e melhorando a rotina do petshop.
+        </p>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="col-lg-4">
+
+        <div class="feature-card h-100">
+
+          <div class="feature-icon bg-dark">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+
+          <h4 class="fw-bold mt-4">
+            Gestão Completa
+          </h4>
+
+          <p class="text-secondary">
+            Gerencie clientes, pets, agendamentos e todo o fluxo de atendimento
+            do petshop em um único sistema.
+          </p>
+
+        </div>
+
       </div>
 
     </div>
+
   </div>
+
 </section>
 
+<!-- CTA -->
+<section class="cta-section py-5">
 
-<!-- Find Section -->
-<section class="section">
+  <div class="container">
 
-  <div class="container section-title">
-    <h2>Acompanhar Atendimento</h2>
-    <p>Consulte o status do seu pet em tempo real</p>
-  </div>
+    <div class="cta-card text-center">
 
-  <div class="container text-center">
-    <h3>Acompanhe seu pet</h3>
-    <p>Digite o nome do pet para visualizar o andamento</p>
+      <h2 class="display-5 fw-bold mb-4 text-white">
+        Mais segurança para o tutor.
+        Mais organização para o petshop.
+      </h2>
 
-    <input type="text" value="Rex" readonly class="form-control mb-3">
+     <p class="lead text-light mb-5">
+        Transforme a experiência do seu amigo no petshop com tecnologia.
+      </p>
 
-    <button class="btn btn-primary">Acompanhar</button>
-
-    <div class="mt-5">
-      <h4>Rex</h4>
-      <p><i class="fa-solid fa-square-poll-vertical"></i> Status: Banho em andamento</p>
-      <p><i class="fa-solid fa-clock"></i> Tempo estimado: 20 minutos</p>
+      <a href="https://wa.me/5519999999999"
+         class="btn btn-success btn-lg rounded-pill px-5 py-3 shadow">
+         <i class="fa-brands fa-whatsapp"></i>
+         Agendar pelo WhatsApp
+      </a>
     </div>
   </div>
 
 </section>
 
+<!-- CSS -->
+<style>
 
-<!-- Call To Action -->
-<section class="call-to-action section">
+body{
+  background: #f7f9fc;
+}
 
-  <div class="container text-center">
-    <h1>Mais segurança e transparência para o seu pet</h1>
-    <p>Acompanhe cada etapa do atendimento com total confiança.</p>
+.hero-modern{
+  background:
+  radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
+  radial-gradient(circle at bottom left, #dcfce7 0%, transparent 30%);
+}
 
-  </div>
+.dashboard-card{
+  border: 1px solid #e5e7eb;
+  backdrop-filter: blur(10px);
+}
 
-  <footer id="footer" class="footer-16 footer position-relative">
+.online-badge{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #22c55e;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.timeline-area{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timeline-item{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.timeline-item i{
+  font-size: 22px;
+}
+
+.timeline-item.completed{
+  color: #22c55e;
+}
+
+.timeline-item.active{
+  color: #2563eb;
+}
+
+.tempo-card{
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  border-radius: 30px;
+  padding: 25px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feature-card{
+  background: white;
+  border-radius: 35px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  transition: 0.4s;
+}
+
+.feature-card:hover{
+  transform: translateY(-12px);
+}
+
+.feature-icon{
+  width: 90px;
+  height: 90px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-icon i{
+  color: white;
+  font-size: 35px;
+}
+
+.cta-card{
+  background: linear-gradient(135deg,#111827,#1f2937);
+  padding: 80px 40px;
+  border-radius: 40px;
+}
+
+.progress{
+  border-radius: 20px;
+}
+
+.progress-bar{
+  background: linear-gradient(90deg,#2563eb,#3b82f6);
+}
+
+</style>
+
+   <footer id="footer" class="footer-16 footer position-relative">
+
 
     <div class="container">
 
+
       <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
-        <div class="row align-items-start">
-
-          <div class="col-lg-5">
-            <div class="brand-section">
-              <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Mobipet</span>
-              </a>
-              <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
-
-              <div class="contact-info mt-5">
-                <div class="contact-item">
-                  <i class="bi bi-geo-alt"></i>
-                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-telephone"></i>
-                  <span> (19)9999-8888</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-envelope"></i>
-                  <span>mobipet@gmail.com</span>
-                </div>
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-md-6 align-items-start">
+            <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+          <h1 class="sitename">Mobipet</h1>
+        </a>
+            <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
+          </div>
+          <div class="col-md-6 align-items-end">
+            <p><span><i class="bi bi-geo-alt"></i> Rua Bela Vista, 100 - Centro, Tambaú - SP</span></p>
+            <p><span><i class="bi bi-telephone"></i> (19)9999-8888</span></p>
+            <p><span><i class="bi bi-envelope"></i> mobipet@gmail.com</span></p>
           </div>
         </div>
-      </div>
 
-    </div>
-    <div vw class="enabled">
+
+          <div vw class="enabled">
       <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
           <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
+
 
   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>
@@ -452,7 +464,7 @@
   </script>
 
 
-
+       
   </footer>
 
 </section>

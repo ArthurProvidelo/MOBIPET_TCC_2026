@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AgendamentoController;
 
 
 
@@ -18,9 +19,11 @@ Route::get('/sobre', function () {
 })->name('sobre');
 
 
-Route::get('/agendamento', function () {
-    return view('agendamento');
-})->name('agendamento');
+Route::get('/agendamento', [AgendamentoController::class, 'create'])
+    ->name('agendamento');
+
+Route::post('/agendamento/store', [AgendamentoController::class, 'store'])
+    ->name('agendamento.store');
 
 Route::get('/contact', function () {
     return view('contact');
@@ -62,3 +65,4 @@ Route::get('/perfil', function () {
 Route::get('/painel-controle', function () {
     return view('painel-controle');
 })->name('painel-controle');
+

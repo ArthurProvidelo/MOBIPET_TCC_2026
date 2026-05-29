@@ -2,82 +2,91 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Agendamento;
 
 class AgendamentoController extends Controller
 {
-    // Listar todos
     public function index()
     {
         $agendamentos = Agendamento::all();
         return view('agendamentos.index', compact('agendamentos'));
     }
 
-    // Formulário de criação
     public function create()
     {
         return view('agendamentos.create');
     }
 
-    // Salvar
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nome_pet' => 'required|string|max:255',
-            'raca' => 'required|string|max:255',
-            'tipo_servico' => 'required|string|max:255',
-            'data_agendamento' => 'required|date',
-            'horario' => 'required',
-            'observacoes' => 'nullable|string',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'nome_tutor' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'telefone' => 'required|string|max:20',
+        'endereco' => 'nullable|string|max:255',
 
-        Agendamento::create($request->all());
+        'nome_pet' => 'required|string|max:255',
+        'tipo_pet' => 'required|string|max:100',
+        'raca' => 'nullable|string|max:255',
+        'idade' => 'nullable|numeric',
+        'porte' => 'nullable|string|max:100',
 
-        return redirect()->route('agendamentos.index')
-            ->with('success', 'Agendamento criado com sucesso!');
-    }
+        'profissional' => 'required|string|max:255',
+        'servico' => 'required|string|max:255',
 
-    // Mostrar um
+        'data' => 'required|date',
+        'hora' => 'required',
+    ]);
+Agendamento::create([
+    'data_agendamento' => $request->data,
+    'horario' => $request->hora,
+    'status_agendamento' => 'Pendente',
+    'fk_id_pet' => 1,
+    'fk_id_servico' => 1,
+    'fk_id_funcionario' => 1,
+]);
+
+    return redirect()
+        ->route('agendamento')
+        ->with('success', 'Agendamento realizado com sucesso!');
+}
     public function show($id)
     {
         $agendamento = Agendamento::findOrFail($id);
         return view('agendamentos.show', compact('agendamento'));
     }
 
-    // Editar
     public function edit($id)
     {
         $agendamento = Agendamento::findOrFail($id);
         return view('agendamentos.edit', compact('agendamento'));
     }
 
-    // Atualizar
     public function update(Request $request, $id)
     {
         $request->validate([
+            'nome_tutor' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'telefone' => 'required|string|max:20',
             'nome_pet' => 'required|string|max:255',
-            'raca' => 'required|string|max:255',
-            'tipo_servico' => 'required|string|max:255',
-            'data_agendamento' => 'required|date',
-            'horario' => 'required',
-            'observacoes' => 'nullable|string',
+            'tipo_pet' => 'required|string|max:100',
+            'profissional' => 'required|string|max:255',
+            'servico' => 'required|string|max:255',
+            'data' => 'required|date',
+            'hora' => 'required',
         ]);
 
         $agendamento = Agendamento::findOrFail($id);
         $agendamento->update($request->all());
-
-        return redirect()->route('agendamentos.index')
-            ->with('success', 'Agendamento atualizado com sucesso!');
+        return redirect()->route('agendamento')->with('success', 'Agendamento atualizado com sucesso!');
     }
 
-    // Deletar
     public function destroy($id)
     {
         $agendamento = Agendamento::findOrFail($id);
         $agendamento->delete();
-
-        return redirect()->route('agendamentos.index')
-            ->with('success', 'Agendamento excluído com sucesso!');
+        return redirect()->route('agendamento')->with('success', 'Agendamento excluído com sucesso!');
     }
 }

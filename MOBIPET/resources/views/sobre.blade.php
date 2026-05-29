@@ -52,23 +52,21 @@
     <div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <a href="{{ route('index') }}" class="logo d-flex align-items-center">
           <h1 class="sitename">Mobipet</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="{{route('index')}}" >Início</a></li>
-            <li><a href="{{route('sobre')}}" class="active">Sobre nós</a></li>
-            <li><a href="{{route('services')}}">Serviços</a></li>
-            <li><a href="{{route('devs')}}">Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
-            <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-            <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('produtos')}}">Produtos</a></li>
-            <li><a href="{{route('perfil')}}">Perfil</a></li>
-          </ul>
+              <li><a href="{{route('index')}}" >Início</a></li>
+              <li><a href="{{route('sobre')}}" class="active">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+              <li><a href="{{route('contact')}}">Contato</a></li>
+              <li><a href="{{route('perfil')}}">Perfil</a></li>
+              
+            </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
@@ -86,7 +84,7 @@
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1 class="heading-title">Como funciona nossos atendimentos?</h1>
+              <h1 class="heading-title">Como funcionam os nossos atendimentos?</h1>
               <p class="mb-0">
                 Trabalhamos com um atendimento profissional e humanizado, priorizando a segurança,
                  a saúde e o bem-estar do seu pet em todas as etapas do serviço.
@@ -98,7 +96,7 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="index.html">Início</a></li>
+            <li><a href="{{ route('index')}}">Início</a></li>
             <li class="current">Sobre-nós</li>
           </ol>
         </div>
@@ -117,12 +115,8 @@
       <h2>Acompanhe todos os detalhes pelo vidro</h2>
 
       <p class="lead">
-        Nosso atendimento é realizado de forma cuidadosa e transparente, 
-        permitindo que você acompanhe cada etapa do processo com total confiança.
-      </p>
-
-      <p>
-        Cuidado, higiene e bem-estar para o seu pet em cada detalhe.
+        Desde o momento da chegada, cada animal recebe uma atenção individualizada, respeitando suas necessidades, personalidade e bem-estar.
+       Seja no banho, na tosa, na higienização ou em outros cuidados, todos os procedimentos são realizados com técnicas adequadas, produtos de qualidade e por profissionais capacitados, sempre priorizando o conforto e a segurança do pet.
       </p>
     </div>
   </div>
@@ -223,76 +217,43 @@
 
   </main>
 
-  <footer id="footer" class="footer-16 footer position-relative">
+   <footer id="footer" class="footer-16 footer position-relative">
+
 
     <div class="container">
 
+
       <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
-        <div class="row align-items-start">
-
-          <div class="col-lg-5">
-            <div class="brand-section">
-              <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Mobipet</span>
-              </a>
-              <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
-
-              <div class="contact-info mt-5">
-                <div class="contact-item">
-                  <i class="bi bi-geo-alt"></i>
-                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-telephone"></i>
-                  <span> (19)9999-8888</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-envelope"></i>
-                  <span>mobipet@gmail.com</span>
-                </div>
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-md-6 align-items-start">
+            <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+          <h1 class="sitename">Mobipet</h1>
+        </a>
+            <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
           </div>
-
-           <div class="col-lg-5">
-            <div class="brand-section">
-              <img src="assets/img/gemini.jpg" class="gemini" alt="">
-            </div>
+          <div class="col-md-6 align-items-end">
+            <p><span><i class="bi bi-geo-alt"></i> Rua Bela Vista, 100 - Centro, Tambaú - SP</span></p>
+            <p><span><i class="bi bi-telephone"></i> (19)9999-8888</span></p>
+            <p><span><i class="bi bi-envelope"></i> mobipet@gmail.com</span></p>
           </div>
         </div>
-      </div>
 
-    </div>
 
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
-          <div class="row align-items-center">
-
-            <div class="col-lg-6">
-              <div class="legal-links">
-                <div class="credits">
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div vw class="enabled">
+          <div vw class="enabled">
       <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
           <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
 
+
   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
 
+
+       
   </footer>
 
   <!-- Scroll Top -->

@@ -42,7 +42,7 @@ CREATE TABLE Funcionario(
     telefone VARCHAR(255),
     email VARCHAR(255)
 );
-
+,
 
 CREATE TABLE Agendamento(
 	id_agendamento INTEGER AUTO_INCREMENT PRIMARY KEY,

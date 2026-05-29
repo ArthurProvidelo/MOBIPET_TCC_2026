@@ -1,317 +1,495 @@
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="pt-br">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Mobipet</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Página inicial</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
 
-  <!-- Favicons -->
-  <link href="assets/img/mobipet_icon.png" rel="icon">
+    <!-- Favicons -->
+    <link href="assets/img/mobipet_icon.png" rel="icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bjundle.min.css" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/estilo.css">
+    <!-- Main CSS File -->
+    <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/estilo.css')}}" rel="stylesheet">
+    
 
+  </head>
 
-</head>
+  <body class="index-page">
 
-<body class="appointment-page">
+    <header id="header" class="header fixed-top">
 
-  <header id="header" class="header fixed-top">
-
-    <div class="topbar d-flex align-items-center dark-background">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-        <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
-        </div>
-        <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+      <div class="topbar d-flex align-items-center dark-background">
+        <div class="container d-flex justify-content-center justify-content-md-between">
+          <div class="contact-info d-flex align-items-center">
+            <i class="bi bi-envelope d-flex align-items-center"><a
+                href="mailto:contact@example.com">mobipet@gmail.com</a></i>
+            <i class="bi bi-phone d-flex align-items-center ms-4"><span>+19 99999-8888</span></i>
+          </div>
+          <div class="social-links d-none d-md-flex align-items-center">
+            <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
+          </div>
         </div>
+      </div><!-- End Top Bar -->
+
+      <div class="branding d-flex align-items-cente">
+
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+          <a href="{{route('index')}}" class="logo d-flex align-items-center">
+            <h1 class="sitename">Mobipet</h1>
+          </a>
+
+          <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="{{route('index')}}" class="active">Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+              <li><a href="{{route('contact')}}">Contato</a></li>
+              <li><a href="{{route('perfil')}}">Perfil</a></li>
+              
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+
+        </div>
+
       </div>
-    </div><!-- End Top Bar -->
 
-    <div class="branding d-flex align-items-cente">
+    </header>
 
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Mobipet</h1>
-        </a>
+    <main class="main">
 
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="{{route('index')}}" >Início</a></li>
-            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-            <li><a href="{{route('services')}}">Serviços</a></li>
-            <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
-            <li><a href="{{route('agendamento')}}" class="active">Agendamento</a></li>
-            <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('departments')}}">Produtos</a></li>
-            <li><a href="">Perfil</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+      <!-- Hero Section -->
+      <section id="hero" class="hero section">
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="hero-content">
+                
+
+                <h1 class="banho-tosa" data-aos="fade-right" data-aos-delay="300">
+                  Monitoramento <br><span class="highlight">&</span> Qualidade
+                </h1>
+
+                <p class="hero-description text-dark fw-bold" data-aos="fade-right" data-aos-delay="400">
+                Agende banho, tosa e consultas em segundos, <span class="laranja fw-bold"> e acompanhe tudo em tempo real pelo app.</span>
+                </p>
+
+                <div class="hero-stats mb-4" data-aos="fade-right" data-aos-delay="500">
+                  <div class="stat-item">
+                    <h3><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2.5"
+                        class="purecounter"></span>+</h3>
+                    <p>Funcionaidades</p>
+                  </div>
+                  <div class="stat-item">
+                    <h3><span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="2"
+                        class="purecounter"></span></h3>
+                    <p>Desenvolvedores</p>
+                  </div>
+                  <div class="stat-item">
+                    <h3><span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="1.4"
+                        class="purecounter"></span></h3>
+                    <p>Anos de Experiência</p>
+                  </div>
+                </div>
+
+                <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
+                  <a href="{{route('agendamento')}}" class="btn btn-primary">Agendar Agora  <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="{{route('sobre')}}" class="btn btn-outline">
+                    <i class="fa-solid fa-angles-right"></i>
+                    Conhecer nossos Serviços
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="hero-visual" data-aos="fade-left" data-aos-delay="400" style="margin-top: 100px">
+                <div class="main-image">
+                  <img src="{{asset('assets/img/pet_sendo_cuidado.png')}}" alt="pet recebendo cuidados" class="img-chowchow">
+                  
+                <div class="background-elements">
+                  <div class="element element-1"></div>
+                  <div class="element element-2"></div>
+                  <div class="element element-3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section><!-- /Hero Section -->
+
+      <!-- Home About Section -->
+      <section id="home-about" class="home-about section">
+        <div class="container">
+          <div class="row align-items-center gy-5">
+
+            <!-- TEXTO -->
+            <div class="col-lg-12">
+              <div class="about-content">
+                <h2 class="section-heading fw-bold">
+                  Tecnologia e cuidado para o seu pet
+                </h2>
+
+                <p class="lead-text">
+                  Acompanhe em tempo real tudo o que acontece com seu pet
+                  durante as etapas do petshop com transparência e segurança.
+                </p>
+
+                <p>
+                  O Mobipet moderniza o atendimento dos petshops através
+                  de monitoramento inteligente, notificações automáticas
+                  e agendamento digital.
+                </p>
+
+                <!-- ESTATÍSTICAS -->
+                <div class="stats-grid">
+
+                  <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">
+                      Pets Monitorados
+                    </div>
+                  </div>
+
+                  <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">
+                      Transparência
+                    </div>
+                  </div>
+
+                  <div class="stat-item">
+                    <div class="stat-number">24h</div>
+                    <div class="stat-label">
+                      Sistema Online
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+ <!-- /Home About Section -->
+
+      <!-- Featured Departments Section -->
+
+<!-- BENEFÍCIOS -->
+<section class="py-5 bg-light">
+
+  <div class="container">
+
+    <div class="text-center mb-5">
+
+      <h2 class="fw-bold display-5">
+        Tudo que seu petshop precisa
+      </h2>
+
+      <p class="text-secondary">
+        Tecnologia inteligente para transformar a experiência do banho e tosa.
+      </p>
+
+    </div>
+
+    <div class="row g-4">
+
+      <!-- CARD -->
+      <div class="col-lg-4">
+
+        <div class="feature-card h-100">
+
+          <div class="feature-icon bg-primary">
+            <i class="bi bi-camera-video-fill"></i>
+          </div>
+
+          <h4 class="fw-bold mt-4">
+            Monitoramento ao vivo
+          </h4>
+
+          <p class="text-secondary">
+            Acompanhe cada etapa do atendimento do seu pet em tempo real,
+            garantindo mais transparência, segurança e tranquilidade.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="col-lg-4">
+
+        <div class="feature-card h-100">
+
+          <div class="feature-icon bg-success">
+            <i class="bi bi-calendar-check-fill"></i>
+          </div>
+
+          <h4 class="fw-bold mt-4">
+            Agendamento Inteligente
+          </h4>
+
+         <p class="text-secondary">
+            Organize agendamentos, horários e serviços de forma prática,
+            evitando atrasos, conflitos e melhorando a rotina do petshop.
+        </p>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="col-lg-4">
+
+        <div class="feature-card h-100">
+
+          <div class="feature-icon bg-dark">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+
+          <h4 class="fw-bold mt-4">
+            Gestão Completa
+          </h4>
+
+          <p class="text-secondary">
+            Gerencie clientes, pets, agendamentos e todo o fluxo de atendimento
+            do petshop em um único sistema.
+          </p>
+
+        </div>
 
       </div>
 
     </div>
 
-  </header>
+  </div>
 
-  <main class="main">
+</section>
 
-    <!-- Page Title -->
-    <div class="page-title">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 class="heading-title">Agendamentos</h1>
-              <p class="mb-0">
-                Ficamos à disposição para agendar no melhor horário para você.
-              </p>
-            </div>
-          </div>
-</div>
-      </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="index.html">Início</a></li>
-            <li class="current">Agendamentos</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
+<!-- CTA -->
+<section class="cta-section py-5">
 
-    <!-- Appointmnet Section -->
-    <section id="appointmnet" class="appointmnet section">
+  <div class="container">
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="cta-card text-center">
 
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="booking-wrapper">
-              <div class="booking-header text-center" data-aos="fade-up" data-aos-delay="200">
-                <h2>Agendamento</h2>
-                <p>Estamos à disposição para oferecer o melhor atendimento possível.</p>
-              </div>
+      <h2 class="display-5 fw-bold mb-4 text-white">
+        Mais segurança para o tutor.
+        Mais organização para o petshop.
+      </h2>
 
-              <div class="booking-steps" data-aos="fade-up" data-aos-delay="300">
-                <div class="step">
-                  <div class="step-icon">
-                    <i class="bi bi-calendar-check"></i>
-                  </div>
-                  <div class="step-content">
-                    <h4>Data</h4>
-                   
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-icon">
-                    <i class="bi bi-clock"></i>
-                  </div>
-                  <div class="step-content">
-                    <h4>Horário</h4>
-                  
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-icon">
-                    <i class="bi bi-person-check"></i>
-                  </div>
-                  <div class="step-content">
-                    <h4>Confirmação</h4>
-                  </div>
-                </div>
-              </div>
+     <p class="lead text-light mb-5">
+        Transforme a experiência do seu amigo no petshop com tecnologia.
+      </p>
 
-              <div class="appointment-form" data-aos="fade-up" data-aos-delay="400">
-                <form action="forms/book-appointment.php" method="post" class="php-email-form">
-                  <div class="row gy-4">
-                    <div class="col-md-6">
-                      <input type="text" name="name" class="form-control" placeholder="Nome" required="">
-                    </div>
-                    <div class="col-md-6">
-                      <input type="email" name="email" class="form-control" placeholder="Email" required="">
-                    </div>
-                    <div class="col-md-6">
-                      <input type="tel" name="phone" class="form-control" placeholder="Telefone" required="">
-                    </div>
-                    <div class="col-md-6">
-                      <select name="department" class="form-select" required="">
-                        <option value="">Selecione o profissional</option>
-                        <option value="general">Maria</option>
-                        <option value="cardiology">Yasmin</option>
-                        <option value="neurology">Pedro</option>
-                        <option value="orthopedics">Kauan</option>
-                        <option value="pediatrics">Rafaela</option>
-                      </select>
-                    </div>
-                    <div class="col-md-6">
-                      <input type="date" name="date" class="form-control" required="">
-                    </div>
-                    <div class="col-md-6">
-                      <select name="doctor" class="form-select" required="">
-                        <option value="">Selecione o serviço</option>
-                        <option value="dr-sarah-johnson">Banho</option>
-                        <option value="dr-michael-chen">Hidratação</option>
-                        <option value="dr-emily-davis">Secagem</option>
-                        <option value="dr-robert-smith">Escova na pelagem</option>
-                        <option value="dr-lisa-brown">Limpeza de ouvidos</option>
-                        <option value="dr-david-wilson">Corte de unhas</option>
-                        <option value="dr-david-wilson">Banho + Hidratação</option>
-                        <option value="dr-david-wilson">Banho + Escova</option>
-                        <option value="dr-david-wilson">Banho + Tosa</option>
-                        <option value="dr-david-wilson">Banho + Limpeza de ouvidos</option>
-                        <option value="dr-david-wilson">Banho + Corte de unhas</option>
-                        <option value="dr-david-wilson">Limpeza de ouvidos + Corte de unhas</option>
-                      </select>
-                    </div>
-                    <div class="col-12">
-                      <textarea name="message" class="form-control" rows="4"
-                        placeholder="Adicione uma observação exemplo: Alergias, etc... (opcional)"></textarea>
-                    </div>
-                    <div class="col-12">
-                      <div class="loading">Loading</div>
-                      <div class="error-message"></div>
-                      <div class="sent-message">Your appointment has been scheduled. Thank you!</div>
-                      <button type="submit" class="btn-book">Agendar</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+      <a href="https://wa.me/5519999999999"
+         class="btn btn-success btn-lg rounded-pill px-5 py-3 shadow">
+         <i class="fa-brands fa-whatsapp"></i>
+         Agendar pelo WhatsApp
+      </a>
+    </div>
+  </div>
 
-              <div class="emergency-info" data-aos="fade-up" data-aos-delay="500">
-                <p><i class="bi bi-exclamation-triangle"></i> Contate-nos no caso de problemas<strong>(19)99999-8888</strong>
-              resolvemos na hora!</p>
-              </div>
+</section>
 
-            </div>
-          </div>
-        </div>
+<!-- CSS -->
+<style>
 
-      </div>
+body{
+  background: #f7f9fc;
+}
 
-    </section><!-- /Appointmnet Section -->
+.hero-modern{
+  background:
+  radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
+  radial-gradient(circle at bottom left, #dcfce7 0%, transparent 30%);
+}
 
-  </main>
+.dashboard-card{
+  border: 1px solid #e5e7eb;
+  backdrop-filter: blur(10px);
+}
 
-  <footer id="footer" class="footer-16 footer position-relative">
+.online-badge{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #22c55e;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.timeline-area{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timeline-item{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.timeline-item i{
+  font-size: 22px;
+}
+
+.timeline-item.completed{
+  color: #22c55e;
+}
+
+.timeline-item.active{
+  color: #2563eb;
+}
+
+.tempo-card{
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  border-radius: 30px;
+  padding: 25px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feature-card{
+  background: white;
+  border-radius: 35px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  transition: 0.4s;
+}
+
+.feature-card:hover{
+  transform: translateY(-12px);
+}
+
+.feature-icon{
+  width: 90px;
+  height: 90px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-icon i{
+  color: white;
+  font-size: 35px;
+}
+
+.cta-card{
+  background: linear-gradient(135deg,#111827,#1f2937);
+  padding: 80px 40px;
+  border-radius: 40px;
+}
+
+.progress{
+  border-radius: 20px;
+}
+
+.progress-bar{
+  background: linear-gradient(90deg,#2563eb,#3b82f6);
+}
+
+</style>
+
+   <footer id="footer" class="footer-16 footer position-relative">
+
 
     <div class="container">
 
+
       <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
-        <div class="row align-items-start">
-
-          <div class="col-lg-5">
-            <div class="brand-section">
-              <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Mobipet</span>
-              </a>
-              <p class="brand-description">Será um prazer atendê-lo(a) no horário agendado.</p>
-
-              <div class="contact-info mt-5">
-                <div class="contact-item">
-                  <i class="bi bi-geo-alt"></i>
-                  <span>Rua das Palmeiras, 245 – Jardim Primavera, Campinas – SP, 13045-678</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-telephone"></i>
-                  <span>(19)99999-8888</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-envelope"></i>
-                  <span>mobipet@gmail.com</span>
-                </div>
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-md-6 align-items-start">
+            <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+          <h1 class="sitename">Mobipet</h1>
+        </a>
+            <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
           </div>
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
-          <div class="row align-items-center">
+          <div class="col-md-6 align-items-end">
+            <p><span><i class="bi bi-geo-alt"></i> Rua Bela Vista, 100 - Centro, Tambaú - SP</span></p>
+            <p><span><i class="bi bi-telephone"></i> (19)9999-8888</span></p>
+            <p><span><i class="bi bi-envelope"></i> mobipet@gmail.com</span></p>
           </div>
         </div>
-      </div>
-    </div>
 
-  </footer>
 
-  <!-- Scroll Top -->
-  <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <div vw class="enabled">
+          <div vw class="enabled">
       <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
           <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
 
+
   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+       
+  </footer>
 
-   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-     <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
-</body>
+</section>
 
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    
+  </body>
+
+  </html>

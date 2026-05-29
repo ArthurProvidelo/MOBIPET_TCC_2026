@@ -95,11 +95,16 @@ p, span, small {
 
       <nav class="navmenu">
         <ul>
-          <li><a href="{{route('index')}}">Início</a></li>
-          <li><a href="{{route('agendamento')}}">Agendamentos</a></li>
-          <li><a href="{{route('produtos')}}">Produtos</a></li>
-          <li><a href="{{route('perfil')}}">Perfil</a></li>
-        </ul>
+              <li><a href="{{route('index')}}" >Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+              <li><a href="{{route('contact')}}">Contato</a></li>
+              <li><a href="{{route('perfil')}}">Perfil</a></li>
+              <li><a href="{{route('painel-controle')}}" class="active">Painel</a></li>
+              
+          </ul>
       </nav>
     </div>
   </div>

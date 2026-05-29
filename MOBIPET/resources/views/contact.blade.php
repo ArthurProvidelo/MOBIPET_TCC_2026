@@ -29,14 +29,6 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/estilo.css">
-
-  <!-- =======================================================
-  * Template Name: Clinic
-  * Template URL: https://bootstrapmade.com/clinic-bootstrap-template/
-  * Updated: Jul 23 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="contact-page">
@@ -66,23 +58,21 @@
     <div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">MobiPet</h1>
+       <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+          <h1 class="sitename">Mobipet</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="{{route('index')}}" >Início</a></li>
-            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-            <li><a href="{{route('services')}}">Serviços</a></li>
-            <li><a href="{{route('devs')}}">Desenvolvedores</a></li></li class="bi bi-chevron-down toggle-dropdown"></i></a></li>
-            <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-            <li><a href="{{route('contact')}}"class="active">Contato</a></li>
-            <li><a href="{{route('produtos')}}">Produtos</a></li>
-            <li><a href="{{route('perfil')}}">Perfil</a></li>
-          </ul>
+              <li><a href="{{route('index')}}">Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+              <li><a href="{{route('contact')}}" class="active">Contato</a></li>
+              <li><a href="{{route('perfil')}}">Perfil</a></li>
+              
+            </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
@@ -220,54 +210,43 @@
 
   </main>
 
-  <footer id="footer" class="footer-16 footer position-relative">
+   <footer id="footer" class="footer-16 footer position-relative">
+
 
     <div class="container">
 
+
       <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
-        <div class="row align-items-start">
-
-          
-
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-md-6 align-items-start">
+            <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+          <h1 class="sitename">Mobipet</h1>
+        </a>
+            <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
           </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
-          <div class="row align-items-center">
-
-            <div class="col-lg-6">
-              <div class="copyright">
-                <p>© <span class="sitename">MobiPet</span>.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="legal-links">
-                <a href="#!">Privacy Policy</a>
-                <a href="#!">Terms of Service</a>
-                <a href="#!">Cookie Policy</a>
-                
-                </div>
-              </div>
-           
+          <div class="col-md-6 align-items-end">
+            <p><span><i class="bi bi-geo-alt"></i> Rua Bela Vista, 100 - Centro, Tambaú - SP</span></p>
+            <p><span><i class="bi bi-telephone"></i> (19)9999-8888</span></p>
+            <p><span><i class="bi bi-envelope"></i> mobipet@gmail.com</span></p>
           </div>
         </div>
-      </div>
+
+
+          <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
     </div>
 
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+
+       
   </footer>
 
   <!-- Scroll Top -->

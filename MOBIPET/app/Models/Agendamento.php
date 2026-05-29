@@ -7,15 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agendamento extends Model
 {
-    use HasFactory; //permite fazer testes de forma automatizada
+    use HasFactory;
 
-    // aqui vai ser definido o que sera enviado para ser preenchido 
+    // Nome da tabela
+    protected $table = 'Agendamento';
+
+    // Chave primária
+    protected $primaryKey = 'id_agendamento';
+
+    // Permitir inserção em massa
     protected $fillable = [
-        'nome_pet',
-        'raca',
-        'tipo_servico', // ex: banho, tosa, hidratação
         'data_agendamento',
         'horario',
-        'observacoes'
+        'status_agendamento',
+        'observacoes',
+        'fk_id_pet',
+        'fk_id_servico',
+        'fk_id_funcionario'
     ];
+
+    // Se não tiver created_at e updated_at
+    public $timestamps = false;
 }

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Faq - Clinic Bootstrap Template</title>
+  <title>Perguntas e Dúvidas Frequentes</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -29,13 +29,6 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Clinic
-  * Template URL: https://bootstrapmade.com/clinic-bootstrap-template/
-  * Updated: Jul 23 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="faq-page">
@@ -46,8 +39,8 @@
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+19 99999-8888</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
@@ -56,65 +49,33 @@
       </div>
     </div><!-- End Top Bar -->
 
-    <div class="branding d-flex align-items-cente">
+<div class="branding d-flex align-items-cente">
 
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Clinic</h1>
-        </a>
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+          <a href="{{route('index')}}" class="logo d-flex align-items-center">
+            <h1 class="sitename">Mobipet</h1>
+          </a>
 
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="departments.html">Departments</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="doctors.html">Doctors</a></li>
-            <li class="dropdown"><a href="#"><span>More Pages</span> <i
-                  class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="department-details.html">Department Details</a></li>
-                <li><a href="service-details.html">Service Details</a></li>
-                <li><a href="appointment.html">Appointment</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="faq.html" class="active">Frequently Asked Questions</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="terms.html">Terms</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
-                <li><a href="404.html">404</a></li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i
-                  class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                      class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+          <nav id="navmenu" class="navmenu">
+         <ul>
+              <li><a href="{{route('index')}}" class="active">Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+              <li><a href="{{route('contact')}}">Contato</a></li>
+              <li><a href="{{route('perfil')}}">Perfil</a></li>
+              <li><a href="{{route('painel-controle')}}">Painel</a></li>
+              
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+
+        </div>
 
       </div>
 
-    </div>
-
-  </header>
+    </header>
 
   <main class="main">
 
@@ -124,9 +85,9 @@
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1 class="heading-title">Frequenty Asked Questions</h1>
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-                ullamcorper mattis, pulvinar dapibus leo.</p>
+              <h1 class="heading-title">Perguntas e Dúvidas</h1>
+              <p class="mb-0">Encontre aqui as principais dúvidas e respostas sobre
+                 nossos produtos, serviços e atendimento.</p>
             </div>
           </div>
         </div>
@@ -134,8 +95,8 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Faq</li>
+            <li><a href="index.html">Inicio</a></li>
+            <li class="current">Perguntas E Dúvidas</li>
           </ol>
         </div>
       </nav>
@@ -154,7 +115,7 @@
               <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="150">
                 <div class="faq-header">
                   <span class="faq-number">01</span>
-                  <h4>Donec sollicitudin molestie malesuada proin eget tortor?</h4>
+                  <h4>Vocês trabalham com ração para pets com alergia alimentar?</h4>
                   <div class="faq-toggle">
                     <i class="bi bi-plus"></i>
                     <i class="bi bi-dash"></i>
@@ -162,8 +123,7 @@
                 </div>
                 <div class="faq-content">
                   <div class="content-inner">
-                    <p>Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Donec rutrum congue leo eget
-                      malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
+                    <p>Sim! Temos opções hipoalergênicas e rações especiais para cães e gatos com sensibilidades alimentares.
                     </p>
                   </div>
                 </div>
@@ -172,7 +132,7 @@
               <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
                 <div class="faq-header">
                   <span class="faq-number">02</span>
-                  <h4>Sed porttitor lectus nibh vivamus magna justo?</h4>
+                  <h4>Como sei se meu pet está acima do peso?</h4>
                   <div class="faq-toggle">
                     <i class="bi bi-plus"></i>
                     <i class="bi bi-dash"></i>
@@ -180,9 +140,7 @@
                 </div>
                 <div class="faq-content">
                   <div class="content-inner">
-                    <p>Nulla porttitor accumsan tincidunt. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                      Cras ultricies ligula sed magna dictum porta. Vivamus suscipit tortor eget felis porttitor
-                      volutpat.</p>
+                    <p>O ideal é consultar um veterinário, mas sinais comuns incluem dificuldade para correr e excesso de gordura abdominal.</p>
                   </div>
                 </div>
               </div><!-- End FAQ Item -->
@@ -190,7 +148,7 @@
               <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
                 <div class="faq-header">
                   <span class="faq-number">03</span>
-                  <h4>Pellentesque habitant morbi tristique senectus?</h4>
+                  <h4>Vocês têm atendimento veterinário?</h4>
                   <div class="faq-toggle">
                     <i class="bi bi-plus"></i>
                     <i class="bi bi-dash"></i>
@@ -198,8 +156,7 @@
                 </div>
                 <div class="faq-content">
                   <div class="content-inner">
-                    <p>Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vestibulum ac diam sit amet quam
-                      vehicula elementum sed sit amet dui. Donec sollicitudin molestie malesuada.</p>
+                    <p>Sim, contamos com parceiros e profissionais especializados para consultas e orientações.</p>
                   </div>
                 </div>
               </div><!-- End FAQ Item -->
@@ -207,7 +164,7 @@
               <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
                 <div class="faq-header">
                   <span class="faq-number">04</span>
-                  <h4>Lorem ipsum dolor sit amet consectetur adipiscing?</h4>
+                  <h4>Vocês têm produtos antipulgas e carrapatos?</h4>
                   <div class="faq-toggle">
                     <i class="bi bi-plus"></i>
                     <i class="bi bi-dash"></i>
@@ -215,8 +172,7 @@
                 </div>
                 <div class="faq-content">
                   <div class="content-inner">
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
-                      Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+                    <p>Sim, trabalhamos com diversas opções para prevenção e tratamento.</p>
                   </div>
                 </div>
               </div><!-- End FAQ Item -->
@@ -224,7 +180,7 @@
               <div class="faq-item" data-aos="fade-up" data-aos-delay="350">
                 <div class="faq-header">
                   <span class="faq-number">05</span>
-                  <h4>Curabitur aliquet quam id dui posuere blandit?</h4>
+                  <h4>Qual a frequência ideal de banho para cães?</h4>
                   <div class="faq-toggle">
                     <i class="bi bi-plus"></i>
                     <i class="bi bi-dash"></i>
@@ -232,8 +188,7 @@
                 </div>
                 <div class="faq-content">
                   <div class="content-inner">
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                      deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati.</p>
+                    <p>Depende da raça e estilo de vida, mas geralmente a cada 15 ou 30 dias.</p>
                   </div>
                 </div>
               </div><!-- End FAQ Item -->
@@ -251,7 +206,9 @@
 
   <footer id="footer" class="footer-16 footer position-relative">
 
-    <div class="container">
+  <!-- FINAL AQUI -->
+
+<div class="container">
 
       <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
         <div class="row align-items-start">
@@ -259,19 +216,18 @@
           <div class="col-lg-5">
             <div class="brand-section">
               <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Clinic</span>
+                <span class="sitename">Mobipet</span>
               </a>
-              <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
-                innovative solutions that elevate your brand presence.</p>
+              <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
 
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>123 Creative Boulevard, Design District, NY 10012</span>
+                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>(19)99999-8888</span>
+                  <span> (19)9999-8888</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
@@ -280,71 +236,11 @@
               </div>
             </div>
           </div>
-
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Studio</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Our Story</a>
-                      <a href="#!">Design Process</a>
-                      <a href="#!">Portfolio</a>
-                      <a href="#!">Case Studies</a>
-                      <a href="#!">Awards</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Services</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Brand Identity</a>
-                      <a href="#!">Web Design</a>
-                      <a href="#!">Mobile Apps</a>
-                      <a href="#!">Digital Strategy</a>
-                      <a href="#!">Consultation</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Resources</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Design Blog</a>
-                      <a href="#!">Style Guide</a>
-                      <a href="#!">Free Assets</a>
-                      <a href="#!">Tutorials</a>
-                      <a href="#!">Inspiration</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Connect</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Start Project</a>
-                      <a href="#!">Schedule Call</a>
-                      <a href="#!">Join Newsletter</a>
-                      <a href="#!">Follow Updates</a>
-                      <a href="#!">Partnership</a>
-                    </nav>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
-    </div>
+   
+<!-- FIM FINAL AQUI -->
 
     <div class="footer-bottom">
       <div class="container">
