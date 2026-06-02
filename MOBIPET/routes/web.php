@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AgendamentoController;
-
-
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PetController;
 
 Route::get('/', function () {
     return view('index');
@@ -66,3 +67,19 @@ Route::get('/painel-controle', function () {
     return view('painel-controle');
 })->name('painel-controle');
 
+Route::get('/login', [AuthController::class, 'index'])
+    ->name('login');
+
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.autenticar');
+
+Route::get('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
+
+Route::resource('pets', PetController::class);
+
+// Rota para exibir a view de cadastro
+Route::get('/cadastro', [LoginController::class, 'exibirCadastro'])->name('cadastro');
+
+// Rota POST para receber os dados do formulário e salvar no banco
+Route::post('/cadastro/salvar', [LoginController::class, 'salvarCadastro'])->name('cadastro.salvar');

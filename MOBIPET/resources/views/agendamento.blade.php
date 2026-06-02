@@ -51,7 +51,11 @@
         </div>
       </div><!-- End Top Bar -->
 
-      <div class="branding d-flex align-items-cente">
+      <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
+
+      <div class="branding d-flex align-items-center">
 
         <div class="container position-relative d-flex align-items-center justify-content-between">
           <a href="{{route('index')}}" class="logo d-flex align-items-center">
@@ -60,18 +64,46 @@
 
           <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="{{route('index')}}" class="active">Início</a></li>
-              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('index')}}" >Início</a></li>
+              <li><a href="{{route('sobre')}}" >Sobre nós</a></li>
               <li><a href="{{route('services')}}">Serviços</a></li>
               <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
-              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-              <li><a href="{{route('contact')}}">Contato</a></li>
-              <li><a href="{{route('perfil')}}">Perfil</a></li>
+            
+              @if(session()->has('cliente_id'))
+              <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
+                <li><a href="{{route('agendamento')}}" class="active">Agendamento</a></li>
+                <li>
+                    <a href="{{ route('pets.index') }}" >
+                        Meus Pets
+                    </a>
+                </li>
+                <li class="dropdown">
+                  
+                    <a href="{{ route('perfil')}}">
+                        <i class="fa-solid fa-user"></i> 
+                        {{ session('cliente_nome') }}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('logout') }}">
+                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
+
+                @else
+
+                <li>
+                    <a href="{{ route('login') }}">
+                        Entrar
+                    </a>
+                </li>
+
+                @endif
               
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
           </nav>
-
         </div>
 
       </div>
@@ -322,10 +354,6 @@
 
 <!-- CSS -->
 <style>
-
-body{
-  background: #f7f9fc;
-}
 
 .hero-modern{
   background:

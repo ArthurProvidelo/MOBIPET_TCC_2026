@@ -72,20 +72,46 @@
 
 
         <nav id="navmenu" class="navmenu">
-         <ul>
+            <ul>
               <li><a href="{{route('index')}}" >Início</a></li>
-              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('sobre')}}" >Sobre nós</a></li>
               <li><a href="{{route('services')}}">Serviços</a></li>
               <li><a href="{{route('devs')}}" class="active">Desenvolvedores</a></li>
-              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-              <li><a href="{{route('contact')}}">Contato</a></li>
-              <li><a href="{{route('perfil')}}">Perfil</a></li>
+              @if(session()->has('cliente_id'))
+              <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
+                <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+                <li>
+                    <a href="{{ route('pets.index') }}" >
+                        Meus Pets
+                    </a>
+                </li>
+                <li class="dropdown">
+                  
+                    <a href="{{ route('perfil')}}">
+                        <i class="fa-solid fa-user"></i> 
+                        {{ session('cliente_nome') }}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('logout') }}">
+                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
+
+                @else
+
+                <li>
+                    <a href="{{ route('login') }}">
+                        Entrar
+                    </a>
+                </li>
+
+                @endif
               
             </ul>
-           
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
 
 
       </div>
