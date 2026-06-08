@@ -48,17 +48,46 @@
         </a>
 
         <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="{{route('index')}}">Início</a></li>
-            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-            <li><a href="{{route('services')}}">Serviços</a></li>
-            <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
-            <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-            <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('login')}}">Entrar</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+            <ul>
+              <li><a href="{{route('index')}}">Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+
+              @if(session()->has('cliente_id'))
+              <li><a href="{{route('pets.create')}}" class="active" >Cadastrar Pet</a></li>
+                <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+                <li>
+                    <a href="{{ route('pets.index') }}" >
+                        Meus Pets
+                    </a>
+                </li>
+                <li class="dropdown">
+                  
+                    <a href="{{ route('perfil')}}">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('logout') }}">
+                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
+
+                @else
+
+                <li>
+                    <a href="{{ route('login') }}">
+                        Entrar
+                    </a>
+                </li>
+
+                @endif
+              
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
       </div>
     </div>
   </header>
@@ -71,7 +100,7 @@
                 
                 <div class="card border-0 shadow-lg rounded-4 overflow-hidden bg-white" style="font-family: 'Roboto', sans-serif;">
                     
-                    <div class="card-header text-white text-center py-4 border-0 position-relative" style="background: linear-gradient(90deg, #3061cb 0%, #031437 100%) !important;">
+                    <div class="card-header text-white text-center py-4 border-0" style="background-color: #497baf !important;">
                       <div class="position-absolute top-50 start-50 translate-middle opacity-10" style="font-size: 7rem; color: #fff; pointer-events: none;">
                         <i class="fa-solid fa-user-plus"></i>
                       </div>
@@ -148,7 +177,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100 py-2.5 fw-semibold rounded-pill shadow-sm dynamic-btn border-0" style="background: linear-gradient(90deg, #3061cb 0%, #031437 100%) !important;">
+                            <button type="submit" class="btn btn-primary w-100 py-2.5 fw-semibold rounded-pill shadow-sm dynamic-btn border-0" style="background-color: #497baf  !important;">
                                 <i class="bi bi-check-circle me-1"></i> Finalizar Cadastro
                             </button>
 

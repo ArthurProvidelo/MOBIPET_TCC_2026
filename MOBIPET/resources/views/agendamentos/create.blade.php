@@ -53,7 +53,7 @@
           </i>
 
           <i class="bi bi-phone d-flex align-items-center ms-4">
-            <span>+19 99999-8888</span>
+            <span>+55 (19) 99999-8888</span>
           </i>
 
         </div>

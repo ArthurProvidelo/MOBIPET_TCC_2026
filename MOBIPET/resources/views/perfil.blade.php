@@ -260,7 +260,7 @@
               <li><a href="{{route('sobre')}}">Sobre nós</a></li>
               <li><a href="{{route('services')}}">Serviços</a></li>
               <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
-              
+
               @if(session()->has('cliente_id'))
               <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
                 <li><a href="{{route('agendamento')}}">Agendamento</a></li>
@@ -272,8 +272,7 @@
                 <li class="dropdown">
                   
                     <a href="{{ route('perfil')}}">
-                        <i class="fa-solid fa-user"></i> 
-                        {{ session('cliente_nome') }}
+                        <i class="fa-solid fa-user"></i>
                     </a>
                 </li>
 

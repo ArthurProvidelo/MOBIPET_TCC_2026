@@ -91,11 +91,3 @@ CREATE TABLE Avaliacao (
 		REFERENCES Agendamento(id_agendamento)
         ON DELETE CASCADE
 );
-
--- -------------
-
-USE mobipet;
-
--- COMANDO APENAS PARA QUNADO FOR USAR O LOGIN
-ALTER TABLE users
-ADD COLUMN tipo VARCHAR(255) NOT NULL DEFAULT 'usuario';

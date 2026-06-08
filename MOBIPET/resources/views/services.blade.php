@@ -250,7 +250,7 @@
             <a href="mailto:mobipet@gmail.com" class="ms-1">mobipet@gmail.com</a>
           </i>
           <i class="bi bi-phone d-flex align-items-center ms-4">
-            <span class="ms-1">+19 99999-8888</span>
+            <span class="ms-1">(19)98943-2384</span>
           </i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
@@ -267,17 +267,46 @@
         </a>
 
         <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="{{route('index')}}">Início</a></li>
-            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-            <li><a href="{{route('services')}}" class="active">Serviços</a></li>
-            <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
-            <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-            <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('perfil')}}">Perfil</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+            <ul>
+              <li><a href="{{route('index')}}" >Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}" class="active">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+
+              @if(session()->has('cliente_id'))
+              <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
+                <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+                <li>
+                    <a href="{{ route('pets.index') }}" >
+                        Meus Pets
+                    </a>
+                </li>
+                <li class="dropdown">
+                  
+                    <a href="{{ route('perfil')}}">
+                        <i class="fa-solid fa-user"></i> 
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('logout') }}">
+                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
+
+                @else
+
+                <li>
+                    <a href="{{ route('login') }}">
+                        Entrar
+                    </a>
+                </li>
+
+                @endif
+              
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
       </div>
     </div>
   </header>

@@ -84,7 +84,7 @@ p, span, small {
     <div class="container d-flex justify-content-between">
       <div class="contact-info d-flex align-items-center">
         <i class="bi bi-envelope"><a href="#">mobipet@gmail.com</a></i>
-        <i class="bi bi-phone ms-4"><span>(19) 99999-8888</span></i>
+        <i class="bi bi-phone ms-4"><span>(19) 98943-2384</span></i>
       </div>
     </div>
   </div>
@@ -93,19 +93,47 @@ p, span, small {
     <div class="container d-flex justify-content-between">
       <h1 class="sitename">Mobipet</h1>
 
-      <nav class="navmenu">
-        <ul>
-              <li><a href="{{route('index')}}" >Início</a></li>
+      <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="{{route('index')}}">Início</a></li>
               <li><a href="{{route('sobre')}}">Sobre nós</a></li>
               <li><a href="{{route('services')}}">Serviços</a></li>
               <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
-              <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-              <li><a href="{{route('contact')}}">Contato</a></li>
-              <li><a href="{{route('perfil')}}">Perfil</a></li>
-              <li><a href="{{route('painel-controle')}}" class="active">Painel</a></li>
+
+              @if(session()->has('cliente_id'))
+              <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
+                <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+                <li>
+                    <a href="{{ route('pets.index') }}" >
+                        Meus Pets
+                    </a>
+                </li>
+                <li class="dropdown">
+                  
+                    <a href="{{ route('perfil')}}">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('logout') }}">
+                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
+
+                @else
+
+                <li>
+                    <a href="{{ route('login') }}">
+                        Entrar
+                    </a>
+                </li>
+
+                @endif
               
-          </ul>
-      </nav>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
     </div>
   </div>
 

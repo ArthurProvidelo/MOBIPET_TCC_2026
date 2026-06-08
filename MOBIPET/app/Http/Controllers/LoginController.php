@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -28,15 +29,21 @@ class LoginController extends Controller
         ]);
 
         // 2. Gravação na tabela correta do seu banco: 'Cliente'
-        DB::table('Cliente')->insert([
+        $idCliente = DB::table('Cliente')->insertGetId([
             'nome'     => $request->nome,
             'cpf'      => $request->cpf,
             'telefone' => $request->telefone,
             'email'    => $request->email,
-            'senha'    => Hash::make($request->senha), // Senha criptografada por segurança
+            'senha'    => Hash::make($request->senha),
             'endereco' => $request->endereco,
         ]);
 
+        Session::put('cliente_id', $idCliente);
+        Session::put('cliente_nome', $request->nome);
+
+        if($idCliente){
+            return redirect()->route('index');
+        }
         // 3. Redirecionamento para a tela de login com mensagem de sucesso
         return redirect()->route('login')->with('sucesso', 'Cadastro realizado com sucesso! Faça seu login.');
     }

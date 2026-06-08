@@ -26,13 +26,34 @@
 </head>
 
 <body class="inner-page">
+      <style>
+          body.inner-page {
+            background-image: url('assets/img/fundo_login.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+          }
+
+          body.inner-page::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.15); 
+            z-index: -1;
+          }
+      </style>
 
   <header id="header" class="header fixed-top">
     <div class="topbar d-flex align-items-center dark-background">
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:mobipet@gmail.com">mobipet@gmail.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)98943-2384</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
@@ -48,17 +69,39 @@
         </a>
 
         <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="{{route('index')}}">Início</a></li>
-            <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-            <li><a href="{{route('services')}}">Serviços</a></li>
-            <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
-            <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-            <li><a href="{{route('contact')}}">Contato</a></li>
-            <li><a href="{{route('perfil')}}">Perfil</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+            <ul>
+              <li><a href="{{route('index')}}">Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+
+              @if(session()->has('cliente_id'))
+              <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
+                <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+                <li>
+                    <a href="{{ route('pets.index') }}" >
+                        Meus Pets
+                    </a>
+                </li>
+                <li class="dropdown">
+                  
+                    <a href="{{ route('perfil')}}">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('logout') }}">
+                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
+
+                @else
+                @endif
+              
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
       </div>
     </div>
   </header>
@@ -109,18 +152,14 @@
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary w-100 py-2.5 fw-semibold rounded-pill shadow-sm transition-all" style="background: linear-gradient(90deg, #3061cb 0%, #031437 100%) !important; border: 0;">
-                                <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
-                            </button>
+                           <button type="submit" class="btn btn-login bg-primary text-white w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm">
+                              <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
+                          </button>
 
                             <div class="text-center mt-4">
                                 <p class="text-secondary small mb-0">Não tem uma conta?</p>
                                 <a href="{{ route('cadastro') }}" class="fw-bold text-decoration-none" style="color: #3061cb;">Cadastre-se aqui</a>
                             </div>
-
-                            <button class="btn btn-primary w-100 py-2.5 fw-semibold rounded-pill shadow-sm transition-all">
-                                <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
-                            </button>
 
                         </form>
 
@@ -133,38 +172,10 @@
     </div>
 
   </main>
-
-  <footer id="footer" class="footer-16 footer position-relative">
-    <div class="container">
-      <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
-        <div class="row">
-          <div class="col-md-6 align-items-start">
-            <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-              <h1 class="sitename">Mobipet</h1>
-            </a>
-            <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
-          </div>
-          <div class="col-md-6 align-items-end">
-            <p><span><i class="bi bi-geo-alt"></i> Rua Bela Vista, 100 - Centro, Tambaú - SP</span></p>
-            <p><span><i class="bi bi-telephone"></i> (19)9999-8888</span></p>
-            <p><span><i class="bi bi-envelope"></i> mobipet@gmail.com</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div vw class="enabled">
-      <div vw-access-button class="active"></div>
-      <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
-      </div>
-    </div>
-
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-      new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
-  </footer>
+      <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+      <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+      </script>
 
   <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

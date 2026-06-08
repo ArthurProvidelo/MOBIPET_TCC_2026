@@ -40,7 +40,7 @@
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
               href="mailto:contact@example.com">mobipet@gmail.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+19 99999-8888</span></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19) 98943-2384</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
@@ -58,8 +58,8 @@
 
           <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="{{route('index')}}" class="active">Início</a></li>
-              <li><a href="{{route('sobre')}}" >Sobre nós</a></li>
+              <li><a href="{{route('index')}}" >Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
               <li><a href="{{route('services')}}">Serviços</a></li>
               <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
               
@@ -67,7 +67,7 @@
               <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
                 <li><a href="{{route('agendamento')}}">Agendamento</a></li>
                 <li>
-                    <a href="{{ route('pets.index') }}" >
+                    <a href="{{ route('pets.index') }}" class="active">
                         Meus Pets
                     </a>
                 </li>
@@ -75,7 +75,6 @@
                   
                     <a href="{{ route('perfil')}}">
                         <i class="fa-solid fa-user"></i> 
-                        {{ session('cliente_nome') }}
                     </a>
                 </li>
 
@@ -255,7 +254,7 @@
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span> (19)9999-8888</span>
+                  <span> (19)98943-2384</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>

@@ -28,7 +28,7 @@ class AuthController extends Controller
                 ->with('erro', 'Usuário não encontrado.');
         }
 
-        if ($request->senha != $cliente->senha) {
+        if (!password_verify($request->senha, $cliente->senha)) {
             return back()
                 ->with('erro', 'Senha inválida.');
         }

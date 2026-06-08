@@ -59,7 +59,7 @@ Route::get('/services', function () {
     return view('services');
 })->name('services');
 
-Route::get('/perfil', function () {
+Route::post('/perfil', function () {
     return view('perfil');
 })->name('perfil');
 

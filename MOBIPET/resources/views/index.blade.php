@@ -42,7 +42,7 @@
           <div class="contact-info d-flex align-items-center">
             <i class="bi bi-envelope d-flex align-items-center"><a
                 href="mailto:contact@example.com">mobipet@gmail.com</a></i>
-            <i class="bi bi-phone d-flex align-items-center ms-4"><span>+19 99999-8888</span></i>
+            <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)98943-2384</span></i>
           </div>
           <div class="social-links d-none d-md-flex align-items-center">
             <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
@@ -79,8 +79,7 @@
                 <li class="dropdown">
                   
                     <a href="{{ route('perfil')}}">
-                        <i class="fa-solid fa-user"></i> 
-                        {{ session('cliente_nome') }}
+                        <i class="fa-solid fa-user"></i>
                     </a>
                 </li>
 
@@ -473,7 +472,7 @@ body{
           </div>
           <div class="col-md-6 align-items-end">
             <p><span><i class="bi bi-geo-alt"></i> Rua Bela Vista, 100 - Centro, Tambaú - SP</span></p>
-            <p><span><i class="bi bi-telephone"></i> (19)9999-8888</span></p>
+            <p><span><i class="bi bi-telephone"></i> (19)98943-2384</span></p>
             <p><span><i class="bi bi-envelope"></i> mobipet@gmail.com</span></p>
           </div>
         </div>

@@ -65,7 +65,7 @@
               <li><a href="{{route('pets.index')}}">Meus Pets</a></li>
               <li class="dropdown">
                 <a href="{{ route('perfil')}}">
-                  {{ session('cliente_nome') }} <i class="fa-solid fa-user ms-1"></i> 
+                 <i class="fa-solid fa-user ms-1"></i> 
                 </a>
               </li>
               <li>
