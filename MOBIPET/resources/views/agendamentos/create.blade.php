@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Agendamento - Mobipet</title>
+  <title>Agendamento</title>
 
   <!-- Favicons -->
   <link href="assets/img/mobipet_icon.png" rel="icon">
@@ -53,7 +53,7 @@
           </i>
 
           <i class="bi bi-phone d-flex align-items-center ms-4">
-            <span>+55 (19) 99999-8888</span>
+            <span>+55 (19) 98943-2384</span>
           </i>
 
         </div>
@@ -89,57 +89,43 @@
         </a>
 
         <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="{{ route('index') }}">Início</a></li>
+                        <li><a href="{{ route('sobre') }}" >Sobre nós</a></li>
+                        <li><a href="{{ route('services') }}">Serviços</a></li>
+                        <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
 
-          <ul>
+                        @if (session()->has('cliente_id'))
+                            <li><a href="{{ route('pets.create') }}">Cadastrar Pet</a></li>
+                            <li><a href="{{ route('agendamento') }}" class="active">Agendamento</a></li>
+                            <li>
+                                <a href="{{ route('pets.index') }}">
+                                    Meus Pets
+                                </a>
+                            </li>
+                            <li class="dropdown">
 
-            <li>
-              <a href="{{route('index')}}">
-                Início
-              </a>
-            </li>
+                                <a href="{{ route('perfil') }}">
+                                    <i class="fa-solid fa-user"></i>
+                                </a>
+                            </li>
 
-            <li>
-              <a href="{{route('sobre')}}">
-                Sobre nós
-              </a>
-            </li>
+                            <li>
+                                <a href="{{ route('logout') }}">
+                                    Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                </a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="{{ route('login') }}">
+                                    Entrar
+                                </a>
+                            </li>
+                        @endif
 
-            <li>
-              <a href="{{route('services')}}">
-                Serviços
-              </a>
-            </li>
-
-            <li>
-              <a href="{{route('devs')}}">
-                Desenvolvedores
-              </a>
-            </li>
-
-            <li>
-              <a href="{{route('agendamento')}}"
-                 class="active">
-                Agendamento
-              </a>
-            </li>
-
-            <li>
-              <a href="{{route('contact')}}">
-                Contato
-              </a>
-            </li>
-
-            <li>
-              <a href="{{route('perfil')}}">
-                Perfil
-              </a>
-            </li>
-
-          </ul>
-
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-
-        </nav>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
 
       </div>
 
@@ -164,10 +150,6 @@
         <!-- HERO -->
         <div class="hero-agendamento text-center"
              data-aos="fade-up">
-
-          <span class="badge badge-mobipet mb-4">
-            Plataforma Inteligente
-          </span>
 
           <h1 class="hero-title">
             Agende o atendimento do seu pet
@@ -200,11 +182,11 @@
 
                   <div>
 
-                    <h3>
-                      Agendamento Mobipet
+                    <h3 class="text-white">
+                      Agendamento
                     </h3>
 
-                    <p class="mb-0">
+                    <p class="mb-0 text-metod">
                       Preencha os dados abaixo para realizar o atendimento.
                     </p>
 
@@ -249,113 +231,55 @@
 
                   <div class="row">
 
-                    <div class="col-md-6 mb-4">
+    <div class="col-md-6 mb-4">
 
-                      <label>
-                        Nome do Pet
-                      </label>
+        <label>Nome do Pet</label>
 
-                      <input type="text"
-                             name="nome_pet"
-                             class="form-control"
-                             placeholder="Nome do seu pet"
-                             required>
+        @if($pets->count() > 0)
 
-                    </div>
+            <select name="pet_id"
+                    class="form-control"
+                    required>
 
-                    <div class="col-md-6 mb-4">
+                <option value="">
+                    Selecione um pet
+                </option>
 
-                      <label>
-                        Tipo do Pet
-                      </label>
+                @foreach($pets as $pet)
 
-                      <select name="tipo_pet"
-                              class="form-control"
-                              required>
+                    <option value="{{ $pet->id_pet }}">
+                        {{ $pet->nome }}
+                    </option>
 
-                        <option value="">
-                          Selecione
-                        </option>
+                @endforeach
 
-                        <option value="Cachorro">
-                          Cachorro
-                        </option>
+            </select>
 
-                        <option value="Gato">
-                          Gato
-                        </option>
+        @else
 
-                        <option value="Outro">
-                          Outro
-                        </option>
+            <div class="alert alert-warning">
+                Você ainda não possui pets cadastrados.
+            </div>
 
-                      </select>
+            <a href="{{ route('pets.create') }}"
+               class="btn btn-primary">
 
-                    </div>
+                <i class="fa-solid fa-paw me-2"></i>
+                Cadastrar Pet
 
-                    <div class="col-md-6 mb-4">
+            </a>
 
-                      <label>
-                        Raça
-                      </label>
+        @endif
 
-                      <input type="text"
-                             name="raca"
-                             class="form-control"
-                             placeholder="Raça do pet">
+    </div>
 
-                    </div>
-
-                    <div class="col-md-3 mb-4">
-
-                      <label>
-                        Idade
-                      </label>
-
-                      <input type="number"
-                             name="idade"
-                             class="form-control"
-                             placeholder="Idade">
-
-                    </div>
-
-                    <div class="col-md-3 mb-4">
-
-                      <label>
-                        Porte
-                      </label>
-
-                      <select name="porte"
-                              class="form-control">
-
-                        <option value="">
-                          Selecione
-                        </option>
-
-                        <option value="Pequeno">
-                          Pequeno
-                        </option>
-
-                        <option value="Médio">
-                          Médio
-                        </option>
-
-                        <option value="Grande">
-                          Grande
-                        </option>
-
-                      </select>
-
-                    </div>
-
-                  </div>
+</div>
 
                   <!-- =========================================================
                   SERVIÇO
                   ========================================================= -->
 
                   <div class="section-title mt-5">
-
                     <i class="fa-solid fa-scissors"></i>
 
                     <span>
@@ -365,7 +289,6 @@
                   </div>
 
                   <div class="row">
-
                     <div class="col-md-6 mb-4">
 
                       <label>
@@ -503,7 +426,7 @@
                     <textarea name="observacoes"
                               class="form-control"
                               rows="5"
-                              placeholder="Digite alguma observação importante..."></textarea>
+                              placeholder="Digite alguma observação, alergia..."></textarea>
 
                   </div>
 
@@ -512,9 +435,7 @@
                           class="btn btn-primary btn-agendar w-100">
 
                     <i class="fa-solid fa-calendar-check me-2"></i>
-
                     Confirmar Agendamento
-
                   </button>
 
                 </form>

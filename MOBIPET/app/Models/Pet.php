@@ -9,22 +9,18 @@ class Pet extends Model
 {
     use HasFactory;
 
-    // Nome da tabela
-    protected $table = 'pet';
+    protected $table = 'Pet';
 
-    // Chave primária
     protected $primaryKey = 'id_pet';
 
-    // Campos permitidos para inserção em massa
     protected $fillable = [
         'nome',
         'especie',
         'raca',
-        'idade',
-        'peso',
-        'id_cliente'
+        'porte',
+        'data_nascimento',
+        'fk_id_cliente'
     ];
 
-    // Desativar timestamps (caso não tenha no banco)
     public $timestamps = false;
 }

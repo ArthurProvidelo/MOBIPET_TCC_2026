@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Agendamento;
+use App\Models\Pet;
+use App\Models\Servico;
+use App\Models\Funcionario;
+use Illuminate\Support\Facades\Session;
 
 class AgendamentoController extends Controller
 {
@@ -16,7 +20,10 @@ class AgendamentoController extends Controller
 
     public function create()
     {
-        return view('agendamentos.create');
+        $clienteId = Session::get('cliente_id');
+        $pets = Pet::where('fk_id_cliente', $clienteId)->get();
+
+        return view('agendamentos.create', compact('pets'));
     }
 
    public function store(Request $request)
@@ -39,14 +46,14 @@ class AgendamentoController extends Controller
         'data' => 'required|date',
         'hora' => 'required',
     ]);
-Agendamento::create([
-    'data_agendamento' => $request->data,
-    'horario' => $request->hora,
-    'status_agendamento' => 'Pendente',
-    'fk_id_pet' => 1,
-    'fk_id_servico' => 1,
-    'fk_id_funcionario' => 1,
-]);
+    Agendamento::create([
+        'data_agendamento' => $request->data,
+        'horario' => $request->hora,
+        'status_agendamento' => 'Pendente',
+        'fk_id_pet' => 1,
+        'fk_id_servico' => 1,
+        'fk_id_funcionario' => 1,
+    ]);
 
     return redirect()
         ->route('agendamento')

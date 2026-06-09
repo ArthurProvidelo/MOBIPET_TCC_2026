@@ -5,6 +5,7 @@ use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\ServiceController;
 
 Route::get('/', function () {
     return view('index');
@@ -59,7 +60,7 @@ Route::get('/services', function () {
     return view('services');
 })->name('services');
 
-Route::post('/perfil', function () {
+Route::get('/perfil', function () {
     return view('perfil');
 })->name('perfil');
 
@@ -83,3 +84,9 @@ Route::get('/cadastro', [LoginController::class, 'exibirCadastro'])->name('cadas
 
 // Rota POST para receber os dados do formulário e salvar no banco
 Route::post('/cadastro/salvar', [LoginController::class, 'salvarCadastro'])->name('cadastro.salvar');
+
+// Rota que renderiza o formulário HTML (Método GET)
+Route::get('/servicos/cadastrar', [ServiceController::class, 'create'])->name('services.create');
+
+// Rota que processa os dados e salva no banco (Método POST)
+Route::post('/servicos/salvar', [ServiceController::class, 'store'])->name('services.store');

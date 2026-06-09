@@ -37,7 +37,7 @@
                     <i class="bi bi-envelope d-flex align-items-center">
                         <a href="mailto:mobipet@gmail.com">mobipet@gmail.com</a>
                     </i>
-                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19) 99999-8888</span></i>
+                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19) 98943-2384</span></i>
                 </div>
                 <div class="social-links d-none d-md-flex align-items-center">
                     <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
@@ -194,7 +194,7 @@ body {
 /* --- TIMELINE DE STATUS MINIMALISTA --- */
 .timeline-minimal {
     display: flex;
-    flex-column: column;
+    flex-direction: column;
     position: relative;
     padding-left: 1.5rem;
     border-left: 2px solid #f1f3f5;
@@ -202,19 +202,17 @@ body {
 }
 
 .timeline-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     position: relative;
+    flex-wrap: nowrap;
 }
 
-.timeline-step .step-dot {
-    position: absolute;
-    left: calc(-1.5rem - 6px);
-    top: 6px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #dee2e6;
-    border: 2px solid #fff;
-    z-index: 2;
+.timeline-step .step-content {
+    font-size: 0.95rem;
+    color: #6c757d;
+    white-space: nowrap;
 }
 
 .timeline-step.completed .step-dot {
@@ -229,6 +227,12 @@ body {
 .timeline-step.active .step-dot {
     background-color: var(--bs-primary);
     box-shadow: 0 0 0 4px rgba(var(--bs-primary-rgb), 0.2);
+}
+
+.timeline-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .timeline-step .step-content {
@@ -351,7 +355,15 @@ body {
     .flow-indicator-wrapper {
         padding: 0;
     }
+
 }
+
+    .img-pets{
+        width: 700px !important;
+        height: 450px; 
+        margin-top: 15%;
+        border-radius: 5%;
+    }
     </style>
 
     <main class="bg-white text-dark">
@@ -383,7 +395,7 @@ body {
 
                 <div class="col-lg-6 text-center text-lg-end">
                     <div class="hero-img-wrapper">
-                        <img src="{{ asset('img/about-pets.png') }}" class="img-fluid rounded-4" alt="Interface Mobipet">
+                        <img src="{{ asset('assets/img/about-pets.png') }}" class="img-pets" alt="Interface Mobipet">
                     </div>
                 </div>
             </div>
@@ -458,15 +470,15 @@ body {
                             <div class="timeline-minimal">
                                 <div class="timeline-step completed">
                                     <span class="step-dot"></span>
-                                    <div class="step-content">📅 Agendamento realizado</div>
+                                    <div class="step-content">📅 Agendamento </div>
                                 </div>
                                 <div class="timeline-step completed">
                                     <span class="step-dot"></span>
                                     <div class="step-content">🐾 Pet recebido</div>
                                 </div>
-                                <div class="timeline-step active">
+                                <div class="timeline-step">
                                     <span class="step-dot"></span>
-                                    <div class="step-content fw-bold text-dark">🛁 Banho em andamento</div>
+                                    <div class="step-content">🛁 Banho iniciado</div>
                                 </div>
                                 <div class="timeline-step">
                                     <span class="step-dot"></span>
