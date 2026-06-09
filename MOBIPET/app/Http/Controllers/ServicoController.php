@@ -17,7 +17,7 @@ class ServicoController extends Controller
     // Formulário de criação
     public function create()
     {
-        return view('servicos.create');
+        return view('servico.create');
     }
 
     // Salvar novo serviço
@@ -27,15 +27,17 @@ class ServicoController extends Controller
             'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'preco' => 'required|numeric',
+            'tempoEstimado' => 'required'
         ]);
 
         DB::table('servico')->insert([
             'nome' => $request->nome,
             'descricao' => $request->descricao,
             'preco' => $request->preco,
+            'duracao_estimada' => $request->tempoEstimado
         ]);
 
-        return redirect()->route('servicos.index')
+        return redirect()->route('services.create')
                          ->with('success', 'Serviço cadastrado com sucesso!');
     }
 

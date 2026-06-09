@@ -19,7 +19,8 @@ class Servico extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'preco'
+        'preco',
+        'duracao_estimada'
     ];
 
     // Sem timestamps

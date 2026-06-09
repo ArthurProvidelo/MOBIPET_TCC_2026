@@ -53,12 +53,16 @@
             <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
 
             @if(session()->has('cliente_id'))
-              <li><a href="{{ route('pets.create') }}">Cadastrar Pet</a></li>
-              <li><a href="{{ route('agendamento') }}">Agendamento</a></li>
-              <li><a href="{{ route('pets.index') }}">Meus Pets</a></li>
-              <li class="dropdown">
-                <a href="{{ route('perfil') }}"><i class="fa-solid fa-user"></i></a>
-              </li>
+              <li><a href="{{ route('index') }}" class="active">Início</a></li>
+        <li><a href="{{ route('sobre') }}">Sobre nós</a></li>
+        <li><a href="{{ route('services') }}">Serviços</a></li>
+        <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
+        <li><a href="{{ route('devs') }}">Meus Pets</a></li>
+        <li>
+            <a href="{{ route('pets.index') }}">
+                Cadastro de Funcionário
+            </a>
+        </li>
               <li>
                 <a href="{{ route('logout') }}">
                   Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -125,12 +129,12 @@
 
                   <div class="col-md-6">
                     <label for="preco" class="form-label fw-bold text-dark">Preço (R$) *</label>
-                    <input type="number" step="0.01" class="form-control form-control-lg rounded-pill border-2" id="preco" name="preco" placeholder="0,00" required value="{{ old('preco') }}">
+                    <input type="text" step="0.01" class="form-control form-control-lg rounded-pill border-2" id="preco" name="preco" placeholder="0,00" required value="{{ old('preco') }}">
                   </div>
 
                   <div class="col-md-6">
                     <label for="duracao" class="form-label fw-bold text-dark">Tempo Estimado de Duração *</label>
-                    <select class="form-select form-control-lg rounded-pill border-2" id="duracao" name="duracao" required>
+                    <select type="text" class="form-select form-control-lg rounded-pill border-2" id="duracao" name="duracao" required>
                       <option value="" disabled selected>Selecione o tempo médio...</option>
                       <option value="30" {{ old('duracao') == '30' ? 'selected' : '' }}>30 minutos</option>
                       <option value="60" {{ old('duracao') == '60' ? 'selected' : '' }}>1 hora</option>
@@ -229,5 +233,26 @@
 
   <script src="{{ asset('assets/js/main.js') }}"></script>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.9/dist/inputmask.min.js"></script>
+    <script>
+        function exibeSweetAlert(icone, titulo, texto){
+            Swal.fire({
+                title: titulo,
+                text: texto,
+                icon: icone
+            });
+        }
+        </script>
+
+      @if(session("success"))
+      <script>exibeSweetAlert("success", "Sucesso", '{{session('success')}}')</script>
+      @endif
+
+      @if ($errors->any())
+        <script> exibeSweetAlert('error', 'Erro!','{{implode('|', $errors->all()) }}')</script>
+      @endif
 </body>
 </html>

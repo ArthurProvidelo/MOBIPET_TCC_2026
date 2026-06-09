@@ -117,7 +117,6 @@
           <div class="row align-items-center">
             <div class="col-lg-6">
               <div class="hero-content">
-                
 
                 <h1 class="banho-tosa" data-aos="fade-right" data-aos-delay="300">
                   Monitoramento <br><span class="highlight">&</span> Qualidade
@@ -147,7 +146,7 @@
 
                 <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
                   <a href="{{route('agendamento')}}" class="btn btn-primary">Agendar Agora  <i class="fa-solid fa-arrow-right"></i></a>
-                  <a href="{{route('sobre')}}" class="btn btn-outline">
+                  <a href="{{route('services')}}" class="btn btn-outline">
                     <i class="fa-solid fa-angles-right"></i>
                     Conhecer nossos Serviços
                   </a>

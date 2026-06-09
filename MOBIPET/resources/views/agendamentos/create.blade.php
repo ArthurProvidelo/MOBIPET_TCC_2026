@@ -139,320 +139,127 @@
 
   <main class="main">
 
-    <!-- =========================================================
-    SECTION AGENDAMENTO
-    ========================================================= -->
-
     <section class="agendamento-section">
-
       <div class="container">
 
-        <!-- HERO -->
-        <div class="hero-agendamento text-center"
-             data-aos="fade-up">
-
-          <h1 class="hero-title">
-            Agende o atendimento do seu pet
-          </h1>
-
+        <div class="hero-agendamento text-center" data-aos="fade-up">
+          <h1 class="hero-title">Agende o atendimento do seu pet</h1>
           <p class="hero-subtitle">
-            Mais praticidade, segurança e monitoramento
-            completo para acompanhar cada etapa do atendimento.
+            Mais praticidade, segurança e monitoramento completo para acompanhar cada etapa do atendimento.
           </p>
-
         </div>
 
-        <!-- CARD -->
         <div class="row justify-content-center">
-
           <div class="col-lg-10">
+            <div class="card agendamento-card" data-aos="zoom-in" data-aos-delay="200">
 
-            <div class="card agendamento-card"
-                 data-aos="zoom-in"
-                 data-aos-delay="200">
-
-              <!-- HEADER -->
               <div class="card-header">
-
                 <div class="d-flex align-items-center gap-3">
-
                   <div class="header-icon">
                     <i class="fa-solid fa-paw"></i>
                   </div>
-
                   <div>
-
-                    <h3 class="text-white">
-                      Agendamento
-                    </h3>
-
-                    <p class="mb-0 text-metod">
-                      Preencha os dados abaixo para realizar o atendimento.
-                    </p>
-
+                    <h3 class="text-white">Agendamento</h3>
+                    <p class="mb-0 text-metod">Preencha os dados abaixo para realizar o atendimento.</p>
                   </div>
-
                 </div>
-
               </div>
 
-              <!-- BODY -->
               <div class="card-body">
 
-                <!-- ALERT -->
                 @if(session('success'))
-
                   <div class="alert alert-success">
-
                     {{ session('success') }}
-
                   </div>
-
                 @endif
 
-                <!-- FORM -->
-                <form action="{{ route('agendamento.store') }}"
-                      method="POST">
-
+                <form action="{{ route('agendamento.store') }}" method="POST">
                   @csrf
-                  <!-- =========================================================
-                  DADOS DO PET
-                  ========================================================= -->
 
-                  <div class="section-title mt-5">
-
+                  <div class="section-title mt-3">
                     <i class="fa-solid fa-dog"></i>
-
-                    <span>
-                      Dados do Pet
-                    </span>
-
+                    <span class="mt-3">Dados do Pet</span>
                   </div>
 
-                  <div class="row">
-
-    <div class="col-md-6 mb-4">
-
-        <label>Nome do Pet</label>
-
-        @if($pets->count() > 0)
-
-            <select name="pet_id"
-                    class="form-control"
-                    required>
-
-                <option value="">
-                    Selecione um pet
-                </option>
-
-                @foreach($pets as $pet)
-
-                    <option value="{{ $pet->id_pet }}">
-                        {{ $pet->nome }}
-                    </option>
-
-                @endforeach
-
-            </select>
-
-        @else
-
-            <div class="alert alert-warning">
-                Você ainda não possui pets cadastrados.
-            </div>
-
-            <a href="{{ route('pets.create') }}"
-               class="btn btn-primary">
-
-                <i class="fa-solid fa-paw me-2"></i>
-                Cadastrar Pet
-
-            </a>
-
-        @endif
-
-    </div>
-
-</div>
-
-                  <!-- =========================================================
-                  SERVIÇO
-                  ========================================================= -->
+                  <div class="row mt-2">
+                    <div class="col-md-6 mb-4">
+                      <label>Nome do Pet</label>
+                      @if($pets->count() > 0)
+                        <select name="fk_id_pet" class="form-control" required>
+                          <option value="">Selecione um pet</option>
+                          @foreach($pets as $pet)
+                            <option value="{{ $pet->id_pet }}">{{ $pet->nome }}</option>
+                          @endforeach
+                        </select>
+                      @else
+                        <div class="alert alert-warning">Você ainda não possui pets cadastrados.</div>
+                        <a href="{{ route('pets.create') }}" class="btn btn-primary">
+                          <i class="fa-solid fa-paw me-2"></i>Cadastrar Pet
+                        </a>
+                      @endif
+                    </div>
+                  </div>
 
                   <div class="section-title mt-5">
                     <i class="fa-solid fa-scissors"></i>
-
-                    <span>
-                      Serviço
-                    </span>
-
+                    <span>Serviço</span>
                   </div>
 
                   <div class="row">
                     <div class="col-md-6 mb-4">
-
-                      <label>
-                        Profissional
-                      </label>
-
-                      <select name="profissional"
-                              class="form-control"
-                              required>
-
-                        <option value="">
-                          Selecione
-                        </option>
-
-                        <option value="Maria">
-                          Maria
-                        </option>
-
-                        <option value="Yasmin">
-                          Yasmin
-                        </option>
-
-                        <option value="Pedro">
-                          Pedro
-                        </option>
-
-                        <option value="Kauan">
-                          Kauan
-                        </option>
-
-                        <option value="Rafaela">
-                          Rafaela
-                        </option>
-
+                      <label>Profissional</label>
+                      <select name="fk_id_funcionario" class="form-control" required>
+                        <option value="">Selecione</option>
+                        @foreach($funcionarios as $funcionario)
+                          <option value="{{ $funcionario->id_funcionario }}">{{ $funcionario->nome }}</option>
+                        @endforeach
                       </select>
-
                     </div>
 
                     <div class="col-md-6 mb-4">
-
-                      <label>
-                        Serviço
-                      </label>
-
-                      <select name="servico"
-                              class="form-control"
-                              required>
-
-                        <option value="">
-                          Selecione
-                        </option>
-
-                        <option value="Banho">
-                          Banho
-                        </option>
-
-                        <option value="Hidratação">
-                          Hidratação
-                        </option>
-
-                        <option value="Secagem">
-                          Secagem
-                        </option>
-
-                        <option value="Escova">
-                          Escova
-                        </option>
-
+                      <label>Serviço</label>
+                      <select name="fk_id_servico" class="form-control" required>
+                        <option value="">Selecione</option>
+                        @foreach($servicos as $servico)
+                          <option value="{{ $servico->id_servico }}">{{ $servico->nome }}</option>
+                        @endforeach
                       </select>
-
                     </div>
-
-                  </div>
-
-                  <!-- =========================================================
-                  AGENDAMENTO
-                  ========================================================= -->
-
-                  <div class="section-title mt-5">
-
+                  </div> <div class="section-title mt-5">
                     <i class="fa-solid fa-calendar-days"></i>
-
-                    <span>
-                      Agendamento
-                    </span>
-
+                    <span>Agendamento</span>
                   </div>
 
                   <div class="row">
-
                     <div class="col-md-6 mb-4">
-
-                      <label>
-                        Data
-                      </label>
-
-                      <input type="date"
-                             name="data"
-                             class="form-control"
-                             required>
-
+                      <label>Data</label>
+                      <input type="date" name="data_agendamento" class="form-control" required>
                     </div>
 
                     <div class="col-md-6 mb-4">
-
-                      <label>
-                        Hora
-                      </label>
-
-                      <input type="time"
-                             name="hora"
-                             class="form-control"
-                             required>
-
+                      <label>Hora</label>
+                      <input type="time" name="horario" class="form-control" required>
                     </div>
-
                   </div>
 
-                  <!-- =========================================================
-                  OBSERVAÇÕES
-                  ========================================================= -->
-
                   <div class="section-title mt-5">
-
                     <i class="fa-solid fa-note-sticky"></i>
-
-                    <span>
-                      Observações
-                    </span>
-
+                    <span>Observações</span>
                   </div>
 
                   <div class="mb-4">
-
-                    <textarea name="observacoes"
-                              class="form-control"
-                              rows="5"
-                              placeholder="Digite alguma observação, alergia..."></textarea>
-
+                    <textarea name="observacoes" class="form-control" rows="5" placeholder="Digite alguma observação, alergia..."></textarea>
                   </div>
 
-                  <!-- BOTÃO -->
-                  <button type="submit"
-                          class="btn btn-primary btn-agendar w-100">
-
-                    <i class="fa-solid fa-calendar-check me-2"></i>
-                    Confirmar Agendamento
+                  <button type="submit" class="btn btn-primary btn-agendar w-100">
+                    <i class="fa-solid fa-calendar-check me-2"></i>Confirmar Agendamento
                   </button>
 
                 </form>
 
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
+              </div> </div> </div> </div> </div>
     </section>
-
-  </main>
+</main>
 
   <!-- =========================================================
   FOOTER

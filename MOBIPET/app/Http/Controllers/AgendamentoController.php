@@ -22,8 +22,10 @@ class AgendamentoController extends Controller
     {
         $clienteId = Session::get('cliente_id');
         $pets = Pet::where('fk_id_cliente', $clienteId)->get();
+        $funcionarios = Funcionario::all();
+        $servicos = Servico::all();
 
-        return view('agendamentos.create', compact('pets'));
+        return view('agendamentos.create', compact('pets','funcionarios','servicos'));
     }
 
    public function store(Request $request)

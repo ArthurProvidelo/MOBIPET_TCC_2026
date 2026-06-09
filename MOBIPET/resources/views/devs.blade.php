@@ -66,17 +66,23 @@
 
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+        <a href="{{ route('index') }}" class="logo d-flex align-items-center col-md-2">
           <h1 class="sitename">Mobipet</h1>
         </a>
 
 
-        <nav id="navmenu" class="navmenu">
+        <nav id="navmenu" class="navmenu col-md-10">
             <ul>
-              <li><a href="{{route('index')}}" >Início</a></li>
-              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-              <li><a href="{{route('services')}}">Serviços</a></li>
-              <li><a href="{{route('devs')}}" class="active">Desenvolvedores</a></li>
+              <li><a href="{{ route('index') }}" class="active">Início</a></li>
+        <li><a href="{{ route('sobre') }}">Sobre nós</a></li>
+        <li><a href="{{ route('services') }}">Serviços</a></li>
+        <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
+        <li><a href="{{ route('devs') }}">Meus Pets</a></li>
+        <li>
+            <a href="{{ route('pets.index') }}">
+                Cadastro de Funcionário
+            </a>
+        </li>
               
               @if(session()->has('cliente_id'))
               <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
@@ -85,6 +91,9 @@
                     <a href="{{ route('pets.index') }}" >
                         Meus Pets
                     </a>
+
+
+                    
                 </li>
                 <li class="dropdown">
                   

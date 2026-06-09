@@ -5,7 +5,9 @@ use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PetController;
-use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServicoController;
+use App\Http\Controllers\FuncionarioController;
+
 
 Route::get('/', function () {
     return view('index');
@@ -20,12 +22,19 @@ Route::get('/sobre', function () {
     return view('sobre');
 })->name('sobre');
 
+Route::post('/funcionario/salvar', [FuncionarioController::class, 'salvar'])
+    ->name('funcionario.salvar');
 
 Route::get('/agendamento', [AgendamentoController::class, 'create'])
     ->name('agendamento');
 
 Route::post('/agendamento/store', [AgendamentoController::class, 'store'])
     ->name('agendamento.store');
+
+
+Route::get('/funcionario', function () {
+    return view('funcionario');
+})->name('funcionario');
 
 Route::get('/contact', function () {
     return view('contact');
@@ -86,7 +95,7 @@ Route::get('/cadastro', [LoginController::class, 'exibirCadastro'])->name('cadas
 Route::post('/cadastro/salvar', [LoginController::class, 'salvarCadastro'])->name('cadastro.salvar');
 
 // Rota que renderiza o formulário HTML (Método GET)
-Route::get('/servicos/cadastrar', [ServiceController::class, 'create'])->name('services.create');
+Route::get('/servicos/cadastrar', [ServicoController::class, 'create'])->name('services.create');
 
 // Rota que processa os dados e salva no banco (Método POST)
-Route::post('/servicos/salvar', [ServiceController::class, 'store'])->name('services.store');
+Route::post('/servicos/salvar', [ServicoController::class, 'store'])->name('services.store');

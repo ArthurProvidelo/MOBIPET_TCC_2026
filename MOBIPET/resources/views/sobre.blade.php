@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -364,6 +365,7 @@ body {
         margin-top: 15%;
         border-radius: 5%;
     }
+
     </style>
 
     <main class="bg-white text-dark">
@@ -613,15 +615,6 @@ body {
         </div>
     </section>
 
-    <section class="py-6 bg-dark text-white text-center position-relative overflow-hidden">
-        <div class="container position-relative z-1 max-w-2xl mx-auto">
-            <span class="text-primary text-uppercase fw-bold tracking-wider small">Nosso Objetivo</span>
-            <h2 class="display-6 fw-bold text-white mt-2 mb-4">Conectando carinho e tecnologia</h2>
-            <p class="text-light-dim fs-5 fw-light lh-lg mb-0">
-                Tornar a comunicação entre tutores e pet shops mais eficiente, transparente e acessível, utilizando a tecnologia para simplificar o cuidado com os animais e melhorar a experiência de todos os envolvidos.
-            </p>
-        </div>
-    </section>
 
 </main>
 

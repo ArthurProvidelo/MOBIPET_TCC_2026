@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class CadastroController extends Controller
 {
     /**
      * Exibe a página com o formulário de cadastro de serviços.

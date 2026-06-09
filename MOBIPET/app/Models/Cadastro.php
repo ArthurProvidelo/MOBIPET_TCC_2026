@@ -6,11 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Cadastro extends Model
 {
     use HasFactory;
 
-    protected $table = 'services';
+    protected $table = 'servico';
 
     protected $fillable = [
         'nome',
