@@ -22,7 +22,7 @@ Route::get('/sobre', function () {
     return view('sobre');
 })->name('sobre');
 
-Route::post('/funcionario/salvar', [FuncionarioController::class, 'salvar'])
+Route::post('/funcionario/salvar', [FuncionarioController::class, 'store'])
     ->name('funcionario.salvar');
 
 Route::get('/agendamento', [AgendamentoController::class, 'create'])
@@ -80,8 +80,15 @@ Route::get('/painel-controle', function () {
 Route::get('/login', [AuthController::class, 'index'])
     ->name('login');
 
+Route::get('/login/funcionario', [AuthController::class, 'indexFuncionario'])
+    ->name('login.funcionario');
+
 Route::post('/login', [AuthController::class, 'login'])
     ->name('login.autenticar');
+
+    
+Route::post('/login-funcionario', [AuthController::class, 'loginFuncionario'])
+    ->name('login.autenticarFuncionario');
 
 Route::get('/logout', [AuthController::class, 'logout'])
     ->name('logout');

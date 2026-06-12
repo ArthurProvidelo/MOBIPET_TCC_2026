@@ -197,20 +197,6 @@
                                     placeholder="Rua, Número, Bairro"
                                     required>
                             </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Função</label>
-
-                                <select name="funcao" class="form-select" required>
-                                    <option value="">Selecione</option>
-                                    <option value="Banhista">Banhista</option>
-                                    <option value="Tosador">Tosador</option>
-                                    <option value="Veterinário">Veterinário</option>
-                                    <option value="Recepcionista">Recepcionista</option>
-                                    <option value="Gerente">Gerente</option>
-                                </select>
-                            </div>
-
                             <div class="mb-3">
                                 <label class="form-label">E-mail</label>
                                 <input type="email"

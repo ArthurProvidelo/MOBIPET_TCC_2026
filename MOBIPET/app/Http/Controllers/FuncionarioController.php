@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class FuncionarioController extends Controller
 {
@@ -23,21 +24,32 @@ class FuncionarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
-            'telefone' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'nome'           => 'required|string|max:255',
+            'cpf'            => 'required|string|max:14|unique:Funcionario,cpf',
+            'cargo'          => 'required|string|max:100',
+            'telefone'       => 'required|string|max:20',
+            'email'          => 'required|email|max:255|unique:Funcionario,email',
+            'endereco'       => 'nullable|string|max:255',
+            'salario'        => 'nullable|numeric|min:0',
+            'data_admissao'  => 'required|date',
+            'senha'          => 'required|min:6'
         ]);
 
-        DB::table('funcionarios')->insert([
-            'nome' => $request->nome,
-            'cargo' => $request->cargo,
-            'telefone' => $request->telefone,
-            'email' => $request->email,
+        DB::table('Funcionario')->insert([
+            'nome'          => $request->nome,
+            'cpf'           => $request->cpf,
+            'cargo'         => $request->cargo,
+            'telefone'      => $request->telefone,
+            'email'         => $request->email,
+            'endereco'      => $request->endereco,
+            'salario'       => $request->salario,
+            'data_admissao' => $request->data_admissao,
+            'senha'         => Hash::make($request->senha)
         ]);
 
-        return redirect()->route('funcionarios.index')
-                         ->with('success', 'Funcionário cadastrado com sucesso!');
+        return redirect()
+            ->route('funcionario')
+            ->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
     // Visualizar funcionário
@@ -80,7 +92,7 @@ class FuncionarioController extends Controller
             ]);
 
         return redirect()->route('funcionarios.index')
-                         ->with('success', 'Funcionário atualizado com sucesso!');
+            ->with('success', 'Funcionário atualizado com sucesso!');
     }
 
     // Excluir funcionário
@@ -91,6 +103,6 @@ class FuncionarioController extends Controller
             ->delete();
 
         return redirect()->route('funcionarios.index')
-                         ->with('success', 'Funcionário excluído com sucesso!');
+            ->with('success', 'Funcionário excluído com sucesso!');
     }
 }

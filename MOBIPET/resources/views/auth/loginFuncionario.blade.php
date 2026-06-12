@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Login - Mobipet</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+<link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
+
+<link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+<link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/estilo.css') }}" rel="stylesheet">
+</head>
+
+<body class="inner-page">
+<style>
+    body.inner-page {
+        background-image: url('{{ asset('assets/img/fundo_login.png') }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+    }
+
+    body.inner-page::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.15);
+        z-index: -1;
+    }
+</style>
+
+  <header id="header" class="header fixed-top">
+    <div class="topbar d-flex align-items-center dark-background">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:mobipet@gmail.com">mobipet@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)98943-2384</span></i>
+        </div>
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="branding d-flex align-items-center">
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+          <h1 class="sitename">Mobipet</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="{{route('index')}}">Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+
+              @if(session()->has('cliente_id'))
+              <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
+                <li><a href="{{route('agendamento')}}">Agendamento</a></li>
+                <li>
+                    <a href="{{ route('pets.index') }}" >
+                        Meus Pets
+                    </a>
+                </li>
+                <li class="dropdown">
+                  
+                    <a href="{{ route('perfil')}}">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('logout') }}">
+                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
+
+                @else
+                @endif
+              
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="main" style="margin-top: 120px;">
+    
+    <div class="container py-5" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden" style="font-family: 'Roboto', sans-serif;">
+                    
+                    <div class="card-body p-4 p-md-5">
+
+                        <h2 class="text-center mb-4 fw-bold text-dark" style="font-family: 'Montserrat', sans-serif;">
+                            Login Funcionário
+                        </h2>
+
+                        @if(session('erro'))
+                            <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-4" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('login.autenticarFuncionario') }}">
+                            @csrf
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">E-mail</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-light-subtle text-muted rounded-start-3"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" 
+                                           name="email" 
+                                           class="form-control rounded-end-3 p-2.5 border-light-subtle shadow-none" 
+                                           placeholder="seuemail@exemplo.com" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">Senha</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-light-subtle text-muted rounded-start-3"><i class="bi bi-lock"></i></span>
+                                    <input type="password" 
+                                           name="senha" 
+                                           class="form-control rounded-end-3 p-2.5 border-light-subtle shadow-none" 
+                                           placeholder="Sua senha" required>
+                                </div>
+                            </div>
+
+                           <button type="submit" class="btn btn-login bg-primary text-white w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm">
+                              <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
+                          </button>
+
+                            <div class="text-center mt-4">
+                                <p class="text-secondary small mb-0">Não tem uma conta?</p>
+                                <a href="{{ route('cadastro') }}" class="fw-bold text-decoration-none" style="color: #3061cb;">Cadastre-se aqui</a>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+  </main>
+      <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+      <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+      </script>
+
+  <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+<script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+<script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+</body>
+
+</html>

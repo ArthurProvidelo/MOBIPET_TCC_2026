@@ -20,47 +20,39 @@ class AgendamentoController extends Controller
 
     public function create()
     {
-        $clienteId = Session::get('cliente_id');
+        $clienteId = Session::get('id');
         $pets = Pet::where('fk_id_cliente', $clienteId)->get();
         $funcionarios = Funcionario::all();
         $servicos = Servico::all();
 
-        return view('agendamentos.create', compact('pets','funcionarios','servicos'));
+        return view('agendamentos.create', compact('pets', 'funcionarios', 'servicos'));
     }
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'nome_tutor' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'telefone' => 'required|string|max:20',
-        'endereco' => 'nullable|string|max:255',
+    public function store(Request $request)
+    {
+        $request->validate([
+            'fk_id_pet' => 'required|exists:Pet,id_pet',
+            'fk_id_servico' => 'required|exists:Servico,id_servico',
+            'fk_id_funcionario' => 'required|exists:Funcionario,id_funcionario',
+            'data_agendamento' => 'required|date',
+            'horario' => 'required',
+        ]);
 
-        'nome_pet' => 'required|string|max:255',
-        'tipo_pet' => 'required|string|max:100',
-        'raca' => 'nullable|string|max:255',
-        'idade' => 'nullable|numeric',
-        'porte' => 'nullable|string|max:100',
+        Agendamento::create([
+            'data_agendamento' => $request->data_agendamento,
+            'horario' => $request->horario,
+            'status_agendamento' => 'Pendente',
 
-        'profissional' => 'required|string|max:255',
-        'servico' => 'required|string|max:255',
+            'fk_id_pet' => $request->fk_id_pet,
+            'fk_id_servico' => $request->fk_id_servico,
+            'fk_id_funcionario' => $request->fk_id_funcionario,
+        ]);
 
-        'data' => 'required|date',
-        'hora' => 'required',
-    ]);
-    Agendamento::create([
-        'data_agendamento' => $request->data,
-        'horario' => $request->hora,
-        'status_agendamento' => 'Pendente',
-        'fk_id_pet' => 1,
-        'fk_id_servico' => 1,
-        'fk_id_funcionario' => 1,
-    ]);
+        return redirect()
+            ->route('agendamento')
+            ->with('success', 'Agendamento realizado com sucesso!');
+    }
 
-    return redirect()
-        ->route('agendamento')
-        ->with('success', 'Agendamento realizado com sucesso!');
-}
     public function show($id)
     {
         $agendamento = Agendamento::findOrFail($id);

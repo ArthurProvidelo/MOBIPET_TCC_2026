@@ -57,7 +57,7 @@
                         <li><a href="{{ route('services') }}">Serviços</a></li>
                         <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
 
-                        @if (session()->has('cliente_id'))
+                        @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
                             <li><a href="{{ route('pets.create') }}">Cadastrar Pet</a></li>
                             <li><a href="{{ route('agendamento') }}">Agendamento</a></li>
                             <li>
@@ -83,6 +83,24 @@
                                     Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 </a>
                             </li>
+                        @elseif (session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+                            <li>
+                                <a href="{{ route('pets.index') }}" class="active">
+                                    seila
+                                </a>
+                            </li>
+                            <li class="dropdown">
+
+                                <a href="{{ route('perfil') }}">
+                                    <i class="fa-solid fa-user"></i>
+
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('logout') }}">
+                                    Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                </a>
                         @else
                             <li>
                                 <a href="{{ route('login') }}">

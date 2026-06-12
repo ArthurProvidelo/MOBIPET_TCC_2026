@@ -16,9 +16,3 @@ $app = require_once __DIR__.'/bootstrap/app.php';
 $status = $app->handleCommand(new ArgvInput);
 
 exit($status);
-
-
-use App\Http\Controllers\FuncionarioController;
-
-Route::post('/funcionarios/salvar', [FuncionarioController::class, 'salvar'])
-    ->name('funcionarios.salvar');

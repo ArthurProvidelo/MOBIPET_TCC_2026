@@ -35,14 +35,22 @@ CREATE TABLE Servico(
 );
 
 
-CREATE TABLE Funcionario(
-	id_funcionario INTEGER AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255),
-    cargo VARCHAR(255),
-    telefone VARCHAR(255),
-    email VARCHAR(255)
+CREATE TABLE Funcionario (
+    id_funcionario INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    cargo VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    endereco VARCHAR(255),
+    salario DECIMAL(10,2),
+    data_admissao DATE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
 );
 
+DROP TABLE funcionario;
 
 CREATE TABLE Agendamento(
 	id_agendamento INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -65,6 +73,13 @@ CREATE TABLE Agendamento(
         REFERENCES Servico(id_servico)
         ON DELETE CASCADE
 );
+
+ALTER TABLE Agendamento
+ADD COLUMN fk_id_funcionario INT,
+ADD CONSTRAINT fk_agendamento_funcionario
+FOREIGN KEY (fk_id_funcionario)
+REFERENCES Funcionario(id_funcionario)
+ON DELETE CASCADE;
 
 
 CREATE TABLE Pagamento (
@@ -91,3 +106,14 @@ CREATE TABLE Avaliacao (
 		REFERENCES Agendamento(id_agendamento)
         ON DELETE CASCADE
 );
+
+
+SELECT * FROM agendamento;
+
+ALTER TABLE Funcionario
+ADD COLUMN cpf VARCHAR(14),
+ADD COLUMN endereco VARCHAR(255),
+ADD COLUMN salario DECIMAL(10,2),
+ADD COLUMN data_admissao DATE,
+ADD COLUMN senha VARCHAR(255),
+ADD COLUMN funcao VARCHAR(100);

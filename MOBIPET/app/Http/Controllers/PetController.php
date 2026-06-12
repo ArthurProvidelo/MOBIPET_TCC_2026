@@ -10,12 +10,12 @@ class PetController extends Controller
     // Listar pets
     public function index()
     {
-        if (!session()->has('cliente_id')) {
+        if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
             return redirect()->route('login');
         }
 
         $pets = DB::table('pet')
-            ->where('fk_id_cliente', session('cliente_id'))
+            ->where('fk_id_cliente', session('id'))
             ->get();
 
         return view('pets.index', compact('pets'));
@@ -24,7 +24,7 @@ class PetController extends Controller
     // Formulário de criação
     public function create()
     {
-        if (!session()->has('cliente_id')) {
+        if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
             return redirect()->route('login');
         }
 
@@ -33,99 +33,119 @@ class PetController extends Controller
 
     // Salvar novo pet
     public function store(Request $request)
-{
-            if (!session()->has('cliente_id')) {
+    {
+        if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
             return redirect()->route('login');
         }
-    $request->validate([
-        'nome' => 'required',
-        'especie' => 'required',
-        'raca' => 'required',
-        'porte' => 'required',
-        'data_nascimento' => 'required|date'
-    ]);
 
-    DB::table('pet')->insert([
-        'nome' => $request->nome,
-        'especie' => $request->especie,
-        'raca' => $request->raca,
-        'porte' => $request->porte,
-        'data_nascimento' => $request->data_nascimento,
-        'fk_id_cliente' => session('cliente_id')
-    ]);
+        $request->validate([
+            'nome' => 'required',
+            'especie' => 'required',
+            'raca' => 'required',
+            'porte' => 'required',
+            'data_nascimento' => 'required|date'
+        ]);
 
-    return redirect()
-        ->route('pets.index')
-        ->with('success', 'Pet cadastrado com sucesso!');
-}
-
-    // Visualizar pet
-    public function show(int $id)
-{
-    $pet = DB::table('pet')
-        ->where('id_pet', $id)
-        ->where('fk_id_cliente', session('cliente_id'))
-        ->first();
-
-    if (!$pet) {
-        abort(403);
-    }
-
-    return view('pets.show', compact('pet'));
-}
-
-    // Formulário de edição
-    public function edit(int $id)
-{
-    $pet = DB::table('pet')
-        ->where('id_pet', $id)
-        ->where('fk_id_cliente', session('cliente_id'))
-        ->first();
-
-    if (!$pet) {
-        abort(403);
-    }
-
-    return view('pets.edit', compact('pet'));
-}
-
-    // Atualizar pet
-    public function update(Request $request, int $id)
-{
-    $request->validate([
-        'nome' => 'required',
-        'especie' => 'required',
-        'raca' => 'required',
-        'porte' => 'required',
-        'data_nascimento' => 'required|date'
-    ]);
-
-    DB::table('pet')
-        ->where('id_pet', $id)
-        ->where('fk_id_cliente', session('cliente_id'))
-        ->update([
+        DB::table('pet')->insert([
             'nome' => $request->nome,
             'especie' => $request->especie,
             'raca' => $request->raca,
             'porte' => $request->porte,
-            'data_nascimento' => $request->data_nascimento
+            'data_nascimento' => $request->data_nascimento,
+            'fk_id_cliente' => session('id')
         ]);
 
-    return redirect()
-        ->route('pets.index')
-        ->with('success', 'Pet atualizado com sucesso!');
-}
+        return redirect()
+            ->route('pets.index')
+            ->with('success', 'Pet cadastrado com sucesso!');
+    }
+
+    // Visualizar pet
+    public function show(int $id)
+    {
+        if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
+            return redirect()->route('login');
+        }
+
+
+        $pet = DB::table('pet')
+            ->where('id_pet', $id)
+            ->where('fk_id_cliente', session('id'))
+            ->first();
+
+        if (!$pet) {
+            abort(403);
+        }
+
+        return view('pets.show', compact('pet'));
+    }
+
+    // Formulário de edição
+    public function edit(int $id)
+    {
+        if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
+            return redirect()->route('login');
+        }
+
+
+        $pet = DB::table('pet')
+            ->where('id_pet', $id)
+            ->where('fk_id_cliente', session('id'))
+            ->first();
+
+        if (!$pet) {
+            abort(403);
+        }
+
+        return view('pets.edit', compact('pet'));
+    }
+
+    // Atualizar pet
+    public function update(Request $request, int $id)
+    {
+        if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
+            return redirect()->route('login');
+        }
+
+
+        $request->validate([
+            'nome' => 'required',
+            'especie' => 'required',
+            'raca' => 'required',
+            'porte' => 'required',
+            'data_nascimento' => 'required|date'
+        ]);
+
+        DB::table('pet')
+            ->where('id_pet', $id)
+            ->where('fk_id_cliente', session('id'))
+            ->update([
+                'nome' => $request->nome,
+                'especie' => $request->especie,
+                'raca' => $request->raca,
+                'porte' => $request->porte,
+                'data_nascimento' => $request->data_nascimento
+            ]);
+
+        return redirect()
+            ->route('pets.index')
+            ->with('success', 'Pet atualizado com sucesso!');
+    }
 
     // Excluir pet
     public function destroy(int $id)
-{
-    DB::table('pet')
-        ->where('id_pet', $id)
-        ->where('fk_id_cliente', session('cliente_id'))
-        ->delete();
+    {
+        if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
+            return redirect()->route('login');
+        }
 
-    return redirect()
-        ->route('pets.index')
-        ->with('success', 'Pet excluído com sucesso!');
-}
+        DB::table('pet')
+            ->where('id_pet', $id)
+            ->where('fk_id_cliente', session('id'))
+            ->delete();
+
+        return redirect()
+            ->route('pets.index')
+            ->with('success', 'Pet excluído com sucesso!');
+    }
 }

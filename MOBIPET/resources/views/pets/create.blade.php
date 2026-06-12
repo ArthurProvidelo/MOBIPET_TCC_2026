@@ -59,7 +59,7 @@
             <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
             <li><a href="{{route('contact')}}">Contato</a></li>
             
-            @if(session()->has('cliente_id'))
+            @if(session()->has('id'))
               <li><a href="{{route('pets.create')}}" class="active">Cadastrar Pet</a></li>
               <li><a href="{{route('agendamento')}}">Agendamento</a></li>
               <li><a href="{{route('pets.index')}}">Meus Pets</a></li>

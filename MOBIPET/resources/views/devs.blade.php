@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Desenvolvedores</title>
+  <title>Mobipet | Desenvolvedores</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -46,44 +46,37 @@
 
   <header id="header" class="header fixed-top">
 
-
-    <div class="topbar d-flex align-items-center dark-background">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-        <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">mobipet@gmail.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)98943-2384</span></i>
-        </div>
-        <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+      <div class="topbar d-flex align-items-center dark-background">
+        <div class="container d-flex justify-content-center justify-content-md-between">
+          <div class="contact-info d-flex align-items-center">
+            <i class="bi bi-envelope d-flex align-items-center"><a
+                href="mailto:contact@example.com">mobipet@gmail.com</a></i>
+            <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)98943-2384</span></i>
+          </div>
+          <div class="social-links d-none d-md-flex align-items-center">
+            <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
+          </div>
         </div>
-      </div>
-    </div><!-- End Top Bar -->
+      </div><!-- End Top Bar -->
 
+      <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+        <i class="bi bi-arrow-up-short"></i>
+      </a>
 
-    <div class="branding d-flex align-items-cente">
+      <div class="branding d-flex align-items-cente">
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+          <a href="{{route('index')}}" class="logo d-flex align-items-center">
+            <h1 class="sitename">Mobipet</h1>
+          </a>
 
-
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="{{ route('index') }}" class="logo d-flex align-items-center col-md-2">
-          <h1 class="sitename">Mobipet</h1>
-        </a>
-
-
-        <nav id="navmenu" class="navmenu col-md-10">
+          <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="{{ route('index') }}" class="active">Início</a></li>
-        <li><a href="{{ route('sobre') }}">Sobre nós</a></li>
-        <li><a href="{{ route('services') }}">Serviços</a></li>
-        <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
-        <li><a href="{{ route('devs') }}">Meus Pets</a></li>
-        <li>
-            <a href="{{ route('pets.index') }}">
-                Cadastro de Funcionário
-            </a>
-        </li>
-              
+              <li><a href="{{route('index')}}" class="active">Início</a></li>
+              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
+              <li><a href="{{route('services')}}">Serviços</a></li>
+              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+
               @if(session()->has('cliente_id'))
               <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
                 <li><a href="{{route('agendamento')}}">Agendamento</a></li>
@@ -91,14 +84,17 @@
                     <a href="{{ route('pets.index') }}" >
                         Meus Pets
                     </a>
-
-
-                    
                 </li>
+                <li>
+                    <a href="{{ route('pets.index') }}">
+                      Cadastro de Funcionário
+                    </a>
+                </li>
+                
                 <li class="dropdown">
                   
                     <a href="{{ route('perfil')}}">
-                        <i class="fa-solid fa-user"></i> 
+                        <i class="fa-solid fa-user"></i>
                     </a>
                 </li>
 
@@ -121,15 +117,9 @@
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
           </nav>
-
-
+        </div>
       </div>
-
-
-    </div>
-
-
-  </header>
+    </header>
 
 
   <main class="main">
@@ -379,7 +369,7 @@
 
 
   <!-- Scroll Top -->
-  <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+  <a href="#!" id="scroll-top" class="scroll-top"><i
       class="bi bi-arrow-up-short"></i></a>
 
 
