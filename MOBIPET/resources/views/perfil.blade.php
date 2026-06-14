@@ -327,7 +327,9 @@
           <div class="perfil-card">
             <!-- FORM -->
 
-            <form action="#" method="post">
+            <form action="{{ route('perfil.update') }}" method="POST">
+            @csrf
+            @method('PUT')
 
               <!-- DADOS TUTOR -->
 
@@ -345,8 +347,9 @@
 
                   <input
                     type="text"
+                    name="nome"
                     class="form-control"
-                    placeholder="Nome completo"
+                    value="{{ $cliente->nome }}"
                     required>
 
                 </div>
@@ -355,8 +358,9 @@
 
                   <input
                     type="email"
+                    name="email"
                     class="form-control"
-                    placeholder="Email"
+                    value="{{ $cliente->email }}"
                     required>
 
                 </div>
@@ -368,9 +372,10 @@
                 <div class="col-md-6">
 
                   <input
-                    type="tel"
+                    type="text"
+                    name="telefone"
                     class="form-control"
-                    placeholder="Telefone"
+                    value="{{ $cliente->telefone }}"
                     required>
 
                 </div>
@@ -379,8 +384,10 @@
 
                   <input
                     type="text"
+                    name="endereco"
                     class="form-control"
-                    placeholder="Endereço">
+                    value="{{ $cliente->endereco }}"
+                    required>
 
                 </div>
 
@@ -388,91 +395,75 @@
 
               <!-- DADOS PET -->
 
-              <div class="section-title">
+              <hr class="my-5">
 
-                <i class="bi bi-heart"></i>
+<div class="section-title">
 
-                <h4>Dados do Pet</h4>
+    <i class="bi bi-heart-fill"></i>
 
-              </div>
+    <h4>Meus Pets</h4>
 
-              <div class="row mb-3">
+</div>
 
-                <div class="col-md-6">
+<div class="table-responsive">
 
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nome do Pet"
-                    required>
+    <table class="table align-middle">
 
-                </div>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Espécie</th>
+                <th>Raça</th>
+                <th>Porte</th>
+                <th>Data Nascimento</th>
+            </tr>
+        </thead>
 
-                <div class="col-md-6">
+        <tbody>
 
-                  <select class="form-select">
+            @forelse($pets as $pet)
 
-                    <option>Espécie</option>
+                <tr>
+                    <td>{{ $pet->nome }}</td>
+                    <td>{{ $pet->especie }}</td>
+                    <td>{{ $pet->raca }}</td>
+                    <td>{{ $pet->porte }}</td>
+                    <td>
+                        {{ \Carbon\Carbon::parse($pet->data_nascimento)->format('d/m/Y') }}
+                    </td>
+                </tr>
 
-                    <option>Cachorro</option>
+            @empty
 
-                    <option>Gato</option>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Nenhum pet cadastrado.
+                    </td>
+                </tr>
 
-                    <option>Outro</option>
+            @endforelse
 
-                  </select>
+        </tbody>
 
-                </div>
+    </table>
 
-              </div>
+</div>
 
-              <div class="row mb-3">
+<div class="text-center mt-4">
 
-                <div class="col-md-6">
+    <a href="{{ route('pets.create') }}" class="btn-salvar">
+        <i class="bi bi-plus-circle"></i>
+        Cadastrar Novo Pet
+    </a>
 
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Raça">
+</div>
 
-                </div>
-
-                <div class="col-md-6">
-
-                  <input
-                    type="number"
-                    class="form-control"
-                    placeholder="Idade">
-
-                </div>
-
-              </div>
-
-              <div class="mb-4">
-
-                <textarea
-                  class="form-control"
-                  placeholder="Observações, alergias ou comportamento do pet."></textarea>
-
-              </div>
-
-              <!-- BOTÃO -->
-
-              <div class="text-center">
-
-                <button class="btn-salvar">
-
-                  <i class="bi bi-check2-circle"></i>
-
-                  Salvar Perfil
-
-                </button>
-
-              </div>
-
-            </form>
-
-          </div>
+<div class="text-center mt-4">
+    <button type="submit" class="btn-salvar">
+        <i class="bi bi-check2-circle"></i>
+        Salvar Alterações
+    </button>
+</div>
 
         </div>
 

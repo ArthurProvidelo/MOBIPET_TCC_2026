@@ -127,55 +127,132 @@
                         <form method="POST" action="{{ route('cadastro.salvar') }}">
                             @csrf
 
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">Nome Completo</label>
-                                <div class="input-group shadow-sm rounded-3 overflow-hidden">
-                                    <span class="input-group-text bg-light border-light-subtle text-muted"><i class="fa-solid fa-user small"></i></span>
-                                    <input type="text" name="nome" class="form-control p-2.5 border-light-subtle shadow-none" placeholder="Seu nome completo" value="{{ old('nome') }}" required>
-                                </div>
-                            </div>
+                           <div class="mb-3">
+    <label class="form-label fw-semibold text-secondary small text-uppercase">
+        Nome Completo
+    </label>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">CPF (Apenas números)</label>
-                                    <div class="input-group shadow-sm rounded-3 overflow-hidden">
-                                        <span class="input-group-text bg-light border-light-subtle text-muted"><i class="fa-solid fa-id-card small"></i></span>
-                                        <input type="text" name="cpf" maxlength="11" class="form-control p-2.5 border-light-subtle shadow-none" placeholder="Ex: 12345678901" value="{{ old('cpf') }}" required>
-                                    </div>
-                                </div>
+    <div class="input-group shadow-sm rounded-3 overflow-hidden">
+        <span class="input-group-text bg-light border-light-subtle text-muted">
+            <i class="fa-solid fa-user small"></i>
+        </span>
 
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">Telefone</label>
-                                    <div class="input-group shadow-sm rounded-3 overflow-hidden">
-                                        <span class="input-group-text bg-light border-light-subtle text-muted"><i class="bi bi-telephone"></i></span>
-                                        <input type="text" name="telefone" class="form-control p-2.5 border-light-subtle shadow-none" placeholder="(19) 99999-8888" value="{{ old('telefone') }}" required>
-                                    </div>
-                                </div>
-                            </div>
+        <input
+            type="text"
+            name="nome"
+            class="form-control p-2.5 border-light-subtle shadow-none"
+            placeholder="Seu nome completo"
+            value="{{ old('nome') }}"
+            required>
+    </div>
+</div>
 
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">Endereço Residencial</label>
-                                <div class="input-group shadow-sm rounded-3 overflow-hidden">
-                                    <span class="input-group-text bg-light border-light-subtle text-muted"><i class="bi bi-geo-alt"></i></span>
-                                    <input type="text" name="endereco" class="form-control p-2.5 border-light-subtle shadow-none" placeholder="Rua, Número, Bairro - Cidade" value="{{ old('endereco') }}" required>
-                                </div>
-                            </div>
+<div class="row">
 
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">E-mail</label>
-                                <div class="input-group shadow-sm rounded-3 overflow-hidden">
-                                    <span class="input-group-text bg-light border-light-subtle text-muted"><i class="bi bi-envelope"></i></span>
-                                    <input type="email" name="email" class="form-control p-2.5 border-light-subtle shadow-none" placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required>
-                                </div>
-                            </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label fw-semibold text-secondary small text-uppercase">
+            CPF
+        </label>
 
-                            <div class="mb-4">
-                                <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">Senha</label>
-                                <div class="input-group shadow-sm rounded-3 overflow-hidden">
-                                    <span class="input-group-text bg-light border-light-subtle text-muted"><i class="bi bi-lock"></i></span>
-                                    <input type="password" name="senha" class="form-control p-2.5 border-light-subtle shadow-none" placeholder="Crie uma senha segura" required>
-                                </div>
-                            </div>
+        <div class="input-group shadow-sm rounded-3 overflow-hidden">
+            <span class="input-group-text bg-light border-light-subtle text-muted">
+                <i class="fa-solid fa-id-card small"></i>
+            </span>
+
+            <input
+                type="text"
+                id="cpf"
+                name="cpf"
+                maxlength="14"
+                class="form-control p-2.5 border-light-subtle shadow-none"
+                placeholder="000.000.000-00"
+                value="{{ old('cpf') }}"
+                required>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label fw-semibold text-secondary small text-uppercase">
+            Telefone
+        </label>
+
+        <div class="input-group shadow-sm rounded-3 overflow-hidden">
+            <span class="input-group-text bg-light border-light-subtle text-muted">
+                <i class="bi bi-telephone"></i>
+            </span>
+
+            <input
+                type="text"
+                id="telefone"
+                name="telefone"
+                maxlength="15"
+                class="form-control p-2.5 border-light-subtle shadow-none"
+                placeholder="(19) 99999-8888"
+                value="{{ old('telefone') }}"
+                required>
+        </div>
+    </div>
+
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-semibold text-secondary small text-uppercase">
+        Endereço Residencial
+    </label>
+
+    <div class="input-group shadow-sm rounded-3 overflow-hidden">
+        <span class="input-group-text bg-light border-light-subtle text-muted">
+            <i class="bi bi-geo-alt"></i>
+        </span>
+
+        <input
+            type="text"
+            name="endereco"
+            class="form-control p-2.5 border-light-subtle shadow-none"
+            placeholder="Rua, Número, Bairro - Cidade"
+            value="{{ old('endereco') }}"
+            required>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-semibold text-secondary small text-uppercase">
+        E-mail
+    </label>
+
+    <div class="input-group shadow-sm rounded-3 overflow-hidden">
+        <span class="input-group-text bg-light border-light-subtle text-muted">
+            <i class="bi bi-envelope"></i>
+        </span>
+
+        <input
+            type="email"
+            name="email"
+            class="form-control p-2.5 border-light-subtle shadow-none"
+            placeholder="seuemail@exemplo.com"
+            value="{{ old('email') }}"
+            required>
+    </div>
+</div>
+
+<div class="mb-4">
+    <label class="form-label fw-semibold text-secondary small text-uppercase">
+        Senha
+    </label>
+
+    <div class="input-group shadow-sm rounded-3 overflow-hidden">
+        <span class="input-group-text bg-light border-light-subtle text-muted">
+            <i class="bi bi-lock"></i>
+        </span>
+
+        <input
+            type="password"
+            name="senha"
+            class="form-control p-2.5 border-light-subtle shadow-none"
+            placeholder="Crie uma senha segura"
+            required>
+    </div>
+</div>
 
                             <button type="submit" class="btn btn-primary w-100 py-2.5 fw-semibold rounded-pill shadow-sm dynamic-btn border-0" style="background-color: #497baf  !important;">
                                 <i class="bi bi-check-circle me-1"></i> Finalizar Cadastro
@@ -237,6 +314,41 @@
     <script>
       new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
+
+      <script>
+          document.addEventListener('DOMContentLoaded', function () {
+
+              const cpf = document.getElementById('cpf');
+
+              cpf.addEventListener('input', function () {
+                  let value = this.value.replace(/\D/g, '');
+
+                  value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                  value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                  value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+                  this.value = value;
+              });
+
+              const telefone = document.getElementById('telefone');
+
+              telefone.addEventListener('input', function () {
+                  let value = this.value.replace(/\D/g, '');
+
+                  if (value.length <= 10) {
+                      value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+                      value = value.replace(/(\d{4})(\d)/, '$1-$2');
+                  } else {
+                      value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+                      value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                  }
+
+                  this.value = value;
+              });
+
+          });
+        </script>
+
   </footer>
 
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">

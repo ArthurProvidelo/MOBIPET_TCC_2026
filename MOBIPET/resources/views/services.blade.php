@@ -1,4 +1,3 @@
-111111111
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -357,15 +356,6 @@
                             Acompanhe cada etapa do atendimento em tempo real, trazendo mais confiança, carinho e
                             tranquilidade para quem ama seu pet.
                         </p>
-                        <div class="d-flex flex-wrap gap-3">
-                            <a href="{{ route('agendamento') }}"
-                                class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">
-                                Solicitar Demonstração
-                            </a>
-                            <a href="{{ route('sobre') }}" class="btn btn-outline-dark btn-lg rounded-pill px-5 py-3">
-                                Conhecer Plataforma
-                            </a>
-                        </div>
                     </div>
 
                     <div class="col-lg-6 mt-lg-5" data-aos="fade-left">
@@ -437,57 +427,62 @@
                     </p>
                 </div>
 
+                <!-- SEÇÃO CORRIGIDA COMEÇA AQUI -->
                 <div class="row g-4">
                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-card h-100 p-5 rounded-5 position-relative overflow-hidden">
-                            <div class="service-icon mb-5">
-                                <i class="bi bi-bell-fill"></i>
+                        <div class="service-card h-100 p-5 rounded-5 position-relative overflow-hidden d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="service-icon mb-5">
+                                    <i class="bi bi-bell-fill"></i>
+                                </div>
+                                <span class="mini-badge">Atualizações em tempo real</span>
+                                <h3 class="fw-bold text-white mt-4 mb-4 display-6">Notificações automáticas durante o atendimento</h3>
+                                <p class="text-light opacity-75 fs-5" style="line-height:1.9;">
+                                    O tutor recebe mensagens automáticas informando cada etapa do atendimento.
+                                </p>
                             </div>
-                            <span class="mini-badge">Atualizações em tempo real</span>
-                            <h3 class="fw-bold text-white mt-4 mb-4 display-6">Notificações automáticas durante o
-                                atendimento</h3>
-                            <p class="text-light opacity-75 fs-5" style="line-height:1.9;">
-                                O tutor recebe mensagens automáticas informando cada etapa do atendimento.
-                            </p>
                             <div class="service-status mt-5">
                                 <div class="status-item"><i class="bi bi-check-circle-fill"></i> Banho concluído</div>
-                                <div class="status-item active"><i class="bi bi-arrow-repeat"></i> Secagem em
-                                    andamento</div>
+                                <div class="status-item active"><i class="bi bi-arrow-repeat"></i> Secagem em andamento</div>
                                 <div class="status-item"><i class="bi bi-clock"></i> Finalização pendente</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="row g-4 h-100">
+                        <div class="row g-4 h-100 align-items-stretch">
                             <div class="col-12">
-                                <div class="glass-card p-5 rounded-5 h-100">
-                                    <div class="small-icon bg-primary">
+                                <div class="glass-card p-5 rounded-5 h-100 d-flex flex-column justify-content-center">
+                                    <div class="small-icon bg-primary mb-3">
                                         <i class="bi bi-whatsapp"></i>
                                     </div>
-                                    <h4 class="fw-bold mt-4 mb-3">Comunicação via WhatsApp</h4>
+                                    <h4 class="fw-bold mt-2 mb-3">Comunicação via WhatsApp</h4>
                                     <p class="text-secondary fs-5 mb-0" style="line-height:1.8;">
                                         Todas as notificações chegam diretamente no WhatsApp do tutor de forma prática.
                                     </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="glass-card p-4 rounded-5 h-100">
-                                    <div class="small-icon bg-success">
-                                        <i class="bi bi-heart-fill"></i>
+                                <div class="glass-card p-4 rounded-5 h-100 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="small-icon bg-success mb-3">
+                                            <i class="bi bi-heart-fill"></i>
+                                        </div>
+                                        <h5 class="fw-bold mt-2 mb-3">Mais confiança</h5>
                                     </div>
-                                    <h5 class="fw-bold mt-4 mb-3">Mais confiança</h5>
                                     <p class="text-secondary mb-0" style="line-height:1.8;">
                                         Transparência para deixar o tutor tranquilo durante o atendimento.
                                     </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="glass-card p-4 rounded-5 h-100">
-                                    <div class="small-icon bg-dark">
-                                        <i class="bi bi-stars"></i>
+                                <div class="glass-card p-4 rounded-5 h-100 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="small-icon bg-dark mb-3">
+                                            <i class="bi bi-stars"></i>
+                                        </div>
+                                        <h5 class="fw-bold mt-2 mb-3">Experiência premium</h5>
                                     </div>
-                                    <h5 class="fw-bold mt-4 mb-3">Experiência premium</h5>
                                     <p class="text-secondary mb-0" style="line-height:1.8;">
                                         Um sistema moderno para destacar seu petshop da concorrência.
                                     </p>
@@ -496,6 +491,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- SEÇÃO CORRIGIDA TERMINA AQUI -->
 
             </div>
         </section>

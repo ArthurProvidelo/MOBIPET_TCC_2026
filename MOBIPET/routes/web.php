@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\ClienteController;
 
 
 Route::get('/', function () {
@@ -69,9 +70,11 @@ Route::get('/services', function () {
     return view('services');
 })->name('services');
 
-Route::get('/perfil', function () {
-    return view('perfil');
-})->name('perfil');
+Route::get('/perfil', [ClienteController::class, 'perfil'])
+    ->name('perfil');
+
+Route::put('/perfil', [ClienteController::class, 'updatePerfil'])
+    ->name('perfil.update');
 
 Route::get('/painel-controle', function () {
     return view('painel-controle');
