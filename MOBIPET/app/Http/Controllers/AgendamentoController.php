@@ -90,4 +90,27 @@ class AgendamentoController extends Controller
         $agendamento->delete();
         return redirect()->route('agendamento')->with('success', 'Agendamento excluído com sucesso!');
     }
+
+    public function agendamentosFuncionario()
+    {
+        if(!session()->has('id') || session('nivel_acesso') != 'FUNCIONARIO')
+        {
+            return redirect()->route('login');
+        }
+
+        $agendamentos = Agendamento::with([
+            'pet.cliente',
+            'servico',
+            'funcionario'
+        ])
+        ->orderBy('data_agendamento')
+        ->orderBy('horario')
+        ->get();
+
+        return view(
+            'funcionario.agendamentos',
+            compact('agendamentos')
+        );
+    }
+        
 }

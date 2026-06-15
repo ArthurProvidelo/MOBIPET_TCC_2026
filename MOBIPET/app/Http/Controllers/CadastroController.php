@@ -7,17 +7,13 @@ use Illuminate\Http\Request;
 
 class CadastroController extends Controller
 {
-    /**
-     * Exibe a página com o formulário de cadastro de serviços.
-     */
+    // Exibe a página com o formulário de cadastro de serviços.
     public function create()
     {
         return view('services.create'); // Altere para o caminho correto da sua view
     }
 
-    /**
-     * Valida os dados enviados e salva o novo serviço no banco de dados.
-     */
+    // Valida os dados enviados e salva o novo serviço no banco de dados.
     public function store(Request $request)
     {
         // 1. Validação dos dados com base nos campos obrigatórios (*) do HTML

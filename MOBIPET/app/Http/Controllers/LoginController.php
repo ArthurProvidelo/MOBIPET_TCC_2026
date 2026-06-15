@@ -10,41 +10,72 @@ use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     // Exibe a tela de cadastro
-    public function exibirCadastro() 
+    public function exibirCadastro()
     {
         return view('auth.cadastro');
     }
 
-    // Processa a gravação no banco de dados adequado ao script SQL
-    public function salvarCadastro(Request $request) 
+    // Processa o cadastro
+    public function salvarCadastro(Request $request)
     {
-        // 1. Validação dos dados com base no banco de dados
+        // Remove máscara do CPF
+        $cpf = preg_replace('/[^0-9]/', '', $request->cpf);
+
+        // Atualiza o valor do request
+        $request->merge([
+            'cpf' => $cpf
+        ]);
+
+        // Validação
         $request->validate([
             'nome'     => 'required|string|max:255',
-            'cpf'      => 'required|string|max:11',
+            'cpf'      => 'required|digits:11',
             'telefone' => 'required|string|max:255',
             'email'    => 'required|email|max:255',
             'senha'    => 'required|min:6|max:255',
             'endereco' => 'required|string|max:255',
         ]);
 
-        // 2. Gravação na tabela correta do seu banco: 'Cliente'
+        // Verifica se já existe CPF cadastrado
+        $cpfExistente = DB::table('Cliente')
+            ->where('cpf', $cpf)
+            ->exists();
+
+        if ($cpfExistente) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'cpf' => 'Este CPF já está cadastrado.'
+                ]);
+        }
+
+        // Verifica se já existe e-mail cadastrado
+        $emailExistente = DB::table('Cliente')
+            ->where('email', $request->email)
+            ->exists();
+
+        if ($emailExistente) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'email' => 'Este e-mail já está cadastrado.'
+                ]);
+        }
+
+        // Salva no banco
         $idCliente = DB::table('Cliente')->insertGetId([
             'nome'     => $request->nome,
-            'cpf'      => $request->cpf,
+            'cpf'      => $cpf,
             'telefone' => $request->telefone,
             'email'    => $request->email,
             'senha'    => Hash::make($request->senha),
             'endereco' => $request->endereco,
         ]);
 
+        // Cria sessão
         Session::put('cliente_id', $idCliente);
         Session::put('cliente_nome', $request->nome);
 
-        if($idCliente){
-            return redirect()->route('index');
-        }
-        // 3. Redirecionamento para a tela de login com mensagem de sucesso
-        return redirect()->route('login')->with('sucesso', 'Cadastro realizado com sucesso! Faça seu login.');
+        return redirect()->route('index');
     }
 }

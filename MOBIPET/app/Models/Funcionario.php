@@ -10,7 +10,7 @@ class Funcionario extends Model
     use HasFactory;
 
     // Nome da tabela
-    protected $table = 'funcionario';
+    protected $table = 'Funcionario';
 
     // Chave primária
     protected $primaryKey = 'id_funcionario';
@@ -29,4 +29,13 @@ class Funcionario extends Model
 
     // Desativar timestamps (caso não tenha no banco)
     public $timestamps = false;
+
+    public function agendamentos()
+    {
+        return $this->hasMany(
+            Agendamento::class,
+            'fk_id_funcionario',
+            'id_funcionario'
+        );
+    }
 }

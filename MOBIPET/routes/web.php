@@ -8,6 +8,7 @@ use App\Http\Controllers\PetController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\PainelController;
 
 
 Route::get('/', function () {
@@ -76,9 +77,8 @@ Route::get('/perfil', [ClienteController::class, 'perfil'])
 Route::put('/perfil', [ClienteController::class, 'updatePerfil'])
     ->name('perfil.update');
 
-Route::get('/painel-controle', function () {
-    return view('painel-controle');
-})->name('painel-controle');
+Route::get('/painel-controle', [PainelController::class, 'index'])
+    ->name('painel-controle');
 
 Route::get('/login', [AuthController::class, 'index'])
     ->name('login');
@@ -99,13 +99,23 @@ Route::get('/logout', [AuthController::class, 'logout'])
 Route::resource('pets', PetController::class);
 
 // Rota para exibir a view de cadastro
-Route::get('/cadastro', [LoginController::class, 'exibirCadastro'])->name('cadastro');
+Route::get('/cadastro', [LoginController::class, 'exibirCadastro'])
+    ->name('cadastro');
 
 // Rota POST para receber os dados do formulário e salvar no banco
-Route::post('/cadastro/salvar', [LoginController::class, 'salvarCadastro'])->name('cadastro.salvar');
+Route::post('/cadastro/salvar', [LoginController::class, 'salvarCadastro'])
+    ->name('cadastro.salvar');
 
 // Rota que renderiza o formulário HTML (Método GET)
-Route::get('/servicos/cadastrar', [ServicoController::class, 'create'])->name('services.create');
+Route::get('/servicos/cadastrar', [ServicoController::class, 'create'])
+    ->name('services.create');
 
 // Rota que processa os dados e salva no banco (Método POST)
-Route::post('/servicos/salvar', [ServicoController::class, 'store'])->name('services.store');
+Route::post('/servicos/salvar', [ServicoController::class, 'store'])
+    ->name('services.store');
+
+
+// Rota para exibir a view de agendamentos do funcionário
+Route::get('/funcionario/agendamentos', [AgendamentoController::class, 'agendamentosFuncionario'])
+    ->name('funcionario.agendamentos');
+

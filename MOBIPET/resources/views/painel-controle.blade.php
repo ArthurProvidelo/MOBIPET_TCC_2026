@@ -141,133 +141,274 @@ p, span, small {
 
 <main class="main">
 
-  <!-- HEADER DO DASHBOARD -->
-  <section class="section" style="padding-top:120px">
-    <div class="container d-flex justify-content-between align-items-center">
-      <div>
-        <h2 class="fw-bold">Painel de Controle</h2>
-        <p class="section-subtitle">Visão geral do seu petshop em tempo real</p>
-      </div>
+    <!-- HEADER DO DASHBOARD -->
+    <section class="section" style="padding-top:120px">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
 
-      <a href="{{route('agendamento')}}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Novo Agendamento
-      </a>
-    </div>
-  </section>
+            <div>
+                <h2 class="fw-bold">
+                    Bem-vindo, {{ session('nome') }}
+                </h2>
 
-  <!-- KPIs -->
-  <section class="section pt-0">
-    <div class="container">
-      <div class="row g-4">
+                <p class="section-subtitle">
+                    Acompanhe os agendamentos e o funcionamento do petshop em tempo real.
+                </p>
+            </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="dashboard-card text-center">
-            <div class="dashboard-icon"><i class="bi bi-calendar-check"></i></div>
-            <h3>12</h3>
-            <p class="section-subtitle">Agendamentos hoje</p>
-          </div>
+            <a href="{{ route('funcionario.agendamentos') }}"
+               class="btn btn-primary">
+
+                <i class="bi bi-calendar-check"></i>
+                Ver Agendamentos
+
+            </a>
+
+        </div>
+    </section>
+
+    <!-- KPIs -->
+    <section class="section pt-0">
+        <div class="container">
+
+            <div class="row g-4">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card text-center">
+
+                        <div class="dashboard-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+
+                        <h3>{{ $agendamentosHoje }}</h3>
+
+                        <p class="section-subtitle">
+                            Agendamentos Hoje
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card text-center">
+
+                        <div class="dashboard-icon">
+                            <i class="bi bi-heart"></i>
+                        </div>
+
+                        <h3>{{ $pets }}</h3>
+
+                        <p class="section-subtitle">
+                            Pets Cadastrados
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card text-center">
+
+                        <div class="dashboard-icon">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+
+                        <h3>{{ $pendentes }}</h3>
+
+                        <p class="section-subtitle">
+                            Pendentes
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-card text-center">
+
+                        <div class="dashboard-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                        <h3>{{ $funcionarios }}</h3>
+
+                        <p class="section-subtitle">
+                            Funcionários
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ÚLTIMOS AGENDAMENTOS -->
+    <section class="section pt-0">
+
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h4 class="fw-bold mb-0">
+                    Últimos Agendamentos
+                </h4>
+
+            </div>
+
+            <div class="table-responsive table-modern">
+
+                <table class="table align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Pet</th>
+                            <th>Serviço</th>
+                            <th>Funcionário</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @forelse($ultimosAgendamentos as $agendamento)
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        {{ $agendamento->pet->nome ?? '-' }}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    {{ $agendamento->servico->nome ?? '-' }}
+                                </td>
+
+                                <td>
+                                    {{ $agendamento->funcionario->nome ?? '-' }}
+                                </td>
+
+                                <td>
+                                    {{ \Carbon\Carbon::parse($agendamento->data_agendamento)->format('d/m/Y') }}
+                                    <br>
+                                    <small class="text-muted">
+                                        {{ $agendamento->horario }}
+                                    </small>
+                                </td>
+
+                                <td>
+
+                                    @if($agendamento->status_agendamento == 'Pendente')
+
+                                        <span class="badge bg-warning">
+                                            Pendente
+                                        </span>
+
+                                    @elseif($agendamento->status_agendamento == 'Concluido')
+
+                                        <span class="badge bg-success">
+                                            Concluído
+                                        </span>
+
+                                    @else
+
+                                        <span class="badge bg-primary">
+                                            {{ $agendamento->status_agendamento }}
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td colspan="5" class="text-center py-5">
+
+                                    <i class="bi bi-calendar-x fs-1 d-block mb-3"></i>
+
+                                    Nenhum agendamento encontrado.
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
         </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="dashboard-card text-center">
-            <div class="dashboard-icon"><i class="bi bi-heart"></i></div>
-            <h3>58</h3>
-            <p class="section-subtitle">Pets cadastrados</p>
-          </div>
+    </section>
+
+    <!-- AÇÕES RÁPIDAS -->
+    <section class="section pt-0">
+
+        <div class="container">
+
+            <h4 class="fw-bold mb-4">
+                Ações Rápidas
+            </h4>
+
+            <div class="row g-3">
+
+                <div class="col-lg-4">
+
+                    <a href="{{ route('funcionario.agendamentos') }}"
+                       class="quick-action d-block text-center">
+
+                        <i class="bi bi-calendar-check fs-3"></i>
+
+                        <p class="mt-2 mb-0">
+                            Gerenciar Agendamentos
+                        </p>
+
+                    </a>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <a href="{{ route('services.create') }}"
+                       class="quick-action d-block text-center">
+
+                        <i class="bi bi-scissors fs-3"></i>
+
+                        <p class="mt-2 mb-0">
+                            Cadastrar Serviço
+                        </p>
+
+                    </a>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <a href="{{ route('logout') }}"
+                       class="quick-action d-block text-center">
+
+                        <i class="bi bi-box-arrow-right fs-3"></i>
+
+                        <p class="mt-2 mb-0">
+                            Encerrar Sessão
+                        </p>
+
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="dashboard-card text-center">
-            <div class="dashboard-icon"><i class="bi bi-clock"></i></div>
-            <h3>5</h3>
-            <p class="section-subtitle">Em atendimento</p>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-          <div class="dashboard-card text-center">
-            <div class="dashboard-icon"><i class="bi bi-cash-stack"></i></div>
-            <h3>R$ 1.250</h3>
-            <p class="section-subtitle">Faturamento do dia</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ATENDIMENTOS -->
-  <section class="section pt-0">
-    <div class="container">
-
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold">Atendimentos em andamento</h4>
-        <a href="#" class="btn btn-outline-primary btn-sm">Ver todos</a>
-      </div>
-
-      <div class="table-responsive table-modern">
-        <table class="table align-middle mb-0">
-          <thead class="table-light">
-            <tr>
-              <th>Pet</th>
-              <th>Serviço</th>
-              <th>Status</th>
-              <th>Tempo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Rex</strong></td>
-              <td>Banho</td>
-              <td><span class="badge bg-warning">Em andamento</span></td>
-              <td>20 min</td>
-            </tr>
-            <tr>
-              <td><strong>Luna</strong></td>
-              <td>Tosa</td>
-              <td><span class="badge bg-success">Finalizado</span></td>
-              <td>45 min</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- AÇÕES RÁPIDAS -->
-  <section class="section pt-0">
-    <div class="container">
-
-      <h4 class="fw-bold mb-3">Ações rápidas</h4>
-
-      <div class="row g-3">
-
-        <div class="col-lg-4">
-          <a href="{{route('agendamento')}}" class="quick-action d-block text-center">
-            <i class="bi bi-plus-circle fs-4"></i>
-            <p class="mt-2 mb-0">Novo Agendamento</p>
-          </a>
-        </div>
-
-        <div class="col-lg-4">
-          <a href="{{route('produtos')}}" class="quick-action d-block text-center">
-            <i class="bi bi-box fs-4"></i>
-            <p class="mt-2 mb-0">Produtos</p>
-          </a>
-        </div>
-
-        <div class="col-lg-4">
-          <a href="{{route('perfil')}}" class="quick-action d-block text-center">
-            <i class="bi bi-person fs-4"></i>
-            <p class="mt-2 mb-0">Perfil</p>
-          </a>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
+    </section>
 
 </main>
 

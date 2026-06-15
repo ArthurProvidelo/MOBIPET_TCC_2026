@@ -23,4 +23,14 @@ class Pet extends Model
     ];
 
     public $timestamps = false;
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'fk_id_cliente', 'id_cliente');
+    }
+
+    public function agendamentos()
+    {
+        return $this->hasMany(Agendamento::class, 'fk_id_pet', 'id_pet');
+    }
 }

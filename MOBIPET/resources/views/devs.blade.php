@@ -72,10 +72,10 @@
 
           <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="{{route('index')}}" class="active">Início</a></li>
+              <li><a href="{{route('index')}}" >Início</a></li>
               <li><a href="{{route('sobre')}}">Sobre nós</a></li>
               <li><a href="{{route('services')}}">Serviços</a></li>
-              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+              <li><a href="{{route('devs')}}" class="active">Desenvolvedores</a></li>
 
               @if(session()->has('cliente_id'))
               <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>

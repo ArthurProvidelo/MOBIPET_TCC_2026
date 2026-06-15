@@ -210,6 +210,16 @@
             box-shadow: 0 15px 30px rgba(37, 99, 235, .25);
         }
 
+        .status-item,
+            .status-item i {
+                color: #fff !important;
+            }
+
+            .status-item.active,
+            .status-item.active i {
+                color: #fff !important;
+            }
+
         /* --- CARDS SECUNDÁRIOS --- */
         .glass-card {
             background: rgba(255, 255, 255, .75);
@@ -526,6 +536,16 @@
             </div>
         </div>
     </footer>
+
+    <!-- Scroll Top -->
+    <a href="#"
+        id="scroll-top"
+        class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
 
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>

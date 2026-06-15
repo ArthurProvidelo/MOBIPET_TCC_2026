@@ -27,4 +27,9 @@ class Cliente extends Model
 
     // Se não tiver created_at e updated_at
     public $timestamps = false;
+
+    public function pets()
+    {
+        return $this->hasMany(Pet::class, 'fk_id_cliente', 'id_cliente');
+    }
 }

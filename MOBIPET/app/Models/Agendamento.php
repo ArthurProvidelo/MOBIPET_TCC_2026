@@ -28,4 +28,19 @@ class Agendamento extends Model
 
     // Se não tiver created_at e updated_at
     public $timestamps = false;
+
+    public function pet()
+    {
+        return $this->belongsTo(Pet::class, 'fk_id_pet', 'id_pet');
+    }
+
+    public function servico()
+    {
+        return $this->belongsTo(Servico::class, 'fk_id_servico', 'id_servico');
+    }
+
+    public function funcionario()
+    {
+        return $this->belongsTo(Funcionario::class, 'fk_id_funcionario', 'id_funcionario');
+    }
 }
