@@ -28,69 +28,178 @@
 <body class="inner-page" style="background-color: #f7f9fc;">
 
   <header id="header" class="header fixed-top">
+
+    <!-- Top Bar -->
     <div class="topbar d-flex align-items-center dark-background">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-        <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:mobipet@gmail.com">mobipet@gmail.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(19)99999-8888</span></i>
+        <div class="container d-flex justify-content-center justify-content-md-between">
+
+            <div class="contact-info d-flex align-items-center">
+                <i class="bi bi-envelope d-flex align-items-center">
+                    <a href="mailto:mobipet@gmail.com">
+                        mobipet@gmail.com
+                    </a>
+                </i>
+
+                <i class="bi bi-phone d-flex align-items-center ms-4">
+                    <span>(19) 98943-2384</span>
+                </i>
+            </div>
+
+            <div class="social-links d-none d-md-flex align-items-center">
+                <a href="#!" class="whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+                <a href="#!" class="instagram">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            </div>
+
         </div>
-        <div class="social-links d-none d-md-flex align-items-center">
-          <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
-        </div>
-      </div>
     </div>
 
+    <!-- Scroll Top -->
+    <a href="#"
+       id="scroll-top"
+       class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
+       style="width: 50px;
+              height: 50px;
+              position: fixed;
+              bottom: 20px;
+              right: 20px;
+              z-index: 999;
+              font-size: 24px;">
+
+        <i class="bi bi-arrow-up-short"></i>
+
+    </a>
+
+    <!-- Branding -->
     <div class="branding d-flex align-items-center">
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-          <h1 class="sitename">Mobipet</h1>
-        </a>
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-              <li><a href="{{route('index')}}">Início</a></li>
-              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-              <li><a href="{{route('services')}}">Serviços</a></li>
-              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+        <div class="container position-relative d-flex align-items-center justify-content-between">
 
-              @if(session()->has('cliente_id'))
-              <li><a href="{{route('pets.create')}}" class="active" >Cadastrar Pet</a></li>
-                <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-                <li>
-                    <a href="{{ route('pets.index') }}" >
-                        Meus Pets
-                    </a>
-                </li>
-                <li class="dropdown">
-                  
-                    <a href="{{ route('perfil')}}">
-                        <i class="fa-solid fa-user"></i>
-                    </a>
-                </li>
+            <a href="{{ route('index') }}"
+               class="logo d-flex align-items-center">
 
-                <li>
-                    <a href="{{ route('logout') }}">
-                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </a>
-                </li>
+                <h1 class="sitename">
+                    Mobipet
+                </h1>
 
-                @else
+            </a>
 
-                <li>
-                    <a href="{{ route('login') }}">
-                        Entrar
-                    </a>
-                </li>
+            <nav id="navmenu" class="navmenu">
 
-                @endif
-              
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-          </nav>
-      </div>
+                <ul>
+
+                    <li>
+                        <a href="{{ route('index') }}">
+                            Início
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('sobre') }}">
+                            Sobre nós
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('services') }}">
+                            Serviços
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('devs') }}">
+                            Desenvolvedores
+                        </a>
+                    </li>
+
+                    {{-- CLIENTE --}}
+                    @if(session()->has('id') && session('nivel_acesso') == 'USUARIO')
+
+                        <li>
+                            <a href="{{ route('pets.create') }}">
+                                Cadastrar Pet
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('agendamento') }}">
+                                Agendamento
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('pets.index') }}">
+                                Meus Pets
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('perfil') }}">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('logout') }}">
+                                Sair
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </a>
+                        </li>
+
+                    {{-- FUNCIONÁRIO --}}
+                    @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+
+                        <li>
+                            <a href="{{ route('painel-controle') }}">
+                                Painel
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('funcionario.agendamentos') }}">
+                                Agendamentos
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('perfil') }}">
+                                Perfil
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('logout') }}">
+                                Sair
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </a>
+                        </li>
+
+                    {{-- VISITANTE --}}
+                    @else
+
+                        <li>
+                            <a href="{{ route('login') }}">
+                                Entrar
+                            </a>
+                        </li>
+
+                    @endif
+
+                </ul>
+
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+            </nav>
+
+        </div>
+
     </div>
-  </header>
+
+</header>
 
   <main class="main" style="margin-top: 140px; min-height: 75vh;">
     
@@ -260,7 +369,7 @@
 
                             <div class="text-center mt-4">
                                 <p class="text-secondary small mb-0">Já possui uma conta?</p>
-                                <a href="{{ route('login') }}" class="fw-bold text-decoration-none" style="color: #3061cb;">Entrar no sistema</a>
+                                <a href="{{ route('login') }}" class="fw-bold text-decoration-none" style="color: #3061cb;">Entrar</a>
                             </div>
 
                         </form>
@@ -284,31 +393,6 @@
     }
   </style>
 
-  <footer id="footer" class="footer-16 footer position-relative">
-    <div class="container">
-      <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
-        <div class="row">
-          <div class="col-md-6 align-items-start">
-            <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-              <h1 class="sitename">Mobipet</h1>
-            </a>
-            <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu melhor amigo!</p>
-          </div>
-          <div class="col-md-6 align-items-end">
-            <p><span><i class="bi bi-geo-alt"></i> Rua Bela Vista, 100 - Centro, Tambaú - SP</span></p>
-            <p><span><i class="bi bi-telephone"></i> (19)9999-8888</span></p>
-            <p><span><i class="bi bi-envelope"></i> mobipet@gmail.com</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div vw class="enabled">
-      <div vw-access-button class="active"></div>
-      <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
-      </div>
-    </div>
 
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
@@ -349,7 +433,6 @@
           });
         </script>
 
-  </footer>
 
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
     <i class="bi bi-arrow-up-short"></i>

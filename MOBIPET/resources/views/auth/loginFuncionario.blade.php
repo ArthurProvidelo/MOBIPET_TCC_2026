@@ -96,7 +96,24 @@
                     </a>
                 </li>
 
+                @elseif(session()->has('funcionario_id'))
+                <li>
+                    <a href="{{ route('funcionario.agendamentos') }}" >
+                        Agendamentos
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="{{ route('perfil')}}">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('logout') }}">
+                          Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                </li>
                 @else
+
                 @endif
               
             </ul>
@@ -117,7 +134,7 @@
                     <div class="card-body p-4 p-md-5">
 
                         <h2 class="text-center mb-4 fw-bold text-dark" style="font-family: 'Montserrat', sans-serif;">
-                            Login Funcionário
+                            Login de Funcionário
                         </h2>
 
                         @if(session('erro'))
@@ -158,7 +175,7 @@
 
                             <div class="text-center mt-4">
                                 <p class="text-secondary small mb-0">Não tem uma conta?</p>
-                                <a href="{{ route('cadastro') }}" class="fw-bold text-decoration-none" style="color: #3061cb;">Cadastre-se aqui</a>
+                                <a href="{{ route('funcionario') }}" class="fw-bold text-decoration-none" style="color: #3061cb;">Cadastre-se aqui</a>
                             </div>
 
                         </form>
