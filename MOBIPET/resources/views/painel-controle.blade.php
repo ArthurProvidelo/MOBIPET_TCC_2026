@@ -80,62 +80,175 @@ p, span, small {
 <!-- HEADER (PADRÃO DO SEU SISTEMA) -->
 <header id="header" class="header fixed-top">
 
-  <div class="topbar d-flex align-items-center dark-background">
-    <div class="container d-flex justify-content-between">
-      <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope"><a href="#">mobipet@gmail.com</a></i>
-        <i class="bi bi-phone ms-4"><span>(19) 98943-2384</span></i>
-      </div>
+    <!-- Top Bar -->
+    <div class="topbar d-flex align-items-center dark-background">
+        <div class="container d-flex justify-content-center justify-content-md-between">
+
+            <div class="contact-info d-flex align-items-center">
+                <i class="bi bi-envelope d-flex align-items-center">
+                    <a href="mailto:mobipet@gmail.com">
+                        mobipet@gmail.com
+                    </a>
+                </i>
+
+                <i class="bi bi-phone d-flex align-items-center ms-4">
+                    <span>(19) 98943-2384</span>
+                </i>
+            </div>
+
+            <div class="social-links d-none d-md-flex align-items-center">
+                <a href="#!" class="whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+
+                <a href="#!" class="instagram">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            </div>
+
+        </div>
     </div>
-  </div>
 
-  <div class="branding d-flex align-items-center">
-    <div class="container d-flex justify-content-between">
-      <h1 class="sitename">Mobipet</h1>
+    <!-- Scroll Top -->
+    <a href="#"
+       id="scroll-top"
+       class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
+       style="width: 50px;
+              height: 50px;
+              position: fixed;
+              bottom: 20px;
+              right: 20px;
+              z-index: 999;
+              font-size: 24px;">
 
-      <nav id="navmenu" class="navmenu">
-            <ul>
-              <li><a href="{{route('index')}}">Início</a></li>
-              <li><a href="{{route('sobre')}}">Sobre nós</a></li>
-              <li><a href="{{route('services')}}">Serviços</a></li>
-              <li><a href="{{route('devs')}}">Desenvolvedores</a></li>
+        <i class="bi bi-arrow-up-short"></i>
 
-              @if(session()->has('cliente_id'))
-              <li><a href="{{route('pets.create')}}" >Cadastrar Pet</a></li>
-                <li><a href="{{route('agendamento')}}">Agendamento</a></li>
-                <li>
-                    <a href="{{ route('pets.index') }}" >
-                        Meus Pets
-                    </a>
-                </li>
-                <li class="dropdown">
-                  
-                    <a href="{{ route('perfil')}}">
-                        <i class="fa-solid fa-user"></i>
-                    </a>
-                </li>
+    </a>
 
-                <li>
-                    <a href="{{ route('logout') }}">
-                       Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </a>
-                </li>
+    <!-- Branding -->
+    <div class="branding d-flex align-items-center">
 
-                @else
+        <div class="container position-relative d-flex align-items-center justify-content-between">
 
-                <li>
-                    <a href="{{ route('login') }}">
-                        Entrar
-                    </a>
-                </li>
+            <a href="{{ route('index') }}"
+               class="logo d-flex align-items-center">
 
-                @endif
-              
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-          </nav>
+                <h1 class="sitename">
+                    Mobipet
+                </h1>
+
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+
+                <ul>
+
+                    <li>
+                        <a href="{{ route('index') }}">
+                            Início
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('sobre') }}">
+                            Sobre nós
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('services') }}">
+                            Serviços
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('devs') }}">
+                            Desenvolvedores
+                        </a>
+                    </li>
+
+                    {{-- CLIENTE --}}
+                    @if(session()->has('id') && session('nivel_acesso') == 'USUARIO')
+
+                        <li>
+                            <a href="{{ route('pets.create') }}">
+                                Cadastrar Pet
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('agendamento') }}">
+                                Agendamento
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('pets.index') }}">
+                                Meus Pets
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('perfil') }}">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('logout') }}">
+                                Sair
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </a>
+                        </li>
+
+                    {{-- FUNCIONÁRIO --}}
+                    @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+
+                        <li>
+                            <a href="{{ route('painel-controle') }}" class="active">
+                                Painel
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('funcionario.agendamentos') }}">
+                                Agendamentos
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('perfil') }}">
+                                Perfil
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('logout') }}">
+                                Sair
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </a>
+                        </li>
+
+                    {{-- VISITANTE --}}
+                    @else
+
+                        <li>
+                            <a href="{{ route('login') }}">
+                                Entrar
+                            </a>
+                        </li>
+
+                    @endif
+
+                </ul>
+
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+            </nav>
+
+        </div>
+
     </div>
-  </div>
 
 </header>
 

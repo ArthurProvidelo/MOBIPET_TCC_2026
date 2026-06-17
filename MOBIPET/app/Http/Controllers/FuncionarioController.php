@@ -25,29 +25,37 @@ class FuncionarioController extends Controller
     // Salvar novo funcionário
     public function store(Request $request)
     {
+        $request->merge([
+            'salario' => str_replace(
+                ',',
+                '.',
+                str_replace('.', '', $request->salario)
+            )
+        ]);
+
         $request->validate([
-            'nome'           => 'required|string|max:255',
-            'cpf'            => 'required|string|max:14|unique:Funcionario,cpf',
-            'cargo'          => 'required|string|max:100',
-            'telefone'       => 'required|string|max:20',
-            'email'          => 'required|email|max:255|unique:Funcionario,email',
-            'endereco'       => 'nullable|string|max:255',
-            'salario'        => 'nullable|numeric|min:0',
-            'data_admissao'  => 'required|date',
-            'senha'          => 'required|min:6'
+            'nome' => 'required|string|max:255',
+            'cpf' => 'required|string|max:14',
+            'cargo' => 'required|string|max:100',
+            'telefone' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'endereco' => 'nullable|string|max:255',
+            'salario' => 'nullable|numeric|min:0',
+            'data_admissao' => 'required|date',
+            'senha' => 'required|min:6'
         ]);
 
         // O Eloquent trata as strings de forma segura, evitando o erro de "coluna não encontrada"
         Funcionario::create([
-            'nome'          => $request->nome,
-            'cpf'           => $request->cpf,
-            'cargo'         => $request->cargo,
-            'telefone'      => $request->telefone,
-            'email'         => $request->email,
-            'endereco'      => $request->endereco,
-            'salario'       => $request->salario,
+            'nome' => $request->nome,
+            'cpf' => $request->cpf,
+            'cargo' => $request->cargo,
+            'telefone' => $request->telefone,
+            'email' => $request->email,
+            'endereco' => $request->endereco,
+            'salario' => $request->salario,
             'data_admissao' => $request->data_admissao,
-            'senha'         => Hash::make($request->senha) // O cast no model já faz isso, mas mantemos por segurança
+            'senha' => Hash::make($request->senha) // O cast no model já faz isso, mas mantemos por segurança
         ]);
 
         return redirect()
@@ -81,18 +89,18 @@ class FuncionarioController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome'     => 'required|string|max:255',
-            'cargo'    => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
+            'cargo' => 'required|string|max:255',
             'telefone' => 'required|string|max:255',
-            'email'    => 'required|email|max:255',
+            'email' => 'required|email|max:255',
         ]);
 
         // Atualizando com base na chave correta
         Funcionario::where('id_funcionario', $id)->update([
-            'nome'     => $request->nome,
-            'cargo'    => $request->cargo,
+            'nome' => $request->nome,
+            'cargo' => $request->cargo,
             'telefone' => $request->telefone,
-            'email'    => $request->email,
+            'email' => $request->email,
         ]);
 
         return redirect()->route('funcionario.index')

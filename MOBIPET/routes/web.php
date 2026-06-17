@@ -117,3 +117,11 @@ Route::get('/servicos/cadastrar', [ServicoController::class, 'create'])
 // Rota que processa os dados e salva no banco (Método POST)
 Route::post('/servicos/salvar', [ServicoController::class, 'store'])
     ->name('services.store');
+
+
+
+
+
+    // Rota que renderiza o formulário HTML (Método GET)
+Route::get('/servicos/cadastrar', [ServicoController::class, 'create'])
+    ->name('services.create');
