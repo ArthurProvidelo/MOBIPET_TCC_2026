@@ -137,6 +137,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('login.funcionario') }}">
+                            Sou Funcionário
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </a>
+                    </li>
+
                     {{-- CLIENTE --}}
                     @if(session()->has('id') && session('nivel_acesso') == 'USUARIO')
 
@@ -170,6 +177,7 @@
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                             </a>
                         </li>
+                        
 
                     {{-- FUNCIONÁRIO --}}
                     @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')

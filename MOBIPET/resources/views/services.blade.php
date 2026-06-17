@@ -463,7 +463,7 @@
                         <div class="row g-4 h-100 align-items-stretch">
                             <div class="col-12">
                                 <div class="glass-card p-5 rounded-5 h-100 d-flex flex-column justify-content-center">
-                                    <div class="small-icon bg-primary mb-3">
+                                    <div class="small-icon bg-success mb-3">
                                         <i class="bi bi-whatsapp"></i>
                                     </div>
                                     <h4 class="fw-bold mt-2 mb-3">Comunicação via WhatsApp</h4>
@@ -475,7 +475,7 @@
                             <div class="col-md-6">
                                 <div class="glass-card p-4 rounded-5 h-100 d-flex flex-column justify-content-between">
                                     <div>
-                                        <div class="small-icon bg-success mb-3">
+                                        <div class="small-icon bg-primary mb-3">
                                             <i class="bi bi-heart-fill"></i>
                                         </div>
                                         <h5 class="fw-bold mt-2 mb-3">Mais confiança</h5>
