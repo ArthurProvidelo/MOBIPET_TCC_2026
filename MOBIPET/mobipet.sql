@@ -108,7 +108,16 @@ CREATE TABLE Avaliacao (
 );
 
 
+
 SELECT * FROM agendamento;
+
+SELECT * FROM cliente;
+
+SELECT * FROM pet;
+
+SELECT * FROM servico;
+
+SELECT * FROM funcionario;
 
 ALTER TABLE Funcionario
 ADD COLUMN cpf VARCHAR(14),

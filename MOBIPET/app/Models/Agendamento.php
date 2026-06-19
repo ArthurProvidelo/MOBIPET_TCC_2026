@@ -20,7 +20,7 @@ class Agendamento extends Model
         'data_agendamento',
         'horario',
         'status_agendamento',
-        'observacoes',
+        'observacao',
         'fk_id_pet',
         'fk_id_servico',
         'fk_id_funcionario'

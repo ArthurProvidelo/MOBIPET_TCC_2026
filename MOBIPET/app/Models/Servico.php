@@ -25,4 +25,13 @@ class Servico extends Model
 
     // Sem timestamps
     public $timestamps = false;
+
+    public function agendamentos()
+    {
+        return $this->hasMany(
+            Agendamento::class,
+            'fk_id_servico',
+            'id_servico'
+        );
+    }
 }

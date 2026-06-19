@@ -101,7 +101,6 @@
             <nav id="navmenu" class="navmenu">
 
                 <ul>
-
                     <li>
                         <a href="{{ route('index') }}">
                             Início

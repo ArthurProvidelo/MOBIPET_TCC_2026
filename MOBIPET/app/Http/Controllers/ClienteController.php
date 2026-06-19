@@ -11,7 +11,7 @@ class ClienteController extends Controller
     // Listar clientes
     public function index()
     {
-        $clientes = DB::table('clientes')->get();
+        $clientes = DB::table('cliente')->get();
         return view('clientes.index', compact('clientes'));
     }
 
@@ -52,16 +52,16 @@ class ClienteController extends Controller
     }
 
     public function perfil(){
-        if (!session()->has('cliente_id')) {
+        if (!session()->has('id')) {
             return redirect()->route('login');
         }
 
         $cliente = DB::table('cliente')
-            ->where('id_cliente', session('cliente_id'))
+            ->where('id_cliente', session('id'))
             ->first();
 
         $pets = DB::table('pet')
-            ->where('fk_id_cliente', session('cliente_id'))
+            ->where('fk_id_cliente', session('id'))
             ->get();
 
         return view('perfil', compact(
@@ -83,7 +83,7 @@ class ClienteController extends Controller
     // Formulário de edição
     public function edit($id)
     {
-        $cliente = DB::table('clientes')
+        $cliente = DB::table('cliente')
             ->where('id_cliente', $id)
             ->first();
 
@@ -105,7 +105,7 @@ class ClienteController extends Controller
             'endereco' => 'required|string|max:255',
         ]);
 
-        DB::table('clientes')
+        DB::table('cliente')
             ->where('id_cliente', $id)
             ->update([
                 'nome' => $request->nome,
@@ -120,7 +120,7 @@ class ClienteController extends Controller
     }
 
     public function updatePerfil(Request $request){
-    if (!session()->has('cliente_id')) {
+    if (!session()->has('id')) {
         return redirect()->route('login');
     }
 
@@ -132,7 +132,7 @@ class ClienteController extends Controller
     ]);
 
     DB::table('cliente')
-        ->where('id_cliente', session('cliente_id'))
+        ->where('id_cliente', session('id'))
         ->update([
             'nome' => $request->nome,
             'email' => $request->email,
@@ -148,7 +148,7 @@ class ClienteController extends Controller
     // Excluir cliente
     public function destroy($id)
     {
-        DB::table('clientes')
+        DB::table('cliente')
             ->where('id_cliente', $id)
             ->delete();
 

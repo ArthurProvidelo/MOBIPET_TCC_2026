@@ -20,6 +20,10 @@ class AgendamentoController extends Controller
 
     public function create()
     {
+        if (!session()->has('id')) {
+            return redirect()->route('login');
+        }
+
         $clienteId = Session::get('id');
         $pets = Pet::where('fk_id_cliente', $clienteId)->get();
         $funcionarios = Funcionario::all();
@@ -36,6 +40,7 @@ class AgendamentoController extends Controller
             'fk_id_funcionario' => 'required|exists:Funcionario,id_funcionario',
             'data_agendamento' => 'required|date',
             'horario' => 'required',
+            'observacoes' => 'required'
         ]);
 
         Agendamento::create([
@@ -46,6 +51,7 @@ class AgendamentoController extends Controller
             'fk_id_pet' => $request->fk_id_pet,
             'fk_id_servico' => $request->fk_id_servico,
             'fk_id_funcionario' => $request->fk_id_funcionario,
+            'observacao' => $request->observacoes
         ]);
 
         return redirect()
@@ -95,7 +101,7 @@ class AgendamentoController extends Controller
     {
         if(!session()->has('id') || session('nivel_acesso') != 'FUNCIONARIO')
         {
-            return redirect()->route('login');
+            return redirect()->route('login.autenticarFuncionario');
         }
 
         $agendamentos = Agendamento::with([

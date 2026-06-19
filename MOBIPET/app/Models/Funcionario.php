@@ -27,7 +27,8 @@ class Funcionario extends Model
         'senha',
         'cargo',
         'salario',
-        'endereco'
+        'endereco',
+        'data_admissao'
     ];
 
     // Oculta a senha por padrão em retornos de consultas/JSON para maior segurança

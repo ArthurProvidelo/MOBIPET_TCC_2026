@@ -268,14 +268,6 @@ p, span, small {
                 </p>
             </div>
 
-            <a href="{{ route('funcionario.agendamentos') }}"
-               class="btn btn-primary">
-
-                <i class="bi bi-calendar-check"></i>
-                Ver Agendamentos
-
-            </a>
-
         </div>
     </section>
 
