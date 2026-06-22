@@ -194,13 +194,6 @@ p, span, small {
                             </a>
                         </li>
 
-                        <li>
-                            <a href="{{ route('logout') }}">
-                                Sair
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            </a>
-                        </li>
-
                     {{-- FUNCIONÁRIO --}}
                     @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
 
@@ -213,12 +206,6 @@ p, span, small {
                         <li>
                             <a href="{{ route('funcionario.agendamentos') }}">
                                 Agendamentos
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('perfil') }}">
-                                Perfil
                             </a>
                         </li>
 
@@ -259,7 +246,7 @@ p, span, small {
         <div class="container d-flex justify-content-between align-items-center flex-wrap">
 
             <div>
-                <h2 class="fw-bold">
+                <h2 class="fw-bold mt-4">
                     Bem-vindo, {{ session('nome') }}
                 </h2>
 
@@ -464,22 +451,7 @@ p, span, small {
 
             <div class="row g-3">
 
-                <div class="col-lg-4">
-
-                    <a href="{{ route('funcionario.agendamentos') }}"
-                       class="quick-action d-block text-center">
-
-                        <i class="bi bi-calendar-check fs-3"></i>
-
-                        <p class="mt-2 mb-0">
-                            Gerenciar Agendamentos
-                        </p>
-
-                    </a>
-
-                </div>
-
-                <div class="col-lg-4">
+                <div class="col-lg-6">
 
                     <a href="{{ route('services.create') }}"
                        class="quick-action d-block text-center">
@@ -494,7 +466,7 @@ p, span, small {
 
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-6">
 
                     <a href="{{ route('logout') }}"
                        class="quick-action d-block text-center">

@@ -155,6 +155,9 @@
                   </div>
                 </form>
 
+                <?php
+                  if(session('nivel_acesso') == 'USUARIO'){
+                ?>
                 <div class="section-title mt-5">
                   <i class="fa-solid fa-paw"></i>
                   <span>Meus Pets</span>
@@ -198,6 +201,8 @@
                 </div>
 
               </div>
+
+              <?php } ?>
             </div>
           </div>
         </div>

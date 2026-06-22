@@ -10,6 +10,8 @@ use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PainelController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\GoogleFuncionarioController;
 
 
 Route::get('/', function () {
@@ -125,3 +127,15 @@ Route::post('/servicos/salvar', [ServicoController::class, 'store'])
     // Rota que renderiza o formulário HTML (Método GET)
 Route::get('/servicos/cadastrar', [ServicoController::class, 'create'])
     ->name('services.create');
+
+// Google
+Route::get('/auth/google', [GoogleController::class, 'redirect'])
+->name('google.login');
+
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+
+// Google Funcionario
+Route::get('/auth/googleFuncionario', [GoogleFuncionarioController::class, 'redirect'])
+->name('google.loginFuncionario');
+
+Route::get('/auth/google/callbackFuncionario', [GoogleFuncionarioController::class, 'callbackFuncionario']);

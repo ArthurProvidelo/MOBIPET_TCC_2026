@@ -101,7 +101,7 @@ class AgendamentoController extends Controller
     {
         if(!session()->has('id') || session('nivel_acesso') != 'FUNCIONARIO')
         {
-            return redirect()->route('login.autenticarFuncionario');
+            return redirect()->route('login.funcionario');
         }
 
         $agendamentos = Agendamento::with([

@@ -56,13 +56,23 @@ class ClienteController extends Controller
             return redirect()->route('login');
         }
 
-        $cliente = DB::table('cliente')
-            ->where('id_cliente', session('id'))
-            ->first();
+        if(session('nivel_acesso') == 'USUARIO'){
+            $cliente = DB::table('cliente')
+                ->where('id_cliente', session('id'))
+                ->first();
 
-        $pets = DB::table('pet')
+            $pets = DB::table('pet')
             ->where('fk_id_cliente', session('id'))
             ->get();
+
+        }else{
+            $cliente = DB::table('funcionario')
+                ->where('id_funcionario', session('id'))
+                ->first();
+
+            $pets = [];
+        }
+
 
         return view('perfil', compact(
             'cliente',
