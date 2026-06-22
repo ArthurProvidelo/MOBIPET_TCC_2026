@@ -126,3 +126,16 @@ ADD COLUMN salario DECIMAL(10,2),
 ADD COLUMN data_admissao DATE,
 ADD COLUMN senha VARCHAR(255),
 ADD COLUMN funcao VARCHAR(100);
+
+-- 1. Desativa a trava do Modo Seguro e a checagem de Chaves Estrangeiras
+SET SQL_SAFE_UPDATES = 0;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- 2. Limpa a tabela e reinicia o contador do ID
+TRUNCATE TABLE servico;
+
+-- 3. Reativa as proteções do banco de dados (Muito importante!)
+SET FOREIGN_KEY_CHECKS = 1;
+SET SQL_SAFE_UPDATES = 1;
+
+ALTER TABLE Cliente MODIFY COLUMN cpf VARCHAR(14);

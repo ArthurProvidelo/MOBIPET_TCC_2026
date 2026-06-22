@@ -139,3 +139,14 @@ Route::get('/auth/googleFuncionario', [GoogleFuncionarioController::class, 'redi
 ->name('google.loginFuncionario');
 
 Route::get('/auth/google/callbackFuncionario', [GoogleFuncionarioController::class, 'callbackFuncionario']);
+
+
+
+
+// use App\Http\Controllers\PerfilController;
+
+// // Rota para exibir o perfil (Método GET)
+// Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
+
+// // Rota para processar a atualização (Método PUT que seu formulário utiliza)
+// Route::put('/perfil/atualizar', [PerfilController::class, 'update'])->name('perfil.update');

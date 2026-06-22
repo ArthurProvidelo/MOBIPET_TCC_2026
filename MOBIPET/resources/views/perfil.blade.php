@@ -137,12 +137,17 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-4 mb-4">
                       <label>Telefone</label>
-                      <input type="text" name="telefone" class="form-control" value="{{ $cliente->telefone }}" required>
+                      <input type="text" id="telefone" name="telefone" class="form-control" value="{{ $cliente->telefone }}" placeholder="(00) 00000-0000" required>
                     </div>
 
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-4 mb-4">
+                      <label>CPF</label>
+                      <input type="text" id="cpf" name="cpf" class="form-control" value="{{ $cliente->cpf ?? '' }}" placeholder="000.000.000-00" required>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
                       <label>Endereço</label>
                       <input type="text" name="endereco" class="form-control" value="{{ $cliente->endereco }}" required>
                     </div>
@@ -421,6 +426,37 @@
   <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
   <script>
     AOS.init();
+
+    // MÁSCARAS EM JAVASCRIPT PURO (VANILLA JS)
+    
+    // Função para aplicar máscara no CPF (000.000.000-00)
+    const inputCpf = document.getElementById('cpf');
+    if(inputCpf) {
+      inputCpf.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, ''); // Remove tudo o que não é dígito
+        if (value.length > 11) value = value.slice(0, 11); // Limita em 11 caracteres
+        
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        
+        e.target.value = value;
+      });
+    }
+
+    // Função para aplicar máscara no Telefone ((00) 00000-0000)
+    const inputTelefone = document.getElementById('telefone');
+    if(inputTelefone) {
+      inputTelefone.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, ''); // Remove tudo o que não é dígito
+        if (value.length > 11) value = value.slice(0, 11); // Limita em 11 caracteres
+        
+        value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+        value = value.replace(/(\d{5})(\d)/, '$1-$2');
+        
+        e.target.value = value;
+      });
+    }
   </script>
 </body>
 </html>
