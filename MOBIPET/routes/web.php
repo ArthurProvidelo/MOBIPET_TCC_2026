@@ -91,7 +91,7 @@ Route::post('/login', [AuthController::class, 'login'])
 Route::post('/login-funcionario', [AuthController::class, 'loginFuncionario'])
     ->name('login.autenticarFuncionario');
 
-// Rota para exibir a view de agendamentos do funcionário
+// Rota para exibir a agenda do funcionário (mês > dia > agendamentos)
 Route::get('/funcionario/agendamentos', [AgendamentoController::class, 'agendamentosFuncionario'])
     ->name('funcionario.agendamentos');
 
@@ -120,14 +120,6 @@ Route::get('/servicos/cadastrar', [ServicoController::class, 'create'])
 Route::post('/servicos/salvar', [ServicoController::class, 'store'])
     ->name('services.store');
 
-
-
-
-
-    // Rota que renderiza o formulário HTML (Método GET)
-Route::get('/servicos/cadastrar', [ServicoController::class, 'create'])
-    ->name('services.create');
-
 // Google
 Route::get('/auth/google', [GoogleController::class, 'redirect'])
 ->name('google.login');
@@ -139,14 +131,3 @@ Route::get('/auth/googleFuncionario', [GoogleFuncionarioController::class, 'redi
 ->name('google.loginFuncionario');
 
 Route::get('/auth/google/callbackFuncionario', [GoogleFuncionarioController::class, 'callbackFuncionario']);
-
-
-
-
-// use App\Http\Controllers\PerfilController;
-
-// // Rota para exibir o perfil (Método GET)
-// Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
-
-// // Rota para processar a atualização (Método PUT que seu formulário utiliza)
-// Route::put('/perfil/atualizar', [PerfilController::class, 'update'])->name('perfil.update');

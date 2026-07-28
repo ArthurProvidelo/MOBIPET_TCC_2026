@@ -10,7 +10,7 @@ class Servico extends Model
     use HasFactory;
 
     // Nome da tabela
-    protected $table = 'servico';
+    protected $table = 'Servico';
 
     // Chave primária
     protected $primaryKey = 'id_servico';

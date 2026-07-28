@@ -9,9 +9,46 @@ use App\Models\Pet;
 use App\Models\Servico;
 use App\Models\Funcionario;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class AgendamentoController extends Controller
 {
+    /**
+     * Nomes dos meses em português (evita depender de locale do sistema/Carbon).
+     */
+    private const MESES = [
+        1  => 'Janeiro',   2  => 'Fevereiro', 3  => 'Março',
+        4  => 'Abril',     5  => 'Maio',      6  => 'Junho',
+        7  => 'Julho',     8  => 'Agosto',    9  => 'Setembro',
+        10 => 'Outubro',   11 => 'Novembro',  12 => 'Dezembro',
+    ];
+
+    /**
+     * Nomes dos dias da semana em português.
+     * Carbon::dayOfWeek: 0 = domingo ... 6 = sábado.
+     */
+    private const DIAS_SEMANA = [
+        0 => 'Domingo', 1 => 'Segunda', 2 => 'Terça',
+        3 => 'Quarta',  4 => 'Quinta',  5 => 'Sexta', 6 => 'Sábado',
+    ];
+
+    /**
+     * Mapeia o texto livre salvo em status_agendamento para as chaves
+     * que o Blade/CSS reconhecem: agendado | andamento | concluido | cancelado.
+     */
+    private const STATUS_MAP = [
+        'pendente'       => 'agendado',
+        'agendado'       => 'agendado',
+        'confirmado'     => 'agendado',
+        'em andamento'   => 'andamento',
+        'andamento'      => 'andamento',
+        'em atendimento' => 'andamento',
+        'concluido'      => 'concluido',
+        'finalizado'     => 'concluido',
+        'cancelado'      => 'cancelado',
+    ];
+
     public function index()
     {
         $agendamentos = Agendamento::all();
@@ -97,6 +134,10 @@ class AgendamentoController extends Controller
         return redirect()->route('agendamento')->with('success', 'Agendamento excluído com sucesso!');
     }
 
+    /**
+     * Tela de agenda no estilo "Calendário do iPhone" (mês > dia > agendamentos)
+     * para uso do funcionário.
+     */
     public function agendamentosFuncionario()
     {
         if(!session()->has('id') || session('nivel_acesso') != 'FUNCIONARIO')
@@ -113,10 +154,92 @@ class AgendamentoController extends Controller
         ->orderBy('horario')
         ->get();
 
+        $agenda = $this->agruparAgendamentos($agendamentos);
+
         return view(
             'funcionario.agendamentos',
-            compact('agendamentos')
+            compact('agenda')
         );
     }
-        
+
+    /**
+     * Agrupa a coleção de Agendamentos em:
+     * ['Mês Ano' => ['total_agendamentos' => int, 'dias' => [ [data, dia_semana, dia, agendamentos[]] ]]]
+     */
+    private function agruparAgendamentos($agendamentos): array
+    {
+        $agenda = [];
+
+        foreach ($agendamentos as $ag) {
+            if (!$ag->data_agendamento) {
+                continue;
+            }
+
+            $data = Carbon::parse($ag->data_agendamento);
+            $mesChave = self::MESES[$data->month] . ' ' . $data->year;
+            $dataKey = $data->format('Y-m-d');
+
+            if (!isset($agenda[$mesChave])) {
+                $agenda[$mesChave] = [
+                    'total_agendamentos' => 0,
+                    'dias' => [],
+                ];
+            }
+
+            if (!isset($agenda[$mesChave]['dias'][$dataKey])) {
+                $agenda[$mesChave]['dias'][$dataKey] = [
+                    'data' => $dataKey,
+                    'dia_semana' => self::DIAS_SEMANA[$data->dayOfWeek],
+                    'dia' => $data->format('d'),
+                    'agendamentos' => [],
+                ];
+            }
+
+            $agenda[$mesChave]['dias'][$dataKey]['agendamentos'][] = [
+                'horario'     => $ag->horario ? Carbon::parse($ag->horario)->format('H:i') : '--:--',
+                'pet'         => $ag->pet->nome ?? 'Pet não informado',
+                'especie'     => $ag->pet->especie ?? 'Não informado',
+                'tutor'       => $ag->pet->cliente->nome ?? 'Tutor não informado',
+                'servico'     => $ag->servico->nome ?? 'Serviço não informado',
+                'funcionario' => $ag->funcionario->nome ?? 'Não atribuído',
+                'status'      => $this->normalizarStatus($ag->status_agendamento),
+                'observacao'  => $ag->observacao,
+            ];
+
+            $agenda[$mesChave]['total_agendamentos']++;
+        }
+
+        // Reindexa 'dias' de array associativo (por data) para lista sequencial,
+        // já ordenada por data pois a query original usa orderBy('data_agendamento').
+        foreach ($agenda as $mesChave => &$mesDados) {
+            $mesDados['dias'] = array_values($mesDados['dias']);
+        }
+        unset($mesDados);
+
+        return $agenda;
+    }
+
+    /**
+     * Normaliza o texto de status_agendamento (minúsculo, sem acento) e
+     * mapeia para as chaves usadas pelos badges do Blade.
+     */
+    private function normalizarStatus(?string $status): string
+    {
+        if (!$status) {
+            return 'agendado';
+        }
+
+        $normalizado = strtolower(trim($status));
+        $normalizado = str_replace(
+            ['á', 'ã', 'â', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç'],
+            ['a', 'a', 'a', 'e', 'e', 'i', 'o', 'o', 'o', 'u', 'c'],
+            $normalizado
+        );
+
+        if (!isset(self::STATUS_MAP[$normalizado])) {
+            Log::warning("Status de agendamento não mapeado: {$status}");
+        }
+
+        return self::STATUS_MAP[$normalizado] ?? 'agendado';
+    }
 }

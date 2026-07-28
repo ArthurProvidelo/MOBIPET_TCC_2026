@@ -9,8 +9,8 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    // Nome da tabela (opcional, Laravel já entende "clientes")
-    protected $table = 'cliente';
+    // Nome da tabela
+    protected $table = 'Cliente';
 
     // Chave primária
     protected $primaryKey = 'id_cliente';
@@ -27,6 +27,11 @@ class Cliente extends Model
 
     // Se não tiver created_at e updated_at
     public $timestamps = false;
+
+    // Oculta a senha por padrão em retornos de consultas/JSON para maior segurança
+    protected $hidden = [
+        'senha',
+    ];
 
     public function pets()
     {
