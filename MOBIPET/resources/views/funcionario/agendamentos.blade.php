@@ -330,7 +330,7 @@
                                             <div class="appointment-card__content">
                                               <div class="appointment-card__top">
                                                 <span class="appointment-card__pet">
-                                                  <i class="fa-solid fa-paw me-1 text-primary"></i>{{ $ag['pet'] }} - {{  $ag['especie']}}
+                                                  {{ $ag['pet'] }} - {{  $ag['especie']}}
                                                 </span>
                                                 <span class="badge badge-status {{ $statusInfo['classe'] }}">
                                                   <i class="fa-solid {{ $statusInfo['icone'] }} me-1"></i>{{ $statusInfo['label'] }}

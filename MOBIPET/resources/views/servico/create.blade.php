@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Cadastrar Serviço - Mobipet</title>
-    <meta name="description" content="Adicione novos serviços, preços e durações oferecidas pelo seu petshop na plataforma Mobipet.">
+    <meta name="description"
+        content="Adicione novos serviços, preços e durações oferecidas pelo seu petshop na plataforma Mobipet.">
     <meta name="keywords" content="petshop, monitoramento pet, banho e tosa, laravel, mobipet, cadastrar servico">
 
     <!-- Favicons -->
@@ -14,7 +15,9 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -54,7 +57,9 @@
         </div>
 
         <!-- Scroll Top Button -->
-        <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+        <a href="#" id="scroll-top"
+            class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
+            style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
             <i class="bi bi-arrow-up-short"></i>
         </a>
 
@@ -73,20 +78,22 @@
                         <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
 
                         {{-- CLIENTE --}}
-                        @if(session()->has('id') && session('nivel_acesso') == 'USUARIO')
+                        @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
                             <li><a href="{{ route('pets.create') }}">Cadastrar Pet</a></li>
                             <li><a href="{{ route('agendamento') }}">Agendamento</a></li>
                             <li><a href="{{ route('pets.index') }}">Meus Pets</a></li>
                             <li><a href="{{ route('perfil') }}"><i class="fa-solid fa-user"></i></a></li>
-                            <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                            <li><a href="{{ route('logout') }}">Sair <i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 
-                        {{-- FUNCIONÁRIO --}}
+                            {{-- FUNCIONÁRIO --}}
                         @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
                             <li><a href="{{ route('painel-controle') }}">Painel</a></li>
                             <li><a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a></li>
                             <li><a href="{{ route('services') }}" class="active">Cadastrar Serviços</a></li>
                             <li><a href="{{ route('perfil') }}">Perfil</a></li>
-                            <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                            <li><a href="{{ route('logout') }}">Sair <i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
                         @else
                             <li><a href="{{ route('login') }}">Entrar</a></li>
                         @endif
@@ -108,16 +115,17 @@
                 <div class="hero-agendamento text-center" data-aos="fade-up">
                     <h1 class="hero-title">Cadastrar Serviço</h1>
                     <p class="hero-subtitle">
-                        Adicione novos procedimentos, defina durações médias e preços para atualizar as opções de agendamento da plataforma.
+                        Adicione novos procedimentos, defina durações médias e preços para atualizar as opções de
+                        agendamento da plataforma.
                     </p>
                 </div>
 
                 <!-- Bloco do Formulário -->
                 <div class="row justify-content-center">
                     <div class="col-lg-8" data-aos="zoom-in" data-aos-delay="200">
-                        
+
                         <div class="card agendamento-card">
-                            
+
                             <!-- Card Header Premium -->
                             <div class="card-header">
                                 <div class="d-flex align-items-center gap-3">
@@ -126,7 +134,8 @@
                                     </div>
                                     <div>
                                         <h3 class="text-white">Novo Serviço</h3>
-                                        <p class="mb-0 text-metod">Preencha os campos obrigatórios (*) para salvar no banco de dados.</p>
+                                        <p class="mb-0 text-metod">Preencha os campos obrigatórios (*) para salvar no
+                                            banco de dados.</p>
                                     </div>
                                 </div>
                             </div>
@@ -134,8 +143,17 @@
                             <!-- Card Body -->
                             <div class="card-body p-4 p-md-5">
 
+                                @if (session('success'))
+                                    <div class="alert alert-success border-0 rounded-4 p-3 shadow-sm mb-4 d-flex align-items-center gap-3"
+                                        data-aos="fade-up">
+                                        <i class="fa-solid fa-circle-check fs-4 text-success"></i>
+                                        <span class="fw-semibold">{{ session('success') }}</span>
+                                    </div>
+                                @endif
+
                                 @if ($errors->any())
-                                    <div class="alert alert-danger border-0 rounded-4 p-3 shadow-sm mb-4 d-flex align-items-center gap-3" style="background-color: #fff5f5; color: #dc2626;">
+                                    <div class="alert alert-danger border-0 rounded-4 p-3 shadow-sm mb-4 d-flex align-items-center gap-3"
+                                        style="background-color: #fff5f5; color: #dc2626;">
                                         <i class="fa-solid fa-circle-exclamation fs-4"></i>
                                         <ul class="mb-0 small fw-semibold list-unstyled">
                                             @foreach ($errors->all() as $error)
@@ -149,57 +167,67 @@
                                     @csrf
 
                                     <div class="row g-4">
-                                        
-                                        <div class="col-12">
+
+                                        <div class="col-6">
                                             <label for="nome" class="form-label-minimal">Nome do Serviço *</label>
-                                            <input type="text" class="form-control form-control-minimal" id="nome" name="nome" placeholder="Ex: Banho Premium, Tosa Higiênica..." required value="{{ old('nome') }}">
+                                            <input type="text" class="form-control form-control-minimal"
+                                                id="nome" name="nome"
+                                                placeholder="Ex: Banho Premium, Tosa Higiênica..." required
+                                                value="{{ old('nome') }}">
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="categoria" class="form-label-minimal">Categoria do Serviço *</label>
-                                            <select class="form-select form-control-minimal" id="categoria" name="categoria" required>
-                                                <option value="" disabled selected>Selecione uma opção...</option>
-                                                <option value="banho" {{ old('categoria') == 'banho' ? 'selected' : '' }}>Banho</option>
-                                                <option value="tosa" {{ old('categoria') == 'tosa' ? 'selected' : '' }}>Tosa</option>
-                                                <option value="consulta" {{ old('categoria') == 'consulta' ? 'selected' : '' }}>Consulta Veterinária</option>
-                                                <option value="outros" {{ old('categoria') == 'outros' ? 'selected' : '' }}>Outros Serviços</option>
+                                            <label for="categoria" class="form-label-minimal">Categoria do Serviço
+                                                *</label>
+                                            <select class="form-select form-control-minimal" id="categoria"
+                                                name="categoria" required>
+                                                <option value="" disabled selected>Selecione uma opção...
+                                                </option>
+                                                <option value="banho"
+                                                    {{ old('categoria') == 'banho' ? 'selected' : '' }}>Banho</option>
+                                                <option value="tosa"
+                                                    {{ old('categoria') == 'tosa' ? 'selected' : '' }}>Tosa</option>
+                                                <option value="consulta"
+                                                    {{ old('categoria') == 'consulta' ? 'selected' : '' }}>Consulta
+                                                    Veterinária</option>
+                                                <option value="outros"
+                                                    {{ old('categoria') == 'outros' ? 'selected' : '' }}>Outros
+                                                    Serviços</option>
                                             </select>
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="preco" class="form-label-minimal">Preço Cobrado (R$) *</label>
-                                            <input type="number" step="0.01" class="form-control form-control-minimal" id="preco" name="preco" placeholder="0,00" required value="{{ old('preco') }}">
+                                            <label for="preco" class="form-label-minimal">Preço Cobrado (R$)
+                                                *</label>
+                                            <input type="number" step="0.01"
+                                                class="form-control form-control-minimal" id="preco"
+                                                name="preco" placeholder="0,00" required
+                                                value="{{ old('preco') }}">
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="tempoEstimado" class="form-label-minimal">Tempo Estimado de Duração *</label>
-                                            <input type="text" class="form-control form-control-minimal" id="tempoEstimado" name="tempoEstimado" placeholder="Ex: 45 min, 1h 30min" required value="{{ old('tempo_estimado') }}">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label class="form-label-minimal d-block mb-3">Disponibilizar Monitoramento ao Vivo?</label>
-                                            <div class="d-flex gap-4 align-items-center pt-1">
-                                                <div class="form-check custom-radio-wrapper">
-                                                    <input class="form-check-input" type="radio" name="monitoramento" id="monitorar_sim" value="1" checked>
-                                                    <label class="form-check-label text-dark fw-medium small" for="monitorar_sim">Sim, ativo</label>
-                                                </div>
-                                                <div class="form-check custom-radio-wrapper">
-                                                    <input class="form-check-input" type="radio" name="monitoramento" id="monitorar_nao" value="0">
-                                                    <label class="form-check-label text-secondary fw-medium small" for="monitorar_nao">Não aplicável</label>
-                                                </div>
-                                            </div>
+                                            <label for="tempoEstimado" class="form-label-minimal">Tempo Estimado de
+                                                Duração *</label>
+                                            <input type="text" class="form-control form-control-minimal"
+                                                id="tempoEstimado" name="tempoEstimado"
+                                                placeholder="Ex: 45 min, 1h 30min" required
+                                                value="{{ old('tempo_estimado') }}">
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="descricao" class="form-label-minimal">Descrição Detalhada do Serviço</label>
-                                            <textarea class="form-control form-control-minimal" id="descricao" name="descricao" rows="4" placeholder="Descreva de forma clara os procedimentos inclusos, produtos químicos ou restrições especiais deste serviço..."></textarea>
+                                            <label for="descricao" class="form-label-minimal">Descrição Detalhada do
+                                                Serviço</label>
+                                            <textarea class="form-control form-control-minimal" id="descricao" name="descricao" rows="4"
+                                                placeholder="Descreva de forma clara os procedimentos inclusos, produtos químicos ou restrições especiais deste serviço..."></textarea>
                                         </div>
 
                                         <div class="col-12 text-end mt-5 pt-3 border-top border-light">
-                                            <a href="{{ route('services') }}" class="btn btn-cancelar-premium me-3 small fw-bold text-decoration-none">
+                                            <a href="{{ route('services') }}"
+                                                class="btn btn-cancelar-premium me-3 small fw-bold text-decoration-none">
                                                 Cancelar
                                             </a>
-                                            <button type="submit" class="btn btn-salvar-premium px-4 py-2.5 rounded-3 fw-bold shadow-sm">
+                                            <button type="submit"
+                                                class="btn btn-salvar-premium px-4 py-2.5 rounded-3 fw-bold shadow-sm">
                                                 <i class="fa-solid fa-cloud-arrow-up me-2"></i> Salvar Serviço
                                             </button>
                                         </div>
@@ -232,7 +260,8 @@
                         </p>
                     </div>
                     <div class="col-md-6 d-flex flex-column align-items-md-end justify-content-center text-secondary">
-                        <p class="mb-2"><span><i class="bi bi-geo-alt me-2"></i>Rua Bela Vista, 100 - Centro, Tambaú - SP</span></p>
+                        <p class="mb-2"><span><i class="bi bi-geo-alt me-2"></i>Rua Bela Vista, 100 - Centro, Tambaú
+                                - SP</span></p>
                         <p class="mb-2"><span><i class="bi bi-telephone me-2"></i>(19) 98943-2384</span></p>
                         <p class="mb-0"><span><i class="bi bi-envelope me-2"></i>mobipet@gmail.com</span></p>
                     </div>
@@ -260,8 +289,8 @@
         .agendamento-section {
             padding: 180px 0 100px;
             background:
-            radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
-            radial-gradient(circle at bottom left, #e0f2fe 0%, transparent 30%);
+                radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
+                radial-gradient(circle at bottom left, #e0f2fe 0%, transparent 30%);
             min-height: 100vh;
         }
 
@@ -291,7 +320,7 @@
             border-radius: 35px;
             overflow: hidden;
             background: white;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.06);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.06);
         }
 
         .agendamento-card .card-header {
@@ -388,14 +417,27 @@
         }
 
         @media(max-width: 992px) {
-            .hero-title { font-size: 38px; }
+            .hero-title {
+                font-size: 38px;
+            }
         }
 
         @media(max-width: 768px) {
-            .agendamento-section { padding-top: 150px; }
-            .hero-title { font-size: 32px; }
-            .hero-subtitle { font-size: 16px; }
-            .agendamento-card .card-header { padding: 25px; }
+            .agendamento-section {
+                padding-top: 150px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .agendamento-card .card-header {
+                padding: 25px;
+            }
         }
     </style>
 

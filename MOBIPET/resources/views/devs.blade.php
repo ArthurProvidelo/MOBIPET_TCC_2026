@@ -236,7 +236,10 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="index.html">Inicio</a></li>
+            <li>
+                <a href="{{ route('index') }}">
+                    Início
+                </a>      
             <li class="current">Desenvolvedores</li>
           </ol>
         </div>
