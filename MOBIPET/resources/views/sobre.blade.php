@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Sobre nós</title>
+    <title>Sobre Nós | Mobipet</title>
     <meta name="description"
         content="Saiba como o Mobipet conecta tutores e petshops através do monitoramento em tempo real.">
     <meta name="keywords" content="petshop, monitoramento pet, banho e tosa, laravel, mobipet">
@@ -778,6 +778,8 @@ body {
     <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    @include('partials.logout-confirm')
 
 </body>
 

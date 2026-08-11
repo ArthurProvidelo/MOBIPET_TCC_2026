@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/mobipet_icon.png" rel="icon">
+  <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -137,18 +137,18 @@
 
                   <div class="mb-4">
                     <label>Nome do Pet</label>
-                    <input type="text" name="nome" class="form-control" placeholder="Ex: Thor, Mel, Max..." required>
+                    <input type="text" name="nome" class="form-control" placeholder="Ex: Thor, Mel, Max..." value="{{ old('nome') }}" required>
                   </div>
 
                   <div class="row">
                     <div class="col-md-6 mb-4">
                       <label>Espécie</label>
-                      <input type="text" name="especie" class="form-control" placeholder="Ex: Cão, Gato, Coelho..." required>
+                      <input type="text" name="especie" class="form-control" placeholder="Ex: Cão, Gato, Coelho..." value="{{ old('especie') }}" required>
                     </div>
 
                     <div class="col-md-6 mb-4">
                       <label>Raça</label>
-                      <input type="text" name="raca" class="form-control" placeholder="Ex: Poodle, Vira-lata, Persa..." required>
+                      <input type="text" name="raca" class="form-control" placeholder="Ex: Poodle, Vira-lata, Persa..." value="{{ old('raca') }}" required>
                     </div>
                   </div>
 
@@ -156,15 +156,15 @@
                     <div class="col-md-6 mb-4">
                       <label>Porte</label>
                       <select name="porte" class="form-select form-control">
-                        <option>Pequeno</option>
-                        <option>Médio</option>
-                        <option>Grande</option>
+                        <option {{ old('porte') == 'Pequeno' ? 'selected' : '' }}>Pequeno</option>
+                        <option {{ old('porte') == 'Médio' ? 'selected' : '' }}>Médio</option>
+                        <option {{ old('porte') == 'Grande' ? 'selected' : '' }}>Grande</option>
                       </select>
                     </div>
 
                     <div class="col-md-6 mb-4">
                       <label>Data de Nascimento</label>
-                      <input type="date" name="data_nascimento" class="form-control" max="{{ date('Y-m-d') }}" required>
+                      <input type="date" name="data_nascimento" class="form-control" max="{{ date('Y-m-d') }}" value="{{ old('data_nascimento') }}" required>
                     </div>
                   </div>
 
@@ -414,6 +414,21 @@
         }
     });
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  @if ($errors->any())
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: '{{ implode('|', $errors->all()) }}'
+      });
+    </script>
+  @endif
+
+    @include('partials.logout-confirm')
+
 </body>
 
 </html>

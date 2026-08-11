@@ -27,7 +27,8 @@ class PainelController extends Controller
 
         $ultimosAgendamentos = Agendamento::with([
             'pet',
-            'servico'
+            'servico',
+            'funcionario'
         ])
         ->latest('id_agendamento')
         ->take(10)

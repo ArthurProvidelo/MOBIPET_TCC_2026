@@ -73,8 +73,9 @@ class LoginController extends Controller
         ]);
 
         // Cria sessão
-        Session::put('cliente_id', $idCliente);
-        Session::put('cliente_nome', $request->nome);
+        Session::put('id', $idCliente);
+        Session::put('nome', $request->nome);
+        Session::put('nivel_acesso', 'USUARIO');
 
         return redirect()->route('index');
     }

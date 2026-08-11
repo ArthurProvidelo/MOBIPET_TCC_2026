@@ -4,12 +4,12 @@
   <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Página inicial</title>
+      <title>Início | Mobipet</title>
       <meta name="description" content="">
       <meta name="keywords" content="">
 
       <!-- Favicons -->
-      <link href="assets/img/mobipet_icon.png" rel="icon">
+      <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
 
       <!-- Fonts -->
       <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -123,7 +123,6 @@
                             Desenvolvedores
                         </a>
                     </li>
-
                     {{-- CLIENTE --}}
                     @if(session()->has('id') && session('nivel_acesso') == 'USUARIO')
 
@@ -624,6 +623,8 @@
           <script src="assets/js/main.js"></script>
 
 
-  </body>
+      @include('partials.logout-confirm')
+
+</body>
 
   </html>

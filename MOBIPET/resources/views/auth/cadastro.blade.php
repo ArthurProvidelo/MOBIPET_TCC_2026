@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
-  <link href="assets/img/mobipet_icon.png" rel="icon">
+  <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
   
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -448,6 +448,8 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <script src="assets/js/main.js"></script>
+
+    @include('partials.logout-confirm')
 
 </body>
 

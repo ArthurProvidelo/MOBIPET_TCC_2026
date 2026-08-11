@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Cadastrar Serviço - Mobipet</title>
+    <title>Cadastrar Serviço | Mobipet</title>
     <meta name="description"
         content="Adicione novos serviços, preços e durações oferecidas pelo seu petshop na plataforma Mobipet.">
     <meta name="keywords" content="petshop, monitoramento pet, banho e tosa, laravel, mobipet, cadastrar servico">
@@ -211,7 +211,7 @@
                                             <input type="text" class="form-control form-control-minimal"
                                                 id="tempoEstimado" name="tempoEstimado"
                                                 placeholder="Ex: 45 min, 1h 30min" required
-                                                value="{{ old('tempo_estimado') }}">
+                                                value="{{ old('tempoEstimado') }}">
                                         </div>
 
                                         <div class="col-12">
@@ -467,6 +467,8 @@
             }
         });
     </script>
+    @include('partials.logout-confirm')
+
 </body>
 
 </html>

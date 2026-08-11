@@ -19,7 +19,8 @@ class Pet extends Model
         'raca',
         'porte',
         'data_nascimento',
-        'fk_id_cliente'
+        'status',
+        'fk_id_cliente',
     ];
 
     public $timestamps = false;

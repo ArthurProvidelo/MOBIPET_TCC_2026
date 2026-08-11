@@ -90,20 +90,20 @@ class FuncionarioController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
             'telefone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'endereco' => 'nullable|string|max:255',
         ]);
 
         // Atualizando com base na chave correta
         Funcionario::where('id_funcionario', $id)->update([
             'nome' => $request->nome,
-            'cargo' => $request->cargo,
             'telefone' => $request->telefone,
             'email' => $request->email,
+            'endereco' => $request->endereco,
         ]);
 
-        return redirect()->route('funcionario.index')
+        return redirect()->route('perfil')
             ->with('success', 'Funcionário atualizado com sucesso!');
     }
 

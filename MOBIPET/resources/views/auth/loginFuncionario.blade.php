@@ -229,6 +229,8 @@
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
+    @include('partials.logout-confirm')
+
 </body>
 
 </html>

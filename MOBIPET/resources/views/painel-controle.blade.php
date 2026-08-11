@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Painel de Controle | Mobipet</title>
 
@@ -432,6 +433,67 @@
             background: #eff6ff;
             color: #2563eb;
             border: 1px solid #bfdbfe;
+        }
+
+        /* ===========================================================
+           SELECT DE STATUS (dropdown)
+        =========================================================== */
+
+        .status-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .3px;
+
+            padding: 9px 38px 9px 18px;
+            border-radius: 50px;
+
+            cursor: pointer;
+            transition: .25s;
+
+            background-color: #f8fafc;
+            color: #6b7280;
+            border: 1px solid #e5e7eb;
+
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b7280' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 11px;
+        }
+
+        .status-select:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(15, 23, 42, .08);
+        }
+
+        .status-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+        }
+
+        .status-select-pendente {
+            background-color: #fff7e6;
+            color: #d97706;
+            border-color: #fde68a;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23d97706' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        }
+
+        .status-select-concluido {
+            background-color: #ecfdf5;
+            color: #059669;
+            border-color: #a7f3d0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23059669' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        }
+
+        .status-select-banho {
+            background-color: #eff6ff;
+            color: #2563eb;
+            border-color: #bfdbfe;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%232563eb' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
         }
 
         /* ===========================================================
@@ -1143,47 +1205,26 @@
                                             <!-- STATUS -->
                                             <td data-label="Status">
 
-                                                @if($agendamento->status_agendamento == 'Pendente')
-
-                                                    <span class="status-badge status-pendente">
-
-                                                        <i class="fa-solid fa-clock me-2"></i>
-
-                                                        Pendente
-
-                                                    </span>
-
-                                                @elseif($agendamento->status_agendamento == 'Concluido')
-
-                                                    <span class="status-badge status-concluido">
-
-                                                        <i class="fa-solid fa-circle-check me-2"></i>
-
+                                                <select
+                                                    name="status"
+                                                    class="status-select status-agendamento status-select-{{ strtolower($agendamento->status_agendamento) }}"
+                                                    data-id="{{ $agendamento->id_agendamento }}"
+                                                >
+                                                    <option value="Concluido"
+                                                        {{ $agendamento->status_agendamento == 'Concluido' ? 'selected' : '' }}>
                                                         Concluído
+                                                    </option>
 
-                                                    </span>
+                                                    <option value="Pendente"
+                                                        {{ $agendamento->status_agendamento == 'Pendente' ? 'selected' : '' }}>
+                                                        Pendente
+                                                    </option>
 
-                                                @elseif($agendamento->status_agendamento == 'Cancelado')
-
-                                                    <span class="status-badge status-cancelado">
-
-                                                        <i class="fa-solid fa-circle-xmark me-2"></i>
-
-                                                        Cancelado
-
-                                                    </span>
-
-                                                @else
-
-                                                    <span class="status-badge status-andamento">
-
-                                                        <i class="fa-solid fa-spinner me-2"></i>
-
-                                                        {{ $agendamento->status_agendamento }}
-
-                                                    </span>
-
-                                                @endif
+                                                    <option value="Banho"
+                                                        {{ $agendamento->status_agendamento == 'Banho' ? 'selected' : '' }}>
+                                                        Banho
+                                                    </option>
+                                                </select>
 
                                             </td>
 
@@ -1456,6 +1497,90 @@
             }
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.querySelectorAll('.status-agendamento').forEach(select => {
+
+            select.addEventListener('change', function () {
+
+                const agendamentoId = this.dataset.id;
+                const status = this.value;
+                const previousClass = Array.from(this.classList).find(c => c.startsWith('status-select-'));
+
+                this.classList.remove('status-select-pendente', 'status-select-concluido', 'status-select-banho');
+                this.classList.add(`status-select-${status.toLowerCase()}`);
+
+                Swal.fire({
+                    title: 'Atualizando status...',
+                    text: 'Por favor, aguarde.',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                fetch(`/agendamentos/${agendamentoId}/status`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        status: status
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.success) {
+                        console.log(data.message);
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Status atualizado!',
+                            text: data.message || 'Status atualizado com sucesso!',
+                            confirmButtonText: 'OK'
+                        });
+                    } else {
+                        if (previousClass) {
+                            this.classList.remove(`status-select-${status.toLowerCase()}`);
+                            this.classList.add(previousClass);
+                        }
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro',
+                            text: data.message || 'Não foi possível atualizar o status.',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+
+                    if (previousClass) {
+                        this.classList.remove(`status-select-${status.toLowerCase()}`);
+                        this.classList.add(previousClass);
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'Erro ao atualizar o status.',
+                        confirmButtonText: 'OK'
+                    });
+                });
+
+            });
+
+        });
+    </script>
+
+    @include('partials.logout-confirm')
 
 </body>
 

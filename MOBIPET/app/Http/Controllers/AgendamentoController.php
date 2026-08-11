@@ -242,4 +242,22 @@ class AgendamentoController extends Controller
 
         return self::STATUS_MAP[$normalizado] ?? 'agendado';
     }
+
+    public function atualizarStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Concluido,Pendente,Banho',
+        ]);
+
+        $agendamento = Agendamento::findOrFail($id);
+
+        $agendamento->status_agendamento = $request->status;
+        $agendamento->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status atualizado com sucesso!',
+            'status' => $agendamento->status_agendamento,
+        ]);
+    }
 }

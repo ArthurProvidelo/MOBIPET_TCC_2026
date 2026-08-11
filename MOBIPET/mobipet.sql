@@ -19,6 +19,7 @@ CREATE TABLE Pet(
     raca VARCHAR(255),
     porte VARCHAR(255),
     data_nascimento DATE,
+    status VARCHAR(255) DEFAULT 'Aguardando atendimento',
     fk_id_cliente INTEGER,
     FOREIGN KEY (fk_id_cliente)
         REFERENCES Cliente(id_cliente)

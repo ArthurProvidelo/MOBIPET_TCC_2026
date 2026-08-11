@@ -9,7 +9,7 @@
   <title>Agendamento | Mobipet</title>
 
   <!-- Favicons -->
-  <link href="assets/img/mobipet_icon.png" rel="icon">
+  <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -244,14 +244,12 @@
 
               <div class="card-body">
 
-                @if(session('success'))
-                  <div class="alert alert-success">
-                    {{ session('success') }}
-                  </div>
-                @endif
-
                 <form action="{{ route('agendamento.store') }}" method="POST">
                   @csrf
+
+                  <p class="required-note">
+                    <span class="required-mark">*</span> Todos os campos são obrigatórios
+                  </p>
 
                   <div class="section-title mt-3">
                     <i class="fa-solid fa-dog"></i>
@@ -260,7 +258,7 @@
 
                   <div class="row mt-2">
                     <div class="col-md-6 mb-4">
-                      <label>Nome do Pet</label>
+                      <label>Nome do Pet <span class="required-mark">*</span></label>
                       @if($pets->count() > 0)
                         <select name="fk_id_pet" class="form-control" required>
                           <option value="">Selecione um pet</option>
@@ -284,7 +282,7 @@
 
                   <div class="row">
                     <div class="col-md-6 mb-4">
-                      <label>Profissional</label>
+                      <label>Profissional <span class="required-mark">*</span></label>
                       <select name="fk_id_funcionario" class="form-control" required>
                         <option value="">Selecione</option>
                         @foreach($funcionarios as $funcionario)
@@ -294,7 +292,7 @@
                     </div>
 
                     <div class="col-md-6 mb-4">
-                      <label>Serviço</label>
+                      <label>Serviço <span class="required-mark">*</span></label>
                       <select name="fk_id_servico" class="form-control" required>
                         <option value="">Selecione</option>
                         @foreach($servicos as $servico)
@@ -309,12 +307,12 @@
 
                   <div class="row">
                     <div class="col-md-6 mb-4">
-                      <label>Data</label>
+                      <label>Data <span class="required-mark">*</span></label>
                       <input type="date" name="data_agendamento" class="form-control" required>
                     </div>
 
                     <div class="col-md-6 mb-4">
-                      <label>Hora</label>
+                      <label>Hora <span class="required-mark">*</span></label>
                       <input type="time" name="horario" class="form-control" required>
                     </div>
                   </div>
@@ -325,7 +323,8 @@
                   </div>
 
                   <div class="mb-4">
-                    <textarea name="observacoes" class="form-control" rows="5" placeholder="Digite alguma observação, alergia..."></textarea>
+                    <label>Observações <span class="required-mark">*</span></label>
+                    <textarea name="observacoes" class="form-control" rows="5" placeholder="Digite alguma observação, alergia..." required></textarea>
                   </div>
 
                   <button type="submit" class="btn btn-primary btn-agendar w-100">
@@ -517,6 +516,17 @@
       color: #374151;
     }
 
+    .required-mark{
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .required-note{
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
+
     .form-control{
       height: 58px;
       border-radius: 18px;
@@ -607,6 +617,32 @@
   <script>
     AOS.init();
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    function exibeSweetAlert(icone, titulo, texto) {
+      Swal.fire({
+        title: titulo,
+        text: texto,
+        icon: icone
+      });
+    }
+  </script>
+
+  @if (session('success'))
+    <script>
+      exibeSweetAlert("success", "Agendamento concluído", '{{ session('success') }}')
+    </script>
+  @endif
+
+  @if ($errors->any())
+    <script>
+      exibeSweetAlert('error', 'Erro!', '{{ implode('|', $errors->all()) }}')
+    </script>
+  @endif
+
+  @include('partials.logout-confirm')
 
 </body>
 

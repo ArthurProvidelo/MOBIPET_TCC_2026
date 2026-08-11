@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/mobipet_icon.png" rel="icon">
+  <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -498,6 +498,21 @@
         }
     });
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  @if ($errors->any())
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: '{{ implode('|', $errors->all()) }}'
+      });
+    </script>
+  @endif
+
+    @include('partials.logout-confirm')
+
 </body>
 
 </html>

@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cliente;
 use App\Models\Funcionario;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Socialite;
 
 class GoogleFuncionarioController extends Controller
 {
     public function redirect(){
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+            ->redirectUrl(route('google.callbackFuncionario'))
+            ->redirect();
     }
 
     // Criar função para fazer login
@@ -20,7 +22,9 @@ class GoogleFuncionarioController extends Controller
         // Tratamento de erros
         try{
             // Pegar os dados enviados pelo google
-            $usuarioGoogle = Socialite::driver('google')->user();
+            $usuarioGoogle = Socialite::driver('google')
+                ->redirectUrl(route('google.callbackFuncionario'))
+                ->user();
 
             // Fazer adaptação para o contexto do banco
             // Procurar um usuário pelo email
@@ -40,7 +44,7 @@ class GoogleFuncionarioController extends Controller
 
             // Faço o login no sistema
             // Auth::login($user);
-            Session::put('id', $user->id_cliente);
+            Session::put('id', $user->id_funcionario);
             Session::put('nome', $user->nome);
             Session::put('nivel_acesso', 'FUNCIONARIO');
 
@@ -48,7 +52,11 @@ class GoogleFuncionarioController extends Controller
             return redirect('/');
 
         } catch(Exception $e){
+            Log::error('Falha no login com Google (funcionário): ' . $e->getMessage());
 
+            return redirect()
+                ->route('login.funcionario')
+                ->with('erro', 'Não foi possível concluir o login com Google. Tente novamente.');
         }
     }
 }

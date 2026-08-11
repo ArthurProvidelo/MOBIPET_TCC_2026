@@ -93,7 +93,7 @@
                     <ul>
 
                         <li>
-                            <a href="{{ route('index') }}" class="active">
+                            <a href="{{ route('index') }}">
                                 Início
                             </a>
                         </li>
@@ -164,6 +164,12 @@
                             </li>
 
                             <li>
+                                <a href="{{ route('services.create') }}" class="active">
+                                    Cadastrar Serviço
+                                </a>
+                            </li>
+
+                            <li>
                                 <a href="{{ route('perfil') }}">
                                     Perfil
                                 </a>
@@ -225,7 +231,7 @@
                                 </div>
                             @endif
 
-                            <form action="#" method="POST">
+                            <form action="{{ route('services.store') }}" method="POST">
                                 @csrf
 
                                 <div class="row g-4">
@@ -493,6 +499,8 @@
             exibeSweetAlert('error', 'Erro!', '{{ implode('|', $errors->all()) }}')
         </script>
     @endif
+
+    @include('partials.logout-confirm')
 </body>
 
 </html>

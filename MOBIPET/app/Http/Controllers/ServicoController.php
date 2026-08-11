@@ -7,6 +7,43 @@ use Illuminate\Support\Facades\DB;
 
 class ServicoController extends Controller
 {
+    /**
+     * O campo "Tempo Estimado" do formulário aceita texto livre
+     * (ex: "45 min", "1h 30min", "01:30") e precisa virar minutos
+     * inteiros para caber na coluna duracao_estimada (INTEGER).
+     */
+    private function parseDuracaoParaMinutos(string $texto): ?int
+    {
+        $texto = strtolower(trim($texto));
+
+        if (preg_match('/^(\d{1,2}):(\d{2})$/', $texto, $m)) {
+            return ((int) $m[1] * 60) + (int) $m[2];
+        }
+
+        $horas = 0;
+        $minutos = 0;
+        $encontrouUnidade = false;
+
+        if (preg_match('/(\d+)\s*h/', $texto, $m)) {
+            $horas = (int) $m[1];
+            $encontrouUnidade = true;
+        }
+
+        if (preg_match('/(\d+)\s*m/', $texto, $m)) {
+            $minutos = (int) $m[1];
+            $encontrouUnidade = true;
+        }
+
+        if (!$encontrouUnidade && preg_match('/(\d+)/', $texto, $m)) {
+            // Nenhuma unidade reconhecida (ex: "45"): assume que já é minutos
+            $minutos = (int) $m[1];
+        }
+
+        $total = ($horas * 60) + $minutos;
+
+        return $total > 0 ? $total : null;
+    }
+
     // Listar serviços
     public function index()
     {
@@ -25,16 +62,26 @@ class ServicoController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
+            'categoria' => 'required|string|in:banho,tosa,consulta,outros',
             'descricao' => 'nullable|string',
-            'preco' => 'required|numeric',
+            'preco' => 'required|numeric|min:0',
             'tempoEstimado' => 'required'
         ]);
 
+        $duracaoMinutos = $this->parseDuracaoParaMinutos((string) $request->tempoEstimado);
+
+        if ($duracaoMinutos === null) {
+            return back()
+                ->withInput()
+                ->withErrors(['tempoEstimado' => 'Informe a duração em um formato válido, ex: "45 min", "1h 30min" ou "01:30".']);
+        }
+
         DB::table('servico')->insert([
             'nome' => $request->nome,
+            'categoria' => $request->categoria,
             'descricao' => $request->descricao,
             'preco' => $request->preco,
-            'duracao_estimada' => $request->tempoEstimado
+            'duracao_estimada' => $duracaoMinutos
         ]);
 
         return redirect()->route('services.create')

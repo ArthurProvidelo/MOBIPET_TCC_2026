@@ -7,7 +7,7 @@
 
   <title>Meu Perfil | Mobipet</title>
 
-  <link href="assets/img/mobipet_icon.png" rel="icon">
+  <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
 
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -115,14 +115,37 @@
                   </div>
                 @endif
 
-                <form action="{{ route('perfil.update') }}" method="POST">
-                  @csrf
-                  @method('PUT')
+                <?php
+                  if(session('nivel_acesso') == 'USUARIO'){
+                ?>
+                  <form action="{{ route('perfil.update') }}" method="POST">                
+                    @csrf
+                    @method('PUT')
 
-                  <div class="section-title mt-3">
+                    <div class="section-title mt-3">
                     <i class="fa-solid fa-id-card"></i>
                     <span>Dados do Tutor</span>
                   </div>
+                <?php 
+                  }
+                ?>
+
+                <?php
+                  if(session('nivel_acesso') == 'FUNCIONARIO'){
+                ?>
+                  <form action="{{ route('funcionario.update', ['id' => session('id')]) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                  <div class="section-title mt-3">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Dados do Funcionário</span>
+                  </div>
+                <?php 
+                  }
+                ?>
+
+
+
 
                   <div class="row">
                     <div class="col-md-6 mb-4">
@@ -458,5 +481,20 @@
       });
     }
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  @if (session('success'))
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: 'Sucesso',
+        text: '{{ session('success') }}'
+      });
+    </script>
+  @endif
+
+    @include('partials.logout-confirm')
+
 </body>
 </html>

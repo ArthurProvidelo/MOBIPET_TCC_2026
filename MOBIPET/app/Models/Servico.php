@@ -18,6 +18,7 @@ class Servico extends Model
     // Permitir inserção em massa
     protected $fillable = [
         'nome',
+        'categoria',
         'descricao',
         'preco',
         'duracao_estimada'

@@ -15,7 +15,12 @@ class PetController extends Controller
         }
 
         $pets = DB::table('pet')
-            ->where('fk_id_cliente', session('id'))
+            ->leftJoin('Agendamento', 'pet.id_pet', '=', 'Agendamento.fk_id_pet')
+            ->where('pet.fk_id_cliente', session('id'))
+            ->select(
+                'pet.*',
+                'Agendamento.status_agendamento as status_agendamento'
+            )
             ->get();
 
         return view('pets.index', compact('pets'));
@@ -43,7 +48,7 @@ class PetController extends Controller
             'especie' => 'required',
             'raca' => 'required',
             'porte' => 'required',
-            'data_nascimento' => 'required|date'
+            'data_nascimento' => 'required|date',
         ]);
 
         DB::table('pet')->insert([
@@ -52,7 +57,11 @@ class PetController extends Controller
             'raca' => $request->raca,
             'porte' => $request->porte,
             'data_nascimento' => $request->data_nascimento,
-            'fk_id_cliente' => session('id')
+
+            // Status inicial
+            'status' => 'Aguardando atendimento',
+
+            'fk_id_cliente' => session('id'),
         ]);
 
         return redirect()
@@ -66,7 +75,6 @@ class PetController extends Controller
         if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
             return redirect()->route('login');
         }
-
 
         $pet = DB::table('pet')
             ->where('id_pet', $id)
@@ -87,7 +95,6 @@ class PetController extends Controller
             return redirect()->route('login');
         }
 
-
         $pet = DB::table('pet')
             ->where('id_pet', $id)
             ->where('fk_id_cliente', session('id'))
@@ -107,13 +114,12 @@ class PetController extends Controller
             return redirect()->route('login');
         }
 
-
         $request->validate([
             'nome' => 'required',
             'especie' => 'required',
             'raca' => 'required',
             'porte' => 'required',
-            'data_nascimento' => 'required|date'
+            'data_nascimento' => 'nullable|date',
         ]);
 
         DB::table('pet')
@@ -124,7 +130,9 @@ class PetController extends Controller
                 'especie' => $request->especie,
                 'raca' => $request->raca,
                 'porte' => $request->porte,
-                'data_nascimento' => $request->data_nascimento
+                'data_nascimento' => $request->data_nascimento ?: null,
+
+                // O status não é alterado ao editar os dados
             ]);
 
         return redirect()

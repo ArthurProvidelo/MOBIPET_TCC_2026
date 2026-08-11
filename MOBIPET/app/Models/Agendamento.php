@@ -17,6 +17,7 @@ class Agendamento extends Model
 
     // Permitir inserção em massa
     protected $fillable = [
+        'id_agendamento',
         'data_agendamento',
         'horario',
         'status_agendamento',

@@ -68,6 +68,10 @@ Route::get('/perfil', [ClienteController::class, 'perfil'])
 Route::put('/perfil', [ClienteController::class, 'updatePerfil'])
     ->name('perfil.update');
 
+Route::put('/perfil-update/{id}', [FuncionarioController::class, 'update'])
+    ->name('funcionario.update');
+
+
 // Rota para o painel de controle do funcionário
 Route::get('/painel-controle', [PainelController::class, 'index'])
     ->name('painel-controle');
@@ -95,6 +99,9 @@ Route::post('/login-funcionario', [AuthController::class, 'loginFuncionario'])
 Route::get('/funcionario/agendamentos', [AgendamentoController::class, 'agendamentosFuncionario'])
     ->name('funcionario.agendamentos');
 
+// rota para atualizar status na tela de agendamento
+Route::patch('/agendamentos/{agendamento}/status', [AgendamentoController::class, 'atualizarStatus'])
+    ->name('agendamentos.atualizarStatus');
 
 // Rota para logout (tanto para clientes quanto para funcionários)
 Route::get('/logout', [AuthController::class, 'logout'])
@@ -124,10 +131,13 @@ Route::post('/servicos/salvar', [ServicoController::class, 'store'])
 Route::get('/auth/google', [GoogleController::class, 'redirect'])
 ->name('google.login');
 
-Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])
+    ->name('google.callback');
 
 // Google Funcionario
 Route::get('/auth/googleFuncionario', [GoogleFuncionarioController::class, 'redirect'])
 ->name('google.loginFuncionario');
 
-Route::get('/auth/google/callbackFuncionario', [GoogleFuncionarioController::class, 'callbackFuncionario']);
+Route::get('/auth/google/callbackFuncionario', [GoogleFuncionarioController::class, 'callbackFuncionario'])
+    ->name('google.callbackFuncionario');
+

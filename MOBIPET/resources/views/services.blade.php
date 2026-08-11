@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Mobipet | Serviços</title>
+    <title>Serviços | Mobipet</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
-    <link href="assets/img/mobipet_icon.png" rel="icon">
+    <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -676,6 +676,8 @@
             }
         });
     </script>
+    @include('partials.logout-confirm')
+
 </body>
 
 </html>

@@ -5,13 +5,13 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Mobipet | Desenvolvedores</title>
+  <title>Desenvolvedores | Mobipet</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
 
   <!-- Favicons -->
-  <link href="assets/img/mobipet_icon.png" rel="icon">
+  <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
 
 
   <!-- Fonts -->
@@ -259,7 +259,7 @@
           <div class="doctor-card">
 
             <div class="doctor-image">
-              <img src="assets/img/arthurbarbosa.png"
+              <img src="assets/img/arthur_novo.png"
                    alt="Arthur Barbosa"
                    class="profile-photo">
             </div>
@@ -533,6 +533,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+
+    @include('partials.logout-confirm')
 
 </body>
 
