@@ -140,6 +140,24 @@ class PetController extends Controller
             ->with('success', 'Pet atualizado com sucesso!');
     }
 
+    public function atualizarTabela()
+{
+    if (!session()->has('id') || session('nivel_acesso') != 'USUARIO') {
+        return response('Não autorizado', 401);
+    }
+
+    $pets = DB::table('pet')
+        ->leftJoin('agendamento', 'pet.id_pet', '=', 'agendamento.fk_id_pet')
+        ->where('pet.fk_id_cliente', session('id'))
+        ->select(
+            'pet.*',
+            'agendamento.status_agendamento'
+        )
+        ->get();
+
+    return view('pets.partials.tabela', compact('pets'));
+}
+
     // Excluir pet
     public function destroy(int $id)
     {

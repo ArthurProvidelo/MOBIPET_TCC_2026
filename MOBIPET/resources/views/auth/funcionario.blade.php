@@ -25,7 +25,29 @@
 <link href="{{ asset('assets/css/estilo.css') }}" rel="stylesheet">
 </head>
 
-<body>
+<body class="inner-page">
+    <style>
+        body.inner-page {
+            background-image: url('{{ asset('assets/img/fundo_login.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body.inner-page::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.15);
+            z-index: -1;
+        }
+    </style>
+
     <header id="header" class="header fixed-top">
 
     <!-- Top Bar -->

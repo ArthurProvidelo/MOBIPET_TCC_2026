@@ -13,6 +13,9 @@ use App\Http\Controllers\PainelController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\GoogleFuncionarioController;
 
+Route::get('/pets/atualizar-tabela', 
+[PetController::class, 'atualizarTabela'])
+    ->name('pets.atualizarTabela');
 
 Route::get('/', function () {
     return view('index');

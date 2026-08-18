@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Cliente extends Model
+class Cliente extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;
 
     // Nome da tabela
     protected $table = 'Cliente';
@@ -32,6 +33,14 @@ class Cliente extends Model
     protected $hidden = [
         'senha',
     ];
+
+    // A coluna de senha do banco chama "senha" (não "password"), então o guard
+    // de autenticação (Auth::attempt / Hash::check via Sanctum) precisa saber
+    // buscar por aqui.
+    public function getAuthPassword()
+    {
+        return $this->senha;
+    }
 
     public function pets()
     {

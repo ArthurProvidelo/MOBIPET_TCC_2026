@@ -327,6 +327,24 @@
 
                                                 @foreach ($pets as $pet)
 
+                                                    @php
+                                                        $statusMap = [
+                                                            'pendente'       => 'status-pendente',
+                                                            'agendado'       => 'status-pendente',
+                                                            'confirmado'     => 'status-pendente',
+                                                            'em andamento'   => 'status-andamento',
+                                                            'andamento'      => 'status-andamento',
+                                                            'em atendimento' => 'status-andamento',
+                                                            'concluido'      => 'status-concluido',
+                                                            'finalizado'     => 'status-concluido',
+                                                            'cancelado'      => 'status-cancelado',
+                                                        ];
+
+                                                        $statusClass = $pet->status_agendamento
+                                                            ? ($statusMap[strtolower($pet->status_agendamento)] ?? 'status-pendente')
+                                                            : 'status-sem-agendamento';
+                                                    @endphp
+
                                                     <tr>
 
                                                         <!-- NOME -->
@@ -769,6 +787,36 @@
             font-size: 11px;
         }
 
+        .status-pendente {
+            background-color: #fff7e6;
+            color: #d97706;
+            border: 1px solid #fde68a;
+        }
+
+        .status-andamento {
+            background-color: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+        }
+
+        .status-concluido {
+            background-color: #ecfdf5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status-cancelado {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .status-sem-agendamento {
+            background-color: #fff7ed;
+            color: #c2410c;
+            border: 1px solid #fed7aa;
+        }
+
 
         /* BOTÕES */
         .btn-action {
@@ -973,8 +1021,11 @@
             });
         </script>
     @endif
+    
+@include('partials.logout-confirm')
 
-    @include('partials.logout-confirm')
+>
+
 </body>
 
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Login - Usuários | Mobipet</title>
+    <title>Entrar | Mobipet</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -49,6 +49,169 @@
             z-index: -1;
         }
 
+        /* ===== Auth card com painel deslizante (estrutura original) ===== */
+        /* =========================================
+   CARD
+========================================= */
+
+        .auth-card {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            min-height: 580px;
+            background: #fff;
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .18);
+        }
+
+
+        /* =========================================
+   FORMULÁRIOS
+========================================= */
+
+        .auth-forms {
+            position: relative;
+            width: 100%;
+            min-height: 580px;
+
+            display: flex;
+        }
+
+        .auth-panel {
+            width: 50%;
+            padding: 40px 45px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background: #fff;
+        }
+
+        .auth-form-signin {
+            order: 1;
+        }
+
+        .auth-form-register {
+            order: 2;
+        }
+
+
+        /* =========================================
+   PAINEL AZUL
+========================================= */
+
+        .auth-overlay-container {
+            position: absolute;
+
+            top: 0;
+            left: 50%;
+
+            width: 50%;
+            height: 100%;
+
+            overflow: hidden;
+
+            z-index: 20;
+
+            transition: left .6s ease-in-out;
+        }
+
+
+        /* CADASTRO */
+
+
+        /* =========================================
+   OVERLAY AZUL
+========================================= */
+
+        .auth-overlay {
+            position: absolute;
+
+            top: 0;
+            left: -100%;
+
+            width: 200%;
+            height: 100%;
+
+            display: flex;
+
+            background: linear-gradient(135deg,
+                    #497baf,
+                    #3061cb);
+
+            transition: left .6s ease-in-out;
+        }
+
+
+        /* Quando estiver no cadastro */
+
+        .auth-card.register-active .auth-overlay {
+            left: 0;
+        }
+
+
+        /* =========================================
+   PAINÉIS DO OVERLAY
+========================================= */
+
+        .auth-overlay-panel {
+            width: 50%;
+            height: 100%;
+
+            flex-shrink: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #fff;
+        }
+
+        .auth-overlay-panel h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .auth-overlay-panel p {
+            max-width: 330px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+   BOTÃO
+========================================= */
+
+        .auth-btn-ghost {
+            min-width: 145px;
+            padding: 12px 30px;
+
+            border: 2px solid #fff;
+            border-radius: 30px;
+
+            background: transparent;
+            color: #fff;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .25s;
+        }
+
+        .auth-btn-ghost:hover {
+            background: #fff;
+            color: #3061cb;
+        }
+
         .google-login-btn {
             display: inline-flex;
             align-items: center;
@@ -61,25 +224,22 @@
             font-weight: 500;
             padding: 10px 24px;
             border: 1px solid #747775;
-            border-radius: 50px; /* Alterado para combinar com o estilo pill dos seus botões */
+            border-radius: 50px;
             text-decoration: none;
             transition: background-color 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
         }
 
-        /* Efeito de Hover (Passar o mouse) */
         .google-login-btn:hover {
             background-color: #f8fafd;
             color: #1f1f1f;
             box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
         }
 
-        /* Efeito de Clique */
         .google-login-btn:active {
             background-color: #f1f3f4;
         }
 
-        /* Divisor "ou" sutil entre formulário e Google */
         .login-separator {
             display: flex;
             align-items: center;
@@ -89,49 +249,452 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .login-separator::before, .login-separator::after {
+
+        .login-separator::before,
+        .login-separator::after {
             content: '';
             flex: 1;
             border-bottom: 1px solid #dee2e6;
         }
-        .login-separator:not(:empty)::before { margin-right: .5em; }
-        .login-separator:not(:empty)::after { margin-left: .5em; }
+
+        .login-separator:not(:empty)::before {
+            margin-right: .5em;
+        }
+
+        .login-separator:not(:empty)::after {
+            margin-left: .5em;
+        }
+
+        /* Ajustes Responsivos */
+        @media (max-width: 700px) {
+
+            .auth-card {
+                min-height: 750px;
+            }
+
+            .auth-forms {
+                min-height: 750px;
+            }
+
+            .auth-panel {
+                width: 100%;
+                padding: 30px 25px;
+            }
+
+            .auth-overlay-container {
+                left: 0;
+                top: 0;
+
+                width: 100%;
+                height: 180px;
+
+                transition: top .6s ease-in-out;
+            }
+
+            .auth-card.register-active .auth-overlay-container {
+                left: 0;
+                top: calc(100% - 180px);
+            }
+
+            .auth-overlay {
+                left: 0;
+                top: -100%;
+
+                width: 100%;
+                height: 200%;
+
+                flex-direction: column;
+
+                transition: top .6s ease-in-out;
+            }
+
+            .auth-card.register-active .auth-overlay {
+                left: 0;
+                top: -100%;
+            }
+
+            .auth-overlay-panel {
+                width: 100%;
+                height: 50%;
+            }
+        }
+
+        .auth-mobile-toggle {
+            display: none;
+        }
+
+        /* =====================================================
+   CARD DE LOGIN / CADASTRO - CLIENTE
+===================================================== */
+
+        .auth-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .auth-card {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            min-height: 580px;
+            background: #fff;
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .18);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* =====================================================
+   ÁREA DOS FORMULÁRIOS
+===================================================== */
+
+        .auth-forms {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .auth-panel {
+            width: 50%;
+            height: 100%;
+            padding: 50px 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+            background: #fff;
+        }
+
+        .auth-panel h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        /* =====================================================
+   PAINEL DESLIZANTE AZUL
+===================================================== */
+
+        .auth-overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 100;
+            transition: transform .7s cubic-bezier(.77, 0, .175, 1);
+        }
+
+        /* Quando estiver no cadastro,
+   o painel azul vai para a esquerda */
+        .auth-card.register-active .auth-overlay-container {
+            transform: translateX(-100%);
+        }
+
+        .auth-overlay {
+            position: relative;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+
+            display: flex;
+
+            background: linear-gradient(135deg,
+                    #497baf 0%,
+                    #3061cb 100%);
+
+            color: #fff;
+
+            transition: transform .7s cubic-bezier(.77, 0, .175, 1);
+        }
+
+        /* =====================================================
+   PAINÉIS INTERNOS DO OVERLAY
+===================================================== */
+
+        .auth-overlay-panel {
+            width: 50%;
+            height: 100%;
+            padding: 40px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+        }
+
+        .auth-overlay-panel h2 {
+            margin-bottom: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 34px;
+            line-height: 1.15;
+            font-weight: 800;
+        }
+
+        .auth-overlay-panel p {
+            max-width: 330px;
+            margin-bottom: 30px;
+            color: #fff;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+   BOTÃO DO PAINEL AZUL
+===================================================== */
+
+        .auth-btn-ghost {
+            min-width: 145px;
+            height: 55px;
+            padding: 0 30px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 2px solid #fff;
+            border-radius: 30px;
+
+            background: transparent;
+            color: #fff;
+
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition:
+                background .25s ease,
+                color .25s ease,
+                transform .2s ease;
+        }
+
+        .auth-btn-ghost:hover {
+            background: #fff;
+            color: #3061cb;
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+   FORMULÁRIO DE LOGIN
+===================================================== */
+
+        .auth-form-signin {
+            order: 1;
+        }
+
+        /* =====================================================
+   CAMPOS
+===================================================== */
+
+        .auth-panel .form-control {
+            height: 52px;
+            border: 1px solid #d9dfe5;
+            transition:
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .auth-panel .form-control:focus {
+            border-color: #497baf;
+            box-shadow: 0 0 0 4px rgba(73, 123, 175, .12);
+        }
+
+        /* =====================================================
+   BOTÃO PRINCIPAL
+===================================================== */
+
+        .auth-panel .btn-primary {
+            height: 52px;
+            background: #497baf !important;
+            border: none !important;
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .auth-panel .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 20px rgba(73, 123, 175, .28);
+        }
+
+        /* =====================================================
+   GOOGLE
+===================================================== */
+
+        .google-login-btn {
+            transition:
+                background-color .2s ease,
+                box-shadow .2s ease,
+                transform .2s ease;
+        }
+
+        .google-login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+   SEPARADOR
+===================================================== */
+
+        .login-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #6c757d;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .login-separator::before,
+        .login-separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .login-separator:not(:empty)::before {
+            margin-right: .5em;
+        }
+
+        .login-separator:not(:empty)::after {
+            margin-left: .5em;
+        }
+
+        /* =====================================================
+   RESPONSIVIDADE
+===================================================== */
+
+        @media (max-width: 900px) {
+
+            .auth-card {
+                max-width: 700px;
+            }
+
+            .auth-panel {
+                padding: 40px 35px;
+            }
+
+            .auth-overlay-panel h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .auth-card {
+                min-height: 720px;
+                max-width: 520px;
+            }
+
+            /* Painel azul vira uma faixa superior */
+            .auth-overlay-container {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 190px;
+            }
+
+            .auth-card.register-active .auth-overlay-container {
+                transform: translateY(calc(100% + 530px));
+            }
+
+            .auth-overlay {
+                width: 100%;
+                height: 200%;
+                left: 0;
+            }
+
+            .auth-card.register-active .auth-overlay {
+                transform: translateY(-50%);
+            }
+
+            .auth-overlay-panel {
+                width: 100%;
+                height: 50%;
+                padding: 20px;
+            }
+
+            .auth-panel {
+                width: 100%;
+                height: calc(100% - 190px);
+                margin-top: 190px;
+                padding: 30px 25px;
+            }
+
+            .auth-overlay-panel h2 {
+                font-size: 24px;
+            }
+
+            .auth-overlay-panel p {
+                font-size: 13px;
+                margin-bottom: 12px;
+            }
+
+            .auth-btn-ghost {
+                height: 42px;
+                min-width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .auth-card {
+                min-height: 700px;
+                border-radius: 20px;
+            }
+
+            .auth-overlay-container {
+                height: 175px;
+            }
+
+            .auth-panel {
+                height: calc(100% - 175px);
+                margin-top: 175px;
+                padding: 25px 20px;
+            }
+
+            .auth-overlay-panel h2 {
+                font-size: 21px;
+            }
+
+            .auth-overlay-panel p {
+                display: none;
+            }
+
+            .auth-btn-ghost {
+                height: 40px;
+            }
+        }
     </style>
 
     <header id="header" class="header fixed-top">
-
         <div class="topbar d-flex align-items-center dark-background">
             <div class="container d-flex justify-content-center justify-content-md-between">
-
                 <div class="contact-info d-flex align-items-center">
                     <i class="bi bi-envelope d-flex align-items-center">
-                        <a href="mailto:mobipet@gmail.com">
-                            mobipet@gmail.com
-                        </a>
+                        <a href="mailto:mobipet@gmail.com">mobipet@gmail.com</a>
                     </i>
-
                     <i class="bi bi-phone d-flex align-items-center ms-4">
                         <span>(19) 98943-2384</span>
                     </i>
                 </div>
-
                 <div class="social-links d-none d-md-flex align-items-center">
-                    <a href="#!" class="whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-
-                    <a href="#!" class="instagram">
-                        <i class="bi bi-instagram"></i>
-                    </a>
+                    <a href="#!" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
                 </div>
-
             </div>
         </div>
 
         <div class="branding d-flex align-items-center">
-
             <div class="container position-relative d-flex align-items-center justify-content-between">
-
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
                     <h1 class="sitename">Mobipet</h1>
                 </a>
@@ -160,8 +723,8 @@
                                 </a>
                             </li>
 
-                        {{-- FUNCIONÁRIO --}}
-                        @htmlelseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+                            {{-- FUNCIONÁRIO --}}
+                        @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
                             <li><a href="{{ route('painel-controle') }}">Painel</a></li>
                             <li><a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a></li>
                             <li><a href="{{ route('perfil') }}">Perfil</a></li>
@@ -174,89 +737,359 @@
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
-
             </div>
-
         </div>
-
     </header>
 
     <main class="main" style="margin-top: 120px;">
 
-        <div class="container py-5" data-aos="fade-up" data-aos-delay="100">
+        {{-- Alertas de Erro Globais --}}
+        <div class="container" data-aos="fade-up">
             <div class="row justify-content-center">
-                <div class="col-md-5">
-
-                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden" style="font-family: 'Roboto', sans-serif;">
-                        <div class="card-body p-4 p-md-5">
-
-                            <h2 class="text-center mb-4 fw-bold text-dark" style="font-family: 'Montserrat', sans-serif;">
-                                Login
-                            </h2>
-
-                            @if (session('erro'))
-                                <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-4" role="alert">
-                                    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            @endif
-
-                            <form method="POST" action="{{ route('login.autenticar') }}">
-                                @csrf
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">E-mail</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-light-subtle text-muted rounded-start-3"><i class="bi bi-envelope"></i></span>
-                                        <input type="email" name="email" class="form-control rounded-end-3 p-2.5 border-light-subtle shadow-none" placeholder="seuemail@exemplo.com" required>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label fw-semibold text-secondary small text-uppercase" style="letter-spacing: 0.5px;">Senha</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-light-subtle text-muted rounded-start-3"><i class="bi bi-lock"></i></span>
-                                        <input type="password" name="senha" class="form-control rounded-end-3 p-2.5 border-light-subtle shadow-none" placeholder="Sua senha" required>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-login bg-primary text-white w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm mb-3">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
-                                </button>
-
-                                <div class="login-separator mb-3">ou</div>
-
-                                <a href="{{ route('google.login') }}" class="google-login-btn w-100 shadow-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20px" height="20px">
-                                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
-                                        <path fill="#4285F4" d="M46.5 24c0-1.55-.15-3.24-.47-4.77H24v9.03h12.75c-.55 2.94-2.22 5.44-4.72 7.11l7.33 5.68C43.64 36.63 46.5 30.82 46.5 24z" />
-                                        <path fill="#FBBC05" d="M10.54 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.98-6.19z" />
-                                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.33-5.68c-2.11 1.42-4.81 2.3-8.56 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
-                                    </svg>
-                                    <span>Entrar com o Google</span>
-                                </a>
-
-                                <div class="text-center mt-4">
-                                    <p class="text-secondary small mb-0">Não tem uma conta?</p>
-                                    <a href="{{ route('cadastro') }}" class="fw-bold text-decoration-none" style="color: #3061cb;">Cadastre-se aqui</a>
-                                </div>
-
-                            </form>
-
+                <div class="col-md-10" style="max-width:900px;">
+                    @if (session('erro'))
+                        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-3"
+                            role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
                         </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger border-0 shadow-sm rounded-4 p-3 mb-3 small" role="alert">
+                            <ul class="mb-0 ps-3">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-wrapper" data-aos="fade-up" data-aos-delay="100">
+            <div class="auth-card">
+
+                <!-- =========================
+         ÁREA DOS FORMULÁRIOS
+    ========================== -->
+                <div class="auth-forms">
+
+                    <!-- LOGIN -->
+                    <div class="auth-panel auth-form-signin">
+
+                        <h2 class="mb-4 text-dark">Entrar</h2>
+
+                        <form method="POST" action="{{ route('login.autenticar') }}">
+                            @csrf
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-secondary small text-uppercase">
+                                    E-mail
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-light-subtle text-muted">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+
+                                    <input type="email" name="email"
+                                        class="form-control rounded-end-3 p-2 border-light-subtle shadow-none"
+                                        placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-secondary small text-uppercase">
+                                    Senha
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-light-subtle text-muted">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+
+                                    <input type="password" name="senha"
+                                        class="form-control rounded-end-3 p-2 border-light-subtle shadow-none"
+                                        placeholder="Sua senha" required>
+                                </div>
+                            </div>
+
+                            <button type="submit"
+                                class="btn btn-primary w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm"
+                                style="background-color: #497baf !important; border: none;">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>
+                                Entrar
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- =========================
+             CADASTRO DO CLIENTE
+        ========================== -->
+                    <div class="auth-panel auth-form-register">
+
+                        <h2 class="mb-3 text-dark">Criar cadastro</h2>
+
+                        <p class="text-secondary small mb-4">
+                            Preencha seus dados para criar sua conta no Mobipet.
+                        </p>
+
+                        <form method="POST" action="{{ route('cadastro.salvar') }}">
+                            @csrf
+
+                            <!-- NOME -->
+                            <div class="mb-2">
+
+                                <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
+                                    style="font-size: 11px;">
+                                    Nome Completo
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text bg-light border-light-subtle text-muted">
+                                        <i class="fa-solid fa-user small"></i>
+                                    </span>
+
+                                    <input type="text" name="nome"
+                                        class="form-control p-2 border-light-subtle shadow-none"
+                                        placeholder="Seu nome completo" value="{{ old('nome', request('nome')) }}"
+                                        required>
+
+                                </div>
+                            </div>
+
+
+                            <!-- CPF + TELEFONE -->
+                            <div class="row g-2 mb-2">
+
+                                <!-- CPF -->
+                                <div class="col-6">
+
+                                    <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
+                                        style="font-size: 11px;">
+                                        CPF
+                                    </label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text bg-light border-light-subtle text-muted">
+                                            <i class="fa-solid fa-id-card small"></i>
+                                        </span>
+
+                                        <input type="text" id="cpf" name="cpf" maxlength="14"
+                                            class="form-control p-2 border-light-subtle shadow-none"
+                                            placeholder="000.000.000-00" value="{{ old('cpf') }}" required>
+
+                                    </div>
+                                </div>
+
+
+                                <!-- TELEFONE -->
+                                <div class="col-6">
+
+                                    <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
+                                        style="font-size: 11px;">
+                                        Telefone
+                                    </label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text bg-light border-light-subtle text-muted">
+                                            <i class="bi bi-telephone"></i>
+                                        </span>
+
+                                        <input type="text" id="telefone" name="telefone" maxlength="15"
+                                            class="form-control p-2 border-light-subtle shadow-none"
+                                            placeholder="(19) 99999-8888" value="{{ old('telefone') }}" required>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <!-- ENDEREÇO -->
+                            <div class="mb-2">
+
+                                <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
+                                    style="font-size: 11px;">
+                                    Endereço Residencial
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text bg-light border-light-subtle text-muted">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+
+                                    <input type="text" name="endereco"
+                                        class="form-control p-2 border-light-subtle shadow-none"
+                                        placeholder="Rua, Número, Bairro - Cidade" value="{{ old('endereco') }}"
+                                        required>
+
+                                </div>
+                            </div>
+
+
+                            <!-- EMAIL -->
+                            <div class="mb-2">
+
+                                <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
+                                    style="font-size: 11px;">
+                                    E-mail
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text bg-light border-light-subtle text-muted">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+
+                                    <input type="email" name="email"
+                                        class="form-control p-2 border-light-subtle shadow-none"
+                                        placeholder="seuemail@exemplo.com"
+                                        value="{{ old('email', request('email')) }}" required>
+
+                                </div>
+                            </div>
+
+
+                            <!-- SENHA -->
+                            <div class="mb-3">
+
+                                <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
+                                    style="font-size: 11px;">
+                                    Senha
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text bg-light border-light-subtle text-muted">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+
+                                    <input type="password" name="senha"
+                                        class="form-control p-2 border-light-subtle shadow-none"
+                                        placeholder="Crie uma senha segura"
+                                        value="{{ old('senha', request('senha')) }}" required>
+
+                                </div>
+                            </div>
+
+
+                            <!-- BOTÃO -->
+                            <button type="submit"
+                                class="btn btn-primary w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm"
+                                style="background-color: #497baf !important; border: none;">
+
+                                <i class="bi bi-check-circle me-1"></i>
+                                Finalizar Cadastro
+
+                            </button>
+
+                        </form>
+
                     </div>
 
                 </div>
+
+
+                <!-- =========================
+         PAINEL AZUL DESLIZANTE
+    ========================== -->
+                <div class="auth-overlay-container">
+
+                    <div class="auth-overlay">
+
+                        <!-- PAINEL PARA LOGIN -->
+                        <div class="auth-overlay-panel">
+
+                            <h2>Bem-vindo de volta!</h2>
+
+                            <p>
+                                Já possui uma conta?
+                                Entre com seus dados para acessar o Mobipet.
+                            </p>
+
+                            <button type="button" id="goLogin" class="auth-btn-ghost">
+                                Entrar
+                            </button>
+
+                        </div>
+
+
+                        <!-- PAINEL PARA CADASTRO -->
+                        <div class="auth-overlay-panel">
+
+                            <h2>Olá, amigo!</h2>
+
+                            <p>
+                                Ainda não possui uma conta?
+                                Cadastre-se para aproveitar todos os recursos do Mobipet.
+                            </p>
+
+                            <button type="button" id="goRegister" class="auth-btn-ghost">
+                                Cadastrar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
 
     </main>
 
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+    <a href="#" id="scroll-top"
+        class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
+        style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
         <i class="bi bi-arrow-up-short"></i>
     </a>
 
     <div id="preloader"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const card = document.querySelector('.auth-card');
+
+            const goRegister = document.getElementById('goRegister');
+            const goLogin = document.getElementById('goLogin');
+
+            // CADASTRO
+            if (goRegister) {
+                goRegister.addEventListener('click', function(e) {
+
+                    e.preventDefault();
+
+                    card.classList.add('register-active');
+
+                });
+            }
+
+            // LOGIN
+            if (goLogin) {
+                goLogin.addEventListener('click', function(e) {
+
+                    e.preventDefault();
+
+                    card.classList.remove('register-active');
+
+                });
+            }
+
+        });
+    </script>
 
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
