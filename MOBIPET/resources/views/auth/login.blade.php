@@ -337,12 +337,14 @@
             position: relative;
             width: 100%;
             max-width: 900px;
-            min-height: 580px;
+            min-height: 480px;
+            height: 580px;
             background: #fff;
             border-radius: 26px;
             overflow: hidden;
             box-shadow: 0 25px 70px rgba(0, 0, 0, .18);
             font-family: 'Roboto', sans-serif;
+            transition: height .5s cubic-bezier(.65, 0, .35, 1);
         }
 
         /* =====================================================
@@ -364,7 +366,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            overflow-y: auto;
+            overflow: hidden;
             background: #fff;
         }
 
@@ -594,7 +596,7 @@
                 max-width: 520px;
             }
 
-            /* Painel azul vira uma faixa superior */
+            /* Painel azul vira uma faixa fixa no topo; só o texto interno troca */
             .auth-overlay-container {
                 top: 0;
                 left: 0;
@@ -603,17 +605,21 @@
             }
 
             .auth-card.register-active .auth-overlay-container {
-                transform: translateY(calc(100% + 530px));
+                top: 0;
+                transform: none;
             }
 
             .auth-overlay {
+                top: 0;
                 width: 100%;
                 height: 200%;
                 left: 0;
+                transform: translateY(-50%);
             }
 
             .auth-card.register-active .auth-overlay {
-                transform: translateY(-50%);
+                top: 0;
+                transform: translateY(0);
             }
 
             .auth-overlay-panel {
@@ -622,11 +628,19 @@
                 padding: 20px;
             }
 
+            /* Em telas pequenas só o formulário ativo ocupa espaço,
+               evitando que login e cadastro fiquem espremidos lado a lado */
             .auth-panel {
+                display: none;
                 width: 100%;
                 height: calc(100% - 190px);
                 margin-top: 190px;
                 padding: 30px 25px;
+            }
+
+            .auth-card:not(.register-active) .auth-form-signin,
+            .auth-card.register-active .auth-form-register {
+                display: flex;
             }
 
             .auth-overlay-panel h2 {
@@ -782,6 +796,10 @@
 
                         <h2 class="mb-4 text-dark">Entrar</h2>
 
+                        <p class="text-secondary small mb-4">
+                            É um prazer ter você de volta conosco!
+                        </p>
+
                         <form method="POST" action="{{ route('login.autenticar') }}">
                             @csrf
 
@@ -840,7 +858,7 @@
                             Preencha seus dados para criar sua conta no Mobipet.
                         </p>
 
-                        <form method="POST" action="{{ route('cadastro.salvar') }}">
+                        <form method="POST" action="{{ route('cadastro.salvar') }}" id="cadastroForm">
                             @csrf
 
                             <!-- NOME -->
@@ -884,6 +902,7 @@
                                         </span>
 
                                         <input type="text" id="cpf" name="cpf" maxlength="14"
+                                            inputmode="numeric" autocomplete="off"
                                             class="form-control p-2 border-light-subtle shadow-none"
                                             placeholder="000.000.000-00" value="{{ old('cpf') }}" required>
 
@@ -906,6 +925,7 @@
                                         </span>
 
                                         <input type="text" id="telefone" name="telefone" maxlength="15"
+                                            inputmode="numeric" autocomplete="off"
                                             class="form-control p-2 border-light-subtle shadow-none"
                                             placeholder="(19) 99999-8888" value="{{ old('telefone') }}" required>
 
@@ -1063,8 +1083,34 @@
 
             const card = document.querySelector('.auth-card');
 
+            const signinPanel = document.querySelector('.auth-form-signin');
+            const registerPanel = document.querySelector('.auth-form-register');
+
             const goRegister = document.getElementById('goRegister');
             const goLogin = document.getElementById('goLogin');
+
+            const mobileQuery = window.matchMedia('(max-width: 700px)');
+            const smallQuery = window.matchMedia('(max-width: 480px)');
+
+            // Ajusta a altura do card ao conteúdo do painel ativo,
+            // para o cadastro (com mais campos) nunca ficar cortado ou com scroll.
+            function syncCardHeight() {
+
+                const activePanel = card.classList.contains('register-active') ?
+                    registerPanel :
+                    signinPanel;
+
+                if (!activePanel) return;
+
+                const contentHeight = activePanel.scrollHeight + 4;
+
+                if (mobileQuery.matches) {
+                    const bannerHeight = smallQuery.matches ? 175 : 190;
+                    card.style.height = (bannerHeight + contentHeight) + 'px';
+                } else {
+                    card.style.height = Math.max(contentHeight, 480) + 'px';
+                }
+            }
 
             // CADASTRO
             if (goRegister) {
@@ -1073,6 +1119,7 @@
                     e.preventDefault();
 
                     card.classList.add('register-active');
+                    syncCardHeight();
 
                 });
             }
@@ -1084,7 +1131,66 @@
                     e.preventDefault();
 
                     card.classList.remove('register-active');
+                    syncCardHeight();
 
+                });
+            }
+
+            window.addEventListener('resize', syncCardHeight);
+            window.addEventListener('load', syncCardHeight);
+
+            syncCardHeight();
+
+            // =========================================
+            // MÁSCARAS DE CPF E TELEFONE
+            // =========================================
+
+            const cpfInput = document.getElementById('cpf');
+            const telefoneInput = document.getElementById('telefone');
+
+            function maskCPF(value) {
+                return value
+                    .replace(/\D/g, '')
+                    .slice(0, 11)
+                    .replace(/(\d{3})(\d)/, '$1.$2')
+                    .replace(/(\d{3})(\d)/, '$1.$2')
+                    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            }
+
+            function maskTelefone(value) {
+                const digits = value.replace(/\D/g, '').slice(0, 11);
+
+                if (digits.length > 10) {
+                    // Celular: (00) 00000-0000
+                    return digits
+                        .replace(/(\d{2})(\d)/, '($1) $2')
+                        .replace(/(\d{5})(\d)/, '$1-$2');
+                }
+
+                // Fixo: (00) 0000-0000
+                return digits
+                    .replace(/(\d{2})(\d)/, '($1) $2')
+                    .replace(/(\d{4})(\d{1,4})$/, '$1-$2');
+            }
+
+            if (cpfInput) {
+                cpfInput.addEventListener('input', function() {
+                    cpfInput.value = maskCPF(cpfInput.value);
+                });
+            }
+
+            if (telefoneInput) {
+                telefoneInput.addEventListener('input', function() {
+                    telefoneInput.value = maskTelefone(telefoneInput.value);
+                });
+            }
+
+            // Antes de enviar, remove a máscara para gravar só os números no banco
+            const cadastroForm = document.getElementById('cadastroForm');
+            if (cadastroForm) {
+                cadastroForm.addEventListener('submit', function() {
+                    if (cpfInput) cpfInput.value = cpfInput.value.replace(/\D/g, '');
+                    if (telefoneInput) telefoneInput.value = telefoneInput.value.replace(/\D/g, '');
                 });
             }
 

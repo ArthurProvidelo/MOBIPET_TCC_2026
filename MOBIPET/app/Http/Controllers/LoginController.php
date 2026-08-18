@@ -18,19 +18,21 @@ class LoginController extends Controller
     // Processa o cadastro
     public function salvarCadastro(Request $request)
     {
-        // Remove máscara do CPF
+        // Remove máscara do CPF e do telefone
         $cpf = preg_replace('/[^0-9]/', '', $request->cpf);
+        $telefone = preg_replace('/[^0-9]/', '', $request->telefone);
 
         // Atualiza o valor do request
         $request->merge([
-            'cpf' => $cpf
+            'cpf'      => $cpf,
+            'telefone' => $telefone,
         ]);
 
         // Validação
         $request->validate([
             'nome'     => 'required|string|max:255',
             'cpf'      => 'required|digits:11',
-            'telefone' => 'required|string|max:255',
+            'telefone' => 'required|digits_between:10,11',
             'email'    => 'required|email|max:255',
             'senha'    => 'required|min:6|max:255',
             'endereco' => 'required|string|max:255',

@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/funcionarios', [FuncionarioController::class, 'index']);
 
     Route::get('/agendamentos', [AgendamentoController::class, 'index']);
+    Route::get('/clientes/{id}/agendamentos', [AgendamentoController::class, 'porCliente']);
     Route::post('/agendamentos', [AgendamentoController::class, 'store']);
     Route::patch('/agendamentos/{id}/cancelar', [AgendamentoController::class, 'cancelar']);
 

@@ -21,6 +21,19 @@ class AgendamentoController extends Controller
         return response()->json($agendamentos);
     }
 
+    /**
+     * Mesma listagem de index(), mas recebendo o id do cliente explicitamente
+     * na URL. O id da rota precisa bater com o dono do token (Sanctum) —
+     * caso contrário qualquer token válido poderia listar agendamentos de
+     * outro cliente.
+     */
+    public function porCliente(Request $request, int $id)
+    {
+        abort_if((int) $request->user()->id_cliente !== $id, 403, 'Você não tem acesso aos agendamentos deste cliente.');
+
+        return $this->index($request);
+    }
+
     public function store(Request $request)
     {
         $dados = $request->validate([
