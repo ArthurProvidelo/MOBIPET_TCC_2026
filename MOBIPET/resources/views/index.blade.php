@@ -9,7 +9,7 @@
       <meta name="keywords" content="">
 
       <!-- Favicons -->
-      <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
+      <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
 
       <!-- Fonts -->
       <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -551,50 +551,221 @@
               .progress-bar {
                   background: linear-gradient(90deg, #2563eb, #3b82f6);
               }
+
+              /* ---------- Footer criativo ---------- */
+              .footer-16 {
+                  position: relative;
+                  overflow: visible;
+                  padding-bottom: 90px;
+              }
+
+              .footer-16 .footer-main {
+                  margin-bottom: 0;
+              }
+
+              .footer-16::before {
+                  content: "";
+                  position: absolute;
+                  top: -1px;
+                  left: 0;
+                  right: 0;
+                  height: 3px;
+                  background: linear-gradient(90deg, transparent, var(--accent-color), #22c55e, var(--accent-color), transparent);
+                  background-size: 200% 100%;
+                  animation: footerGradientMove 6s linear infinite;
+              }
+
+              @keyframes footerGradientMove {
+                  0% { background-position: 0% 0; }
+                  100% { background-position: 200% 0; }
+              }
+
+              .footer-badge {
+                  position: absolute;
+                  top: 0;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  width: 64px;
+                  height: 64px;
+                  border-radius: 50%;
+                  background: linear-gradient(135deg, var(--accent-color), #1d4ed8);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  box-shadow: 0 10px 25px rgba(23, 92, 221, 0.35);
+                  z-index: 2;
+                  transition: transform 0.4s ease;
+              }
+
+              .footer-badge i {
+                  color: #fff;
+                  font-size: 26px;
+              }
+
+              .footer-badge:hover {
+                  transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
+              }
+
+              .footer-16 .brand-section {
+                  max-width: 380px;
+              }
+
+              .footer-status {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  font-size: 13px;
+                  font-weight: 600;
+                  color: #16a34a;
+                  background: rgba(34, 197, 94, 0.12);
+                  padding: 6px 14px;
+                  border-radius: 999px;
+                  margin-bottom: 22px;
+              }
+
+              .footer-status .status-dot {
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #22c55e;
+                  animation: statusPulse 2s infinite;
+              }
+
+              @keyframes statusPulse {
+                  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+                  70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+                  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+              }
+
+              .footer-16 .contact-info {
+                  margin-top: 24px;
+              }
+
+              .footer-16 .footer-social .social-link.whatsapp i {
+                  color: #25d366;
+              }
+
+              .footer-16 .footer-social .social-link.instagram i {
+                  background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+              }
+
+              .footer-16 .footer-bottom .legal-links .credits i {
+                  color: #ef4444;
+                  margin: 0 2px;
+              }
+
+              /* .footer-bottom carrega um fundo azul fixo (estilo.css); ajusta o texto para contraste */
+              .footer-16 .footer-bottom .copyright p {
+                  color: rgba(255, 255, 255, 0.85);
+              }
+
+              .footer-16 .footer-bottom .copyright p .sitename {
+                  color: #fff;
+              }
+
+              .footer-16 .footer-bottom .legal-links a {
+                  color: rgba(255, 255, 255, 0.85);
+              }
+
+              .footer-16 .footer-bottom .legal-links a:hover {
+                  color: #fff;
+                  text-decoration: underline;
+              }
+
+              .footer-16 .footer-bottom .legal-links .credits {
+                  color: rgba(255, 255, 255, 0.7);
+                  border-left-color: rgba(255, 255, 255, 0.3);
+              }
+
+              .footer-16 .footer-bottom .legal-links .credits a {
+                  color: #fff;
+                  font-weight: 600;
+              }
           </style>
 
           <footer id="footer" class="footer-16 footer position-relative">
 
+              <div class="footer-badge">
+                  <i class="fa-solid fa-paw"></i>
+              </div>
 
               <div class="container">
 
+                  <div class="footer-main row gy-5 justify-content-between align-items-start" data-aos="fade-up" data-aos-delay="100">
 
-                  <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
-                      <div class="row">
-                          <div class="col-md-6 align-items-start">
-                              <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                                  <h1 class="sitename">Mobipet</h1>
-                              </a>
-                              <p class="brand-description">Obrigado pela confiança. Estamos prontos para cuidar do seu
-                                  melhor amigo!</p>
+                      <div class="col-lg-5 brand-section">
+
+                          <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+                              <h1 class="sitename">Mobipet</h1>
+                          </a>
+
+                          <div class="contact-info">
+                              <div class="contact-item">
+                                  <i class="bi bi-geo-alt"></i>
+                                  <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
+                              </div>
+                              <div class="contact-item">
+                                  <i class="bi bi-telephone"></i>
+                                  <span>(19) 98943-2384</span>
+                              </div>
+                              <div class="contact-item">
+                                  <i class="bi bi-envelope"></i>
+                                  <span>mobipet@gmail.com</span>
+                              </div>
                           </div>
-                          <div class="col-md-6 align-items-end">
-                              <p><span><i class="bi bi-geo-alt"></i> Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
-                              </p>
-                              <p><span><i class="bi bi-telephone"></i> (19)98943-2384</span></p>
-                              <p><span><i class="bi bi-envelope"></i> mobipet@gmail.com</span></p>
-                          </div>
+
                       </div>
 
+                      <div class="col-lg-6 footer-nav-wrapper">
+                          <div class="row">
 
-                      <div vw class="enabled">
-                          <div vw-access-button class="active"></div>
-                          <div vw-plugin-wrapper>
-                              <div class="vw-plugin-top-wrapper"></div>
+                              <div class="col-6 nav-column">
+                                  <h6>Navegação</h6>
+                                  <nav class="footer-nav">
+                                      <a href="{{ route('index') }}">Início</a>
+                                      <a href="{{ route('sobre') }}">Sobre nós</a>
+                                      <a href="{{ route('services') }}">Serviços</a>
+                                      <a href="{{ route('devs') }}">Desenvolvedores</a>
+                                  </nav>
+                              </div>
+
+                              <div class="col-6 nav-column">
+                                  <h6>Minha Conta</h6>
+                                  <nav class="footer-nav">
+                                      @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
+                                          <a href="{{ route('agendamento') }}">Agendamento</a>
+                                          <a href="{{ route('pets.index') }}">Meus Pets</a>
+                                          <a href="{{ route('pets.create') }}">Cadastrar Pet</a>
+                                          <a href="{{ route('perfil') }}">Meu Perfil</a>
+                                      @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+                                          <a href="{{ route('painel-controle') }}">Painel</a>
+                                          <a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a>
+                                          <a href="{{ route('perfil') }}">Perfil</a>
+                                      @else
+                                          <a href="{{ route('login') }}">Entrar</a>
+                                          <a href="{{ route('cadastro') }}">Criar conta</a>
+                                      @endif
+                                  </nav>
+                              </div>
+
                           </div>
                       </div>
+                  </div>
+              </div>
 
+              <div vw class="enabled">
+                  <div vw-access-button class="active"></div>
+                  <div vw-plugin-wrapper>
+                      <div class="vw-plugin-top-wrapper"></div>
+                  </div>
+              </div>
 
-                      <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-                      <script>
-                          new window.VLibras.Widget('https://vlibras.gov.br/app');
-                      </script>
-
-
-
-          </footer>
-
-          </section>
+              <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+              <script>
+                  new window.VLibras.Widget('https://vlibras.gov.br/app');
+              </script>
 
           </footer>
 

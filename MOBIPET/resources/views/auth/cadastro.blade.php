@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
-    <link href="{{ asset('assets/img/mobipet_icon.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
