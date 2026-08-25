@@ -30,32 +30,6 @@
     <!-- HEADER -->
     <header id="header" class="header fixed-top">
 
-        <div class="topbar d-flex align-items-center dark-background">
-            <div class="container d-flex justify-content-center justify-content-md-between">
-
-                <div class="contact-info d-flex align-items-center">
-                    <i class="bi bi-envelope d-flex align-items-center">
-                        <a href="mailto:mobipet@gmail.com">mobipet@gmail.com</a>
-                    </i>
-
-                    <i class="bi bi-phone d-flex align-items-center ms-4">
-                        <span>(19) 98943-2384</span>
-                    </i>
-                </div>
-
-                <div class="social-links d-none d-md-flex align-items-center">
-                    <a href="#!" class="whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-
-                    <a href="#!" class="instagram">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
         <!-- BOTÃO VOLTAR AO TOPO -->
         <a href="#" id="scroll-top"
             class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
@@ -94,7 +68,6 @@
 
                         {{-- CLIENTE --}}
                         @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
-
                             <li>
                                 <a href="{{ route('pets.create') }}">
                                     Cadastrar Pet
@@ -126,9 +99,8 @@
                                 </a>
                             </li>
 
-                        {{-- FUNCIONÁRIO --}}
+                            {{-- FUNCIONÁRIO --}}
                         @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
-
                             <li>
                                 <a href="{{ route('painel-controle') }}">
                                     Painel
@@ -153,15 +125,12 @@
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 </a>
                             </li>
-
                         @else
-
                             <li>
                                 <a href="{{ route('login') }}">
                                     Entrar
                                 </a>
                             </li>
-
                         @endif
 
                     </ul>
@@ -220,7 +189,6 @@
 
                         <!-- MENSAGEM DE SUCESSO -->
                         @if (session('success'))
-
                             <div class="alert alert-success border-0 rounded-4 p-3 shadow-sm mb-4 d-flex align-items-center gap-3"
                                 data-aos="fade-up">
 
@@ -231,7 +199,6 @@
                                 </span>
 
                             </div>
-
                         @endif
 
 
@@ -326,22 +293,22 @@
                                             <tbody>
 
                                                 @foreach ($pets as $pet)
-
                                                     @php
                                                         $statusMap = [
-                                                            'pendente'       => 'status-pendente',
-                                                            'agendado'       => 'status-pendente',
-                                                            'confirmado'     => 'status-pendente',
-                                                            'em andamento'   => 'status-andamento',
-                                                            'andamento'      => 'status-andamento',
+                                                            'pendente' => 'status-pendente',
+                                                            'agendado' => 'status-pendente',
+                                                            'confirmado' => 'status-pendente',
+                                                            'em andamento' => 'status-andamento',
+                                                            'andamento' => 'status-andamento',
                                                             'em atendimento' => 'status-andamento',
-                                                            'concluido'      => 'status-concluido',
-                                                            'finalizado'     => 'status-concluido',
-                                                            'cancelado'      => 'status-cancelado',
+                                                            'concluido' => 'status-concluido',
+                                                            'finalizado' => 'status-concluido',
+                                                            'cancelado' => 'status-cancelado',
                                                         ];
 
                                                         $statusClass = $pet->status_agendamento
-                                                            ? ($statusMap[strtolower($pet->status_agendamento)] ?? 'status-pendente')
+                                                            ? $statusMap[strtolower($pet->status_agendamento)] ??
+                                                                'status-pendente'
                                                             : 'status-sem-agendamento';
                                                     @endphp
 
@@ -354,7 +321,8 @@
 
                                                                 <div class="pet-avatar-mini">
 
-                                                                    <i class="fa-solid
+                                                                    <i
+                                                                        class="fa-solid
                                                                         {{ $pet->especie == 'Gato' ? 'fa-cat' : 'fa-dog' }}">
                                                                     </i>
 
@@ -383,9 +351,7 @@
 
 
                                                         <!-- RAÇA -->
-                                                        <td
-                                                            class="text-secondary fw-medium"
-                                                            data-label="Raça">
+                                                        <td class="text-secondary fw-medium" data-label="Raça">
 
                                                             {{ $pet->raca }}
 
@@ -406,32 +372,29 @@
 
 
                                                         <!-- NASCIMENTO -->
-                                                        <td
-                                                            class="text-secondary small fw-medium"
+                                                        <td class="text-secondary small fw-medium"
                                                             data-label="Nascimento">
 
-                                                            {{ $pet->data_nascimento
-                                                                ? date('d/m/Y', strtotime($pet->data_nascimento))
-                                                                : 'Não informada'
-                                                            }}
+                                                            {{ $pet->data_nascimento ? date('d/m/Y', strtotime($pet->data_nascimento)) : 'Não informada' }}
 
                                                         </td>
 
 
-                                                        <!-- STATUS -->
                                                         <td data-label="Status" class="text-center">
 
-                                                            <span class="status-badge {{ $statusClass }}"> <i class="fa-solid fa-clock me-1">
-                                                                
-                                                            </i> {{ $pet->status_agendamento ?? 'Sem agendamento' }} </span>
+                                                            <span
+                                                                class="status-badge {{ $statusClass }}"
+                                                                data-status-pet="{{ $pet->id_pet }}"
+                                                            >
+                                                                <i class="fa-solid fa-clock me-1"></i>
+                                                                {{ $pet->status_agendamento ?? 'Sem agendamento' }}
+                                                            </span>
 
                                                         </td>
 
 
                                                         <!-- AÇÕES -->
-                                                        <td
-                                                            class="text-end pe-4"
-                                                            data-label="Ações">
+                                                        <td class="text-end pe-4" data-label="Ações">
 
                                                             <div class="d-flex justify-content-end gap-2">
 
@@ -470,7 +433,6 @@
                                                         </td>
 
                                                     </tr>
-
                                                 @endforeach
 
                                             </tbody>
@@ -478,9 +440,7 @@
                                         </table>
 
                                     </div>
-
                                 @else
-
                                     <!-- NENHUM PET -->
                                     <div class="text-center py-5 px-4">
 
@@ -554,8 +514,13 @@
         }
 
         @keyframes footerGradientMove {
-            0% { background-position: 0% 0; }
-            100% { background-position: 200% 0; }
+            0% {
+                background-position: 0% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
         }
 
         .footer-badge {
@@ -610,9 +575,17 @@
         }
 
         @keyframes statusPulse {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
-            70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
         }
 
         .footer-16 .contact-info {
@@ -670,7 +643,8 @@
 
         <div class="container">
 
-            <div class="footer-main row gy-5 justify-content-between align-items-start" data-aos="fade-up" data-aos-delay="100">
+            <div class="footer-main row gy-5 justify-content-between align-items-start" data-aos="fade-up"
+                data-aos-delay="100">
 
                 <div class="col-lg-5 brand-section">
 
@@ -744,7 +718,6 @@
 
     <!-- CSS -->
     <style>
-
         body {
             background: #f7f9fc;
             font-family: 'Montserrat', sans-serif;
@@ -1095,7 +1068,6 @@
             }
 
         }
-
     </style>
 
 
@@ -1125,7 +1097,6 @@
 
     <!-- AOS -->
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
 
             if (typeof AOS !== 'undefined') {
@@ -1138,7 +1109,6 @@
             }
 
         });
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -1152,10 +1122,67 @@
             });
         </script>
     @endif
-    
-@include('partials.logout-confirm')
 
->
+    @include('partials.logout-confirm')
+
+    <!-- ATUALIZA SOMENTE O STATUS DOS PETS -->
+    <script>
+        function atualizarStatusPets() {
+
+            fetch("{{ route('pets.index') }}", {
+                method: "GET",
+                cache: "no-store",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error("Erro ao consultar os pets.");
+                }
+
+                return response.text();
+            })
+            .then(function(html) {
+
+                const parser = new DOMParser();
+                const novaPagina = parser.parseFromString(html, "text/html");
+
+                const novosStatus = novaPagina.querySelectorAll(
+                    ".status-badge[data-status-pet]"
+                );
+
+                novosStatus.forEach(function(novoStatus) {
+
+                    const idPet = novoStatus.getAttribute("data-status-pet");
+
+                    const statusAtual = document.querySelector(
+                        '.status-badge[data-status-pet="' + idPet + '"]'
+                    );
+
+                    if (!statusAtual) {
+                        return;
+                    }
+
+                    // Só altera se o status realmente mudou.
+                    if (
+                        statusAtual.className !== novoStatus.className ||
+                        statusAtual.innerHTML.trim() !== novoStatus.innerHTML.trim()
+                    ) {
+                        statusAtual.className = novoStatus.className;
+                        statusAtual.innerHTML = novoStatus.innerHTML;
+                    }
+                });
+
+            })
+            .catch(function(error) {
+                console.error("Erro ao atualizar status:", error);
+            });
+        }
+
+        // Consulta o servidor a cada 10 segundos.
+        setInterval(atualizarStatusPets, 3000);
+    </script>
 
 </body>
 

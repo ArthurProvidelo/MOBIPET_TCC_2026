@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\AgendamentoController;
-use App\Http\Controllers\Api\AtendimentoController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FuncionarioController;
 use App\Http\Controllers\Api\PetController;
@@ -35,11 +34,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/funcionarios', [FuncionarioController::class, 'index']);
 
     Route::get('/agendamentos', [AgendamentoController::class, 'index']);
+    Route::get('/agendamentos/atual', [AgendamentoController::class, 'atual']);
     Route::get('/clientes/{id}/agendamentos', [AgendamentoController::class, 'porCliente']);
     Route::post('/agendamentos', [AgendamentoController::class, 'store']);
     Route::patch('/agendamentos/{id}/cancelar', [AgendamentoController::class, 'cancelar']);
-
-    Route::get('/atendimentos/atual', [AtendimentoController::class, 'atual']);
-    Route::post('/atendimentos', [AtendimentoController::class, 'store']);
-    Route::post('/atendimentos/{id}/avancar', [AtendimentoController::class, 'avancar']);
+    Route::post('/agendamentos/{id}/iniciar', [AgendamentoController::class, 'iniciar']);
+    Route::post('/agendamentos/{id}/avancar', [AgendamentoController::class, 'avancar']);
 });

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Atendimento;
+use App\Models\Agendamento;
 use App\Models\Pet;
 use Illuminate\Http\Request;
 
@@ -52,13 +52,13 @@ class PetController extends Controller
     {
         $pet = $this->petDoCliente($request, $id);
 
-        $atendimento = Atendimento::where('fk_id_pet', $pet->id_pet)
-            ->whereNull('finalizado_em')
-            ->with(['etapas', 'servico'])
-            ->latest('iniciado_em')
+        $agendamento = Agendamento::where('fk_id_pet', $pet->id_pet)
+            ->where('status_agendamento', 'Banho')
+            ->with(['servico', 'funcionario'])
+            ->latest('id_agendamento')
             ->first();
 
-        return response()->json(['atendimento' => $atendimento]);
+        return response()->json(['agendamento' => $agendamento]);
     }
 
     private function validarDados(Request $request): array

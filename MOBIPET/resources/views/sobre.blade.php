@@ -34,33 +34,6 @@
     <header id="header" class="header fixed-top">
 
     <!-- Top Bar -->
-    <div class="topbar d-flex align-items-center dark-background">
-        <div class="container d-flex justify-content-center justify-content-md-between">
-
-            <div class="contact-info d-flex align-items-center">
-                <i class="bi bi-envelope d-flex align-items-center">
-                    <a href="mailto:mobipet@gmail.com">
-                        mobipet@gmail.com
-                    </a>
-                </i>
-
-                <i class="bi bi-phone d-flex align-items-center ms-4">
-                    <span>(19) 98943-2384</span>
-                </i>
-            </div>
-
-            <div class="social-links d-none d-md-flex align-items-center">
-                <a href="#!" class="whatsapp">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </a>
-
-                <a href="#!" class="instagram">
-                    <i class="bi bi-instagram"></i>
-                </a>
-            </div>
-
-        </div>
-    </div>
 
     <!-- Scroll Top -->
     <a href="#"
