@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -7,17 +6,20 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Sobre Nós | Mobipet</title>
     <meta name="description"
-        content="Saiba como o Mobipet conecta tutores e petshops através do monitoramento em tempo real.">
-    <meta name="keywords" content="petshop, monitoramento pet, banho e tosa, laravel, mobipet">
+        content="Conheça o Mobipet: a plataforma que conecta tutores e petshops com agendamento digital e acompanhamento do banho e da tosa em tempo real.">
+    <meta name="keywords" content="petshop, monitoramento pet, banho e tosa, agendamento pet, mobipet">
 
+    <!-- Favicons -->
     <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
 
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
 
+    <!-- Vendor CSS Files -->
     <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
@@ -25,686 +27,889 @@
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
+    <!-- Main CSS File -->
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/estilo.css') }}" rel="stylesheet">
-</head>
-
-<body class="about-page">
-
-    <header id="header" class="header fixed-top">
-
-    <!-- Top Bar -->
-
-    <!-- Scroll Top -->
-    <a href="#"
-       id="scroll-top"
-       class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
-       style="width: 50px;
-              height: 50px;
-              position: fixed;
-              bottom: 20px;
-              right: 20px;
-              z-index: 999;
-              font-size: 24px;">
-
-        <i class="bi bi-arrow-up-short"></i>
-
-    </a>
-
-    <!-- Branding -->
-    <div class="branding d-flex align-items-center">
-
-        <div class="container position-relative d-flex align-items-center justify-content-between">
-
-            <a href="{{ route('index') }}"
-               class="logo d-flex align-items-center">
-
-                <h1 class="sitename">
-                    Mobipet
-                </h1>
-
-            </a>
-
-            <nav id="navmenu" class="navmenu">
-
-                <ul>
-
-                    <li>
-                        <a href="{{ route('index') }}">
-                            Início
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('sobre') }}" class="active">
-                            Sobre nós
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('services') }}">
-                            Serviços
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('devs') }}">
-                            Desenvolvedores
-                        </a>
-                    </li>
-
-                    {{-- CLIENTE --}}
-                    @if(session()->has('id') && session('nivel_acesso') == 'USUARIO')
-
-                        <li>
-                            <a href="{{ route('pets.create') }}">
-                                Cadastrar Pet
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('agendamento') }}">
-                                Agendamento
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('pets.index') }}">
-                                Meus Pets
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('perfil') }}">
-                                <i class="fa-solid fa-user"></i>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('logout') }}">
-                                Sair
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            </a>
-                        </li>
-
-                    {{-- FUNCIONÁRIO --}}
-                    @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
-
-                        <li>
-                            <a href="{{ route('painel-controle') }}">
-                                Painel
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('funcionario.agendamentos') }}">
-                                Agendamentos
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('perfil') }}">
-                                Perfil
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ route('logout') }}">
-                                Sair
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            </a>
-                        </li>
-
-                    {{-- VISITANTE --}}
-                    @else
-
-                        <li>
-                            <a href="{{ route('login') }}">
-                                Entrar
-                            </a>
-                        </li>
-
-                    @endif
-
-                </ul>
-
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-
-            </nav>
-
-        </div>
-
-    </div>
-
-</header>
 
     <style>
-        /* --- CONFIGURAÇÕES DE TIPOGRAFIA E BASE --- */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-}
+        /* ===========================================================
+           PÁGINA SOBRE — MOBIPET  ·  estilos isolados (prefixo sb-)
+           =========================================================== */
+        .sb-page {
+            --sb-accent: #175cdd;
+            --sb-accent-dark: #0f47b3;
+            --sb-accent-soft: #eaf1fe;
+            --sb-ink: #0f1b34;
+            --sb-body: #4a5568;
+            --sb-muted: #8794a7;
+            --sb-amber: #f59e0b;
+            --sb-green: #16a34a;
+            --sb-line: #e6ecf5;
+            --sb-bg: #f7f9ff;
+            --sb-radius: 24px;
+            --sb-radius-sm: 14px;
+            --sb-shadow-sm: 0 10px 30px -14px rgba(15, 27, 52, .2);
+            --sb-shadow: 0 40px 90px -40px rgba(23, 92, 221, .4);
 
-/* --- ESPAÇAMENTOS PREMIUM (SISTEMA DE RESPIRO) --- */
-.py-6 {
-    padding-top: 5.5rem !important;
-    padding-bottom: 5.5rem !important;
-}
+            font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--sb-body);
+            background: var(--sb-bg);
+            overflow-x: clip;
+        }
 
-.max-w-2xl {
-    max-width: 42rem;
-}
+        .sb-page h1,
+        .sb-page h2,
+        .sb-page h3,
+        .sb-page h4 {
+            font-family: "Montserrat", sans-serif;
+            color: var(--sb-ink);
+            letter-spacing: -0.022em;
+            line-height: 1.12;
+        }
 
-.p-4AndHalf {
-    padding: 2.25rem !important;
-}
+        .sb-page p {
+            line-height: 1.78;
+        }
 
-/* --- CORES ADICIONAIS --- */
-.text-light-dim {
-    color: rgba(255, 255, 255, 0.75);
-}
+        .sb-wrap {
+            width: min(1140px, 90%);
+            margin-inline: auto;
+        }
 
-.text-primary-dim {
-    color: rgba(var(--bs-primary-rgb), 0.15);
-}
+        .sb-narrow {
+            width: min(720px, 90%);
+            margin-inline: auto;
+        }
 
-/* --- BADGES & STATUS INDICATORS --- */
-.badge-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    color: #495057;
-    font-weight: 500;
-}
+        .sb-page section {
+            padding: clamp(4rem, 9vw, 8rem) 0;
+            position: relative;
+        }
 
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #6c757d;
-}
+        /* ---- Barra de progresso de rolagem ---- */
+        .sb-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--sb-accent), #4ade80);
+            z-index: 1100;
+            transition: width .12s linear;
+        }
 
-.status-dot.pulsing {
-    background-color: var(--bs-primary);
-    animation: statusPulse 2s infinite ease-in-out;
-}
+        /* ---- Rótulos de seção (eyebrow editorial) ---- */
+        .sb-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-size: .78rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--sb-accent);
+        }
 
-.status-dot.waiting { background-color: #ffc107; }
-.status-dot.success { background-color: #198754; }
+        .sb-eyebrow::before {
+            content: "";
+            width: 30px;
+            height: 2px;
+            background: currentColor;
+        }
 
-@keyframes statusPulse {
-    0% { opacity: 0.4; }
-    50% { opacity: 1; }
-    100% { opacity: 0.4; }
-}
+        .sb-eyebrow .sb-idx {
+            color: var(--sb-muted);
+            font-variant-numeric: tabular-nums;
+        }
 
-/* --- MINIMAL CARDS --- */
-.card-minimal {
-    border: 1px solid #f1f3f5;
-    background-color: #ffffff;
-    border-radius: 16px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+        .sb-h2 {
+            font-size: clamp(1.9rem, 4.2vw, 3rem);
+            margin: 22px 0 0;
+        }
 
-.card-minimal:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03) !important;
-}
+        .sb-lead {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            color: var(--sb-body);
+        }
 
-/* Shape para ícones minimalistas */
-.icon-shape {
-    width: 48px;
-    height: 48px;
-    background-color: rgba(var(--bs-primary-rgb), 0.06);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .sb-mark {
+            color: var(--sb-ink);
+            font-weight: 600;
+            background: linear-gradient(transparent 62%, color-mix(in srgb, var(--sb-amber) 45%, transparent) 62%);
+        }
 
-/* --- PASSO A PASSO (HOW IT WORKS) --- */
-.step-card {
-    border-radius: 16px;
-    transition: background-color 0.2s ease;
-}
+        /* ---- Botões ---- */
+        .sb-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+            font-size: .97rem;
+            padding: 14px 26px;
+            border-radius: 999px;
+            border: 1.5px solid transparent;
+            text-decoration: none;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+        }
 
-.step-card:hover {
-    background-color: #f8f9fa;
-}
+        .sb-btn--primary {
+            background: var(--sb-accent);
+            color: #fff;
+            box-shadow: 0 18px 34px -16px rgba(23, 92, 221, .75);
+        }
 
-/* --- TIMELINE DE STATUS MINIMALISTA --- */
-.timeline-minimal {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    padding-left: 1.5rem;
-    border-left: 2px solid #f1f3f5;
-    gap: 1.5rem;
-}
+        .sb-btn--primary:hover {
+            background: var(--sb-accent-dark);
+            color: #fff;
+            transform: translateY(-3px);
+        }
 
-.timeline-step {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-    flex-wrap: nowrap;
-}
+        .sb-btn--ghost {
+            background: transparent;
+            color: var(--sb-ink);
+            border-color: var(--sb-line);
+        }
 
-.timeline-step .step-content {
-    font-size: 0.95rem;
-    color: #6c757d;
-    white-space: nowrap;
-}
+        .sb-btn--ghost:hover {
+            border-color: var(--sb-accent);
+            color: var(--sb-accent);
+            transform: translateY(-3px);
+        }
 
-.timeline-step.completed .step-dot {
-    background-color: #3b82f6; /* Azul primário suave */
-}
+        .sb-btn--light {
+            background: #fff;
+            color: var(--sb-accent);
+        }
 
-.timeline-step.completed .step-content {
-    color: #6c757d;
-    opacity: 0.75;
-}
+        .sb-btn--light:hover {
+            color: var(--sb-accent-dark);
+            transform: translateY(-3px);
+        }
 
-.timeline-step.active .step-dot {
-    background-color: var(--bs-primary);
-    box-shadow: 0 0 0 4px rgba(var(--bs-primary-rgb), 0.2);
-}
+        /* ===================== HERO ===================== */
+        .sb-hero {
+            padding-top: clamp(8rem, 16vw, 12rem) !important;
+            padding-bottom: clamp(3rem, 8vw, 6rem) !important;
+            background:
+                radial-gradient(48% 40% at 82% 8%, var(--sb-accent-soft) 0%, transparent 62%),
+                radial-gradient(40% 34% at 6% 92%, #e7f8ee 0%, transparent 60%),
+                var(--sb-bg);
+            overflow: hidden;
+        }
 
-.timeline-step {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        .sb-hero-grid {
+            display: grid;
+            grid-template-columns: 1.12fr .88fr;
+            gap: clamp(2rem, 5vw, 4rem);
+            align-items: center;
+        }
 
-.timeline-step .step-content {
-    font-size: 0.95rem;
-    color: #6c757d;
-}
+        .sb-hero h1 {
+            font-size: clamp(2.4rem, 6vw, 4.1rem);
+            font-weight: 800;
+            margin: 26px 0 22px;
+        }
 
-/* --- HERO IMAGE EFFECTS --- */
-.hero-img-wrapper {
-    position: relative;
-    display: inline-block;
-}
+        .sb-hero h1 .sb-grad {
+            background: linear-gradient(120deg, var(--sb-accent), #3b82f6 55%, #4ade80);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
-.hero-img-wrapper::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    box-shadow: inset 0 0 40px rgba(255,255,255,1);
-    pointer-events: none;
-}
+        .sb-hero p {
+            font-size: clamp(1.05rem, 2vw, 1.22rem);
+            max-width: 520px;
+            margin-bottom: 30px;
+        }
 
-/* --- CONTAINER DO FLUXOGRAMA MINIMALISTA --- */
-.minimal-flow-container {
-    position: relative;
-    padding: 2rem 0;
-}
+        .sb-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
 
-/* Linha horizontal conectora elegante (Apenas para telas grandes) */
-@media (min-width: 992px) {
-    .minimal-flow-container::before {
-        content: '';
-        position: absolute;
-        top: 42px; /* Alinha exatamente no centro vertical dos círculos numéricos */
-        left: 12.5%; /* Começa no meio do primeiro card */
-        width: 75%;  /* Termina no meio do último card */
-        height: 1px;
-        background: linear-gradient(to right, #dee2e6 0%, #dee2e6 100%);
-        z-index: 0;
-    }
-}
+        .sb-scrollcue {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 42px;
+            font-size: .82rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--sb-muted);
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+        }
 
-/* Card do Fluxo */
-.minimal-flow-card {
-    position: relative;
-    background: transparent;
-    transition: transform 0.3s ease;
-    padding: 0 10px;
-}
+        .sb-scrollcue i {
+            animation: sb-bob 1.8s ease-in-out infinite;
+        }
 
-.minimal-flow-card:hover {
-    transform: translateY(-4px);
-}
+        @keyframes sb-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
 
-/* Invólucro do Círculo Numérico */
-.flow-indicator-wrapper {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff; /* Fundo branco cobre a linha que passa por trás */
-    padding: 0 15px; /* Cria o respiro nas laterais da linha */
-    z-index: 2;
-}
+        /* Painel "ao vivo" do hero */
+        .sb-live-card {
+            position: relative;
+            background: #fff;
+            border: 1px solid var(--sb-line);
+            border-radius: var(--sb-radius);
+            box-shadow: var(--sb-shadow);
+            padding: 26px;
+        }
 
-/* O Círculo Numérico Minimalista */
-.flow-node {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #f8f9fa; /* Cinza bem claro, sutil */
-    border: 1px solid #e9ecef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--bs-primary); /* Usa o azul primário do Bootstrap */
-    transition: all 0.3s ease;
-}
+        .sb-live-card::after {
+            content: "";
+            position: absolute;
+            inset: -40px -40px auto auto;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(74, 222, 128, .35), transparent 70%);
+            filter: blur(10px);
+            z-index: -1;
+            animation: sb-glow 6s ease-in-out infinite alternate;
+        }
 
-/* Efeito sutil ao passar o mouse */
-.minimal-flow-card:hover .flow-node {
-    background: var(--bs-primary);
-    color: #ffffff;
-    border-color: var(--bs-primary);
-    box-shadow: 0 0 0 4px rgba(var(--bs-primary-rgb), 0.15);
-}
+        @keyframes sb-glow {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(-14px, 18px) scale(1.15); }
+        }
 
-/* Conteúdo de Texto */
-.flow-content h5 {
-    letter-spacing: -0.3px;
-}
+        .sb-lc-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
 
-.flow-content p {
-    color: #6c757d;
-    font-weight: 400;
-    line-height: 1.5;
-}
+        .sb-lc-head b {
+            font-family: "Montserrat", sans-serif;
+            font-size: .98rem;
+            color: var(--sb-ink);
+        }
 
-/* --- RESPONSIVIDADE PARA MOBILE --- */
-@media (max-width: 991px) {
-    .minimal-flow-col {
-        position: relative;
-        text-align: center;
-    }
-    
-    /* Linha conectora vertical sutil para mobile */
-    .minimal-flow-col:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        top: 44px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1px;
-        height: calc(100% - 20px);
-        background-color: #dee2e6;
-        z-index: 0;
-    }
-    
-    .flow-indicator-wrapper {
-        padding: 0;
-    }
+        .sb-badge-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .06em;
+            color: var(--sb-green);
+            background: #e7f8ee;
+            padding: 5px 11px;
+            border-radius: 999px;
+        }
 
-}
+        .sb-badge-live .sb-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--sb-green);
+            animation: sb-pulse 2s infinite;
+        }
 
-    .img-pets{
-        width: 700px !important;
-        height: 450px; 
-        margin-top: 15%;
-        border-radius: 5%;
-    }
+        @keyframes sb-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, .5); }
+            70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+        }
 
-    </style>
+        .sb-steps {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-    <main class="bg-white text-dark">
+        .sb-steps li {
+            position: relative;
+            padding: 0 0 20px 30px;
+            font-size: .93rem;
+            color: var(--sb-muted);
+        }
 
-    <section class="about-hero py-6">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-6">
-                    
-                    <h1 class="display-5 fw-bold text-dark tracking-tight mb-4 lh-sm mt-5">
-                        O jeito mais simples de agendar e acompanhar os cuidados do seu pet.
-                    </h1>
-                    <p class="fs-5 text-secondary mb-5 fw-normal">
-                        A Mobipet conecta tutores e pet shops em uma única plataforma, tornando o processo de agendamento mais rápido, organizado e transparente.
-                    </p>
-                    
-                    <div class="d-flex flex-wrap gap-2">
-                        <span class="badge-status">
-                            <span class="status-dot pulsing"></span> 🛁 Banho em andamento
-                        </span>
-                        <span class="badge-status">
-                            <span class="status-dot waiting"></span> ✂️ Tosa aguardando
-                        </span>
-                        <span class="badge-status">
-                            <span class="status-dot success"></span>  Pronto para retirada
-                        </span>
-                    </div>
-                </div>
+        .sb-steps li:last-child {
+            padding-bottom: 0;
+        }
 
-                <div class="col-lg-6 text-center text-lg-end">
-                    <div class="hero-img-wrapper">
-                        <img src="{{ asset('assets/img/about-pets.png') }}" class="img-pets" alt="Interface Mobipet">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        .sb-steps li::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 20px;
+            bottom: -2px;
+            width: 2px;
+            background: var(--sb-line);
+        }
 
-    <section class="py-6 bg-light-subtle border-top border-bottom border-light">
-        <div class="container">
-            <div class="text-center max-w-2xl mx-auto mb-5">
-                <span class="text-primary text-uppercase fw-bold tracking-wider small">O Problema</span>
-                <h2 class="fw-bold text-dark mt-2 display-6">O que queremos resolver?</h2>
-                <p class="text-secondary mt-3">
-                    Muitos tutores enfrentam dificuldades para agendar serviços e acompanhar o atendimento dos seus pets. Ligações, mensagens e falta de informações geram insegurança e perda de tempo.
-                </p>
-            </div>
+        .sb-steps li:last-child::before {
+            display: none;
+        }
 
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100 card-minimal">
-                        <div class="card-body p-4AndHalf">
-                            <div class="icon-shape mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                            </div>
-                            <h5 class="fw-bold text-dark mb-2">Agendamentos demorados</h5>
-                            <p class="text-secondary small mb-0">Dependência de ligações e mensagens para marcar consultas, banhos e tosas.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 card-minimal">
-                        <div class="card-body p-4AndHalf">
-                            <div class="icon-shape mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            </div>
-                            <h5 class="fw-bold text-dark mb-2">Falta de transparência</h5>
-                            <p class="text-secondary small mb-0">O tutor não sabe em qual etapa do atendimento o pet realmente está.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 card-minimal">
-                        <div class="card-body p-4AndHalf">
-                            <div class="icon-shape mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                            </div>
-                            <h5 class="fw-bold text-dark mb-2">Comunicação limitada</h5>
-                            <p class="text-secondary small mb-0">Informações desencontradas e necessidade constante de contato com o estabelecimento.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        .sb-steps li::after {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 3px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--sb-line);
+        }
 
-    <section class="py-6">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-6">
-                    <span class="text-primary text-uppercase fw-bold tracking-wider small">Nossa Solução</span>
-                    <h2 class="fw-bold text-dark mt-2 mb-4 display-6">Tecnologia para aproximar tutores e pet shops.</h2>
-                    <p class="text-secondary mb-4 fs-5">
-                        Com a Mobipet, os tutores podem realizar agendamentos online de forma rápida e acompanhar cada etapa em tempo real.
-                    </p>
+        .sb-steps li.is-done {
+            color: var(--sb-body);
+        }
 
-                </div>
+        .sb-steps li.is-done::after {
+            background: var(--sb-green);
+            border-color: var(--sb-green);
+        }
 
-                <div class="col-lg-6">
-                    <div class="card card-minimal shadow-sm border border-light-subtle">
-                        <div class="card-body p-4AndHalf">
-                            <h6 class="text-uppercase tracking-wider text-secondary fw-bold small mb-4">Status do atendimento simulado</h6>
-                            
-                            <div class="timeline-minimal">
-                                <div class="timeline-step completed">
-                                    <span class="step-dot"></span>
-                                    <div class="step-content">📅 Agendamento </div>
-                                </div>
-                                <div class="timeline-step completed">
-                                    <span class="step-dot"></span>
-                                    <div class="step-content">🐾 Pet recebido</div>
-                                </div>
-                                <div class="timeline-step">
-                                    <span class="step-dot"></span>
-                                    <div class="step-content">🛁 Banho iniciado</div>
-                                </div>
-                                <div class="timeline-step">
-                                    <span class="step-dot"></span>
-                                    <div class="step-content">✂️ Tosa aguardando</div>
-                                </div>
-                                <div class="timeline-step">
-                                    <span class="step-dot"></span>
-                                    <div class="step-content">🚗 Pronto para retirada</div>
-                                </div>
-                            </div>
+        .sb-steps li.is-now {
+            color: var(--sb-accent);
+            font-weight: 600;
+        }
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        .sb-steps li.is-now::after {
+            background: var(--sb-accent);
+            border-color: #fff;
+            box-shadow: 0 0 0 4px rgba(23, 92, 221, .25);
+            animation: sb-pulse 2s infinite;
+        }
 
-        <!-- Container do Fluxograma -->
-        <section class="py-6 bg-white border-top border-bottom border-light overflow-hidden">
-    <div class="container">
-        
-        <div class="text-center max-w-2xl mx-auto mb-5">
-            <span class="text-primary text-uppercase fw-bold tracking-wider small" style="font-size: 0.75rem;">Como Funciona</span>
-            <h2 class="fw-bold text-dark mt-2 display-6">Simples, rápido e intuitivo</h2>
-        </div>
+        /* ===================== MANIFESTO ===================== */
+        .sb-manifesto {
+            background: #fff;
+            border-top: 1px solid var(--sb-line);
+        }
 
-        <!-- Container Principal do Fluxograma Minimalista -->
-        <div class="minimal-flow-container">
-            <div class="row g-4 position-relative z-1">
-                
-                <!-- Passo 1 -->
-                <div class="col-lg-3 col-md-6 minimal-flow-col">
-                    <div class="minimal-flow-card">
-                        <div class="flow-indicator-wrapper">
-                            <div class="flow-node">01</div>
-                        </div>
-                        <div class="flow-content mt-4">
-                            <h5 class="fw-bold text-dark fs-6 mb-2">Escolha o serviço</h5>
-                            <p class="text-secondary small mb-0">Consulta, banho ou tosa direto pelo app ou plataforma web.</p>
-                        </div>
-                    </div>
-                </div>
+        .sb-manifesto .sb-big {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            color: var(--sb-ink);
+            font-size: clamp(1.5rem, 3.6vw, 2.4rem);
+            line-height: 1.32;
+            letter-spacing: -0.02em;
+        }
 
-                <!-- Passo 2 -->
-                <div class="col-lg-3 col-md-6 minimal-flow-col">
-                    <div class="minimal-flow-card">
-                        <div class="flow-indicator-wrapper">
-                            <div class="flow-node">02</div>
-                        </div>
-                        <div class="flow-content mt-4">
-                            <h5 class="fw-bold text-dark fs-6 mb-2">Agende online</h5>
-                            <p class="text-secondary small mb-0">Escolha o melhor dia e horário para você em poucos cliques.</p>
-                        </div>
-                    </div>
-                </div>
+        .sb-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 44px;
+        }
 
-                <!-- Passo 3 -->
-                <div class="col-lg-3 col-md-6 minimal-flow-col">
-                    <div class="minimal-flow-card">
-                        <div class="flow-indicator-wrapper">
-                            <div class="flow-node">03</div>
-                        </div>
-                        <div class="flow-content mt-4">
-                            <h5 class="fw-bold text-dark fs-6 mb-2">Acompanhe</h5>
-                            <p class="text-secondary small mb-0">Veja o andamento de cada etapa do serviço em tempo real.</p>
-                        </div>
-                    </div>
-                </div>
+        .sb-pill {
+            flex: 1 1 200px;
+            border: 1px solid var(--sb-line);
+            border-radius: var(--sb-radius-sm);
+            padding: 22px 24px;
+            background: var(--sb-bg);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
 
-                <!-- Passo 4 -->
-                <div class="col-lg-3 col-md-6 minimal-flow-col">
-                    <div class="minimal-flow-card">
-                        <div class="flow-indicator-wrapper">
-                            <div class="flow-node">04</div>
-                        </div>
-                        <div class="flow-content mt-4">
-                            <h5 class="fw-bold text-dark fs-6 mb-2">Retire seu pet</h5>
-                            <p class="text-secondary small mb-0">Com total tranquilidade, segurança e máxima agilidade.</p>
-                        </div>
-                    </div>
-                </div>
+        .sb-pill:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--sb-shadow-sm);
+        }
 
-            </div>
-        </div>
+        .sb-pill b {
+            display: block;
+            font-family: "Montserrat", sans-serif;
+            font-size: clamp(1.7rem, 4vw, 2.2rem);
+            color: var(--sb-ink);
+            line-height: 1;
+        }
 
-    </div>
-</section>
+        .sb-pill span {
+            font-size: .9rem;
+            color: var(--sb-muted);
+        }
 
-    </div>
-</section>
+        /* ===================== O PROBLEMA (seção escura) ===================== */
+        .sb-problem {
+            background-color: #0f1b34;
+            background-image:
+                radial-gradient(60% 50% at 100% 0%, rgba(23, 92, 221, .28), transparent 60%),
+                linear-gradient(180deg, #0f1b34 0%, #101d3a 100%);
+            color: rgba(255, 255, 255, .72);
+        }
 
-    <section class="py-6">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card h-100 card-minimal border border-light-subtle">
-                        <div class="card-body p-5">
-                            <div class="d-flex align-items-center gap-3 mb-4">
-                                <div class="p-2 bg-light rounded-circle text-primary fs-4">🐶</div>
-                                <h4 class="fw-bold text-dark mb-0">Para os Tutores</h4>
-                            </div>
-                            <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Agendamento online 24h</li>
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Acompanhamento em tempo real</li>
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Mais praticidade para o dia a dia</li>
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Segurança com notificações integradas</li>
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Histórico completo de serviços prestados</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        .sb-problem h2,
+        .sb-problem .sb-big {
+            color: #fff;
+        }
 
-                <div class="col-md-6">
-                    <div class="card h-100 card-minimal border border-light-subtle">
-                        <div class="card-body p-5">
-                            <div class="d-flex align-items-center gap-3 mb-4">
-                                <div class="p-2 bg-light rounded-circle text-primary fs-4">🏪</div>
-                                <h4 class="fw-bold text-dark mb-0">Para os Pet Shops</h4>
-                            </div>
-                            <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Organização centralizada de agendamentos</li>
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Redução drástica de ligações e mensagens</li>
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Controle visual simplificado de serviços</li>
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Aumento perceptível de produtividade</li>
-                                <li class="d-flex align-items-center gap-3 text-secondary small"><span class="text-primary">✓</span> Melhoria contínua na experiência do cliente</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        .sb-problem .sb-eyebrow {
+            color: #7db0ff;
+        }
 
+        .sb-problem .sb-eyebrow .sb-idx {
+            color: rgba(255, 255, 255, .4);
+        }
 
-</main>
+        .sb-problem-lead {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, .72);
+            max-width: 620px;
+            margin-top: 20px;
+        }
 
-    <style>
-        /* ---------- Footer criativo ---------- */
+        .sb-pain-list {
+            margin-top: 56px;
+            display: grid;
+            gap: 0;
+        }
+
+        .sb-pain {
+            display: grid;
+            grid-template-columns: 90px 1fr;
+            gap: 24px;
+            padding: 34px 0;
+            border-top: 1px solid rgba(255, 255, 255, .12);
+            align-items: start;
+        }
+
+        .sb-pain:last-child {
+            border-bottom: 1px solid rgba(255, 255, 255, .12);
+        }
+
+        .sb-pain .sb-pnum {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 800;
+            font-size: 2.4rem;
+            color: rgba(255, 255, 255, .18);
+            line-height: 1;
+        }
+
+        .sb-pain h3 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin: 0 0 8px;
+        }
+
+        .sb-pain p {
+            margin: 0;
+            color: rgba(255, 255, 255, .66);
+            max-width: 560px;
+        }
+
+        .sb-pain:hover .sb-pnum {
+            color: #4ade80;
+            transition: color .3s ease;
+        }
+
+        /* ===================== A VIRADA (antes / depois) ===================== */
+        .sb-turn {
+            background: #fff;
+        }
+
+        .sb-compare {
+            display: grid;
+            grid-template-columns: 1fr 64px 1fr;
+            gap: 0;
+            margin-top: 56px;
+            align-items: stretch;
+        }
+
+        .sb-col {
+            border: 1px solid var(--sb-line);
+            border-radius: var(--sb-radius);
+            padding: 34px;
+        }
+
+        .sb-col--before {
+            background: #f4f5f7;
+        }
+
+        .sb-col--after {
+            background: linear-gradient(180deg, var(--sb-accent-soft), #fff);
+            border-color: color-mix(in srgb, var(--sb-accent) 30%, transparent);
+            box-shadow: var(--sb-shadow-sm);
+        }
+
+        .sb-col h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin: 0 0 22px;
+        }
+
+        .sb-col--before h3 {
+            color: var(--sb-muted);
+        }
+
+        .sb-col--after h3 {
+            color: var(--sb-accent);
+        }
+
+        .sb-col ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sb-col li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: .98rem;
+        }
+
+        .sb-col--before li {
+            color: #7a828e;
+        }
+
+        .sb-col--after li {
+            color: var(--sb-ink);
+            font-weight: 500;
+        }
+
+        .sb-col li i {
+            flex: none;
+            margin-top: 2px;
+            font-size: 1.05rem;
+        }
+
+        .sb-col--before li i {
+            color: #b6bcc5;
+        }
+
+        .sb-col--after li i {
+            color: var(--sb-green);
+        }
+
+        .sb-arrow {
+            display: grid;
+            place-items: center;
+            font-size: 1.4rem;
+            color: var(--sb-accent);
+        }
+
+        .sb-arrow i {
+            animation: sb-slide 1.8s ease-in-out infinite;
+        }
+
+        @keyframes sb-slide {
+            0%, 100% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+        }
+
+        /* ===================== COMO FUNCIONA ===================== */
+        .sb-how {
+            background: var(--sb-bg);
+        }
+
+        .sb-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+            margin-top: 58px;
+            position: relative;
+        }
+
+        .sb-flow::before {
+            content: "";
+            position: absolute;
+            top: 27px;
+            left: 11%;
+            right: 11%;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, var(--sb-line) 0 8px, transparent 8px 16px);
+        }
+
+        .sb-node {
+            position: relative;
+            text-align: center;
+        }
+
+        .sb-node .sb-nring {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--sb-line);
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            color: var(--sb-accent);
+            transition: .25s ease;
+        }
+
+        .sb-node:hover .sb-nring {
+            background: var(--sb-accent);
+            border-color: var(--sb-accent);
+            color: #fff;
+            transform: translateY(-5px);
+        }
+
+        .sb-node h3 {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .sb-node p {
+            font-size: .92rem;
+            margin: 0;
+        }
+
+        /* ===================== VALORES (sticky) ===================== */
+        .sb-values {
+            background: #fff;
+        }
+
+        .sb-values-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: clamp(2rem, 6vw, 5rem);
+            align-items: start;
+        }
+
+        .sb-values-aside {
+            position: sticky;
+            top: 120px;
+        }
+
+        .sb-value {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: 22px;
+            padding: 34px 0;
+            border-top: 1px solid var(--sb-line);
+        }
+
+        .sb-value:first-child {
+            padding-top: 0;
+            border-top: 0;
+        }
+
+        .sb-value .sb-vico {
+            width: 56px;
+            height: 56px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            background: var(--sb-accent-soft);
+            color: var(--sb-accent);
+            font-size: 1.5rem;
+        }
+
+        .sb-value h3 {
+            font-size: 1.22rem;
+            margin: 4px 0 8px;
+        }
+
+        .sb-value p {
+            margin: 0;
+            max-width: 520px;
+        }
+
+        /* ===================== PÚBLICO ===================== */
+        .sb-aud {
+            background: var(--sb-bg);
+        }
+
+        .sb-aud-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+            margin-top: 54px;
+        }
+
+        .sb-audcard {
+            border-radius: var(--sb-radius);
+            padding: 38px;
+            border: 1px solid var(--sb-line);
+            background: #fff;
+        }
+
+        .sb-audcard--dark {
+            background: var(--sb-ink);
+            border-color: var(--sb-ink);
+        }
+
+        .sb-audcard-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .sb-audcard-top .sb-af {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: var(--sb-accent-soft);
+            color: var(--sb-accent);
+            font-size: 1.4rem;
+        }
+
+        .sb-audcard--dark .sb-af {
+            background: rgba(255, 255, 255, .1);
+            color: #7db0ff;
+        }
+
+        .sb-audcard h3 {
+            margin: 0;
+            font-size: 1.28rem;
+        }
+
+        .sb-audcard--dark h3 {
+            color: #fff;
+        }
+
+        .sb-audcard ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .sb-audcard li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: .97rem;
+            color: var(--sb-body);
+        }
+
+        .sb-audcard--dark li {
+            color: rgba(255, 255, 255, .8);
+        }
+
+        .sb-audcard li i {
+            flex: none;
+            margin-top: 3px;
+            color: var(--sb-green);
+        }
+
+        .sb-audcard--dark li i {
+            color: #4ade80;
+        }
+
+        /* ===================== TIME / QUEM CONSTRÓI ===================== */
+        .sb-team {
+            background: #fff;
+            text-align: center;
+        }
+
+        .sb-team .sb-h2 {
+            margin-top: 18px;
+        }
+
+        .sb-team p {
+            max-width: 560px;
+            margin: 16px auto 30px;
+        }
+
+        /* ===================== CTA FINAL ===================== */
+        .sb-cta {
+            background: var(--sb-bg);
+        }
+
+        .sb-cta-card {
+            border-radius: clamp(24px, 4vw, 42px);
+            padding: clamp(3rem, 8vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+            text-align: center;
+            color: #fff;
+            background:
+                radial-gradient(46% 130% at 100% 0%, rgba(255, 255, 255, .16), transparent 60%),
+                linear-gradient(135deg, var(--sb-accent), var(--sb-accent-dark));
+        }
+
+        .sb-cta-card h2 {
+            color: #fff;
+            font-size: clamp(1.8rem, 4.4vw, 2.8rem);
+            margin-bottom: 14px;
+        }
+
+        .sb-cta-card p {
+            color: rgba(255, 255, 255, .85);
+            font-size: 1.1rem;
+            max-width: 540px;
+            margin: 0 auto 32px;
+        }
+
+        .sb-cta-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        /* ===================== RESPONSIVO ===================== */
+        @media (max-width: 991px) {
+
+            .sb-hero-grid,
+            .sb-values-grid,
+            .sb-aud-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sb-values-aside {
+                position: static;
+            }
+
+            .sb-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sb-flow::before {
+                display: none;
+            }
+
+            .sb-compare {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .sb-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        @media (max-width: 575px) {
+            .sb-flow {
+                grid-template-columns: 1fr;
+            }
+
+            .sb-pain {
+                grid-template-columns: 60px 1fr;
+                gap: 16px;
+            }
+
+            .sb-audcard,
+            .sb-col {
+                padding: 26px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sb-page *,
+            .sb-page *::before,
+            .sb-page *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* ---- Footer criativo (reaproveitado do padrão do site) ---- */
         .footer-16 {
             position: relative;
             overflow: visible;
@@ -762,151 +967,361 @@ body {
             max-width: 380px;
         }
 
-        .footer-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #16a34a;
-            background: rgba(34, 197, 94, 0.12);
-            padding: 6px 14px;
-            border-radius: 999px;
-            margin-bottom: 22px;
-        }
-
-        .footer-status .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #22c55e;
-            animation: statusPulse 2s infinite;
-        }
-
-        @keyframes statusPulse {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
-            70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-
         .footer-16 .contact-info {
             margin-top: 24px;
         }
-
-        .footer-16 .footer-social .social-link.whatsapp i {
-            color: #25d366;
-        }
-
-        .footer-16 .footer-social .social-link.instagram i {
-            background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits i {
-            color: #ef4444;
-            margin: 0 2px;
-        }
-
-        .footer-16 .footer-bottom .copyright p {
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .footer-16 .footer-bottom .copyright p .sitename {
-            color: #fff;
-        }
-
-        .footer-16 .footer-bottom .legal-links a {
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .footer-16 .footer-bottom .legal-links a:hover {
-            color: #fff;
-            text-decoration: underline;
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits {
-            color: rgba(255, 255, 255, 0.7);
-            border-left-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits a {
-            color: #fff;
-            font-weight: 600;
-        }
     </style>
+</head>
 
-    <footer id="footer" class="footer-16 footer position-relative">
+<body class="about-page">
 
-        <div class="footer-badge">
-            <i class="fa-solid fa-paw"></i>
+    @include('partials.preloader')
+
+
+    <div class="sb-progress" id="sbProgress"></div>
+
+    <header id="header" class="header fixed-top">
+
+        <!-- Scroll Top -->
+        <a href="#" id="scroll-top"
+            class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
+            style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+            <i class="bi bi-arrow-up-short"></i>
+        </a>
+
+        <!-- Branding -->
+        <div class="branding d-flex align-items-center">
+
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+
+                <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+                    <h1 class="sitename">Mobipet</h1>
+                </a>
+
+                <nav id="navmenu" class="navmenu">
+
+                    <ul>
+                        <li><a href="{{ route('index') }}">Início</a></li>
+                        <li><a href="{{ route('sobre') }}" class="active">Sobre nós</a></li>
+                        <li><a href="{{ route('services') }}">Serviços</a></li>
+                        <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
+
+                        {{-- CLIENTE --}}
+                        @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
+                            <li><a href="{{ route('pets.create') }}">Cadastrar Pet</a></li>
+                            <li><a href="{{ route('agendamento') }}">Agendamento</a></li>
+                            <li><a href="{{ route('pets.index') }}">Meus Pets</a></li>
+                            <li><a href="{{ route('perfil') }}"><i class="fa-solid fa-user"></i></a></li>
+                            <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+
+                            {{-- FUNCIONÁRIO --}}
+                        @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+                            <li><a href="{{ route('painel-controle') }}">Painel</a></li>
+                            <li><a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a></li>
+                            <li><a href="{{ route('perfil') }}">Perfil</a></li>
+                            <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+
+                            {{-- VISITANTE --}}
+                        @else
+                            <li><a href="{{ route('login') }}">Entrar</a></li>
+                        @endif
+                    </ul>
+
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+                </nav>
+
+            </div>
+
         </div>
 
-        <div class="container">
+    </header>
 
-            <div class="footer-main row gy-5 justify-content-between align-items-start" data-aos="fade-up" data-aos-delay="100">
+    <main class="main sb-page">
 
-                <div class="col-lg-5 brand-section">
+        <!-- ================= HERO ================= -->
+        <section class="sb-hero">
+            <div class="sb-wrap">
+                <div class="sb-hero-grid">
 
-                    <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                        <h1 class="sitename">Mobipet</h1>
-                    </a>
+                    <div data-aos="fade-right">
+                        <span class="sb-eyebrow">Sobre o Mobipet</span>
+                        <h1>
+                            Seu pet bem cuidado e
+                            <span class="sb-grad">você tranquilo do início ao fim.</span>
+                        </h1>
+                        <p>
+                            Acompanhe cada etapa do atendimento em tempo real e saiba que seu pet está
+                            bem — sem ligações, sem espera e sem incerteza.
+                        </p>
 
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="bi bi-geo-alt"></i>
-                            <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="bi bi-telephone"></i>
-                            <span>(19) 98943-2384</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="bi bi-envelope"></i>
-                            <span>mobipet@gmail.com</span>
+                        <div class="sb-hero-actions">
+                            <a href="{{ route('services') }}" class="sb-btn sb-btn--primary">
+                                Ver os serviços <i class="bi bi-arrow-right"></i>
+                            </a>
+                            <a href="{{ route('agendamento') }}" class="sb-btn sb-btn--ghost">
+                                <i class="bi bi-calendar-check"></i> Agendar agora
+                            </a>
                         </div>
                     </div>
 
+                    <div class="sb-live-card" data-aos="fade-left" data-aos-delay="150">
+                        <div class="sb-lc-head">
+                            <b>Thor &middot; Banho &amp; Tosa</b>
+                            <span class="sb-badge-live"><span class="sb-dot"></span> AO VIVO</span>
+                        </div>
+                        <ul class="sb-steps">
+                            <li class="is-done">Agendamento confirmado</li>
+                            <li class="is-done">Pet recebido no petshop</li>
+                            <li class="is-now">Banho em andamento</li>
+                            <li>Tosa e finalização</li>
+                            <li>Pronto para retirada</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= MANIFESTO ================= -->
+        <section class="sb-manifesto">
+            <div class="sb-wrap">
+                <div class="sb-narrow" style="margin-inline:0;" data-aos="fade-up">
+                    <p class="sb-big" style="margin-top:24px;">
+                        O Mobipet tornou o atendimento do seu  pet
+                        <span class="sb-mark">mais rápido</span>,
+                        <span class="sb-mark">mais organizado</span> e
+                        <span class="sb-mark">mais transparente</span> para quem leva
+                        o pet e para quem cuida dele.
+                    </p>
+                    <p class="sb-lead" style="margin-top:22px;">
+                        Do agendamento à retirada, tutor e petshop enxergam a mesma informação,
+                        ao mesmo tempo. Sem ligações repetidas, sem "já está pronto?".
+                    </p>
                 </div>
 
-                <div class="col-lg-6 footer-nav-wrapper">
-                    <div class="row">
-
-                        <div class="col-6 nav-column">
-                            <h6>Navegação</h6>
-                            <nav class="footer-nav">
-                                <a href="{{ route('index') }}">Início</a>
-                                <a href="{{ route('sobre') }}">Sobre nós</a>
-                                <a href="{{ route('services') }}">Serviços</a>
-                                <a href="{{ route('devs') }}">Desenvolvedores</a>
-                            </nav>
-                        </div>
-
-                        <div class="col-6 nav-column">
-                            <h6>Minha Conta</h6>
-                            <nav class="footer-nav">
-                                @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
-                                    <a href="{{ route('agendamento') }}">Agendamento</a>
-                                    <a href="{{ route('pets.index') }}">Meus Pets</a>
-                                    <a href="{{ route('pets.create') }}">Cadastrar Pet</a>
-                                    <a href="{{ route('perfil') }}">Meu Perfil</a>
-                                @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
-                                    <a href="{{ route('painel-controle') }}">Painel</a>
-                                    <a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a>
-                                    <a href="{{ route('perfil') }}">Perfil</a>
-                                @else
-                                    <a href="{{ route('login') }}">Entrar</a>
-                                    <a href="{{ route('cadastro') }}">Criar conta</a>
-                                @endif
-                            </nav>
-                        </div>
-
+                <div class="sb-pills">
+                    <div class="sb-pill" data-aos="fade-up" data-aos-delay="0">
+                        <b><span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="2"
+                                class="purecounter"></span></b>
+                        <span>etapas do atendimento monitoradas</span>
+                    </div>
+                    <div class="sb-pill" data-aos="fade-up" data-aos-delay="100">
+                        <b>24<span style="font-size:1.1rem;">h</span></b>
+                        <span>agendamento online, todos os dias</span>
+                    </div>
+                    <div class="sb-pill" data-aos="fade-up" data-aos-delay="200">
+                        <b><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2.4"
+                                class="purecounter"></span>%</b>
+                        <span>do histórico de serviços registrado</span>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-    </footer>
+        <!-- ================= O PROBLEMA ================= -->
+        <section class="sb-problem">
+            <div class="sb-wrap">
+                <div data-aos="fade-up">
+                    <span class="sb-eyebrow"><span class="sb-idx">02</span> Antes do Mobipet</span>
+                    <h2 class="sb-h2">Deixar o pet no petshop virava um exercício de paciência.</h2>
+                    <p class="sb-problem-lead">
+                        Marcar horário dependia de telefone e mensagem. Acompanhar o atendimento,
+                        então, era impossível: o tutor só descobria o que aconteceu na hora de buscar.
+                    </p>
+                </div>
+
+                <div class="sb-pain-list">
+                    <div class="sb-pain" data-aos="fade-up">
+                        <div class="sb-pnum">01</div>
+                        <div>
+                            <h3>Agendamento demorado</h3>
+                            <p>Ligações que ninguém atende, mensagens sem resposta e horários
+                                marcados no caderno &mdash; com risco de conflito e esquecimento.</p>
+                        </div>
+                    </div>
+                    <div class="sb-pain" data-aos="fade-up" data-aos-delay="80">
+                        <div class="sb-pnum">02</div>
+                        <div>
+                            <h3>Falta de transparência</h3>
+                            <p>O tutor não sabia se o pet já tinha sido atendido, se estava no
+                                banho ou apenas esperando a vez.</p>
+                        </div>
+                    </div>
+                    <div class="sb-pain" data-aos="fade-up" data-aos-delay="160">
+                        <div class="sb-pnum">03</div>
+                        <div>
+                            <h3>Comunicação limitada</h3>
+                            <p>Informações desencontradas e a necessidade constante de ligar de
+                                novo para o estabelecimento só para ter notícias.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= A VIRADA ================= -->
+        <section class="sb-turn">
+            <div class="sb-wrap">
+                <div class="sb-narrow" style="margin-inline:0;" data-aos="fade-up">
+                    <span class="sb-eyebrow"><span class="sb-idx">03</span> Com o Mobipet</span>
+                    <h2 class="sb-h2">A mesma rotina, agora sob controle.</h2>
+                    <p class="sb-lead" style="margin-top:18px;">
+                        O que era incerteza vira acompanhamento. O que era ligação vira notificação.
+                    </p>
+                </div>
+
+                <div class="sb-compare">
+                    <div class="sb-col sb-col--before" data-aos="fade-right">
+                        <h3>Antes</h3>
+                        <ul>
+                            <li><i class="bi bi-x-circle"></i> Ligar várias vezes para marcar</li>
+                            <li><i class="bi bi-x-circle"></i> Não saber em que etapa o pet está</li>
+                            <li><i class="bi bi-x-circle"></i> Descobrir tudo só na retirada</li>
+                            <li><i class="bi bi-x-circle"></i> Histórico de serviços na memória</li>
+                        </ul>
+                    </div>
+                    <div class="sb-arrow" aria-hidden="true"><i class="bi bi-arrow-right"></i></div>
+                    <div class="sb-col sb-col--after" data-aos="fade-left">
+                        <h3>Depois</h3>
+                        <ul>
+                            <li><i class="bi bi-check-circle-fill"></i> Agendar em segundos, a qualquer hora</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Ver cada etapa acontecer em tempo real</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Receber aviso automático a cada mudança</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Histórico completo salvo na plataforma</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= VALORES ================= -->
+        <section class="sb-values">
+            <div class="sb-wrap">
+                <div class="sb-values-grid">
+
+                    <div class="sb-values-aside" data-aos="fade-up">
+                        <span class="sb-eyebrow"><span class="sb-idx">05</span> No que acreditamos</span>
+                        <h2 class="sb-h2" style="margin-top:20px;">Princípios que guiam cada tela do Mobipet.</h2>
+                    </div>
+
+                    <div>
+                        <div class="sb-value" data-aos="fade-up">
+                            <div class="sb-vico"><i class="bi bi-eye"></i></div>
+                            <div>
+                                <h3>Transparência</h3>
+                                <p>Tutor e petshop veem a mesma informação, ao mesmo tempo. Nada
+                                    de "achismo" sobre o que está acontecendo com o pet.</p>
+                            </div>
+                        </div>
+                        <div class="sb-value" data-aos="fade-up">
+                            <div class="sb-vico"><i class="bi bi-magic"></i></div>
+                            <div>
+                                <h3>Simplicidade</h3>
+                                <p>Agendar tem que ser mais fácil do que ligar. Cada fluxo é
+                                    pensado para resolver em poucos toques.</p>
+                            </div>
+                        </div>
+                        <div class="sb-value" data-aos="fade-up">
+                            <div class="sb-vico"><i class="bi bi-heart-pulse"></i></div>
+                            <div>
+                                <h3>Cuidado</h3>
+                                <p>A tecnologia existe para dar tranquilidade a quem ama o pet e
+                                    organização a quem cuida dele todos os dias.</p>
+                            </div>
+                        </div>
+                        <div class="sb-value" data-aos="fade-up">
+                            <div class="sb-vico"><i class="bi bi-universal-access-circle"></i></div>
+                            <div>
+                                <h3>Acessibilidade</h3>
+                                <p>Interface clara e tradução automática para Libras (VLibras),
+                                    para que a plataforma sirva a todo mundo.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÚBLICO ================= -->
+        <section class="sb-aud">
+            <div class="sb-wrap">
+                <div data-aos="fade-up" style="max-width:640px;">
+                    <span class="sb-eyebrow"><span class="sb-idx">06</span> Para quem é</span>
+                    <h2 class="sb-h2">Os dois lados do balcão, no mesmo sistema.</h2>
+                </div>
+
+                <div class="sb-aud-grid">
+                    <div class="sb-audcard" data-aos="fade-up">
+                        <div class="sb-audcard-top">
+                            <span class="sb-af"><i class="bi bi-heart"></i></span>
+                            <h3>Para os tutores</h3>
+                        </div>
+                        <ul>
+                            <li><i class="bi bi-check-circle-fill"></i> Agendamento online 24 horas</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Acompanhamento de cada etapa em tempo real</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Notificações automáticas a cada atualização</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Histórico completo dos atendimentos do pet</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Menos ligações, mais tranquilidade</li>
+                        </ul>
+                    </div>
+
+                    <div class="sb-audcard sb-audcard--dark" data-aos="fade-up" data-aos-delay="120">
+                        <div class="sb-audcard-top">
+                            <span class="sb-af"><i class="bi bi-shop"></i></span>
+                            <h3>Para o petshop</h3>
+                        </div>
+                        <ul>
+                            <li><i class="bi bi-check-circle-fill"></i> Agenda centralizada, sem conflito de horário</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Painel único de clientes, pets e serviços</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Menos ligações e mensagens no balcão</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Fluxo de atendimento visual e organizado</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Mais produtividade e melhor experiência do cliente</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= QUEM CONSTRÓI ================= -->
+        <section class="sb-team">
+            <div class="sb-wrap" data-aos="fade-up">
+                <span class="sb-eyebrow" style="justify-content:center;"><span class="sb-idx">07</span> Quem constrói</span>
+                <h2 class="sb-h2">Um produto feito por seis desenvolvedores.</h2>
+                <p>
+                    O Mobipet é desenvolvido por um time enxuto que cuida de cada detalhe do
+                    agendamento, do monitoramento e da gestão &mdash; da API ao aplicativo.
+                </p>
+                <a href="{{ route('devs') }}" class="sb-btn sb-btn--ghost">
+                    <i class="bi bi-people"></i> Conhecer o time
+                </a>
+            </div>
+        </section>
+
+        <!-- ================= CTA FINAL ================= -->
+        <section class="sb-cta">
+            <div class="sb-wrap">
+                <div class="sb-cta-card" data-aos="zoom-in">
+                    <h2>Pronto para acompanhar o próximo atendimento do seu pet?</h2>
+                    <p>Agende em segundos e veja cada etapa acontecer &mdash; do check-in à retirada.</p>
+                    <div class="sb-cta-actions">
+                        <a href="{{ route('agendamento') }}" class="sb-btn sb-btn--light">
+                            Agendar agora <i class="bi bi-arrow-right"></i>
+                        </a>
+                        <a href="https://wa.me/5519989432384" class="sb-btn sb-btn--ghost"
+                            style="color:#fff;border-color:rgba(255,255,255,.4);" target="_blank" rel="noopener">
+                            <i class="bi bi-whatsapp"></i> Falar no WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    @include('partials.footer')
 
     <a href="#" id="scroll-top"
         class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
@@ -916,17 +1331,8 @@ body {
 
     <div id="preloader"></div>
 
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-            <div class="vw-plugin-top-wrapper"></div>
-        </div>
-    </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
 
+    <!-- Vendor JS Files -->
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
     <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
@@ -934,7 +1340,25 @@ body {
     <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
     <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 
+    <!-- Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    <!-- Barra de progresso de rolagem -->
+    <script>
+        (function () {
+            var bar = document.getElementById('sbProgress');
+            if (!bar) return;
+            function update() {
+                var h = document.documentElement;
+                var max = h.scrollHeight - h.clientHeight;
+                var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+                bar.style.width = pct + '%';
+            }
+            document.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
+    </script>
 
     @include('partials.logout-confirm')
 

@@ -33,6 +33,9 @@
 
 <body class="faq-page">
 
+    @include('partials.preloader')
+
+
   <header id="header" class="header fixed-top">
 
 
@@ -351,77 +354,7 @@
     }
   </style>
 
-  <footer id="footer" class="footer-16 footer position-relative">
-
-    <div class="footer-badge">
-        <i class="fa-solid fa-paw"></i>
-    </div>
-
-    <div class="container">
-
-      <div class="footer-main row gy-5 justify-content-between align-items-start" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="col-lg-5 brand-section">
-
-          <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-            <h1 class="sitename">Mobipet</h1>
-          </a>
-
-          <div class="contact-info">
-            <div class="contact-item">
-              <i class="bi bi-geo-alt"></i>
-              <span>Rua Bela Vista, 100 - Centro, Tambaú - SP</span>
-            </div>
-            <div class="contact-item">
-              <i class="bi bi-telephone"></i>
-              <span>(19) 98943-2384</span>
-            </div>
-            <div class="contact-item">
-              <i class="bi bi-envelope"></i>
-              <span>mobipet@gmail.com</span>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-lg-6 footer-nav-wrapper">
-          <div class="row">
-
-            <div class="col-6 nav-column">
-              <h6>Navegação</h6>
-              <nav class="footer-nav">
-                <a href="{{ route('index') }}">Início</a>
-                <a href="{{ route('sobre') }}">Sobre nós</a>
-                <a href="{{ route('services') }}">Serviços</a>
-                <a href="{{ route('devs') }}">Desenvolvedores</a>
-              </nav>
-            </div>
-
-            <div class="col-6 nav-column">
-              <h6>Minha Conta</h6>
-              <nav class="footer-nav">
-                @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
-                  <a href="{{ route('agendamento') }}">Agendamento</a>
-                  <a href="{{ route('pets.index') }}">Meus Pets</a>
-                  <a href="{{ route('pets.create') }}">Cadastrar Pet</a>
-                  <a href="{{ route('perfil') }}">Meu Perfil</a>
-                @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
-                  <a href="{{ route('painel-controle') }}">Painel</a>
-                  <a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a>
-                  <a href="{{ route('perfil') }}">Perfil</a>
-                @else
-                  <a href="{{ route('login') }}">Entrar</a>
-                  <a href="{{ route('cadastro') }}">Criar conta</a>
-                @endif
-              </nav>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </footer>
+  @include('partials.footer')
 
   <!-- Scroll Top -->
   <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
@@ -430,17 +363,7 @@
   <!-- Preloader -->
   <div id="preloader"></div>
 
-  <div vw class="enabled">
-      <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-          <div class="vw-plugin-top-wrapper"></div>
-        </div>
-    </div>
 
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

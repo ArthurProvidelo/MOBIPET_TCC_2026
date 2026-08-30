@@ -26,6 +26,9 @@
 </head>
 
 <body class="inner-page">
+
+    @include('partials.preloader')
+
     <style>
         body.inner-page {
             background-image: url('assets/img/fundo_login.png');
@@ -348,16 +351,14 @@
 
     </main>
 
+    @include('partials.footer')
+
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
         <i class="bi bi-arrow-up-short"></i>
     </a>
 
     <div id="preloader"></div>
 
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
 
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
