@@ -4,18 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Login Funcionários | Mobipet</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <title>Acesso da Equipe | Mobipet</title>
+    <meta name="description"
+        content="Portal de acesso da equipe Mobipet: gerencie agendamentos, acompanhe cada etapa do atendimento e atualize o status em tempo real.">
+    <meta name="keywords" content="login funcionário mobipet, acesso equipe, painel petshop, agendamentos">
 
+    <!-- Favicons -->
+    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
 
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
-
+    <!-- Vendor CSS Files -->
     <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
@@ -23,15 +27,74 @@
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
+    <!-- Main CSS File -->
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/estilo.css') }}" rel="stylesheet">
-</head>
-
-<body class="inner-page">
-
-    @include('partials.preloader')
 
     <style>
+        /* ===========================================================
+           ACESSO DA EQUIPE — MOBIPET  ·  isolado (prefixo lg-)
+           Mesmo sistema de design das telas de login/cadastro.
+           =========================================================== */
+        .lg-page {
+            --lg-accent: #175cdd;
+            --lg-accent-dark: #0f47b3;
+            --lg-accent-soft: #eaf1fe;
+            --lg-ink: #0f1b34;
+            --lg-body: #4a5568;
+            --lg-muted: #8794a7;
+            --lg-line: #e6ecf5;
+            --lg-bg: #f7f9ff;
+            --lg-radius: 26px;
+            --lg-shadow: 0 40px 90px -40px rgba(23, 92, 221, .4);
+
+            font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--lg-body);
+        }
+
+        .lg-page h1,
+        .lg-page h2,
+        .lg-page h3 {
+            font-family: "Montserrat", sans-serif;
+            color: var(--lg-ink);
+            letter-spacing: -0.022em;
+            line-height: 1.12;
+        }
+
+        /* Barra de progresso de rolagem (padrão do site) */
+        .lg-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--lg-accent), #4ade80);
+            z-index: 1100;
+            transition: width .12s linear;
+        }
+
+        /* Rótulo de seção */
+        .lg-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-size: .74rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--lg-accent);
+            margin-bottom: 14px;
+        }
+
+        .lg-eyebrow::before {
+            content: "";
+            width: 26px;
+            height: 2px;
+            background: currentColor;
+        }
+
+        /* Fundo da página */
         body.inner-page {
             background-image: url('{{ asset('assets/img/fundo_login.png') }}');
             background-size: cover;
@@ -44,168 +107,254 @@
         body.inner-page::before {
             content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.15);
+            inset: 0;
+            background-color: rgba(247, 249, 255, .18);
             z-index: -1;
         }
-    </style>
 
-    <header id="header" class="header fixed-top">
-        
-        <div class="branding d-flex align-items-center">
-            <div class="container position-relative d-flex align-items-center justify-content-between">
-                <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                    <h1 class="sitename">Mobipet</h1>
-                </a>
+        /* =========================================================
+           BOTÕES (sistema consistente)
+           ========================================================= */
+        .lg-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+            font-size: .97rem;
+            padding: 14px 26px;
+            border-radius: 999px;
+            border: 1.5px solid transparent;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+        }
 
-                <nav id="navmenu" class="navmenu">
-                    <ul>
-                        <li><a href="{{ route('index') }}">Início</a></li>
-                        <li><a href="{{ route('sobre') }}">Sobre nós</a></li>
-                        <li><a href="{{ route('services') }}">Serviços</a></li>
-                        <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
-                        <li>
-                            <a href="{{ route('login') }}">
-                                Sou Visitante <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            </a>
-                        </li>
+        .lg-btn--primary {
+            width: 100%;
+            background: var(--lg-accent);
+            color: #fff;
+            box-shadow: 0 18px 34px -16px rgba(23, 92, 221, .75);
+        }
 
-                        @if (session()->has('cliente_id'))
-                            <li><a href="{{ route('pets.create') }}">Cadastrar Pet</a></li>
-                            <li><a href="{{ route('agendamento') }}">Agendamento</a></li>
-                            <li>
-                                <a href="{{ route('pets.index') }}">
-                                    Meus Pets
-                                </a>
-                            </li>
-                            <li class="dropdown">
+        .lg-btn--primary:hover {
+            background: var(--lg-accent-dark);
+            color: #fff;
+            transform: translateY(-3px);
+        }
 
-                                <a href="{{ route('perfil') }}">
-                                    <i class="fa-solid fa-user"></i>
-                                </a>
-                            </li>
+        .lg-btn--ghost {
+            background: transparent;
+            color: #fff;
+            border-color: rgba(255, 255, 255, .7);
+        }
 
-                            <li>
-                                <a href="{{ route('logout') }}">
-                                    Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                </a>
-                            </li>
-                        @elseif(session()->has('funcionario_id'))
-                            <li>
-                                <a href="{{ route('funcionario.agendamentos') }}">
-                                    Agendamentos
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="{{ route('perfil') }}">
-                                    <i class="fa-solid fa-user"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('logout') }}">
-                                    Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                </a>
-                            </li>
-                        @else
-                        @endif
+        .lg-btn--ghost:hover {
+            background: #fff;
+            color: var(--lg-accent);
+            transform: translateY(-3px);
+        }
 
-                    </ul>
-                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-                </nav>
-            </div>
-        </div>
-    </header>
+        /* =========================================================
+           CARD DIVIDIDO (marca + formulário)
+           ========================================================= */
+        .lg-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem 4rem;
+        }
 
-    <main class="main" style="margin-top: 120px;">
+        .lg-card {
+            position: relative;
+            width: 100%;
+            max-width: 940px;
+            background: #fff;
+            border-radius: var(--lg-radius);
+            overflow: hidden;
+            box-shadow: var(--lg-shadow);
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+        }
 
-        <div class="container py-5" data-aos="fade-up" data-aos-delay="100">
-            <div class="row justify-content-center">
-                <div class="col-md-5">
+        /* Painel de marca (lado esquerdo) */
+        .lg-media {
+            padding: 54px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #fff;
+            background:
+                radial-gradient(46% 130% at 100% 0%, rgba(255, 255, 255, .16), transparent 60%),
+                linear-gradient(135deg, var(--lg-accent), var(--lg-accent-dark));
+        }
 
-                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden"
-                        style="font-family: 'Roboto', sans-serif;">
+        .lg-media .lg-eyebrow {
+            color: rgba(255, 255, 255, .78);
+        }
 
-                        <div class="card-body p-4 p-md-5">
+        .lg-media .lg-eyebrow::before {
+            background: rgba(255, 255, 255, .6);
+        }
 
-                            <h2 class="text-center mb-4 fw-bold text-dark"
-                                style="font-family: 'Montserrat', sans-serif;">
-                                Login de Funcionário
-                            </h2>
+        .lg-media-icon {
+            width: 60px;
+            height: 60px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .14);
+            border: 1px solid rgba(255, 255, 255, .22);
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+        }
 
-                            @if (session('erro'))
-                                <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-4"
-                                    role="alert">
-                                    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                                </div>
-                            @endif
+        .lg-media h2 {
+            color: #fff;
+            font-size: clamp(1.6rem, 3vw, 2.15rem);
+            font-weight: 800;
+            margin: 0 0 12px;
+        }
 
-                            <form method="POST" action="{{ route('login.autenticarFuncionario') }}">
-                                @csrf
+        .lg-media > p {
+            color: rgba(255, 255, 255, .85);
+            font-size: .96rem;
+            line-height: 1.65;
+            max-width: 360px;
+            margin: 0;
+        }
 
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold text-secondary small text-uppercase"
-                                        style="letter-spacing: 0.5px;">E-mail</label>
-                                    <div class="input-group">
-                                        <span
-                                            class="input-group-text bg-light border-light-subtle text-muted rounded-start-3"><i
-                                                class="bi bi-envelope"></i></span>
-                                        <input type="email" name="email"
-                                            class="form-control rounded-end-3 p-2.5 border-light-subtle shadow-none"
-                                            placeholder="seuemail@exemplo.com" required>
-                                    </div>
-                                </div>
+        .lg-media ul {
+            list-style: none;
+            margin: 26px 0 0;
+            padding: 0;
+        }
 
-                                <div class="mb-4">
-                                    <label class="form-label fw-semibold text-secondary small text-uppercase"
-                                        style="letter-spacing: 0.5px;">Senha</label>
-                                    <div class="input-group">
-                                        <span
-                                            class="input-group-text bg-light border-light-subtle text-muted rounded-start-3"><i
-                                                class="bi bi-lock"></i></span>
-                                        <input type="password" name="senha"
-                                            class="form-control rounded-end-3 p-2.5 border-light-subtle shadow-none"
-                                            placeholder="Sua senha" required>
-                                    </div>
-                                </div>
+        .lg-media li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: .9rem;
+            color: rgba(255, 255, 255, .9);
+        }
 
-                                <button type="submit"
-                                    class="btn btn-login bg-primary text-white w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
-                                </button>
+        .lg-media li i {
+            margin-top: 2px;
+            color: #4ade80;
+        }
 
-                                <div class="text-center mt-4">
-                                    <p class="text-secondary small mb-0">Não tem uma conta?</p>
-                                    <a href="{{ route('funcionario') }}" class="fw-bold text-decoration-none"
-                                        style="color: #3061cb;">Cadastre-se aqui</a>
-                                </div>
+        /* Painel do formulário (lado direito) */
+        .lg-panel {
+            padding: 54px 52px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #fff;
+        }
 
-                                {{-- <a href="{{ route('google.loginFuncionario') }}"
-                                    class="btn btn-login bg-primary text-white w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
-                                </a> --}}
+        .lg-panel h2 {
+            font-weight: 800;
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            margin: 0 0 6px;
+        }
 
-                            </form>
+        .lg-panel .lg-sub {
+            font-size: .92rem;
+            color: var(--lg-muted);
+            margin-bottom: 26px;
+        }
 
-                        </div>
+        .lg-panel .form-label {
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-size: .7rem;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--lg-muted);
+            margin-bottom: 6px;
+        }
 
-                    </div>
+        .lg-panel .input-group-text {
+            background: var(--lg-bg);
+            border: 1px solid var(--lg-line);
+            color: var(--lg-muted);
+        }
 
-                </div>
-            </div>
-        </div>
+        .lg-panel .form-control {
+            height: 50px;
+            border: 1px solid var(--lg-line);
+            box-shadow: none;
+            transition: border-color .25s ease, box-shadow .25s ease;
+        }
 
-    </main>
+        .lg-panel .form-control:focus {
+            border-color: var(--lg-accent);
+            box-shadow: 0 0 0 4px var(--lg-accent-soft);
+        }
 
-    <!-- =========================================================
-    FOOTER
-    ========================================================= -->
-    <style>
-        /* ---------- Footer criativo ---------- */
+        .lg-foot {
+            margin-top: 22px;
+            text-align: center;
+            font-size: .9rem;
+            color: var(--lg-muted);
+        }
+
+        .lg-foot a {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+            color: var(--lg-accent);
+            text-decoration: none;
+        }
+
+        .lg-foot a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================================================
+           RESPONSIVO
+           ========================================================= */
+        @media (max-width: 860px) {
+            .lg-card {
+                grid-template-columns: 1fr;
+                max-width: 520px;
+            }
+
+            .lg-media {
+                padding: 40px 36px;
+            }
+
+            .lg-media ul {
+                display: none;
+            }
+
+            .lg-panel {
+                padding: 40px 34px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lg-card {
+                border-radius: 20px;
+            }
+
+            .lg-media,
+            .lg-panel {
+                padding: 32px 24px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .lg-page *,
+            .lg-page *::before,
+            .lg-page *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* ---- Footer criativo (padrão do site) ---- */
         .footer-16 {
             position: relative;
             overflow: visible;
@@ -263,88 +412,139 @@
             max-width: 380px;
         }
 
-        .footer-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #16a34a;
-            background: rgba(34, 197, 94, 0.12);
-            padding: 6px 14px;
-            border-radius: 999px;
-            margin-bottom: 22px;
-        }
-
-        .footer-status .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #22c55e;
-            animation: statusPulse 2s infinite;
-        }
-
-        @keyframes statusPulse {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
-            70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-
         .footer-16 .contact-info {
             margin-top: 24px;
         }
-
-        .footer-16 .footer-social .social-link.whatsapp i {
-            color: #25d366;
-        }
-
-        .footer-16 .footer-social .social-link.instagram i {
-            background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits i {
-            color: #ef4444;
-            margin: 0 2px;
-        }
-
-        .footer-16 .footer-bottom .copyright p {
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .footer-16 .footer-bottom .copyright p .sitename {
-            color: #fff;
-        }
-
-        .footer-16 .footer-bottom .legal-links a {
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .footer-16 .footer-bottom .legal-links a:hover {
-            color: #fff;
-            text-decoration: underline;
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits {
-            color: rgba(255, 255, 255, 0.7);
-            border-left-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits a {
-            color: #fff;
-            font-weight: 600;
-        }
     </style>
+</head>
+
+<body class="inner-page">
+
+    @include('partials.preloader')
+
+    <div class="lg-progress" id="lgProgress"></div>
+
+    <header id="header" class="header fixed-top">
+
+        <div class="branding d-flex align-items-center">
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+                    <h1 class="sitename">Mobipet</h1>
+                </a>
+
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        
+                        @include('partials.nav-user')
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main lg-page" style="margin-top: 120px;">
+
+        <!-- ================= ALERTAS GLOBAIS ================= -->
+        <div class="container" data-aos="fade-up">
+            <div class="row justify-content-center">
+                <div class="col-md-10" style="max-width:940px;">
+                    @if (session('erro'))
+                        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-3"
+                            role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger border-0 shadow-sm rounded-4 p-3 mb-3 small" role="alert">
+                            <ul class="mb-0 ps-3">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CARD DE ACESSO DA EQUIPE ================= -->
+        <div class="lg-wrapper" data-aos="fade-up" data-aos-delay="100">
+            <div class="lg-card">
+
+                <!-- ---------- PAINEL DE MARCA ---------- -->
+                <div class="lg-media">
+                    <div class="lg-media-icon"><i class="bi bi-shield-lock"></i></div>
+                    <span class="lg-eyebrow">Portal da equipe</span>
+                    <h2>Bem-vindo de volta ao Mobipet</h2>
+                    <p>Faça login para acompanhar a rotina do petshop e manter os tutores informados.</p>
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i> Gerencie os agendamentos do dia</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Acompanhe cada etapa do atendimento</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Atualize o status em tempo real</li>
+                    </ul>
+                </div>
+
+                <!-- ---------- FORMULÁRIO ---------- -->
+                <div class="lg-panel">
+
+                    <span class="lg-eyebrow">Acesso restrito</span>
+                    <h2>Entrar como funcionário</h2>
+                    <p class="lg-sub">Use o e-mail e a senha cadastrados pela administração.</p>
+
+                    <form method="POST" action="{{ route('login.autenticarFuncionario') }}">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label class="form-label">E-mail</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" name="email" class="form-control rounded-end-3"
+                                    placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Senha</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" name="senha" class="form-control rounded-end-3"
+                                    placeholder="Sua senha" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="lg-btn lg-btn--primary">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Entrar
+                        </button>
+
+                    </form>
+
+                    <div class="lg-foot">
+                        Ainda não tem acesso?
+                        <a href="{{ route('funcionario') }}">Cadastre-se aqui</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
 
     @include('partials.footer')
 
-
-    <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" id="scroll-top"
+        class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
+        style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
 
     <div id="preloader"></div>
 
+    <!-- Vendor JS Files -->
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
     <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
@@ -352,7 +552,25 @@
     <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
     <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 
+    <!-- Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    <!-- Barra de progresso de rolagem -->
+    <script>
+        (function () {
+            var bar = document.getElementById('lgProgress');
+            if (!bar) return;
+            function update() {
+                var h = document.documentElement;
+                var max = h.scrollHeight - h.clientHeight;
+                var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+                bar.style.width = pct + '%';
+            }
+            document.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
+    </script>
 
     @include('partials.logout-confirm')
 

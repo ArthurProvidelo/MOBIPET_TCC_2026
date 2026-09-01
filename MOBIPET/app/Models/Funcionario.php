@@ -24,6 +24,7 @@ class Funcionario extends Model
         'salario',
         'data_admissao',
         'senha',
+        'nivel_acesso',
     ];
 
     protected $hidden = [
@@ -38,5 +39,13 @@ class Funcionario extends Model
     public function agendamentos(): HasMany
     {
         return $this->hasMany(Agendamento::class, 'fk_id_funcionario', 'id_funcionario');
+    }
+
+    /**
+     * Indica se o funcionário é administrador do sistema.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->nivel_acesso === 'ADMIN';
     }
 }

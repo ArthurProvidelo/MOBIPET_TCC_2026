@@ -5,35 +5,107 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Entrar | Mobipet</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description"
+        content="Acesse sua conta Mobipet para agendar serviços, acompanhar o atendimento do seu pet em tempo real e gerenciar seus cadastros.">
+    <meta name="keywords" content="login mobipet, entrar, acesso cliente, cadastro tutor, agendamento pet">
 
+    <!-- Favicons -->
     <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
 
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
 
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
-    <link href="assets/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/estilo.css">
-</head>
-
-<body class="inner-page">
-
-    @include('partials.preloader')
+    <!-- Main CSS File -->
+    <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/estilo.css') }}" rel="stylesheet">
 
     <style>
+        /* ===========================================================
+           PÁGINA LOGIN / CADASTRO — MOBIPET  ·  isolado (prefixo lg-)
+           =========================================================== */
+        .lg-page {
+            --lg-accent: #175cdd;
+            --lg-accent-dark: #0f47b3;
+            --lg-accent-soft: #eaf1fe;
+            --lg-ink: #0f1b34;
+            --lg-body: #4a5568;
+            --lg-muted: #8794a7;
+            --lg-line: #e6ecf5;
+            --lg-bg: #f7f9ff;
+            --lg-radius: 26px;
+            --lg-radius-sm: 14px;
+            --lg-shadow-sm: 0 10px 30px -14px rgba(15, 27, 52, .2);
+            --lg-shadow: 0 40px 90px -40px rgba(23, 92, 221, .4);
+
+            font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--lg-body);
+        }
+
+        .lg-page h1,
+        .lg-page h2,
+        .lg-page h3,
+        .lg-page h4 {
+            font-family: "Montserrat", sans-serif;
+            color: var(--lg-ink);
+            letter-spacing: -0.022em;
+            line-height: 1.12;
+        }
+
+        /* Barra de progresso de rolagem (padrão do site) */
+        .lg-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--lg-accent), #4ade80);
+            z-index: 1100;
+            transition: width .12s linear;
+        }
+
+        /* Rótulo de seção */
+        .lg-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-size: .74rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--lg-accent);
+            margin-bottom: 14px;
+        }
+
+        .lg-eyebrow::before {
+            content: "";
+            width: 26px;
+            height: 2px;
+            background: currentColor;
+        }
+
+        .lg-eyebrow .lg-idx {
+            color: var(--lg-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* =========================================================
+           FUNDO DA PÁGINA
+           ========================================================= */
         body.inner-page {
-            background-image: url('assets/img/fundo_login.png');
+            background-image: url('{{ asset('assets/img/fundo_login.png') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -44,325 +116,89 @@
         body.inner-page::before {
             content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.15);
+            inset: 0;
+            background-color: rgba(247, 249, 255, .18);
             z-index: -1;
         }
 
-        /* ===== Auth card com painel deslizante (estrutura original) ===== */
-        /* =========================================
-   CARD
-========================================= */
-
-        .auth-card {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            min-height: 580px;
-            background: #fff;
-            border-radius: 26px;
-            overflow: hidden;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, .18);
-        }
-
-
-        /* =========================================
-   FORMULÁRIOS
-========================================= */
-
-        .auth-forms {
-            position: relative;
-            width: 100%;
-            min-height: 580px;
-
-            display: flex;
-        }
-
-        .auth-panel {
-            width: 50%;
-            padding: 40px 45px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-
-            background: #fff;
-        }
-
-        .auth-form-signin {
-            order: 1;
-        }
-
-        .auth-form-register {
-            order: 2;
-        }
-
-
-        /* =========================================
-   PAINEL AZUL
-========================================= */
-
-        .auth-overlay-container {
-            position: absolute;
-
-            top: 0;
-            left: 50%;
-
-            width: 50%;
-            height: 100%;
-
-            overflow: hidden;
-
-            z-index: 20;
-
-            transition: left .6s ease-in-out;
-        }
-
-
-        /* CADASTRO */
-
-
-        /* =========================================
-   OVERLAY AZUL
-========================================= */
-
-        .auth-overlay {
-            position: absolute;
-
-            top: 0;
-            left: -100%;
-
-            width: 200%;
-            height: 100%;
-
-            display: flex;
-
-            background: linear-gradient(135deg,
-                    #497baf,
-                    #3061cb);
-
-            transition: left .6s ease-in-out;
-        }
-
-
-        /* Quando estiver no cadastro */
-
-        .auth-card.register-active .auth-overlay {
-            left: 0;
-        }
-
-
-        /* =========================================
-   PAINÉIS DO OVERLAY
-========================================= */
-
-        .auth-overlay-panel {
-            width: 50%;
-            height: 100%;
-
-            flex-shrink: 0;
-
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            padding: 40px;
-
-            color: #fff;
-        }
-
-        .auth-overlay-panel h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-        }
-
-        .auth-overlay-panel p {
-            max-width: 330px;
-            line-height: 1.6;
-        }
-
-
-        /* =========================================
-   BOTÃO
-========================================= */
-
-        .auth-btn-ghost {
-            min-width: 145px;
-            padding: 12px 30px;
-
-            border: 2px solid #fff;
-            border-radius: 30px;
-
-            background: transparent;
-            color: #fff;
-
-            font-weight: 600;
-
-            cursor: pointer;
-
-            transition: .25s;
-        }
-
-        .auth-btn-ghost:hover {
-            background: #fff;
-            color: #3061cb;
-        }
-
-        .google-login-btn {
+        /* =========================================================
+           BOTÕES (sistema consistente — padrão devs)
+           ========================================================= */
+        .lg-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            background-color: #ffffff;
-            color: #1f1f1f;
-            font-family: "Roboto", sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 10px 24px;
-            border: 1px solid #747775;
-            border-radius: 50px;
+            gap: 10px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+            font-size: .97rem;
+            padding: 14px 26px;
+            border-radius: 999px;
+            border: 1.5px solid transparent;
             text-decoration: none;
-            transition: background-color 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
         }
 
-        .google-login-btn:hover {
-            background-color: #f8fafd;
-            color: #1f1f1f;
-            box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+        .lg-btn--primary {
+            width: 100%;
+            background: var(--lg-accent);
+            color: #fff;
+            box-shadow: 0 18px 34px -16px rgba(23, 92, 221, .75);
         }
 
-        .google-login-btn:active {
-            background-color: #f1f3f4;
+        .lg-btn--primary:hover {
+            background: var(--lg-accent-dark);
+            color: #fff;
+            transform: translateY(-3px);
         }
 
-        .login-separator {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: #6c757d;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .lg-btn--ghost {
+            min-width: 150px;
+            background: transparent;
+            color: #fff;
+            border-color: rgba(255, 255, 255, .7);
         }
 
-        .login-separator::before,
-        .login-separator::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #dee2e6;
+        .lg-btn--ghost:hover {
+            background: #fff;
+            color: var(--lg-accent);
+            transform: translateY(-3px);
         }
 
-        .login-separator:not(:empty)::before {
-            margin-right: .5em;
-        }
-
-        .login-separator:not(:empty)::after {
-            margin-left: .5em;
-        }
-
-        /* Ajustes Responsivos */
-        @media (max-width: 700px) {
-
-            .auth-card {
-                min-height: 750px;
-            }
-
-            .auth-forms {
-                min-height: 750px;
-            }
-
-            .auth-panel {
-                width: 100%;
-                padding: 30px 25px;
-            }
-
-            .auth-overlay-container {
-                left: 0;
-                top: 0;
-
-                width: 100%;
-                height: 180px;
-
-                transition: top .6s ease-in-out;
-            }
-
-            .auth-card.register-active .auth-overlay-container {
-                left: 0;
-                top: calc(100% - 180px);
-            }
-
-            .auth-overlay {
-                left: 0;
-                top: -100%;
-
-                width: 100%;
-                height: 200%;
-
-                flex-direction: column;
-
-                transition: top .6s ease-in-out;
-            }
-
-            .auth-card.register-active .auth-overlay {
-                left: 0;
-                top: -100%;
-            }
-
-            .auth-overlay-panel {
-                width: 100%;
-                height: 50%;
-            }
-        }
-
-        .auth-mobile-toggle {
-            display: none;
-        }
-
-        /* =====================================================
-   CARD DE LOGIN / CADASTRO - CLIENTE
-===================================================== */
-
-        .auth-wrapper {
+        /* =========================================================
+           CARD (login + cadastro com painel deslizante)
+           ========================================================= */
+        .lg-wrapper {
             display: flex;
             justify-content: center;
-            padding: 2rem 1rem;
+            padding: 2rem 1rem 4rem;
         }
 
-        .auth-card {
+        .lg-card {
             position: relative;
             width: 100%;
             max-width: 900px;
             min-height: 480px;
             height: 580px;
             background: #fff;
-            border-radius: 26px;
+            border-radius: var(--lg-radius);
             overflow: hidden;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, .18);
-            font-family: 'Roboto', sans-serif;
+            box-shadow: var(--lg-shadow);
+            font-family: "Roboto", sans-serif;
             transition: height .5s cubic-bezier(.65, 0, .35, 1);
         }
 
-        /* =====================================================
-   ÁREA DOS FORMULÁRIOS
-===================================================== */
-
-        .auth-forms {
+        /* =========================================================
+           ÁREA DOS FORMULÁRIOS
+           ========================================================= */
+        .lg-forms {
             position: absolute;
             inset: 0;
-            width: 100%;
-            height: 100%;
             display: flex;
         }
 
-        .auth-panel {
+        .lg-panel {
             width: 50%;
             height: 100%;
             padding: 50px 55px;
@@ -373,16 +209,63 @@
             background: #fff;
         }
 
-        .auth-panel h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+        .lg-panel h2 {
+            font-weight: 800;
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            margin: 0 0 6px;
         }
 
-        /* =====================================================
-   PAINEL DESLIZANTE AZUL
-===================================================== */
+        .lg-panel .lg-sub {
+            font-size: .92rem;
+            color: var(--lg-muted);
+            margin-bottom: 26px;
+        }
 
-        .auth-overlay-container {
+        .lg-form-signin {
+            order: 1;
+        }
+
+        .lg-form-register {
+            order: 2;
+        }
+
+        /* Campos */
+        .lg-panel .form-label {
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-size: .7rem;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--lg-muted);
+            margin-bottom: 6px;
+        }
+
+        .lg-panel .input-group-text {
+            background: var(--lg-bg);
+            border: 1px solid var(--lg-line);
+            color: var(--lg-muted);
+        }
+
+        .lg-panel .form-control {
+            height: 50px;
+            border: 1px solid var(--lg-line);
+            box-shadow: none;
+            transition: border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .lg-panel .form-control:focus {
+            border-color: var(--lg-accent);
+            box-shadow: 0 0 0 4px var(--lg-accent-soft);
+        }
+
+        .lg-form-register .form-control {
+            height: 44px;
+        }
+
+        /* =========================================================
+           PAINEL AZUL DESLIZANTE
+           ========================================================= */
+        .lg-overlay-container {
             position: absolute;
             top: 0;
             left: 50%;
@@ -393,247 +276,108 @@
             transition: transform .7s cubic-bezier(.77, 0, .175, 1);
         }
 
-        /* Quando estiver no cadastro,
-   o painel azul vai para a esquerda */
-        .auth-card.register-active .auth-overlay-container {
-            transform: translateX(-100%);
-        }
-
-        .auth-overlay {
+        .lg-overlay {
             position: relative;
             left: -100%;
             width: 200%;
             height: 100%;
-
             display: flex;
-
-            background: linear-gradient(135deg,
-                    #497baf 0%,
-                    #3061cb 100%);
-
             color: #fff;
-
+            background:
+                radial-gradient(46% 130% at 100% 0%, rgba(255, 255, 255, .16), transparent 60%),
+                linear-gradient(135deg, var(--lg-accent), var(--lg-accent-dark));
             transition: transform .7s cubic-bezier(.77, 0, .175, 1);
         }
 
-        /* =====================================================
-   PAINÉIS INTERNOS DO OVERLAY
-===================================================== */
-
-        .auth-overlay-panel {
+        .lg-overlay-panel {
             width: 50%;
             height: 100%;
             padding: 40px;
-
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-
             text-align: center;
         }
 
-        .auth-overlay-panel h2 {
-            margin-bottom: 16px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 34px;
-            line-height: 1.15;
+        .lg-overlay-panel h2 {
+            color: #fff;
+            font-family: "Montserrat", sans-serif;
+            font-size: clamp(1.5rem, 3.4vw, 2.1rem);
             font-weight: 800;
+            margin-bottom: 14px;
         }
 
-        .auth-overlay-panel p {
-            max-width: 330px;
-            margin-bottom: 30px;
-            color: #fff;
-            font-size: 15px;
-            line-height: 1.6;
+        .lg-overlay-panel p {
+            max-width: 320px;
+            margin-bottom: 28px;
+            font-size: .95rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, .85);
         }
 
-        /* =====================================================
-   BOTÃO DO PAINEL AZUL
-===================================================== */
-
-        .auth-btn-ghost {
-            min-width: 145px;
-            height: 55px;
-            padding: 0 30px;
-
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            border: 2px solid #fff;
-            border-radius: 30px;
-
-            background: transparent;
-            color: #fff;
-
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-
-            text-decoration: none;
-
-            transition:
-                background .25s ease,
-                color .25s ease,
-                transform .2s ease;
+        /* Estados do card:
+           - padrão            -> mostra formulário de LOGIN + CTA "Cadastrar"
+           - .lg-register-active -> mostra formulário de CADASTRO + CTA "Entrar" */
+        .lg-card.lg-register-active .lg-overlay-container {
+            transform: translateX(-100%);
         }
 
-        .auth-btn-ghost:hover {
-            background: #fff;
-            color: #3061cb;
-            transform: translateY(-2px);
+        .lg-card.lg-register-active .lg-overlay {
+            transform: translateX(50%);
         }
 
-        /* =====================================================
-   FORMULÁRIO DE LOGIN
-===================================================== */
-
-        .auth-form-signin {
-            order: 1;
-        }
-
-        /* =====================================================
-   CAMPOS
-===================================================== */
-
-        .auth-panel .form-control {
-            height: 52px;
-            border: 1px solid #d9dfe5;
-            transition:
-                border-color .25s ease,
-                box-shadow .25s ease;
-        }
-
-        .auth-panel .form-control:focus {
-            border-color: #497baf;
-            box-shadow: 0 0 0 4px rgba(73, 123, 175, .12);
-        }
-
-        /* =====================================================
-   BOTÃO PRINCIPAL
-===================================================== */
-
-        .auth-panel .btn-primary {
-            height: 52px;
-            background: #497baf !important;
-            border: none !important;
-            transition:
-                transform .2s ease,
-                box-shadow .2s ease;
-        }
-
-        .auth-panel .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 9px 20px rgba(73, 123, 175, .28);
-        }
-
-        /* =====================================================
-   GOOGLE
-===================================================== */
-
-        .google-login-btn {
-            transition:
-                background-color .2s ease,
-                box-shadow .2s ease,
-                transform .2s ease;
-        }
-
-        .google-login-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* =====================================================
-   SEPARADOR
-===================================================== */
-
-        .login-separator {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: #6c757d;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-        }
-
-        .login-separator::before,
-        .login-separator::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .login-separator:not(:empty)::before {
-            margin-right: .5em;
-        }
-
-        .login-separator:not(:empty)::after {
-            margin-left: .5em;
-        }
-
-        /* =====================================================
-   RESPONSIVIDADE
-===================================================== */
-
+        /* =========================================================
+           RESPONSIVO
+           ========================================================= */
         @media (max-width: 900px) {
-
-            .auth-card {
+            .lg-card {
                 max-width: 700px;
             }
 
-            .auth-panel {
+            .lg-panel {
                 padding: 40px 35px;
-            }
-
-            .auth-overlay-panel h2 {
-                font-size: 28px;
             }
         }
 
         @media (max-width: 700px) {
-
-            .auth-card {
+            .lg-card {
                 min-height: 720px;
                 max-width: 520px;
             }
 
-            /* Painel azul vira uma faixa fixa no topo; só o texto interno troca */
-            .auth-overlay-container {
+            /* Painel azul vira faixa fixa no topo; só o texto interno troca */
+            .lg-overlay-container {
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 190px;
             }
 
-            .auth-card.register-active .auth-overlay-container {
-                top: 0;
+            .lg-card.lg-register-active .lg-overlay-container {
                 transform: none;
             }
 
-            .auth-overlay {
+            .lg-overlay {
                 top: 0;
+                left: 0;
                 width: 100%;
                 height: 200%;
-                left: 0;
                 transform: translateY(-50%);
             }
 
-            .auth-card.register-active .auth-overlay {
-                top: 0;
+            .lg-card.lg-register-active .lg-overlay {
                 transform: translateY(0);
             }
 
-            .auth-overlay-panel {
+            .lg-overlay-panel {
                 width: 100%;
                 height: 50%;
                 padding: 20px;
             }
 
-            /* Em telas pequenas só o formulário ativo ocupa espaço,
-               evitando que login e cadastro fiquem espremidos lado a lado */
-            .auth-panel {
+            /* Em telas pequenas só o formulário ativo ocupa espaço */
+            .lg-panel {
                 display: none;
                 width: 100%;
                 height: calc(100% - 190px);
@@ -641,428 +385,49 @@
                 padding: 30px 25px;
             }
 
-            .auth-card:not(.register-active) .auth-form-signin,
-            .auth-card.register-active .auth-form-register {
+            .lg-card:not(.lg-register-active) .lg-form-signin,
+            .lg-card.lg-register-active .lg-form-register {
                 display: flex;
             }
 
-            .auth-overlay-panel h2 {
-                font-size: 24px;
-            }
-
-            .auth-overlay-panel p {
-                font-size: 13px;
-                margin-bottom: 12px;
-            }
-
-            .auth-btn-ghost {
-                height: 42px;
-                min-width: 120px;
+            .lg-overlay-panel p {
+                font-size: .85rem;
+                margin-bottom: 14px;
             }
         }
 
         @media (max-width: 480px) {
-
-            .auth-card {
+            .lg-card {
                 min-height: 700px;
                 border-radius: 20px;
             }
 
-            .auth-overlay-container {
+            .lg-overlay-container {
                 height: 175px;
             }
 
-            .auth-panel {
+            .lg-panel {
                 height: calc(100% - 175px);
                 margin-top: 175px;
                 padding: 25px 20px;
             }
 
-            .auth-overlay-panel h2 {
-                font-size: 21px;
-            }
-
-            .auth-overlay-panel p {
+            .lg-overlay-panel p {
                 display: none;
             }
+        }
 
-            .auth-btn-ghost {
-                height: 40px;
+        @media (prefers-reduced-motion: reduce) {
+
+            .lg-page *,
+            .lg-page *::before,
+            .lg-page *::after {
+                animation: none !important;
+                transition: none !important;
             }
         }
-    </style>
 
-    <header id="header" class="header fixed-top">
-      
-
-        <div class="branding d-flex align-items-center">
-            <div class="container position-relative d-flex align-items-center justify-content-between">
-                <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                    <h1 class="sitename">Mobipet</h1>
-                </a>
-
-                <nav id="navmenu" class="navmenu">
-                    <ul>
-                        <li><a href="{{ route('index') }}">Início</a></li>
-                        <li><a href="{{ route('sobre') }}">Sobre nós</a></li>
-                        <li><a href="{{ route('services') }}">Serviços</a></li>
-                        <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
-                        <li>
-                            <a href="{{ route('login.funcionario') }}">
-                                Sou Funcionário <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            </a>
-                        </li>
-
-                        {{-- CLIENTE --}}
-                        @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
-                            <li><a href="{{ route('pets.create') }}">Cadastrar Pet</a></li>
-                            <li><a href="{{ route('agendamento') }}">Agendamento</a></li>
-                            <li><a href="{{ route('pets.index') }}">Meus Pets</a></li>
-                            <li><a href="{{ route('perfil') }}"><i class="fa-solid fa-user"></i></a></li>
-                            <li>
-                                <a href="{{ route('logout') }}">
-                                    Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                </a>
-                            </li>
-
-                            {{-- FUNCIONÁRIO --}}
-                        @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
-                            <li><a href="{{ route('painel-controle') }}">Painel</a></li>
-                            <li><a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a></li>
-                            <li><a href="{{ route('perfil') }}">Perfil</a></li>
-                            <li>
-                                <a href="{{ route('logout') }}">
-                                    Sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                </a>
-                            </li>
-                        @endif
-                    </ul>
-                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <main class="main" style="margin-top: 120px;">
-
-        {{-- Alertas de Erro Globais --}}
-        <div class="container" data-aos="fade-up">
-            <div class="row justify-content-center">
-                <div class="col-md-10" style="max-width:900px;">
-                    @if (session('erro'))
-                        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-3"
-                            role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                        </div>
-                    @endif
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger border-0 shadow-sm rounded-4 p-3 mb-3 small" role="alert">
-                            <ul class="mb-0 ps-3">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <div class="auth-wrapper" data-aos="fade-up" data-aos-delay="100">
-            <div class="auth-card">
-
-                <!-- =========================
-         ÁREA DOS FORMULÁRIOS
-    ========================== -->
-                <div class="auth-forms">
-
-                    <!-- LOGIN -->
-                    <div class="auth-panel auth-form-signin">
-
-                        <h2 class="mb-4 text-dark">Entrar</h2>
-
-                        <p class="text-secondary small mb-4">
-                            É um prazer ter você de volta conosco!
-                        </p>
-
-                        <form method="POST" action="{{ route('login.autenticar') }}">
-                            @csrf
-
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold text-secondary small text-uppercase">
-                                    E-mail
-                                </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light border-light-subtle text-muted">
-                                        <i class="bi bi-envelope"></i>
-                                    </span>
-
-                                    <input type="email" name="email"
-                                        class="form-control rounded-end-3 p-2 border-light-subtle shadow-none"
-                                        placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold text-secondary small text-uppercase">
-                                    Senha
-                                </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light border-light-subtle text-muted">
-                                        <i class="bi bi-lock"></i>
-                                    </span>
-
-                                    <input type="password" name="senha"
-                                        class="form-control rounded-end-3 p-2 border-light-subtle shadow-none"
-                                        placeholder="Sua senha" required>
-                                </div>
-                            </div>
-
-                            <button type="submit"
-                                class="btn btn-primary w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm"
-                                style="background-color: #497baf !important; border: none;">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>
-                                Entrar
-                            </button>
-
-                        </form>
-
-                    </div>
-
-
-                    <!-- =========================
-             CADASTRO DO CLIENTE
-        ========================== -->
-                    <div class="auth-panel auth-form-register">
-
-                        <h2 class="mb-3 text-dark">Criar cadastro</h2>
-
-                        <p class="text-secondary small mb-4">
-                            Preencha seus dados para criar sua conta no Mobipet.
-                        </p>
-
-                        <form method="POST" action="{{ route('cadastro.salvar') }}" id="cadastroForm">
-                            @csrf
-
-                            <!-- NOME -->
-                            <div class="mb-2">
-
-                                <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
-                                    style="font-size: 11px;">
-                                    Nome Completo
-                                </label>
-
-                                <div class="input-group">
-
-                                    <span class="input-group-text bg-light border-light-subtle text-muted">
-                                        <i class="fa-solid fa-user small"></i>
-                                    </span>
-
-                                    <input type="text" name="nome"
-                                        class="form-control p-2 border-light-subtle shadow-none"
-                                        placeholder="Seu nome completo" value="{{ old('nome', request('nome')) }}"
-                                        required>
-
-                                </div>
-                            </div>
-
-
-                            <!-- CPF + TELEFONE -->
-                            <div class="row g-2 mb-2">
-
-                                <!-- CPF -->
-                                <div class="col-6">
-
-                                    <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
-                                        style="font-size: 11px;">
-                                        CPF
-                                    </label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text bg-light border-light-subtle text-muted">
-                                            <i class="fa-solid fa-id-card small"></i>
-                                        </span>
-
-                                        <input type="text" id="cpf" name="cpf" maxlength="14"
-                                            inputmode="numeric" autocomplete="off"
-                                            class="form-control p-2 border-light-subtle shadow-none"
-                                            placeholder="000.000.000-00" value="{{ old('cpf') }}" required>
-
-                                    </div>
-                                </div>
-
-
-                                <!-- TELEFONE -->
-                                <div class="col-6">
-
-                                    <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
-                                        style="font-size: 11px;">
-                                        Telefone
-                                    </label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text bg-light border-light-subtle text-muted">
-                                            <i class="bi bi-telephone"></i>
-                                        </span>
-
-                                        <input type="text" id="telefone" name="telefone" maxlength="15"
-                                            inputmode="numeric" autocomplete="off"
-                                            class="form-control p-2 border-light-subtle shadow-none"
-                                            placeholder="(19) 99999-8888" value="{{ old('telefone') }}" required>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <!-- ENDEREÇO -->
-                            <div class="mb-2">
-
-                                <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
-                                    style="font-size: 11px;">
-                                    Endereço Residencial
-                                </label>
-
-                                <div class="input-group">
-
-                                    <span class="input-group-text bg-light border-light-subtle text-muted">
-                                        <i class="bi bi-geo-alt"></i>
-                                    </span>
-
-                                    <input type="text" name="endereco"
-                                        class="form-control p-2 border-light-subtle shadow-none"
-                                        placeholder="Rua, Número, Bairro - Cidade" value="{{ old('endereco') }}"
-                                        required>
-
-                                </div>
-                            </div>
-
-
-                            <!-- EMAIL -->
-                            <div class="mb-2">
-
-                                <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
-                                    style="font-size: 11px;">
-                                    E-mail
-                                </label>
-
-                                <div class="input-group">
-
-                                    <span class="input-group-text bg-light border-light-subtle text-muted">
-                                        <i class="bi bi-envelope"></i>
-                                    </span>
-
-                                    <input type="email" name="email"
-                                        class="form-control p-2 border-light-subtle shadow-none"
-                                        placeholder="seuemail@exemplo.com"
-                                        value="{{ old('email', request('email')) }}" required>
-
-                                </div>
-                            </div>
-
-
-                            <!-- SENHA -->
-                            <div class="mb-3">
-
-                                <label class="form-label fw-semibold text-secondary small text-uppercase mb-1"
-                                    style="font-size: 11px;">
-                                    Senha
-                                </label>
-
-                                <div class="input-group">
-
-                                    <span class="input-group-text bg-light border-light-subtle text-muted">
-                                        <i class="bi bi-lock"></i>
-                                    </span>
-
-                                    <input type="password" name="senha"
-                                        class="form-control p-2 border-light-subtle shadow-none"
-                                        placeholder="Crie uma senha segura"
-                                        value="{{ old('senha', request('senha')) }}" required>
-
-                                </div>
-                            </div>
-
-
-                            <!-- BOTÃO -->
-                            <button type="submit"
-                                class="btn btn-primary w-100 py-2 px-4 fw-semibold rounded-pill shadow-sm"
-                                style="background-color: #497baf !important; border: none;">
-
-                                <i class="bi bi-check-circle me-1"></i>
-                                Finalizar Cadastro
-
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-         PAINEL AZUL DESLIZANTE
-    ========================== -->
-                <div class="auth-overlay-container">
-
-                    <div class="auth-overlay">
-
-                        <!-- PAINEL PARA LOGIN -->
-                        <div class="auth-overlay-panel">
-
-                            <h2>Bem-vindo de volta!</h2>
-
-                            <p>
-                                Já possui uma conta?
-                                Entre com seus dados para acessar o Mobipet.
-                            </p>
-
-                            <button type="button" id="goLogin" class="auth-btn-ghost">
-                                Entrar
-                            </button>
-
-                        </div>
-
-
-                        <!-- PAINEL PARA CADASTRO -->
-                        <div class="auth-overlay-panel">
-
-                            <h2>Olá, amigo!</h2>
-
-                            <p>
-                                Ainda não possui uma conta?
-                                Cadastre-se para aproveitar todos os recursos do Mobipet.
-                            </p>
-
-                            <button type="button" id="goRegister" class="auth-btn-ghost">
-                                Cadastrar
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-    </main>
-
-    <!-- =========================================================
-    FOOTER
-    ========================================================= -->
-    <style>
-        /* ---------- Footer criativo ---------- */
+        /* ---- Footer criativo (padrão do site) ---- */
         .footer-16 {
             position: relative;
             overflow: visible;
@@ -1120,79 +485,255 @@
             max-width: 380px;
         }
 
-        .footer-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #16a34a;
-            background: rgba(34, 197, 94, 0.12);
-            padding: 6px 14px;
-            border-radius: 999px;
-            margin-bottom: 22px;
-        }
-
-        .footer-status .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #22c55e;
-            animation: statusPulse 2s infinite;
-        }
-
-        @keyframes statusPulse {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
-            70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-
         .footer-16 .contact-info {
             margin-top: 24px;
         }
-
-        .footer-16 .footer-social .social-link.whatsapp i {
-            color: #25d366;
-        }
-
-        .footer-16 .footer-social .social-link.instagram i {
-            background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits i {
-            color: #ef4444;
-            margin: 0 2px;
-        }
-
-        .footer-16 .footer-bottom .copyright p {
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .footer-16 .footer-bottom .copyright p .sitename {
-            color: #fff;
-        }
-
-        .footer-16 .footer-bottom .legal-links a {
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .footer-16 .footer-bottom .legal-links a:hover {
-            color: #fff;
-            text-decoration: underline;
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits {
-            color: rgba(255, 255, 255, 0.7);
-            border-left-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .footer-16 .footer-bottom .legal-links .credits a {
-            color: #fff;
-            font-weight: 600;
-        }
     </style>
+</head>
+
+<body class="inner-page">
+
+    @include('partials.preloader')
+
+    <div class="lg-progress" id="lgProgress"></div>
+
+    <header id="header" class="header fixed-top">
+
+        <!-- Branding -->
+        <div class="branding d-flex align-items-center">
+
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+
+                <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+                    <h1 class="sitename">Mobipet</h1>
+                </a>
+
+                <nav id="navmenu" class="navmenu">
+
+                    <ul>
+                        
+                        @include('partials.nav-user')
+                    </ul>
+
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+                </nav>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="main lg-page" style="margin-top: 120px;">
+
+        <!-- ================= ALERTAS GLOBAIS ================= -->
+        <div class="container" data-aos="fade-up">
+            <div class="row justify-content-center">
+                <div class="col-md-10" style="max-width:900px;">
+                    @if (session('erro'))
+                        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-3"
+                            role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger border-0 shadow-sm rounded-4 p-3 mb-3 small" role="alert">
+                            <ul class="mb-0 ps-3">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CARD LOGIN / CADASTRO ================= -->
+        <div class="lg-wrapper" data-aos="fade-up" data-aos-delay="100">
+            <div class="lg-card">
+
+                <!-- ---------- ÁREA DOS FORMULÁRIOS ---------- -->
+                <div class="lg-forms">
+
+                    <!-- LOGIN -->
+                    <div class="lg-panel lg-form-signin">
+
+                        <span class="lg-eyebrow"><span class="lg-idx">01</span> Acesso</span>
+
+                        <h2>Entrar</h2>
+                        <p class="lg-sub">É um prazer ter você de volta conosco!</p>
+
+                        <form method="POST" action="{{ route('login.autenticar') }}">
+                            @csrf
+
+                            <div class="mb-3">
+                                <label class="form-label">E-mail</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input type="email" name="email"
+                                        class="form-control rounded-end-3"
+                                        placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Senha</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+                                    <input type="password" name="senha"
+                                        class="form-control rounded-end-3"
+                                        placeholder="Sua senha" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="lg-btn lg-btn--primary">
+                                <i class="bi bi-box-arrow-in-right"></i>
+                                Entrar
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- CADASTRO DO CLIENTE -->
+                    <div class="lg-panel lg-form-register">
+
+                        <span class="lg-eyebrow"><span class="lg-idx">02</span> Nova conta</span>
+
+                        <h2>Criar cadastro</h2>
+                        <p class="lg-sub">Preencha seus dados para criar sua conta no Mobipet.</p>
+
+                        <form method="POST" action="{{ route('cadastro.salvar') }}" id="cadastroForm">
+                            @csrf
+
+                            <!-- NOME -->
+                            <div class="mb-2">
+                                <label class="form-label">Nome Completo</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-user small"></i>
+                                    </span>
+                                    <input type="text" name="nome" class="form-control"
+                                        placeholder="Seu nome completo" value="{{ old('nome', request('nome')) }}"
+                                        required>
+                                </div>
+                            </div>
+
+                            <!-- CPF + TELEFONE -->
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <label class="form-label">CPF</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fa-solid fa-id-card small"></i>
+                                        </span>
+                                        <input type="text" id="cpf" name="cpf" maxlength="14"
+                                            inputmode="numeric" autocomplete="off" class="form-control"
+                                            placeholder="000.000.000-00" value="{{ old('cpf') }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <label class="form-label">Telefone</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-telephone"></i>
+                                        </span>
+                                        <input type="text" id="telefone" name="telefone" maxlength="15"
+                                            inputmode="numeric" autocomplete="off" class="form-control"
+                                            placeholder="(19) 99999-8888" value="{{ old('telefone') }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ENDEREÇO -->
+                            <div class="mb-2">
+                                <label class="form-label">Endereço Residencial</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    <input type="text" name="endereco" class="form-control"
+                                        placeholder="Rua, Número, Bairro - Cidade" value="{{ old('endereco') }}"
+                                        required>
+                                </div>
+                            </div>
+
+                            <!-- EMAIL -->
+                            <div class="mb-2">
+                                <label class="form-label">E-mail</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input type="email" name="email" class="form-control"
+                                        placeholder="seuemail@exemplo.com"
+                                        value="{{ old('email', request('email')) }}" required>
+                                </div>
+                            </div>
+
+                            <!-- SENHA -->
+                            <div class="mb-3">
+                                <label class="form-label">Senha</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+                                    <input type="password" name="senha" class="form-control"
+                                        placeholder="Crie uma senha segura"
+                                        value="{{ old('senha', request('senha')) }}" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="lg-btn lg-btn--primary">
+                                <i class="bi bi-check-circle"></i>
+                                Finalizar Cadastro
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <!-- ---------- PAINEL AZUL DESLIZANTE ---------- -->
+                <div class="lg-overlay-container">
+                    <div class="lg-overlay">
+
+                        <!-- CTA -> voltar para LOGIN -->
+                        <div class="lg-overlay-panel">
+                            <h2>Bem-vindo de volta!</h2>
+                            <p>Já possui uma conta? Entre com seus dados para acessar o Mobipet.</p>
+                            <button type="button" id="lgGoLogin" class="lg-btn lg-btn--ghost">
+                                Entrar
+                            </button>
+                        </div>
+
+                        <!-- CTA -> ir para CADASTRO -->
+                        <div class="lg-overlay-panel">
+                            <h2>Olá, amigo!</h2>
+                            <p>Ainda não possui uma conta? Cadastre-se para aproveitar todos os recursos do Mobipet.</p>
+                            <button type="button" id="lgGoRegister" class="lg-btn lg-btn--ghost">
+                                Cadastrar
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
 
     @include('partials.footer')
 
@@ -1204,16 +745,43 @@
 
     <div id="preloader"></div>
 
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+
+    <!-- Main JS File -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    <!-- Barra de progresso de rolagem -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        (function () {
+            var bar = document.getElementById('lgProgress');
+            if (!bar) return;
+            function update() {
+                var h = document.documentElement;
+                var max = h.scrollHeight - h.clientHeight;
+                var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+                bar.style.width = pct + '%';
+            }
+            document.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
+    </script>
 
-            const card = document.querySelector('.auth-card');
+    <!-- Painel deslizante login/cadastro + máscaras -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-            const signinPanel = document.querySelector('.auth-form-signin');
-            const registerPanel = document.querySelector('.auth-form-register');
-
-            const goRegister = document.getElementById('goRegister');
-            const goLogin = document.getElementById('goLogin');
+            const card = document.querySelector('.lg-card');
+            const signinPanel = document.querySelector('.lg-form-signin');
+            const registerPanel = document.querySelector('.lg-form-register');
+            const goRegister = document.getElementById('lgGoRegister');
+            const goLogin = document.getElementById('lgGoLogin');
 
             const mobileQuery = window.matchMedia('(max-width: 700px)');
             const smallQuery = window.matchMedia('(max-width: 480px)');
@@ -1221,10 +789,11 @@
             // Ajusta a altura do card ao conteúdo do painel ativo,
             // para o cadastro (com mais campos) nunca ficar cortado ou com scroll.
             function syncCardHeight() {
+                if (!card) return;
 
-                const activePanel = card.classList.contains('register-active') ?
-                    registerPanel :
-                    signinPanel;
+                const activePanel = card.classList.contains('lg-register-active')
+                    ? registerPanel
+                    : signinPanel;
 
                 if (!activePanel) return;
 
@@ -1238,39 +807,35 @@
                 }
             }
 
-            // CADASTRO
             if (goRegister) {
-                goRegister.addEventListener('click', function(e) {
-
+                goRegister.addEventListener('click', function (e) {
                     e.preventDefault();
-
-                    card.classList.add('register-active');
+                    card.classList.add('lg-register-active');
                     syncCardHeight();
-
                 });
             }
 
-            // LOGIN
             if (goLogin) {
-                goLogin.addEventListener('click', function(e) {
-
+                goLogin.addEventListener('click', function (e) {
                     e.preventDefault();
-
-                    card.classList.remove('register-active');
+                    card.classList.remove('lg-register-active');
                     syncCardHeight();
-
                 });
             }
 
             window.addEventListener('resize', syncCardHeight);
             window.addEventListener('load', syncCardHeight);
-
             syncCardHeight();
+
+            // Se o formulário de cadastro voltou com erros, abre já no cadastro
+            @if ($errors->any() && old('nome'))
+                card.classList.add('lg-register-active');
+                syncCardHeight();
+            @endif
 
             // =========================================
             // MÁSCARAS DE CPF E TELEFONE
             // =========================================
-
             const cpfInput = document.getElementById('cpf');
             const telefoneInput = document.getElementById('telefone');
 
@@ -1300,13 +865,13 @@
             }
 
             if (cpfInput) {
-                cpfInput.addEventListener('input', function() {
+                cpfInput.addEventListener('input', function () {
                     cpfInput.value = maskCPF(cpfInput.value);
                 });
             }
 
             if (telefoneInput) {
-                telefoneInput.addEventListener('input', function() {
+                telefoneInput.addEventListener('input', function () {
                     telefoneInput.value = maskTelefone(telefoneInput.value);
                 });
             }
@@ -1314,7 +879,7 @@
             // Antes de enviar, remove a máscara para gravar só os números no banco
             const cadastroForm = document.getElementById('cadastroForm');
             if (cadastroForm) {
-                cadastroForm.addEventListener('submit', function() {
+                cadastroForm.addEventListener('submit', function () {
                     if (cpfInput) cpfInput.value = cpfInput.value.replace(/\D/g, '');
                     if (telefoneInput) telefoneInput.value = telefoneInput.value.replace(/\D/g, '');
                 });
@@ -1322,16 +887,6 @@
 
         });
     </script>
-
-
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-    <script src="assets/js/main.js"></script>
 
     @include('partials.logout-confirm')
 

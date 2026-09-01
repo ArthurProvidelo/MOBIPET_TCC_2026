@@ -31,8 +31,9 @@ Route::get('/sobre', function () {
     return view('sobre');
 })->name('sobre');
 
-// Rota para processar o formulário de cadastro de funcionário
+// Rota para processar o formulário de cadastro de funcionário (somente ADMIN)
 Route::post('/funcionario/salvar', [FuncionarioController::class, 'store'])
+    ->middleware('admin')
     ->name('funcionario.salvar');
 
 // Rota para exibir a página de agendamento
@@ -43,10 +44,10 @@ Route::get('/agendamento', [AgendamentoController::class, 'create'])
 Route::post('/agendamento/store', [AgendamentoController::class, 'store'])
     ->name('agendamento.store');
 
-// Rota para exibir a página de cadastro de funcionários
+// Rota para exibir a página de cadastro de funcionários (somente ADMIN)
 Route::get('/funcionario', function () {
     return view('auth.funcionario');
-})->name('funcionario');
+})->middleware('admin')->name('funcionario');
 
 // Rota para exibir a página de desenvolvedores
 Route::get('/devs', function () {
@@ -75,8 +76,9 @@ Route::put('/perfil-update/{id}', [FuncionarioController::class, 'update'])
     ->name('funcionario.update');
 
 
-// Rota para o painel de controle do funcionário
+// Rota para o painel de controle da equipe (funcionário ou admin)
 Route::get('/painel-controle', [PainelController::class, 'index'])
+    ->middleware('staff')
     ->name('painel-controle');
 
 // Rotas de autenticação
@@ -100,6 +102,7 @@ Route::post('/login-funcionario', [AuthController::class, 'loginFuncionario'])
 
 // Rota para exibir a agenda do funcionário (mês > dia > agendamentos)
 Route::get('/funcionario/agendamentos', [AgendamentoController::class, 'agendamentosFuncionario'])
+    ->middleware('staff')
     ->name('funcionario.agendamentos');
 
 // rota para atualizar status na tela de agendamento

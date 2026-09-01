@@ -1054,30 +1054,8 @@
                 <nav id="navmenu" class="navmenu">
 
                     <ul>
-                        <li><a href="{{ route('index') }}" class="active">Início</a></li>
-                        <li><a href="{{ route('sobre') }}">Sobre nós</a></li>
-                        <li><a href="{{ route('services') }}">Serviços</a></li>
-                        <li><a href="{{ route('devs') }}">Desenvolvedores</a></li>
-
-                        {{-- CLIENTE --}}
-                        @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
-                            <li><a href="{{ route('pets.create') }}">Cadastrar Pet</a></li>
-                            <li><a href="{{ route('agendamento') }}">Agendamento</a></li>
-                            <li><a href="{{ route('pets.index') }}">Meus Pets</a></li>
-                            <li><a href="{{ route('perfil') }}"><i class="fa-solid fa-user"></i></a></li>
-                            <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
-
-                            {{-- FUNCIONÁRIO --}}
-                        @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
-                            <li><a href="{{ route('painel-controle') }}">Painel</a></li>
-                            <li><a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a></li>
-                            <li><a href="{{ route('perfil') }}">Perfil</a></li>
-                            <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
-
-                            {{-- VISITANTE --}}
-                        @else
-                            <li><a href="{{ route('login') }}">Entrar</a></li>
-                        @endif
+                        
+                        @include('partials.nav-user')
                     </ul>
 
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -1118,7 +1096,7 @@
                                 <a href="{{ route('pets.index') }}" class="mp-btn mp-btn--ghost">
                                     <i class="bi bi-heart"></i> Meus pets
                                 </a>
-                            @elseif (session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+                            @elseif (session()->has('id') && (session('nivel_acesso') === 'FUNCIONARIO' || session('nivel_acesso') === 'ADMIN'))
                                 <a href="{{ route('painel-controle') }}" class="mp-btn mp-btn--primary">
                                     Abrir o painel <i class="bi bi-arrow-right"></i>
                                 </a>
@@ -1158,18 +1136,6 @@
                         <div class="mp-frame">
                             <img src="{{ asset('assets/img/pet_sendo_cuidado.png') }}"
                                 alt="Pet recebendo cuidados de banho e tosa no petshop">
-                        </div>
-
-                        <div class="mp-float mp-float--notif">
-                            <span class="mp-bell"><i class="bi bi-bell-fill"></i></span>
-                            Seu pet está no banho 🛁
-                        </div>
-
-                        <div class="mp-float mp-float--status">
-                            <div class="mp-fs-title">Status do atendimento</div>
-                            <div class="mp-fs-row done"><i class="bi bi-check-circle-fill"></i> Pet recebido</div>
-                            <div class="mp-fs-row active"><i class="bi bi-droplet-half"></i> Banho em andamento</div>
-                            <div class="mp-fs-row wait"><i class="bi bi-circle"></i> Pronto para retirada</div>
                         </div>
                     </div>
 
@@ -1343,7 +1309,7 @@
                         </div>
                     </div>
                     <div class="mp-start-cta">
-                        @if (session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+                        @if (session()->has('id') && (session('nivel_acesso') === 'FUNCIONARIO' || session('nivel_acesso') === 'ADMIN'))
                             <a href="{{ route('painel-controle') }}" class="mp-btn mp-btn--primary">
                                 Abrir o painel <i class="bi bi-arrow-right"></i>
                             </a>
@@ -1418,7 +1384,7 @@
                                 <i class="bi bi-plus-circle"></i> Cadastrar outro pet
                             </a>
                         </div>
-                    @elseif (session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
+                    @elseif (session()->has('id') && (session('nivel_acesso') === 'FUNCIONARIO' || session('nivel_acesso') === 'ADMIN'))
                         <h2>Sua agenda do dia está esperando</h2>
                         <p>Abra o painel para organizar os atendimentos e atualizar os status.</p>
                         <div class="mp-cta-actions">

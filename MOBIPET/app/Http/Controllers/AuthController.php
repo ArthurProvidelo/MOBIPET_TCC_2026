@@ -66,11 +66,15 @@ class AuthController extends Controller
                 ->with('erro', 'Senha inválida.');
         }
 
+        // O nível vem do banco: 'FUNCIONARIO' (padrão) ou 'ADMIN'.
+        $nivel = $funcionario->nivel_acesso ?: 'FUNCIONARIO';
+
         Session::put('id', $funcionario->id_funcionario);
         Session::put('nome', $funcionario->nome);
-        Session::put('nivel_acesso', 'FUNCIONARIO');
+        Session::put('nivel_acesso', $nivel);
 
-        return redirect()->route('index');
+        // Administrador cai direto no painel de gestão.
+        return redirect()->route($nivel === 'ADMIN' ? 'painel-controle' : 'index');
     }
 
     public function logout()

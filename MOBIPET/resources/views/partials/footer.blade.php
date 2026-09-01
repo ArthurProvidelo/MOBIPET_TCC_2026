@@ -531,9 +531,16 @@
                             <a href="{{ route('pets.index') }}">Meus Pets</a>
                             <a href="{{ route('pets.create') }}">Cadastrar Pet</a>
                             <a href="{{ route('perfil') }}">Meu Perfil</a>
+                        @elseif(session()->has('id') && session('nivel_acesso') == 'ADMIN')
+                            <a href="{{ route('painel-controle') }}">Painel</a>
+                            <a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a>
+                            <a href="{{ route('funcionario') }}">Cadastrar Funcionário</a>
+                            <a href="{{ route('services.create') }}">Cadastrar Serviço</a>
+                            <a href="{{ route('perfil') }}">Perfil</a>
                         @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
                             <a href="{{ route('painel-controle') }}">Painel</a>
                             <a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a>
+                            <a href="{{ route('services.create') }}">Cadastrar Serviço</a>
                             <a href="{{ route('perfil') }}">Perfil</a>
                         @else
                             <a href="{{ route('login') }}">Entrar</a>
