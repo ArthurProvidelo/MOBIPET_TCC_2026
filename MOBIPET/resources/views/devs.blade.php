@@ -653,7 +653,7 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
             .dv-page *,
             .dv-page *::before,
             .dv-page *::after {

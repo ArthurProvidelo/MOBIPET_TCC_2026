@@ -938,7 +938,7 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
             .sv-page *,
             .sv-page *::before,
             .sv-page *::after {

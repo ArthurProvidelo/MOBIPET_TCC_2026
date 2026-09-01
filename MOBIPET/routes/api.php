@@ -35,9 +35,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/agendamentos', [AgendamentoController::class, 'index']);
     Route::get('/agendamentos/atual', [AgendamentoController::class, 'atual']);
+    Route::get('/agendamentos/proximos', [AgendamentoController::class, 'proximos']);
     Route::get('/clientes/{id}/agendamentos', [AgendamentoController::class, 'porCliente']);
     Route::post('/agendamentos', [AgendamentoController::class, 'store']);
     Route::patch('/agendamentos/{id}/cancelar', [AgendamentoController::class, 'cancelar']);
+    Route::delete('/agendamentos/{id}', [AgendamentoController::class, 'destroy']);
     Route::post('/agendamentos/{id}/iniciar', [AgendamentoController::class, 'iniciar']);
     Route::post('/agendamentos/{id}/avancar', [AgendamentoController::class, 'avancar']);
 });

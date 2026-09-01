@@ -528,7 +528,9 @@
   <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
   <script>
-    AOS.init();
+    if (typeof AOS !== 'undefined') {
+      AOS.init({ duration: 650, easing: 'ease-out-cubic', once: true, offset: 100 });
+    }
 
     // MÁSCARAS EM JAVASCRIPT PURO (VANILLA JS)
     

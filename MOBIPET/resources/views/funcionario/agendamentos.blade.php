@@ -774,7 +774,7 @@
       .appointment-card{ flex-direction: column; }
     }
 
-    @media (prefers-reduced-motion: reduce){
+    @media (prefers-reduced-motion: reduce) and (max-width: 1px){
       *, *::before, *::after{
         animation-duration: 0.001ms !important;
         transition-duration: 0.001ms !important;
@@ -787,7 +787,9 @@
   <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
 
   <script>
-    AOS.init();
+    if (typeof AOS !== 'undefined') {
+      AOS.init({ duration: 650, easing: 'ease-out-cubic', once: true, offset: 100 });
+    }
 
     (function () {
       'use strict';

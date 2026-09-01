@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Acesso da Equipe | Mobipet</title>
+    <title>Recuperar Senha | Mobipet</title>
     <meta name="description"
-        content="Portal de acesso da equipe Mobipet: gerencie agendamentos, acompanhe cada etapa do atendimento e atualize o status em tempo real.">
-    <meta name="keywords" content="login funcionário mobipet, acesso equipe, painel petshop, agendamentos">
+        content="Recupere o acesso à sua conta Mobipet. Confirme o e-mail e o CPF cadastrados para redefinir sua senha na hora.">
+    <meta name="keywords" content="recuperar senha mobipet, esqueci minha senha, redefinir senha">
 
     <!-- Favicons -->
     <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
@@ -33,48 +33,50 @@
 
     <style>
         /* ===========================================================
-           ACESSO DA EQUIPE — MOBIPET  ·  isolado (prefixo lg-)
-           Mesmo sistema de design das telas de login/cadastro.
+           PÁGINA RECUPERAR SENHA — MOBIPET  ·  isolado (prefixo rs-)
            =========================================================== */
-        .lg-page {
-            --lg-accent: #175cdd;
-            --lg-accent-dark: #0f47b3;
-            --lg-accent-soft: #eaf1fe;
-            --lg-ink: #0f1b34;
-            --lg-body: #4a5568;
-            --lg-muted: #8794a7;
-            --lg-line: #e6ecf5;
-            --lg-bg: #f7f9ff;
-            --lg-radius: 26px;
-            --lg-shadow: 0 40px 90px -40px rgba(23, 92, 221, .4);
+        .rs-page {
+            --rs-accent: #175cdd;
+            --rs-accent-dark: #0f47b3;
+            --rs-accent-soft: #eaf1fe;
+            --rs-ink: #0f1b34;
+            --rs-body: #4a5568;
+            --rs-muted: #8794a7;
+            --rs-line: #e6ecf5;
+            --rs-bg: #f7f9ff;
+            --rs-radius: 26px;
+            --rs-radius-sm: 14px;
+            --rs-shadow-sm: 0 10px 30px -14px rgba(15, 27, 52, .2);
+            --rs-shadow: 0 40px 90px -40px rgba(23, 92, 221, .4);
 
             font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
-            color: var(--lg-body);
+            color: var(--rs-body);
         }
 
-        .lg-page h1,
-        .lg-page h2,
-        .lg-page h3 {
+        .rs-page h1,
+        .rs-page h2,
+        .rs-page h3,
+        .rs-page h4 {
             font-family: "Montserrat", sans-serif;
-            color: var(--lg-ink);
+            color: var(--rs-ink);
             letter-spacing: -0.022em;
             line-height: 1.12;
         }
 
         /* Barra de progresso de rolagem (padrão do site) */
-        .lg-progress {
+        .rs-progress {
             position: fixed;
             top: 0;
             left: 0;
             height: 3px;
             width: 0;
-            background: linear-gradient(90deg, var(--lg-accent), #4ade80);
+            background: linear-gradient(90deg, var(--rs-accent), #4ade80);
             z-index: 1100;
             transition: width .12s linear;
         }
 
         /* Rótulo de seção */
-        .lg-eyebrow {
+        .rs-eyebrow {
             display: inline-flex;
             align-items: center;
             gap: 12px;
@@ -83,18 +85,25 @@
             font-size: .74rem;
             letter-spacing: .16em;
             text-transform: uppercase;
-            color: var(--lg-accent);
+            color: var(--rs-accent);
             margin-bottom: 14px;
         }
 
-        .lg-eyebrow::before {
+        .rs-eyebrow::before {
             content: "";
             width: 26px;
             height: 2px;
             background: currentColor;
         }
 
-        /* Fundo da página */
+        .rs-eyebrow .rs-idx {
+            color: var(--rs-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* =========================================================
+           FUNDO DA PÁGINA
+           ========================================================= */
         body.inner-page {
             background-image: url('{{ asset('assets/img/fundo_login.png') }}');
             background-size: cover;
@@ -113,9 +122,9 @@
         }
 
         /* =========================================================
-           BOTÕES (sistema consistente)
+           BOTÕES (sistema consistente — padrão devs)
            ========================================================= */
-        .lg-btn {
+        .rs-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -131,224 +140,228 @@
             transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
         }
 
-        .lg-btn--primary {
+        .rs-btn--primary {
             width: 100%;
-            background: var(--lg-accent);
+            background: var(--rs-accent);
             color: #fff;
             box-shadow: 0 18px 34px -16px rgba(23, 92, 221, .75);
         }
 
-        .lg-btn--primary:hover {
-            background: var(--lg-accent-dark);
+        .rs-btn--primary:hover {
+            background: var(--rs-accent-dark);
             color: #fff;
             transform: translateY(-3px);
         }
 
-        .lg-btn--ghost {
+        .rs-btn--primary:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .rs-btn--ghost {
+            min-width: 150px;
             background: transparent;
             color: #fff;
             border-color: rgba(255, 255, 255, .7);
         }
 
-        .lg-btn--ghost:hover {
+        .rs-btn--ghost:hover {
             background: #fff;
-            color: var(--lg-accent);
+            color: var(--rs-accent);
             transform: translateY(-3px);
         }
 
+        .rs-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: "Lato", sans-serif;
+            font-weight: 600;
+            font-size: .85rem;
+            color: var(--rs-muted);
+            text-decoration: none;
+            margin-top: 18px;
+            transition: color .2s ease, gap .2s ease;
+        }
+
+        .rs-back-link:hover {
+            color: var(--rs-accent);
+            gap: 10px;
+        }
+
         /* =========================================================
-           CARD DIVIDIDO (marca + formulário)
+           CARD (recuperação — layout estático de 2 colunas)
            ========================================================= */
-        .lg-wrapper {
+        .rs-wrapper {
             display: flex;
             justify-content: center;
             padding: 2rem 1rem 4rem;
         }
 
-        .lg-card {
+        .rs-card {
             position: relative;
             width: 100%;
-            max-width: 940px;
+            max-width: 900px;
+            min-height: 480px;
             background: #fff;
-            border-radius: var(--lg-radius);
+            border-radius: var(--rs-radius);
             overflow: hidden;
-            box-shadow: var(--lg-shadow);
-            display: grid;
-            grid-template-columns: 1.05fr 1fr;
+            box-shadow: var(--rs-shadow);
+            font-family: "Roboto", sans-serif;
+            display: flex;
         }
 
-        /* Painel de marca (lado esquerdo) */
-        .lg-media {
-            padding: 54px 48px;
+        /* =========================================================
+           FORMULÁRIO
+           ========================================================= */
+        .rs-panel {
+            width: 50%;
+            padding: 55px 55px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            color: #fff;
-            background:
-                radial-gradient(46% 130% at 100% 0%, rgba(255, 255, 255, .16), transparent 60%),
-                linear-gradient(135deg, var(--lg-accent), var(--lg-accent-dark));
         }
 
-        .lg-media .lg-eyebrow {
-            color: rgba(255, 255, 255, .78);
-        }
-
-        .lg-media .lg-eyebrow::before {
-            background: rgba(255, 255, 255, .6);
-        }
-
-        .lg-media-icon {
-            width: 60px;
-            height: 60px;
-            display: grid;
-            place-items: center;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, .14);
-            border: 1px solid rgba(255, 255, 255, .22);
-            font-size: 1.6rem;
-            margin-bottom: 24px;
-        }
-
-        .lg-media h2 {
-            color: #fff;
-            font-size: clamp(1.6rem, 3vw, 2.15rem);
-            font-weight: 800;
-            margin: 0 0 12px;
-        }
-
-        .lg-media > p {
-            color: rgba(255, 255, 255, .85);
-            font-size: .96rem;
-            line-height: 1.65;
-            max-width: 360px;
-            margin: 0;
-        }
-
-        .lg-media ul {
-            list-style: none;
-            margin: 26px 0 0;
-            padding: 0;
-        }
-
-        .lg-media li {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 12px;
-            font-size: .9rem;
-            color: rgba(255, 255, 255, .9);
-        }
-
-        .lg-media li i {
-            margin-top: 2px;
-            color: #4ade80;
-        }
-
-        /* Painel do formulário (lado direito) */
-        .lg-panel {
-            padding: 54px 52px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: #fff;
-        }
-
-        .lg-panel h2 {
+        .rs-panel h2 {
             font-weight: 800;
             font-size: clamp(1.6rem, 3vw, 2rem);
             margin: 0 0 6px;
         }
 
-        .lg-panel .lg-sub {
+        .rs-panel .rs-sub {
             font-size: .92rem;
-            color: var(--lg-muted);
+            color: var(--rs-muted);
             margin-bottom: 26px;
         }
 
-        .lg-panel .form-label {
+        /* Campos */
+        .rs-panel .form-label {
             font-family: "Lato", sans-serif;
             font-weight: 700;
             font-size: .7rem;
             letter-spacing: .09em;
             text-transform: uppercase;
-            color: var(--lg-muted);
+            color: var(--rs-muted);
             margin-bottom: 6px;
         }
 
-        .lg-panel .input-group-text {
-            background: var(--lg-bg);
-            border: 1px solid var(--lg-line);
-            color: var(--lg-muted);
+        .rs-panel .input-group-text {
+            background: var(--rs-bg);
+            border: 1px solid var(--rs-line);
+            color: var(--rs-muted);
         }
 
-        .lg-panel .form-control {
+        .rs-panel .form-control {
             height: 50px;
-            border: 1px solid var(--lg-line);
+            border: 1px solid var(--rs-line);
             box-shadow: none;
             transition: border-color .25s ease, box-shadow .25s ease;
         }
 
-        .lg-panel .form-control:focus {
-            border-color: var(--lg-accent);
-            box-shadow: 0 0 0 4px var(--lg-accent-soft);
+        .rs-panel .form-control:focus {
+            border-color: var(--rs-accent);
+            box-shadow: 0 0 0 4px var(--rs-accent-soft);
         }
 
-        .lg-foot {
-            margin-top: 22px;
+        /* =========================================================
+           PAINEL AZUL LATERAL (estático — sem toggle)
+           ========================================================= */
+        .rs-side {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            font-size: .9rem;
-            color: var(--lg-muted);
+            color: #fff;
+            background:
+                radial-gradient(46% 130% at 100% 0%, rgba(255, 255, 255, .16), transparent 60%),
+                linear-gradient(135deg, var(--rs-accent), var(--rs-accent-dark));
         }
 
-        .lg-foot a {
+        .rs-side i.bi {
+            font-size: 3.2rem;
+            margin-bottom: 18px;
+            opacity: .95;
+        }
+
+        .rs-side h2 {
+            color: #fff;
             font-family: "Montserrat", sans-serif;
-            font-weight: 600;
-            color: var(--lg-accent);
-            text-decoration: none;
+            font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+            font-weight: 800;
+            margin-bottom: 14px;
         }
 
-        .lg-foot a:hover {
-            text-decoration: underline;
+        .rs-side p {
+            max-width: 320px;
+            margin-bottom: 4px;
+            font-size: .95rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, .85);
         }
 
         /* =========================================================
            RESPONSIVO
            ========================================================= */
-        @media (max-width: 860px) {
-            .lg-card {
-                grid-template-columns: 1fr;
+        @media (max-width: 900px) {
+            .rs-card {
+                max-width: 700px;
+            }
+
+            .rs-panel,
+            .rs-side {
+                padding: 40px 35px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .rs-card {
+                flex-direction: column;
                 max-width: 520px;
             }
 
-            .lg-media {
-                padding: 40px 36px;
+            .rs-panel,
+            .rs-side {
+                width: 100%;
             }
 
-            .lg-media ul {
-                display: none;
+            .rs-side {
+                order: -1;
+                padding: 30px 25px;
             }
 
-            .lg-panel {
-                padding: 40px 34px;
+            .rs-side p {
+                font-size: .85rem;
+            }
+
+            .rs-panel {
+                padding: 35px 25px;
             }
         }
 
         @media (max-width: 480px) {
-            .lg-card {
+            .rs-card {
                 border-radius: 20px;
             }
 
-            .lg-media,
-            .lg-panel {
-                padding: 32px 24px;
+            .rs-side i.bi {
+                font-size: 2.6rem;
+                margin-bottom: 12px;
+            }
+
+            .rs-panel {
+                padding: 30px 20px;
             }
         }
 
         @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
 
-            .lg-page *,
-            .lg-page *::before,
-            .lg-page *::after {
+            .rs-page *,
+            .rs-page *::before,
+            .rs-page *::after {
                 animation: none !important;
                 transition: none !important;
             }
@@ -422,38 +435,57 @@
 
     @include('partials.preloader')
 
-    <div class="lg-progress" id="lgProgress"></div>
+    <div class="rs-progress" id="rsProgress"></div>
 
     <header id="header" class="header fixed-top">
 
+        <!-- Branding -->
         <div class="branding d-flex align-items-center">
+
             <div class="container position-relative d-flex align-items-center justify-content-between">
+
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
                     <h1 class="sitename">Mobipet</h1>
                 </a>
 
                 <nav id="navmenu" class="navmenu">
+
                     <ul>
-                        
+
                         @include('partials.nav-user')
                     </ul>
+
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
                 </nav>
+
             </div>
+
         </div>
+
     </header>
 
-    <main class="main lg-page" style="margin-top: 120px;">
+    <main class="main rs-page" style="margin-top: 120px;">
 
         <!-- ================= ALERTAS GLOBAIS ================= -->
         <div class="container" data-aos="fade-up">
             <div class="row justify-content-center">
-                <div class="col-md-10" style="max-width:940px;">
+                <div class="col-md-10" style="max-width:900px;">
+                    @if (session('sucesso'))
+                        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-3"
+                            role="alert">
+                            <i class="bi bi-check-circle-fill me-2"></i> {{ session('sucesso') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
                     @if (session('erro'))
                         <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-3"
                             role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
                         </div>
                     @endif
 
@@ -470,63 +502,65 @@
             </div>
         </div>
 
-        <!-- ================= CARD DE ACESSO DA EQUIPE ================= -->
-        <div class="lg-wrapper" data-aos="fade-up" data-aos-delay="100">
-            <div class="lg-card">
-
-                <!-- ---------- PAINEL DE MARCA ---------- -->
-                <div class="lg-media">
-                    <div class="lg-media-icon"><i class="bi bi-shield-lock"></i></div>
-                    <span class="lg-eyebrow">Portal da equipe</span>
-                    <h2>Bem-vindo de volta ao Mobipet</h2>
-                    <p>Faça login para acompanhar a rotina do petshop e manter os tutores informados.</p>
-                    <ul>
-                        <li><i class="bi bi-check-circle-fill"></i> Gerencie os agendamentos do dia</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Acompanhe cada etapa do atendimento</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Atualize o status em tempo real</li>
-                    </ul>
-                </div>
+        <!-- ================= CARD RECUPERAR SENHA ================= -->
+        <div class="rs-wrapper" data-aos="fade-up" data-aos-delay="100">
+            <div class="rs-card">
 
                 <!-- ---------- FORMULÁRIO ---------- -->
-                <div class="lg-panel">
+                <div class="rs-panel">
 
-                    <span class="lg-eyebrow">Acesso restrito</span>
-                    <h2>Entrar como funcionário</h2>
-                    <p class="lg-sub">Use o e-mail e a senha cadastrados pela administração.</p>
+                    <span class="rs-eyebrow"><span class="rs-idx">01</span> Recuperação</span>
 
-                    <form method="POST" action="{{ route('login.autenticarFuncionario') }}">
+                    <h2>Esqueceu sua senha?</h2>
+                    <p class="rs-sub">Informe o e-mail e o CPF cadastrados na sua conta. Se os dois conferirem, você cria uma nova senha na hora.</p>
+
+                    <form method="POST" action="{{ route('senha.verificar') }}">
                         @csrf
 
                         <div class="mb-3">
                             <label class="form-label">E-mail</label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input type="email" name="email" class="form-control rounded-end-3"
-                                    placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required>
+                                <span class="input-group-text">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input type="email" name="email"
+                                    class="form-control rounded-end-3"
+                                    placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required autofocus>
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label">Senha</label>
+                            <label class="form-label">CPF</label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" name="senha" class="form-control rounded-end-3"
-                                    placeholder="Sua senha" required>
+                                <span class="input-group-text">
+                                    <i class="bi bi-person-vcard"></i>
+                                </span>
+                                <input type="text" name="cpf"
+                                    class="form-control rounded-end-3"
+                                    placeholder="000.000.000-00" value="{{ old('cpf') }}"
+                                    inputmode="numeric" maxlength="14" required>
                             </div>
                         </div>
 
-                        <button type="submit" class="lg-btn lg-btn--primary">
-                            <i class="bi bi-box-arrow-in-right"></i>
-                            Entrar
+                        <button type="submit" class="rs-btn rs-btn--primary">
+                            <i class="bi bi-shield-check"></i>
+                            Confirmar dados
                         </button>
 
                     </form>
 
-                    <div class="lg-foot">
-                        Ainda não tem acesso?
-                        <a href="{{ route('funcionario') }}">Cadastre-se aqui</a>
-                    </div>
+                    <a href="{{ route('login') }}" class="rs-back-link">
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar para o login
+                    </a>
 
+                </div>
+
+                <!-- ---------- PAINEL AZUL LATERAL ---------- -->
+                <div class="rs-side">
+                    <i class="bi bi-shield-lock"></i>
+                    <h2>Confirme sua identidade</h2>
+                    <p>Sem link e sem espera: confirme o e-mail e o CPF que você usou no cadastro e crie uma nova senha na hora para voltar a cuidar do seu pet por aqui.</p>
                 </div>
 
             </div>
@@ -558,7 +592,7 @@
     <!-- Barra de progresso de rolagem -->
     <script>
         (function () {
-            var bar = document.getElementById('lgProgress');
+            var bar = document.getElementById('rsProgress');
             if (!bar) return;
             function update() {
                 var h = document.documentElement;

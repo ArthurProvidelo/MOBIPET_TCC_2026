@@ -17,37 +17,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/vendor/aos/aos.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
     <!-- CSS -->
-    <link href="{{ asset('assets/css/main.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/css/estilo.css') }}"
-        rel="stylesheet">
+    <link href="{{ asset('assets/css/estilo.css') }}" rel="stylesheet">
 
     <style>
-
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
@@ -489,7 +481,7 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23059669' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
         }
 
-        .status-select-banho {
+        .status-select-em-atendimento {
             background-color: #eff6ff;
             color: #2563eb;
             border-color: #bfdbfe;
@@ -677,11 +669,10 @@
     <header id="header" class="header fixed-top">
 
         <!-- Top Bar -->
-      
+
 
         <!-- Scroll Top -->
-        <a href="#"
-            id="scroll-top"
+        <a href="#" id="scroll-top"
             class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
             style="width:50px;height:50px;position:fixed;bottom:20px;right:20px;z-index:999;font-size:24px;">
 
@@ -704,7 +695,7 @@
 
                     <ul>
 
-                        
+
                         @include('partials.nav-user')
                     </ul>
 
@@ -728,48 +719,49 @@
 
         <section class="dashboard-hero py-4">
 
-    <div class="container">
+            <div class="container">
 
-        <div class="hero-card">
+                <div class="hero-card">
 
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
 
-                <div>
+                        <div>
 
-                    <span class="dashboard-badge mb-2 d-inline-flex">
-                        <i class="fa-solid fa-shield-dog me-2"></i>
-                        Painel Administrativo
-                    </span>
+                            <span class="dashboard-badge mb-2 d-inline-flex">
+                                <i class="fa-solid fa-shield-dog me-2"></i>
+                                Painel Administrativo
+                            </span>
 
-                    <h2 class="hero-title mb-2">
-                        Olá, <span>{{ session('nome') }}</span> 
-                    </h2>
+                            <h2 class="hero-title mb-2">
+                                Olá, <span>{{ session('nome') }}</span>
+                            </h2>
 
-                    <p class="hero-description mb-0">
-                        Bem-vindo ao painel de controle dos funcionários. Gerencie agendamentos, serviços e acompanhe as atividades do petshop.
-                    </p>
+                            <p class="hero-description mb-0">
+                                Bem-vindo ao painel de controle dos funcionários. Gerencie agendamentos, serviços e
+                                acompanhe as atividades do petshop.
+                            </p>
 
-                </div>
+                        </div>
 
-                <div class="mt-3 mt-lg-0">
+                        <div class="mt-3 mt-lg-0">
 
-                    <a href="{{ route('funcionario.agendamentos') }}"
-                        class="btn btn-dashboard btn-dashboard-primary">
+                            <a href="{{ route('funcionario.agendamentos') }}"
+                                class="btn btn-dashboard btn-dashboard-primary">
 
-                        <i class="fa-solid fa-calendar-check me-2"></i>
-                        Agendamentos
+                                <i class="fa-solid fa-calendar-check me-2"></i>
+                                Agendamentos
 
-                    </a>
+                            </a>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
-
-    </div>
-
-</section>
+        </section>
 
         <!-- KPIs -->
         <section class="dashboard-section">
@@ -823,8 +815,7 @@
 
                         <div class="kpi-card">
 
-                            <div class="kpi-icon"
-                                style="background:linear-gradient(135deg,#10b981,#34d399);">
+                            <div class="kpi-icon" style="background:linear-gradient(135deg,#10b981,#34d399);">
 
                                 <i class="fa-solid fa-paw"></i>
 
@@ -842,8 +833,7 @@
 
                             </p>
 
-                            <div class="kpi-growth"
-                                style="background:#ecfdf5;color:#059669;">
+                            <div class="kpi-growth" style="background:#ecfdf5;color:#059669;">
 
                                 <i class="fa-solid fa-heart"></i>
 
@@ -863,8 +853,7 @@
 
                         <div class="kpi-card">
 
-                            <div class="kpi-icon"
-                                style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
+                            <div class="kpi-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">
 
                                 <i class="fa-solid fa-clock"></i>
 
@@ -882,8 +871,7 @@
 
                             </p>
 
-                            <div class="kpi-growth"
-                                style="background:#fff7ed;color:#ea580c;">
+                            <div class="kpi-growth" style="background:#fff7ed;color:#ea580c;">
 
                                 <i class="fa-solid fa-hourglass-half"></i>
 
@@ -903,8 +891,7 @@
 
                         <div class="kpi-card">
 
-                            <div class="kpi-icon"
-                                style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">
+                            <div class="kpi-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">
 
                                 <i class="fa-solid fa-users"></i>
 
@@ -922,8 +909,7 @@
 
                             </p>
 
-                            <div class="kpi-growth"
-                                style="background:#f5f3ff;color:#7c3aed;">
+                            <div class="kpi-growth" style="background:#f5f3ff;color:#7c3aed;">
 
                                 <i class="fa-solid fa-user-group"></i>
 
@@ -955,7 +941,7 @@
 
                         <div>
 
-                            <h3>
+                            <h3 class="text-white">
 
                                 Últimos Agendamentos
 
@@ -1004,7 +990,6 @@
 
                                 <tbody>
                                     @forelse($ultimosAgendamentos as $agendamento)
-
                                         <tr>
 
                                             <!-- PET -->
@@ -1014,10 +999,9 @@
 
                                                     <div class="pet-avatar">
 
-                                                        <i class="fa-solid
-                                                            {{ ($agendamento->pet->especie ?? '') == 'Gato'
-                                                                ? 'fa-cat'
-                                                                : 'fa-dog' }}">
+                                                        <i
+                                                            class="fa-solid
+                                                            {{ ($agendamento->pet->especie ?? '') == 'Gato' ? 'fa-cat' : 'fa-dog' }}">
                                                         </i>
 
                                                     </div>
@@ -1090,24 +1074,22 @@
                                             <!-- STATUS -->
                                             <td data-label="Status">
 
-                                                <select
-                                                    name="status"
-                                                    class="status-select status-agendamento status-select-{{ strtolower($agendamento->status_agendamento) }}"
-                                                    data-id="{{ $agendamento->id_agendamento }}"
-                                                >
-                                                    <option value="Concluido"
-                                                        {{ $agendamento->status_agendamento == 'Concluido' ? 'selected' : '' }}>
-                                                        Concluído
-                                                    </option>
-
+                                                <select name="status"
+                                                    class="status-select status-agendamento status-select-{{ \Illuminate\Support\Str::slug($agendamento->status_agendamento) }}"
+                                                    data-id="{{ $agendamento->id_agendamento }}">
                                                     <option value="Pendente"
                                                         {{ $agendamento->status_agendamento == 'Pendente' ? 'selected' : '' }}>
                                                         Pendente
                                                     </option>
 
-                                                    <option value="Banho"
-                                                        {{ $agendamento->status_agendamento == 'Banho' ? 'selected' : '' }}>
-                                                        Banho
+                                                    <option value="Em atendimento"
+                                                        {{ $agendamento->status_agendamento == 'Em atendimento' ? 'selected' : '' }}>
+                                                        Em atendimento
+                                                    </option>
+
+                                                    <option value="Concluido"
+                                                        {{ $agendamento->status_agendamento == 'Concluido' ? 'selected' : '' }}>
+                                                        Concluído
                                                     </option>
                                                 </select>
 
@@ -1148,7 +1130,6 @@
                                             </td>
 
                                         </tr>
-
                                     @endforelse
 
                                 </tbody>
@@ -1189,8 +1170,7 @@
 
                     <div class="col-lg-4 col-md-6">
 
-                        <a href="{{ route('funcionario.agendamentos') }}"
-                            class="text-decoration-none">
+                        <a href="{{ route('funcionario.agendamentos') }}" class="text-decoration-none">
 
                             <div class="quick-card">
 
@@ -1220,8 +1200,7 @@
 
                     <div class="col-lg-4 col-md-6">
 
-                        <a href="{{ route('services.create') }}"
-                            class="text-decoration-none">
+                        <a href="{{ route('services.create') }}" class="text-decoration-none">
 
                             <div class="quick-card">
 
@@ -1251,13 +1230,11 @@
 
                     <div class="col-lg-4 col-md-12">
 
-                        <a href="{{ route('logout') }}"
-                            class="text-decoration-none">
+                        <a href="{{ route('logout') }}" class="text-decoration-none">
 
                             <div class="quick-card">
 
-                                <div class="quick-icon"
-                                    style="background:linear-gradient(135deg,#ef4444,#dc2626);">
+                                <div class="quick-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);">
 
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
 
@@ -1318,8 +1295,13 @@
         }
 
         @keyframes footerGradientMove {
-            0% { background-position: 0% 0; }
-            100% { background-position: 200% 0; }
+            0% {
+                background-position: 0% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
         }
 
         .footer-badge {
@@ -1374,9 +1356,17 @@
         }
 
         @keyframes statusPulse {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
-            70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
         }
 
         .footer-16 .contact-info {
@@ -1454,30 +1444,21 @@
 
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (typeof AOS !== "undefined") {
-                AOS.init({
-                    duration: 900,
-                    once: true,
-                    easing: "ease-in-out"
-                });
-            }
-        });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         document.querySelectorAll('.status-agendamento').forEach(select => {
 
-            select.addEventListener('change', function () {
+            select.addEventListener('change', function() {
 
                 const agendamentoId = this.dataset.id;
                 const status = this.value;
+                const statusSlug = status.toLowerCase().replace(/\s+/g, '-');
                 const previousClass = Array.from(this.classList).find(c => c.startsWith('status-select-'));
 
-                this.classList.remove('status-select-pendente', 'status-select-concluido', 'status-select-banho');
-                this.classList.add(`status-select-${status.toLowerCase()}`);
+                this.classList.remove('status-select-pendente', 'status-select-concluido',
+                    'status-select-em-atendimento');
+                this.classList.add(`status-select-${statusSlug}`);
 
                 Swal.fire({
                     title: 'Atualizando status...',
@@ -1490,58 +1471,59 @@
                 });
 
                 fetch(`/agendamentos/${agendamentoId}/status`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        status: status
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content'),
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            status: status
+                        })
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
+                    .then(response => response.json())
+                    .then(data => {
 
-                    if (data.success) {
-                        console.log(data.message);
+                        if (data.success) {
+                            console.log(data.message);
 
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Status atualizado!',
-                            text: data.message || 'Status atualizado com sucesso!',
-                            confirmButtonText: 'OK'
-                        });
-                    } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Status atualizado!',
+                                text: data.message || 'Status atualizado com sucesso!',
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            if (previousClass) {
+                                this.classList.remove(`status-select-${statusSlug}`);
+                                this.classList.add(previousClass);
+                            }
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erro',
+                                text: data.message || 'Não foi possível atualizar o status.',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+
                         if (previousClass) {
-                            this.classList.remove(`status-select-${status.toLowerCase()}`);
+                            this.classList.remove(`status-select-${statusSlug}`);
                             this.classList.add(previousClass);
                         }
 
                         Swal.fire({
                             icon: 'error',
                             title: 'Erro',
-                            text: data.message || 'Não foi possível atualizar o status.',
+                            text: 'Erro ao atualizar o status.',
                             confirmButtonText: 'OK'
                         });
-                    }
-
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-
-                    if (previousClass) {
-                        this.classList.remove(`status-select-${status.toLowerCase()}`);
-                        this.classList.add(previousClass);
-                    }
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Erro',
-                        text: 'Erro ao atualizar o status.',
-                        confirmButtonText: 'OK'
                     });
-                });
 
             });
 

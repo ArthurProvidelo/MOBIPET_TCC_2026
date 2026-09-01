@@ -44,6 +44,7 @@ class AgendamentoController extends Controller
         'em andamento'   => 'andamento',
         'andamento'      => 'andamento',
         'em atendimento' => 'andamento',
+        'banho'          => 'andamento', // legado: status antigo antes do rename para "Em atendimento"
         'concluido'      => 'concluido',
         'finalizado'     => 'concluido',
         'cancelado'      => 'cancelado',
@@ -79,6 +80,27 @@ class AgendamentoController extends Controller
             'horario' => 'required',
             'observacoes' => 'required'
         ]);
+
+        // Não permite agendar para uma data anterior à data atual.
+        $dataAgendamento = Carbon::parse($request->data_agendamento)->startOfDay();
+
+        if ($dataAgendamento->lt(Carbon::today())) {
+            return back()
+                ->withInput()
+                ->withErrors(['data_agendamento' => 'A data do agendamento não pode ser anterior à data atual.']);
+        }
+
+        // Não permite dois agendamentos no mesmo dia e horário para o mesmo funcionário.
+        $jaExiste = Agendamento::where('data_agendamento', $request->data_agendamento)
+            ->where('horario', $request->horario)
+            ->where('fk_id_funcionario', $request->fk_id_funcionario)
+            ->exists();
+
+        if ($jaExiste) {
+            return back()
+                ->withInput()
+                ->withErrors(['horario' => 'Já existe um agendamento para esta data e horário.']);
+        }
 
         Agendamento::create([
             'data_agendamento' => $request->data_agendamento,
@@ -246,7 +268,7 @@ class AgendamentoController extends Controller
     public function atualizarStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:Concluido,Pendente,Banho',
+            'status' => 'required|in:Concluido,Pendente,Em atendimento',
         ]);
 
         $agendamento = Agendamento::findOrFail($id);

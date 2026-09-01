@@ -12,6 +12,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PainelController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\GoogleFuncionarioController;
+use App\Http\Controllers\SenhaController;
 
 Route::get('/pets/atualizar-tabela', 
 [PetController::class, 'atualizarTabela'])
@@ -147,3 +148,33 @@ Route::get('/auth/googleFuncionario', [GoogleFuncionarioController::class, 'redi
 Route::get('/auth/google/callbackFuncionario', [GoogleFuncionarioController::class, 'callbackFuncionario'])
     ->name('google.callbackFuncionario');
 
+
+
+// ===============================
+// RECUPERAÇÃO DE SENHA (conferência de e-mail + CPF, sem envio de e-mail)
+// ===============================
+
+// Tela para informar o e-mail e o CPF cadastrados
+Route::get('/recuperar-senha', [SenhaController::class, 'formularioRecuperar'])
+    ->name('senha.recuperar');
+
+// Confere se o e-mail e o CPF batem com algum cliente
+Route::post('/recuperar-senha', [SenhaController::class, 'verificarIdentidade'])
+    ->name('senha.verificar');
+
+Route::get('/resetar-senha/{token}', [ClienteController::class, 'mostrarFormularioReset'])
+    ->name('password.reset');
+
+
+// ===============================
+// REDEFINIÇÃO DE SENHA
+// ===============================
+
+// Tela para criar uma nova senha (liberada só após a conferência)
+Route::get('/redefinir-senha', [SenhaController::class, 'formulario'])
+    ->name('senha.redefinir');
+
+
+// Atualiza a senha
+Route::post('/redefinir-senha', [SenhaController::class, 'atualizar'])
+    ->name('senha.atualizar');

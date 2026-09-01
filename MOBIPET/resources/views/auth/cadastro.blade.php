@@ -349,7 +349,7 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
 
             .lg-page *,
             .lg-page *::before,

@@ -22,7 +22,8 @@ class ClienteController extends Controller
     }
 
     // Salvar novo cliente
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         // Remove máscara antes da validação
         $request->merge([
             'cpf' => preg_replace('/\D/', '', $request->cpf),
@@ -51,21 +52,21 @@ class ClienteController extends Controller
             ->with('success', 'Cliente cadastrado com sucesso!');
     }
 
-    public function perfil(){
+    public function perfil()
+    {
         if (!session()->has('id')) {
             return redirect()->route('login');
         }
 
-        if(session('nivel_acesso') == 'USUARIO'){
+        if (session('nivel_acesso') == 'USUARIO') {
             $cliente = DB::table('cliente')
                 ->where('id_cliente', session('id'))
                 ->first();
 
             $pets = DB::table('pet')
-            ->where('fk_id_cliente', session('id'))
-            ->get();
-
-        }else{
+                ->where('fk_id_cliente', session('id'))
+                ->get();
+        } else {
             $cliente = DB::table('funcionario')
                 ->where('id_funcionario', session('id'))
                 ->first();
@@ -101,7 +102,8 @@ class ClienteController extends Controller
     }
 
     // Atualizar cliente
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $request->merge([
             'cpf' => preg_replace('/\D/', '', $request->cpf),
             'telefone' => preg_replace('/\D/', '', $request->telefone),
@@ -129,31 +131,32 @@ class ClienteController extends Controller
             ->with('success', 'Cliente atualizado com sucesso!');
     }
 
-    public function updatePerfil(Request $request){
-    if (!session()->has('id')) {
-        return redirect()->route('login');
-    }
+    public function updatePerfil(Request $request)
+    {
+        if (!session()->has('id')) {
+            return redirect()->route('login');
+        }
 
-    $request->validate([
-        'nome' => 'required|max:255',
-        'email' => 'required|email|max:255',
-        'telefone' => 'required|max:255',
-        'endereco' => 'required|max:255'
-    ]);
-
-    DB::table('cliente')
-        ->where('id_cliente', session('id'))
-        ->update([
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'endereco' => $request->endereco
+        $request->validate([
+            'nome' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'telefone' => 'required|max:255',
+            'endereco' => 'required|max:255'
         ]);
 
-    return redirect()
-        ->route('perfil')
-        ->with('success', 'Perfil atualizado com sucesso!');
-}
+        DB::table('cliente')
+            ->where('id_cliente', session('id'))
+            ->update([
+                'nome' => $request->nome,
+                'email' => $request->email,
+                'telefone' => $request->telefone,
+                'endereco' => $request->endereco
+            ]);
+
+        return redirect()
+            ->route('perfil')
+            ->with('success', 'Perfil atualizado com sucesso!');
+    }
 
     // Excluir cliente
     public function destroy($id)
@@ -163,6 +166,13 @@ class ClienteController extends Controller
             ->delete();
 
         return redirect()->route('clientes.index')
-                         ->with('success', 'Cliente excluído com sucesso!');
+            ->with('success', 'Cliente excluído com sucesso!');
+    }
+
+    public function mostrarFormularioReset($token)
+    {
+        return view('auth.resetar-senha', [
+            'token' => $token
+        ]);
     }
 }

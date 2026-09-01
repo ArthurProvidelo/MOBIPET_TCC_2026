@@ -28,7 +28,7 @@
         overflow: hidden;
         border: 0;
         margin-top: 60px;
-        padding: 132px 0 30px;
+        padding: 138px 0 30px;
         background: linear-gradient(160deg, var(--mpf-bg1) 0%, var(--mpf-bg2) 100%);
         color: var(--mpf-muted);
         font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -40,24 +40,8 @@
         font-family: "Montserrat", sans-serif;
     }
 
-    /* faixa de gradiente animada no topo */
-    .mpf::before {
-        content: "";
-        position: absolute;
-        inset: 0 0 auto 0;
-        height: 3px;
-        z-index: 4;
-        background: linear-gradient(90deg, transparent, var(--mpf-accent), var(--mpf-green), var(--mpf-accent-bright), transparent);
-        background-size: 200% 100%;
-        animation: mpf-slide 6s linear infinite;
-    }
-
-    @keyframes mpf-slide {
-        to { background-position: 200% 0; }
-    }
-
-    /* onda no topo */
-    .mpf__wave {
+    /* crista de espuma no topo — combina com as bolhas de banho */
+    .mpf__foam {
         position: absolute;
         top: 0;
         left: 0;
@@ -67,16 +51,17 @@
         pointer-events: none;
     }
 
-    .mpf__wave svg {
+    .mpf__foam svg {
         display: block;
         width: 100%;
-        height: 68px;
+        height: 70px;
     }
 
-    .mpf__wave .mpf__wave-a { fill: rgba(255, 255, 255, .045); }
-    .mpf__wave .mpf__wave-b { fill: rgba(79, 140, 255, .16); }
+    .mpf__foam .mpf__foam-back  { fill: rgba(255, 255, 255, .05); }
+    .mpf__foam .mpf__foam-mid   { fill: rgba(120, 170, 255, .12); }
+    .mpf__foam .mpf__foam-front { fill: rgba(255, 255, 255, .11); }
 
-    /* bolhas de banho subindo */
+    /* bolhas de sabão subindo */
     .mpf__bubbles {
         position: absolute;
         inset: 0;
@@ -87,21 +72,41 @@
 
     .mpf__bubbles span {
         position: absolute;
-        bottom: -70px;
+        bottom: -80px;
         left: var(--x);
         width: var(--s);
         height: var(--s);
         border-radius: 50%;
-        background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, .55), rgba(79, 140, 255, .12) 62%, transparent 74%);
-        border: 1px solid rgba(255, 255, 255, .10);
+        /* interior quase invisível + aro fino iridescente = parede de sabão */
+        background:
+            radial-gradient(circle at 30% 27%, rgba(255, 255, 255, .30) 0%, rgba(255, 255, 255, .05) 14%, transparent 24%),
+            radial-gradient(circle at 72% 78%, rgba(150, 190, 255, .10) 0%, transparent 32%),
+            radial-gradient(circle at 50% 50%, transparent 56%, rgba(255, 255, 255, .04) 72%, rgba(180, 165, 255, .12) 84%, rgba(160, 225, 255, .16) 92%, rgba(255, 255, 255, .22) 97%, transparent 100%);
+        box-shadow:
+            inset 0 0 5px rgba(255, 255, 255, .14),
+            inset 3px -3px 7px rgba(120, 170, 255, .10),
+            0 0 5px rgba(255, 255, 255, .04);
         opacity: 0;
-        animation: mpf-rise var(--d) ease-in var(--delay) infinite;
+        animation: mpf-rise var(--d) linear var(--delay) infinite;
+    }
+
+    /* brilho especular da bolha */
+    .mpf__bubbles span::after {
+        content: "";
+        position: absolute;
+        top: 13%;
+        left: 17%;
+        width: 34%;
+        height: 34%;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .75), rgba(255, 255, 255, .18) 52%, transparent 72%);
     }
 
     @keyframes mpf-rise {
-        0% { transform: translateY(0) scale(.55); opacity: 0; }
-        12% { opacity: .9; }
-        70% { opacity: .55; }
+        0% { transform: translateY(0) scale(.5); opacity: 0; }
+        10% { opacity: .5; }
+        55% { opacity: .34; }
+        80% { opacity: .22; }
         100% { transform: translateY(calc(-1 * var(--rise))) translateX(var(--drift)) scale(1); opacity: 0; }
     }
 
@@ -113,7 +118,7 @@
     /* trilha de patinhas caminhando */
     .mpf__pawtrail {
         position: absolute;
-        top: 74px;
+        top: 124px;
         right: 3%;
         display: flex;
         gap: 10px;
@@ -410,11 +415,12 @@
     }
 
     @media (max-width: 767px) {
-        .mpf { padding-top: 108px; }
+        .mpf { padding-top: 116px; }
+        .mpf__foam svg { height: 54px; }
         .mpf__bottom { justify-content: center; text-align: center; }
     }
 
-    @media (prefers-reduced-motion: reduce) {
+    @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
         .mpf *,
         .mpf *::before,
         .mpf *::after {
@@ -422,7 +428,7 @@
             transition: none !important;
         }
 
-        .mpf__wave,
+        .mpf__foam,
         .mpf__bubbles,
         .mpf__pawtrail { display: none; }
 
@@ -436,22 +442,29 @@
 
 <footer id="footer" class="mpf">
 
-    {{-- onda animada no topo --}}
-    <div class="mpf__wave" aria-hidden="true">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="mpf__wave-a"
-                d="M0,40 C300,90 600,0 900,40 C1050,60 1150,50 1200,45 L1200,0 L0,0 Z">
-                <animate attributeName="d" dur="12s" repeatCount="indefinite"
-                    values="M0,40 C300,90 600,0 900,40 C1050,60 1150,50 1200,45 L1200,0 L0,0 Z;
-                            M0,52 C300,8 600,82 900,34 C1050,12 1150,46 1200,56 L1200,0 L0,0 Z;
-                            M0,40 C300,90 600,0 900,40 C1050,60 1150,50 1200,45 L1200,0 L0,0 Z" />
+    {{-- crista de espuma no topo (banho) --}}
+    <div class="mpf__foam" aria-hidden="true">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="mpf__foam-back"
+                d="M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z">
+                <animate attributeName="d" dur="20s" repeatCount="indefinite"
+                    values="M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z;
+                            M0,80 L0,40 Q90,22 180,38 Q250,6 320,42 Q420,20 520,36 Q600,8 680,42 Q780,24 880,36 Q960,8 1040,42 Q1120,20 1200,36 L1200,0 L0,0 Z;
+                            M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z" />
             </path>
-            <path class="mpf__wave-b"
-                d="M0,55 C250,20 500,80 800,50 C1000,30 1100,55 1200,60 L1200,0 L0,0 Z">
-                <animate attributeName="d" dur="8s" repeatCount="indefinite"
-                    values="M0,55 C250,20 500,80 800,50 C1000,30 1100,55 1200,60 L1200,0 L0,0 Z;
-                            M0,44 C250,82 500,14 800,46 C1000,66 1100,38 1200,36 L1200,0 L0,0 Z;
-                            M0,55 C250,20 500,80 800,50 C1000,30 1100,55 1200,60 L1200,0 L0,0 Z" />
+            <path class="mpf__foam-mid"
+                d="M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z">
+                <animate attributeName="d" dur="16s" repeatCount="indefinite"
+                    values="M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z;
+                            M0,80 L0,44 Q110,26 220,40 Q320,12 420,44 Q540,24 660,38 Q760,10 860,44 Q980,26 1100,38 Q1160,14 1200,44 L1200,0 L0,0 Z;
+                            M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z" />
+            </path>
+            <path class="mpf__foam-front"
+                d="M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z">
+                <animate attributeName="d" dur="13s" repeatCount="indefinite"
+                    values="M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z;
+                            M0,80 L0,48 Q60,34 120,44 Q190,22 260,47 Q340,34 420,43 Q490,22 560,47 Q650,34 740,43 Q820,22 900,47 Q980,34 1060,43 Q1140,22 1200,48 L1200,0 L0,0 Z;
+                            M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z" />
             </path>
         </svg>
     </div>
@@ -472,6 +485,20 @@
         <span style="--x:91%;--s:11px;--d:10s;--delay:0.8s;--rise:465px;--drift:-24px"></span>
         <span style="--x:96%;--s:22px;--d:14s;--delay:2.2s;--rise:515px;--drift:14px"></span>
         <span style="--x:40%;--s:7px;--d:7.5s;--delay:6s;--rise:430px;--drift:-12px"></span>
+        <span style="--x:3%;--s:9px;--d:9.5s;--delay:3.2s;--rise:455px;--drift:18px"></span>
+        <span style="--x:9%;--s:6px;--d:7s;--delay:5.5s;--rise:425px;--drift:-14px"></span>
+        <span style="--x:16%;--s:14px;--d:11.5s;--delay:1.8s;--rise:485px;--drift:22px"></span>
+        <span style="--x:23%;--s:10px;--d:9s;--delay:4.8s;--rise:460px;--drift:-20px"></span>
+        <span style="--x:31%;--s:19px;--d:13s;--delay:0.3s;--rise:505px;--drift:16px"></span>
+        <span style="--x:38%;--s:8px;--d:8s;--delay:2.7s;--rise:445px;--drift:-18px"></span>
+        <span style="--x:48%;--s:13px;--d:10.5s;--delay:3.9s;--rise:475px;--drift:24px"></span>
+        <span style="--x:56%;--s:17px;--d:12.5s;--delay:1.2s;--rise:495px;--drift:-16px"></span>
+        <span style="--x:64%;--s:7px;--d:7.5s;--delay:5.2s;--rise:430px;--drift:20px"></span>
+        <span style="--x:72%;--s:21px;--d:14.5s;--delay:2.9s;--rise:515px;--drift:-22px"></span>
+        <span style="--x:80%;--s:9px;--d:8.5s;--delay:4.2s;--rise:450px;--drift:14px"></span>
+        <span style="--x:88%;--s:12px;--d:10s;--delay:1.6s;--rise:470px;--drift:-18px"></span>
+        <span style="--x:94%;--s:8px;--d:8s;--delay:5.8s;--rise:440px;--drift:16px"></span>
+        <span style="--x:66%;--s:6px;--d:7s;--delay:3.4s;--rise:420px;--drift:-12px"></span>
     </div>
 
     {{-- trilha de patinhas --}}
@@ -581,7 +608,7 @@
         (function () {
             var btn = document.getElementById('mpfTop');
             if (!btn) return;
-            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var reduce = false; // Mobipet: animações sempre ativas.
             btn.addEventListener('click', function () {
                 window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
             });

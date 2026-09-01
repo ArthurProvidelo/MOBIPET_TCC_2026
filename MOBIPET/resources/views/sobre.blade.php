@@ -900,7 +900,7 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
             .sb-page *,
             .sb-page *::before,
             .sb-page *::after {

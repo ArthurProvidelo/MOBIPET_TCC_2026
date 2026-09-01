@@ -53,7 +53,7 @@ class PetController extends Controller
         $pet = $this->petDoCliente($request, $id);
 
         $agendamento = Agendamento::where('fk_id_pet', $pet->id_pet)
-            ->where('status_agendamento', 'Banho')
+            ->where('status_agendamento', 'Em atendimento')
             ->with(['servico', 'funcionario'])
             ->latest('id_agendamento')
             ->first();

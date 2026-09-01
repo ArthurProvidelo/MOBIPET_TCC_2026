@@ -2,510 +2,531 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Cadastrar Pet | Mobipet</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cadastrar Pet | Mobipet</title>
+    <meta name="description" content="Cadastre um novo pet na sua conta Mobipet e acompanhe cada atendimento dele pela plataforma.">
+    <meta name="keywords" content="cadastrar pet mobipet, novo pet, cadastro de animal">
 
-  <!-- Favicons -->
-  <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    <!-- Favicons -->
+    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
-  <!-- Main CSS Files -->
-  <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/css/estilo.css')}}" rel="stylesheet">
+    <!-- Main CSS Files -->
+    <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/estilo.css') }}" rel="stylesheet">
+
+    <style>
+        /* ===========================================================
+           CADASTRAR PET — MOBIPET  ·  isolado (prefixo pt-)
+           mesmo sistema tipográfico/visual de devs.blade.php e das
+           telas de recuperação de senha (rs-/rd-)
+           =========================================================== */
+        .pt-page {
+            --pt-accent: #175cdd;
+            --pt-accent-dark: #0f47b3;
+            --pt-accent-soft: #eaf1fe;
+            --pt-ink: #0f1b34;
+            --pt-body: #4a5568;
+            --pt-muted: #8794a7;
+            --pt-line: #e6ecf5;
+            --pt-bg: #f7f9ff;
+            --pt-radius: 26px;
+            --pt-radius-sm: 14px;
+            --pt-shadow-sm: 0 10px 30px -14px rgba(15, 27, 52, .2);
+            --pt-shadow: 0 40px 90px -40px rgba(23, 92, 221, .4);
+
+            font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--pt-body);
+        }
+
+        .pt-page h1,
+        .pt-page h2,
+        .pt-page h3,
+        .pt-page h4 {
+            font-family: "Montserrat", sans-serif;
+            color: var(--pt-ink);
+            letter-spacing: -0.022em;
+            line-height: 1.12;
+        }
+
+        /* Barra de progresso de rolagem (padrão do site) */
+        .pt-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--pt-accent), #4ade80);
+            z-index: 1100;
+            transition: width .12s linear;
+        }
+
+        /* Rótulo de seção */
+        .pt-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-size: .78rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--pt-accent);
+            margin-bottom: 14px;
+        }
+
+        .pt-eyebrow::before {
+            content: "";
+            width: 26px;
+            height: 2px;
+            background: currentColor;
+        }
+
+        .pt-eyebrow .pt-idx {
+            color: var(--pt-muted);
+        }
+
+        /* =========================================================
+           FUNDO / HERO
+           ========================================================= */
+        .pt-hero {
+            padding: 170px 0 100px;
+            background:
+                radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
+                radial-gradient(circle at bottom left, #dcfce7 0%, transparent 30%),
+                var(--pt-bg);
+            min-height: 100vh;
+        }
+
+        .pt-wrap {
+            width: min(820px, 92%);
+            margin-inline: auto;
+        }
+
+        .pt-hero-head {
+            text-align: center;
+            max-width: 620px;
+            margin: 0 auto 44px;
+        }
+
+        .pt-h1 {
+            font-size: clamp(2rem, 4.4vw, 2.9rem);
+            font-weight: 800;
+            margin: 0 0 14px;
+        }
+
+        .pt-lead {
+            font-size: 1.02rem;
+            color: var(--pt-muted);
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        /* =========================================================
+           ALERTAS
+           ========================================================= */
+        .pt-alert {
+            border-radius: var(--pt-radius-sm);
+            border: none;
+            padding: 16px 18px;
+            font-size: .92rem;
+            margin-bottom: 22px;
+        }
+
+        /* =========================================================
+           CARD / FORMULÁRIO
+           ========================================================= */
+        .pt-card {
+            background: #fff;
+            border-radius: var(--pt-radius);
+            box-shadow: var(--pt-shadow);
+            padding: clamp(28px, 5vw, 54px);
+        }
+
+        .pt-section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--pt-ink);
+        }
+
+        .pt-section-title:not(:first-child) {
+            margin-top: 8px;
+        }
+
+        .pt-section-title i {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--pt-accent), #3b82f6);
+            color: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .pt-page label {
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-size: .72rem;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--pt-muted);
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .pt-page .form-control,
+        .pt-page .form-select {
+            height: 56px;
+            border-radius: 16px;
+            border: 1px solid var(--pt-line);
+            background-color: var(--pt-bg);
+            padding: 14px 18px;
+            font-size: .96rem;
+            color: var(--pt-ink);
+            transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease;
+            box-shadow: none !important;
+        }
+
+        .pt-page .form-control:focus,
+        .pt-page .form-select:focus {
+            border-color: var(--pt-accent);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px var(--pt-accent-soft) !important;
+        }
+
+        /* Escolha de espécie (cartões com radio escondido) */
+        .pt-choice {
+            border: 2px solid var(--pt-line);
+            background-color: var(--pt-bg);
+            color: var(--pt-muted);
+            cursor: pointer;
+            transition: all .22s ease;
+        }
+
+        .pt-choice:hover {
+            border-color: #93c5fd;
+            background-color: var(--pt-accent-soft);
+            color: var(--pt-accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-check:checked+.pt-choice {
+            border-color: var(--pt-accent);
+            background-color: var(--pt-accent-soft);
+            color: var(--pt-accent);
+            box-shadow: 0 8px 20px rgba(23, 92, 221, .18);
+            transform: translateY(-2px);
+        }
+
+        /* Controle segmentado (porte) */
+        .pt-segmented {
+            background: var(--pt-bg);
+            border: 1px solid var(--pt-line);
+        }
+
+        .pt-segment-item {
+            border: none !important;
+            color: var(--pt-muted);
+            background: transparent;
+            font-family: "Montserrat", sans-serif;
+            transition: .25s;
+        }
+
+        .pt-segment-item:hover {
+            color: var(--pt-ink);
+        }
+
+        .btn-check:checked+.pt-segment-item {
+            background-color: #fff !important;
+            color: var(--pt-accent) !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(15, 27, 52, .08) !important;
+        }
+
+        /* =========================================================
+           BOTÕES (sistema consistente — padrão devs / rs / rd)
+           ========================================================= */
+        .pt-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+            font-size: .96rem;
+            padding: 15px 28px;
+            border-radius: 999px;
+            border: 1.5px solid transparent;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+        }
+
+        .pt-btn--primary {
+            background: var(--pt-accent);
+            color: #fff;
+            box-shadow: 0 18px 34px -16px rgba(23, 92, 221, .75);
+        }
+
+        .pt-btn--primary:hover {
+            background: var(--pt-accent-dark);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .pt-btn--ghost {
+            background: transparent;
+            color: var(--pt-ink);
+            border-color: var(--pt-line);
+        }
+
+        .pt-btn--ghost:hover {
+            border-color: var(--pt-accent);
+            color: var(--pt-accent);
+            transform: translateY(-3px);
+        }
+
+        .pt-actions {
+            display: flex;
+            flex-wrap: wrap-reverse;
+            gap: 16px;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .pt-actions .pt-btn--primary {
+            flex: 1 1 260px;
+        }
+
+        .pt-actions .pt-btn--ghost {
+            flex: 0 0 auto;
+        }
+
+        .pt-divider {
+            border: none;
+            border-top: 1px solid var(--pt-line);
+            margin: 40px 0 34px;
+        }
+
+        /* =========================================================
+           RESPONSIVO
+           ========================================================= */
+        @media (max-width: 768px) {
+            .pt-hero {
+                padding-top: 140px;
+            }
+
+            .pt-card {
+                border-radius: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
+
+            .pt-page *,
+            .pt-page *::before,
+            .pt-page *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="index-page">
 
     @include('partials.preloader')
 
+    <div class="pt-progress" id="ptProgress"></div>
 
-  <!-- =========================================================
-  HEADER
-  ========================================================= -->
-  <header id="header" class="header fixed-top">
-    <!-- Top Bar -->
+    <!-- =========================================================
+    HEADER
+    ========================================================= -->
+    <header id="header" class="header fixed-top">
 
-    <!-- Scroll Top Button -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow" style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
-        <i class="bi bi-arrow-up-short"></i>
-    </a>
+        <a href="#" id="scroll-top"
+            class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
+            style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+            <i class="bi bi-arrow-up-short"></i>
+        </a>
 
-    <!-- Branding -->
-    <div class="branding d-flex align-items-center">
-        <div class="container position-relative d-flex align-items-center justify-content-between">
-            <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                <h1 class="sitename">Mobipet</h1>
-            </a>
+        <div class="branding d-flex align-items-center">
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+                    <h1 class="sitename">Mobipet</h1>
+                </a>
 
-            <nav id="navmenu" class="navmenu">
-                <ul>
-                    
-                    @include('partials.nav-user')
-                </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        @include('partials.nav-user')
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+            </div>
         </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- =========================================================
-  MAIN CONTENT
-  ========================================================= -->
-  <main class="main">
-    <section class="agendamento-section">
-      <div class="container">
+    <!-- =========================================================
+    MAIN CONTENT
+    ========================================================= -->
+    <main class="main pt-page">
+        <section class="pt-hero">
+            <div class="pt-wrap">
 
-        <div class="hero-agendamento text-center" data-aos="fade-up">
-          <h1 class="hero-title">Adicionar Companheiro</h1>
-        </div>
-
-        <div class="row justify-content-center">
-          <div class="col-lg-9 col-md-11">
-            <div class="card agendamento-card" data-aos="zoom-in" data-aos-delay="200">
-
-              <!-- Card Header -->
-              <div class="card-header">
-                <div class="d-flex align-items-center gap-3">
-                  <div class="header-icon">
-                    <i class="fa-solid fa-paw"></i>
-                  </div>
-                  <div>
-                    <h3 class="text-white">Novo Pet</h3>
-                    <p class="mb-0 text-metod">Preencha os campos abaixo para concluir o registro.</p>
-                  </div>
+                <div class="pt-hero-head" data-aos="fade-up">
+                    <span class="pt-eyebrow" style="justify-content:center;"><span class="pt-idx">Meus pets</span> · Novo cadastro</span>
+                    <h1 class="pt-h1">Adicionar companheiro</h1>
+                    <p class="pt-lead">Preencha os campos abaixo para concluir o registro do seu pet e liberar o agendamento de atendimentos.</p>
                 </div>
-              </div>
 
-              <!-- Card Body -->
-              <div class="card-body">
-                <form action="{{ route('pets.store') }}" method="POST">
-                  @csrf
-
-                  <!-- SEÇÃO: IDENTIFICAÇÃO -->
-                  <div class="section-title mt-2">
-                    <i class="fa-solid fa-file-signature"></i>
-                    <span>Informações Básicas</span>
-                  </div>
-
-                  <div class="mb-4">
-                    <label>Nome do Pet</label>
-                    <input type="text" name="nome" class="form-control" placeholder="Ex: Thor, Mel, Max..." value="{{ old('nome') }}" required>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <label>Espécie</label>
-                      <input type="text" name="especie" class="form-control" placeholder="Ex: Cão, Gato, Coelho..." value="{{ old('especie') }}" required>
+                @if ($errors->any())
+                    <div class="pt-alert alert alert-danger shadow-sm" data-aos="fade-up">
+                        <ul class="mb-0 ps-3">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
+                @endif
 
-                    <div class="col-md-6 mb-4">
-                      <label>Raça</label>
-                      <input type="text" name="raca" class="form-control" placeholder="Ex: Poodle, Vira-lata, Persa..." value="{{ old('raca') }}" required>
-                    </div>
-                  </div>
+                <div class="pt-card" data-aos="zoom-in" data-aos-delay="100">
+                    <form action="{{ route('pets.store') }}" method="POST">
+                        @csrf
 
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <label>Porte</label>
-                      <select name="porte" class="form-select form-control">
-                        <option {{ old('porte') == 'Pequeno' ? 'selected' : '' }}>Pequeno</option>
-                        <option {{ old('porte') == 'Médio' ? 'selected' : '' }}>Médio</option>
-                        <option {{ old('porte') == 'Grande' ? 'selected' : '' }}>Grande</option>
-                      </select>
-                    </div>
+                        <div class="pt-section-title">
+                            <i class="fa-solid fa-file-signature"></i>
+                            <span>Informações básicas</span>
+                        </div>
 
-                    <div class="col-md-6 mb-4">
-                      <label>Data de Nascimento</label>
-                      <input type="date" name="data_nascimento" class="form-control" max="{{ date('Y-m-d') }}" value="{{ old('data_nascimento') }}" required>
-                    </div>
-                  </div>
+                        <div class="mb-4">
+                            <label>Nome do pet</label>
+                            <input type="text" name="nome" class="form-control"
+                                placeholder="Ex: Thor, Mel, Max..." value="{{ old('nome') }}" required>
+                        </div>
 
-                  <hr class="my-5 opacity-25">
+                        <div class="mb-4">
+                            <label class="d-block">Espécie</label>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <input type="radio" class="btn-check" name="especie" id="especie_cao"
+                                        value="Cão" {{ old('especie') == 'Cão' ? 'checked' : '' }} required>
+                                    <label class="btn pt-choice w-100 py-3 rounded-4 d-flex flex-column align-items-center gap-2"
+                                        for="especie_cao">
+                                        <i class="fa-solid fa-dog fa-2x"></i>
+                                        <span class="fw-bold small">Cão</span>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="radio" class="btn-check" name="especie" id="especie_gato"
+                                        value="Gato" {{ old('especie') == 'Gato' ? 'checked' : '' }} required>
+                                    <label class="btn pt-choice w-100 py-3 rounded-4 d-flex flex-column align-items-center gap-2"
+                                        for="especie_gato">
+                                        <i class="fa-solid fa-cat fa-2x"></i>
+                                        <span class="fw-bold small">Gato</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-                  <!-- AÇÕES / BOTÕES -->
-                  <div class="row g-3 justify-content-between align-items-center">
-                    <div class="col-md-4 order-2 order-md-1">
-                      <a href="{{ route('pets.index') }}" class="btn-voltar d-flex align-items-center justify-content-center gap-2">
-                        <i class="fa-solid fa-arrow-left"></i> Voltar
-                      </a>
-                    </div>
-                    <div class="col-md-6 order-1 order-md-2">
-                      <button type="submit" class="btn btn-primary btn-agendar w-100 mt-0">
-                        <i class="fa-solid fa-circle-check me-2"></i>Concluir Cadastro
-                      </button>
-                    </div>
-                  </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label>Raça</label>
+                                <input type="text" name="raca" class="form-control"
+                                    placeholder="Ex: Poodle, Vira-lata, Persa..." value="{{ old('raca') }}" required>
+                            </div>
 
-                </form>
-              </div>
+                            <div class="col-md-6 mb-4">
+                                <label>Data de nascimento</label>
+                                <input type="date" name="data_nascimento" class="form-control"
+                                    max="{{ date('Y-m-d') }}" value="{{ old('data_nascimento') }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-1">
+                            <label class="d-block">Porte</label>
+                            <div class="pt-segmented p-1 rounded-4 d-flex" role="group">
+                                <input type="radio" class="btn-check" name="porte" id="porte_p" value="Pequeno"
+                                    {{ old('porte') == 'Pequeno' ? 'checked' : '' }} required>
+                                <label class="btn pt-segment-item w-100 py-3 rounded-3 small" for="porte_p">Pequeno</label>
+
+                                <input type="radio" class="btn-check" name="porte" id="porte_m" value="Médio"
+                                    {{ old('porte') == 'Médio' ? 'checked' : '' }}>
+                                <label class="btn pt-segment-item w-100 py-3 rounded-3 small" for="porte_m">Médio</label>
+
+                                <input type="radio" class="btn-check" name="porte" id="porte_g" value="Grande"
+                                    {{ old('porte') == 'Grande' ? 'checked' : '' }}>
+                                <label class="btn pt-segment-item w-100 py-3 rounded-3 small" for="porte_g">Grande</label>
+                            </div>
+                        </div>
+
+                        <hr class="pt-divider">
+
+                        <div class="pt-actions">
+                            <a href="{{ route('pets.index') }}" class="pt-btn pt-btn--ghost">
+                                <i class="bi bi-arrow-left"></i> Voltar
+                            </a>
+                            <button type="submit" class="pt-btn pt-btn--primary">
+                                <i class="fa-solid fa-circle-check"></i> Concluir cadastro
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
 
             </div>
-          </div>
-        </div>
+        </section>
+    </main>
 
-      </div>
-    </section>
-  </main>
+    @include('partials.footer')
 
-  <!-- =========================================================
-  FOOTER
-  ========================================================= -->
-  <style>
-    /* ---------- Footer criativo ---------- */
-    .footer-16 {
-        position: relative;
-        overflow: visible;
-        padding-bottom: 90px;
-    }
+    <div id="preloader"></div>
 
-    .footer-16 .footer-main {
-        margin-bottom: 0;
-    }
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 
-    .footer-16::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, var(--accent-color), #22c55e, var(--accent-color), transparent);
-        background-size: 200% 100%;
-        animation: footerGradientMove 6s linear infinite;
-    }
-
-    @keyframes footerGradientMove {
-        0% { background-position: 0% 0; }
-        100% { background-position: 200% 0; }
-    }
-
-    .footer-badge {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--accent-color), #1d4ed8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 10px 25px rgba(23, 92, 221, 0.35);
-        z-index: 2;
-        transition: transform 0.4s ease;
-    }
-
-    .footer-badge i {
-        color: #fff;
-        font-size: 26px;
-    }
-
-    .footer-badge:hover {
-        transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
-    }
-
-    .footer-16 .brand-section {
-        max-width: 380px;
-    }
-
-    .footer-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 13px;
-        font-weight: 600;
-        color: #16a34a;
-        background: rgba(34, 197, 94, 0.12);
-        padding: 6px 14px;
-        border-radius: 999px;
-        margin-bottom: 22px;
-    }
-
-    .footer-status .status-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #22c55e;
-        animation: statusPulse 2s infinite;
-    }
-
-    @keyframes statusPulse {
-        0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
-        70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-    }
-
-    .footer-16 .contact-info {
-        margin-top: 24px;
-    }
-
-    .footer-16 .footer-social .social-link.whatsapp i {
-        color: #25d366;
-    }
-
-    .footer-16 .footer-social .social-link.instagram i {
-        background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .footer-16 .footer-bottom .legal-links .credits i {
-        color: #ef4444;
-        margin: 0 2px;
-    }
-
-    .footer-16 .footer-bottom .copyright p {
-        color: rgba(255, 255, 255, 0.85);
-    }
-
-    .footer-16 .footer-bottom .copyright p .sitename {
-        color: #fff;
-    }
-
-    .footer-16 .footer-bottom .legal-links a {
-        color: rgba(255, 255, 255, 0.85);
-    }
-
-    .footer-16 .footer-bottom .legal-links a:hover {
-        color: #fff;
-        text-decoration: underline;
-    }
-
-    .footer-16 .footer-bottom .legal-links .credits {
-        color: rgba(255, 255, 255, 0.7);
-        border-left-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .footer-16 .footer-bottom .legal-links .credits a {
-        color: #fff;
-        font-weight: 600;
-    }
-  </style>
-
-  @include('partials.footer')
-
-  <!-- =========================================================
-  CSS INTERNO (Padrão Identidade Mobipet)
-  ========================================================= -->
-  <style>
-    body {
-      background: #f7f9fc;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .agendamento-section {
-      padding: 180px 0 100px;
-      background:
-      radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
-      radial-gradient(circle at bottom left, #dcfce7 0%, transparent 30%);
-      min-height: 100vh;
-    }
-
-    .hero-agendamento {
-      margin-bottom: 50px;
-    }
-
-    .hero-title {
-      font-size: 52px;
-      font-weight: 800;
-      color: #111827;
-      margin-bottom: 20px;
-      letter-spacing: -1px;
-    }
-
-    .hero-subtitle {
-      font-size: 18px;
-      color: #6b7280;
-      max-width: 650px;
-      margin: auto;
-      line-height: 1.6;
-    }
-
-    .agendamento-card {
-      border: none;
-      border-radius: 35px;
-      overflow: hidden;
-      background: white;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.06);
-    }
-
-    .agendamento-card .card-header {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      padding: 35px;
-      border: none;
-      color: white;
-    }
-
-    .header-icon {
-      width: 65px;
-      height: 65px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .header-icon i {
-      font-size: 26px;
-      color: white;
-    }
-
-    .card-header h3 {
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .text-metod {
-      color: rgba(255, 255, 255, 0.8) !important;
-      font-size: 14px;
-    }
-
-    .card-body {
-      padding: 50px;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 30px;
-      font-size: 20px;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .section-title i {
-      width: 42px;
-      height: 42px;
-      background: linear-gradient(135deg, #2563eb, #3b82f6);
-      color: white;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
-
-    label {
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #374151;
-      font-size: 15px;
-    }
-
-    .form-control, .form-select {
-      height: 58px;
-      border-radius: 18px;
-      border: 1px solid #d1d5db;
-      background-color: #f9fafb;
-      padding: 15px 20px;
-      font-size: 15px;
-      transition: 0.3s;
-      box-shadow: none !important;
-    }
-
-    .form-control:focus, .form-select:focus {
-      border-color: #2563eb;
-      background-color: #fff;
-      box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.12) !important;
-    }
-
-    .btn-agendar {
-      height: 60px;
-      border-radius: 18px;
-      border: none;
-      font-size: 16px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: white;
-      transition: 0.4s;
-    }
-
-    .btn-agendar:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
-    }
-
-    .btn-voltar {
-      height: 60px;
-      border-radius: 18px;
-      border: 1px solid #d1d5db;
-      font-size: 16px;
-      font-weight: 600;
-      color: #4b5563;
-      background: #fff;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-
-    .btn-voltar:hover {
-      background: #f3f4f6;
-      color: #1f2937;
-    }
-
-    @media(max-width: 992px) {
-      .hero-title { font-size: 38px; }
-      .card-body { padding: 35px; }
-    }
-
-    @media(max-width: 768px) {
-      .agendamento-section { padding-top: 150px; }
-      .hero-title { font-size: 32px; }
-      .hero-subtitle { font-size: 16px; }
-      .card-body { padding: 25px; }
-    }
-  </style>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-  <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/js/main.js') }}"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if (typeof AOS !== 'undefined') {
-            AOS.init({
-                duration: 1000,
-                once: true
-            });
-        }
-    });
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  @if ($errors->any())
+    <!-- Barra de progresso de rolagem -->
     <script>
-      Swal.fire({
-        icon: 'error',
-        title: 'Erro',
-        text: '{{ implode('|', $errors->all()) }}'
-      });
+        (function () {
+            var bar = document.getElementById('ptProgress');
+            if (!bar) return;
+            function update() {
+                var h = document.documentElement;
+                var max = h.scrollHeight - h.clientHeight;
+                var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+                bar.style.width = pct + '%';
+            }
+            document.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
     </script>
-  @endif
 
     @include('partials.logout-confirm')
 

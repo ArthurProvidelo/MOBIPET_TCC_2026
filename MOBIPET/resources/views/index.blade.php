@@ -1014,7 +1014,7 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
             .mp-landing *,
             .mp-landing *::before,
             .mp-landing *::after {
@@ -1430,7 +1430,7 @@
     <script>
         (function () {
             'use strict';
-            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var reduceMotion = false; // Mobipet: animações sempre ativas.
 
             /* ---- Barra de progresso de leitura ---- */
             var bar = document.getElementById('mpProgress');

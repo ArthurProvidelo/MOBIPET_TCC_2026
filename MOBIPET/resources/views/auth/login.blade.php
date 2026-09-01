@@ -261,6 +261,26 @@
         .lg-form-register .form-control {
             height: 44px;
         }
+        /* =========================================================
+           RECUPERAR SENHA
+           ========================================================= */
+        .lg-forgot-password {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--lg-accent);
+            font-family: "Lato", sans-serif;
+            font-size: .85rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color .2s ease, transform .2s ease;
+        }
+
+        .lg-forgot-password:hover {
+            color: var(--lg-accent-dark);
+            text-decoration: underline;
+        }
+
 
         /* =========================================================
            PAINEL AZUL DESLIZANTE
@@ -417,7 +437,7 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
 
             .lg-page *,
             .lg-page *::before,
@@ -583,7 +603,7 @@
                                 </div>
                             </div>
 
-                            <div class="mb-4">
+                            <div class="mb-2">
                                 <label class="form-label">Senha</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -593,6 +613,14 @@
                                         class="form-control rounded-end-3"
                                         placeholder="Sua senha" required>
                                 </div>
+                            </div>
+
+                            <!-- RECUPERAR SENHA -->
+                            <div class="text-end mb-4">
+                                <a href="{{ route('senha.recuperar') }}" class="lg-forgot-password">
+                                    <i class="bi bi-key me-1"></i>
+                                    Esqueci minha senha
+                                </a>
                             </div>
 
                             <button type="submit" class="lg-btn lg-btn--primary">

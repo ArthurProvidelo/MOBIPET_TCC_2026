@@ -116,23 +116,26 @@
     color: #1f2937 !important; 
 }
 
-.form-control,
-.form-select {
+/* Campos padrão do site — NÃO se aplica às telas com o design system .pt-page,
+   que trazem o próprio estilo de formulário. A transição é limitada a
+   propriedades que não causam reflow, para o foco/hover ficar suave. */
+.form-control:not(.pt-page .form-control),
+.form-select:not(.pt-page .form-select) {
     height: 52px !important;
-    border-radius: 12px!important;
+    border-radius: 12px !important;
     border: 1px solid #dcdcdc !important;
     padding: 10px 15px !important;
-    transition: 0.3s !important;
+    transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease !important;
 }
 
-textarea.form-control {
+textarea.form-control:not(.pt-page textarea.form-control) {
     height: auto !important;
 }
 
-.form-control:focus,
-.form-select:focus {
+.form-control:not(.pt-page .form-control):focus,
+.form-select:not(.pt-page .form-select):focus {
     border-color: #0d6efd !important;
-    box-shadow: 0 0 0 0.15rem rgba(13,110,253,.15) !important;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, .15) !important;
 }
 
 .btn-book {
@@ -152,4 +155,11 @@ textarea.form-control {
 
 .lead{
     font-family: 'Roboto', sans-serif !important;
+}
+
+/* Failsafe: se por algum motivo o AOS não rodar, o conteúdo não pode ficar
+   invisível. O main.js adiciona .no-aos ao <html> quando a lib falta. */
+.no-aos [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
 }

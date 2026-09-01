@@ -118,7 +118,7 @@
         100% { transform: translateX(360%); }
     }
 
-    @media (prefers-reduced-motion: reduce) {
+    @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
         .mp-loader__ring { animation: none; }
         .mp-loader__paw { animation: none; }
         .mp-loader__box { animation: none; }
