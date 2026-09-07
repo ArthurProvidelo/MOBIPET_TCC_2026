@@ -42,6 +42,6 @@
 
 @else
     {{-- ================= VISITANTE ================= --}}
-    <li><a href="{{ route('login.funcionario') }}" @class(['active' => request()->routeIs('login.funcionario')])>Sou Funcionário <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
     <li><a href="{{ route('login') }}" @class(['active' => request()->routeIs('login')])>Entrar</a></li>
+    <li><a href="{{ route('login.funcionario') }}" @class(['active' => request()->routeIs('login.funcionario')])>Sou Funcionário <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 @endif

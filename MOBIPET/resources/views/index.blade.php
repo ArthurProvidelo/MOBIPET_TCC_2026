@@ -33,26 +33,24 @@
 
     <style>
         /* ===========================================================
-           LANDING PAGE MOBIPET — estilos isolados (prefixo mp-)
-           Foco: UI/UX de onboarding, interatividade a cada scroll
+           PÁGINA INÍCIO — MOBIPET  ·  estilos isolados (prefixo mp-)
+           Mesmo design system das páginas Sobre / Serviços / Devs.
            =========================================================== */
-        .mp-landing {
+        .mp-page {
             --mp-accent: #175cdd;
             --mp-accent-dark: #0f47b3;
             --mp-accent-soft: #eaf1fe;
             --mp-ink: #0f1b34;
             --mp-body: #4a5568;
-            --mp-muted: #7b899c;
+            --mp-muted: #8794a7;
             --mp-amber: #f59e0b;
             --mp-green: #16a34a;
-            --mp-green-soft: #e7f8ee;
-            --mp-surface: #ffffff;
-            --mp-bg: #f6f9ff;
-            --mp-border: #e7ecf5;
-            --mp-radius: 22px;
+            --mp-line: #e6ecf5;
+            --mp-bg: #f7f9ff;
+            --mp-radius: 24px;
             --mp-radius-sm: 14px;
-            --mp-shadow-sm: 0 6px 20px -8px rgba(15, 27, 52, .18);
-            --mp-shadow: 0 24px 60px -24px rgba(23, 92, 221, .32);
+            --mp-shadow-sm: 0 10px 30px -14px rgba(15, 27, 52, .2);
+            --mp-shadow: 0 40px 90px -40px rgba(23, 92, 221, .4);
 
             font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
             color: var(--mp-body);
@@ -60,39 +58,36 @@
             overflow-x: clip;
         }
 
-        .mp-landing h1,
-        .mp-landing h2,
-        .mp-landing h3,
-        .mp-landing h4 {
+        .mp-page h1,
+        .mp-page h2,
+        .mp-page h3,
+        .mp-page h4 {
             font-family: "Montserrat", sans-serif;
             color: var(--mp-ink);
-            letter-spacing: -0.02em;
-            line-height: 1.15;
+            letter-spacing: -0.022em;
+            line-height: 1.12;
         }
 
-        .mp-landing p {
-            line-height: 1.7;
+        .mp-page p {
+            line-height: 1.78;
         }
 
-        .mp-landing section {
-            padding: clamp(3.5rem, 8vw, 6.5rem) 0;
-        }
-
-        .mp-container {
-            width: min(1160px, 92%);
+        .mp-wrap {
+            width: min(1140px, 90%);
             margin-inline: auto;
         }
 
-        /* Acessibilidade: foco visível em todos os interativos */
-        .mp-landing a:focus-visible,
-        .mp-landing button:focus-visible,
-        .mp-landing summary:focus-visible {
-            outline: 3px solid color-mix(in srgb, var(--mp-accent) 55%, transparent);
-            outline-offset: 3px;
-            border-radius: 6px;
+        .mp-narrow {
+            width: min(720px, 90%);
+            margin-inline: auto;
         }
 
-        /* Barra de progresso de leitura */
+        .mp-page section {
+            padding: clamp(4rem, 9vw, 8rem) 0;
+            position: relative;
+        }
+
+        /* ---- Barra de progresso de rolagem ---- */
         .mp-progress {
             position: fixed;
             top: 0;
@@ -104,67 +99,67 @@
             transition: width .12s linear;
         }
 
+        /* ---- Rótulo de seção (eyebrow editorial) ---- */
         .mp-eyebrow {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             font-family: "Lato", sans-serif;
             font-weight: 700;
-            font-size: .82rem;
-            letter-spacing: .08em;
+            font-size: .78rem;
+            letter-spacing: .16em;
             text-transform: uppercase;
             color: var(--mp-accent);
-            background: var(--mp-accent-soft);
-            border: 1px solid color-mix(in srgb, var(--mp-accent) 18%, transparent);
-            padding: 7px 14px;
-            border-radius: 999px;
         }
 
-        .mp-section-head {
-            max-width: 640px;
+        .mp-eyebrow::before {
+            content: "";
+            width: 30px;
+            height: 2px;
+            background: currentColor;
         }
 
-        .mp-section-head.mp-center {
-            margin-inline: auto;
-            text-align: center;
+        .mp-eyebrow .mp-idx {
+            color: var(--mp-muted);
+            font-variant-numeric: tabular-nums;
         }
 
-        .mp-section-head h2 {
-            font-size: clamp(1.7rem, 3.6vw, 2.5rem);
-            margin: 18px 0 12px;
+        .mp-h2 {
+            font-size: clamp(1.9rem, 4.2vw, 3rem);
+            margin: 22px 0 0;
         }
 
-        .mp-section-head p {
-            font-size: 1.06rem;
+        .mp-lead {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
             color: var(--mp-body);
-            margin: 0;
         }
 
-        /* ---------- Botões ---------- */
+        .mp-mark {
+            color: var(--mp-ink);
+            font-weight: 600;
+            background: linear-gradient(transparent 62%, color-mix(in srgb, var(--mp-amber) 45%, transparent) 62%);
+        }
+
+        /* ---- Botões ---- */
         .mp-btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
             font-family: "Montserrat", sans-serif;
             font-weight: 600;
-            font-size: .98rem;
+            font-size: .97rem;
             padding: 14px 26px;
             border-radius: 999px;
             border: 1.5px solid transparent;
+            text-decoration: none;
             cursor: pointer;
             transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
-            text-decoration: none;
-        }
-
-        .mp-btn i {
-            font-size: 1.05em;
         }
 
         .mp-btn--primary {
             background: var(--mp-accent);
             color: #fff;
-            box-shadow: 0 16px 30px -14px rgba(23, 92, 221, .7);
+            box-shadow: 0 18px 34px -16px rgba(23, 92, 221, .75);
         }
 
         .mp-btn--primary:hover {
@@ -174,25 +169,14 @@
         }
 
         .mp-btn--ghost {
-            background: #fff;
+            background: transparent;
             color: var(--mp-ink);
-            border-color: var(--mp-border);
+            border-color: var(--mp-line);
         }
 
         .mp-btn--ghost:hover {
             border-color: var(--mp-accent);
             color: var(--mp-accent);
-            transform: translateY(-3px);
-        }
-
-        .mp-btn--wpp {
-            background: #25d366;
-            color: #05231a;
-        }
-
-        .mp-btn--wpp:hover {
-            background: #1fbe5b;
-            color: #05231a;
             transform: translateY(-3px);
         }
 
@@ -202,59 +186,45 @@
         }
 
         .mp-btn--light:hover {
-            background: #fff;
             color: var(--mp-accent-dark);
             transform: translateY(-3px);
         }
 
-        .mp-btn--block {
-            width: 100%;
-        }
-
-        /* ---------- HERO ---------- */
+        /* ===================== HERO ===================== */
         .mp-hero {
-            position: relative;
+            padding-top: clamp(8rem, 16vw, 12rem) !important;
+            padding-bottom: clamp(3rem, 8vw, 6rem) !important;
             background:
-                radial-gradient(60% 55% at 88% -5%, var(--mp-accent-soft) 0%, transparent 60%),
-                radial-gradient(50% 45% at -5% 105%, var(--mp-green-soft) 0%, transparent 55%),
+                radial-gradient(48% 40% at 84% 6%, var(--mp-accent-soft) 0%, transparent 62%),
+                radial-gradient(40% 34% at 4% 94%, #e7f8ee 0%, transparent 60%),
                 var(--mp-bg);
-            padding-top: clamp(6.5rem, 13vw, 9rem) !important;
+            overflow: hidden;
         }
 
         .mp-hero-grid {
             display: grid;
-            grid-template-columns: 1.05fr .95fr;
-            gap: clamp(2rem, 5vw, 4.5rem);
+            grid-template-columns: 1.08fr .92fr;
+            gap: clamp(2rem, 5vw, 4rem);
             align-items: center;
         }
 
         .mp-hero h1 {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
-            margin: 22px 0 18px;
+            font-size: clamp(2.3rem, 6vw, 4rem);
+            font-weight: 800;
+            margin: 26px 0 22px;
         }
 
-        .mp-hero h1 .mp-hl {
-            position: relative;
-            color: var(--mp-accent);
-            white-space: nowrap;
+        .mp-hero h1 .mp-grad {
+            background: linear-gradient(120deg, var(--mp-accent), #3b82f6 55%, #4ade80);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        .mp-hero h1 .mp-hl::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 4px;
-            height: 10px;
-            background: color-mix(in srgb, var(--mp-amber) 40%, transparent);
-            border-radius: 4px;
-            z-index: -1;
-        }
-
-        .mp-hero-lead {
-            font-size: 1.15rem;
+        .mp-hero p {
+            font-size: clamp(1.05rem, 2vw, 1.22rem);
             max-width: 520px;
-            margin-bottom: 26px;
+            margin-bottom: 30px;
         }
 
         .mp-hero-actions {
@@ -263,282 +233,349 @@
             gap: 14px;
         }
 
-        .mp-trust {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-            margin-top: 22px;
-        }
-
-        .mp-trust span {
+        .mp-scrollcue {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: .9rem;
+            gap: 10px;
+            margin-top: 42px;
+            font-size: .82rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--mp-muted);
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+        }
+
+        .mp-scrollcue i {
+            animation: mp-bob 1.8s ease-in-out infinite;
+        }
+
+        @keyframes mp-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+
+        /* Painel "ao vivo" do hero */
+        .mp-live-card {
+            position: relative;
+            background: #fff;
+            border: 1px solid var(--mp-line);
+            border-radius: var(--mp-radius);
+            box-shadow: var(--mp-shadow);
+            padding: 26px;
+        }
+
+        .mp-live-card::after {
+            content: "";
+            position: absolute;
+            inset: -40px -40px auto auto;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(74, 222, 128, .35), transparent 70%);
+            filter: blur(10px);
+            z-index: -1;
+            animation: mp-glow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes mp-glow {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(-14px, 18px) scale(1.15); }
+        }
+
+        .mp-lc-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .mp-lc-head b {
+            font-family: "Montserrat", sans-serif;
+            font-size: .98rem;
+            color: var(--mp-ink);
+        }
+
+        .mp-badge-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .06em;
+            color: var(--mp-green);
+            background: #e7f8ee;
+            padding: 5px 11px;
+            border-radius: 999px;
+        }
+
+        .mp-badge-live .mp-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--mp-green);
+            animation: mp-pulse 2s infinite;
+        }
+
+        @keyframes mp-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, .5); }
+            70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+        }
+
+        /* ---- Lista de etapas (compartilhada hero + demo) ---- */
+        .mp-steps {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mp-steps li {
+            position: relative;
+            padding: 0 0 20px 30px;
+            font-size: .93rem;
+            color: var(--mp-muted);
+            transition: color .3s ease;
+        }
+
+        .mp-steps li:last-child {
+            padding-bottom: 0;
+        }
+
+        .mp-steps li::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 20px;
+            bottom: -2px;
+            width: 2px;
+            background: var(--mp-line);
+        }
+
+        .mp-steps li:last-child::before {
+            display: none;
+        }
+
+        .mp-steps li::after {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 3px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--mp-line);
+            transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
+        }
+
+        .mp-steps li.is-done {
             color: var(--mp-body);
         }
 
-        .mp-trust i {
-            color: var(--mp-green);
-            font-size: 1.05rem;
+        .mp-steps li.is-done::after {
+            background: var(--mp-green);
+            border-color: var(--mp-green);
         }
 
-        .mp-stats {
+        .mp-steps li.is-now {
+            color: var(--mp-accent);
+            font-weight: 600;
+        }
+
+        .mp-steps li.is-now::after {
+            background: var(--mp-accent);
+            border-color: #fff;
+            box-shadow: 0 0 0 4px rgba(23, 92, 221, .25);
+            animation: mp-pulse 2s infinite;
+        }
+
+        /* ===================== MANIFESTO ===================== */
+        .mp-manifesto {
+            background: #fff;
+            border-top: 1px solid var(--mp-line);
+        }
+
+        .mp-manifesto .mp-big {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            color: var(--mp-ink);
+            font-size: clamp(1.5rem, 3.6vw, 2.4rem);
+            line-height: 1.32;
+            letter-spacing: -0.02em;
+        }
+
+        .mp-pills {
             display: flex;
             flex-wrap: wrap;
-            gap: clamp(1.5rem, 5vw, 3rem);
-            margin-top: 34px;
-            padding-top: 26px;
-            border-top: 1px solid var(--mp-border);
+            gap: 14px;
+            margin-top: 44px;
         }
 
-        .mp-stat b {
+        .mp-pill {
+            flex: 1 1 200px;
+            border: 1px solid var(--mp-line);
+            border-radius: var(--mp-radius-sm);
+            padding: 22px 24px;
+            background: var(--mp-bg);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        .mp-pill:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--mp-shadow-sm);
+        }
+
+        .mp-pill b {
             display: block;
             font-family: "Montserrat", sans-serif;
-            font-size: clamp(1.6rem, 4vw, 2.1rem);
+            font-size: clamp(1.7rem, 4vw, 2.2rem);
             color: var(--mp-ink);
             line-height: 1;
         }
 
-        .mp-stat span {
+        .mp-pill span {
             font-size: .9rem;
             color: var(--mp-muted);
         }
 
-        /* Visual do hero */
-        .mp-hero-visual {
-            position: relative;
-        }
-
-        .mp-hero-visual .mp-frame {
-            border-radius: var(--mp-radius);
-            overflow: hidden;
-            box-shadow: var(--mp-shadow);
-            border: 6px solid #fff;
-            aspect-ratio: 4 / 4.3;
-        }
-
-        .mp-hero-visual .mp-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .mp-float {
-            position: absolute;
-            background: #fff;
-            border-radius: var(--mp-radius-sm);
-            box-shadow: var(--mp-shadow-sm);
-            border: 1px solid var(--mp-border);
-            padding: 14px 16px;
-        }
-
-        .mp-float--status {
-            left: -28px;
-            bottom: 44px;
-            width: 232px;
-        }
-
-        .mp-float--status .mp-fs-title {
-            font-size: .72rem;
-            text-transform: uppercase;
-            letter-spacing: .08em;
-            color: var(--mp-muted);
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .mp-fs-row {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            font-size: .85rem;
-            color: var(--mp-body);
-            padding: 4px 0;
-        }
-
-        .mp-fs-row i {
-            font-size: 1rem;
-        }
-
-        .mp-fs-row.done i {
-            color: var(--mp-green);
-        }
-
-        .mp-fs-row.active {
-            color: var(--mp-accent);
-            font-weight: 600;
-        }
-
-        .mp-fs-row.active i {
-            color: var(--mp-accent);
-        }
-
-        .mp-fs-row.wait i {
-            color: #cbd5e1;
-        }
-
-        .mp-float--notif {
-            top: 26px;
-            right: -22px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: .86rem;
-            font-weight: 600;
-            color: var(--mp-ink);
-        }
-
-        .mp-float--notif .mp-bell {
-            width: 34px;
-            height: 34px;
-            flex: none;
-            display: grid;
-            place-items: center;
-            border-radius: 10px;
-            background: var(--mp-accent-soft);
-            color: var(--mp-accent);
-        }
-
-        /* ---------- COMO FUNCIONA (4 passos) ---------- */
+        /* ===================== COMO FUNCIONA ===================== */
         .mp-how {
-            background: #fff;
+            background: var(--mp-bg);
         }
 
-        .mp-steps-grid {
+        .mp-flow {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-top: 52px;
+            gap: 22px;
+            margin-top: 58px;
             position: relative;
         }
 
-        .mp-steps-grid::before {
+        .mp-flow::before {
             content: "";
             position: absolute;
-            top: 26px;
-            left: 12%;
-            right: 12%;
+            top: 27px;
+            left: 11%;
+            right: 11%;
             height: 2px;
-            background: repeating-linear-gradient(90deg, var(--mp-border) 0 10px, transparent 10px 20px);
-            z-index: 0;
+            background: repeating-linear-gradient(90deg, var(--mp-line) 0 8px, transparent 8px 16px);
         }
 
-        .mp-step {
+        .mp-node {
             position: relative;
-            z-index: 1;
             text-align: center;
         }
 
-        .mp-step .mp-num {
-            width: 54px;
-            height: 54px;
-            margin: 0 auto 18px;
+        .mp-node .mp-nring {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
             display: grid;
             place-items: center;
             border-radius: 50%;
             background: #fff;
-            border: 2px solid var(--mp-border);
+            border: 2px solid var(--mp-line);
             font-family: "Montserrat", sans-serif;
             font-weight: 700;
             color: var(--mp-accent);
             transition: .25s ease;
         }
 
-        .mp-step:hover .mp-num {
+        .mp-node:hover .mp-nring {
             background: var(--mp-accent);
             border-color: var(--mp-accent);
             color: #fff;
-            transform: translateY(-4px);
+            transform: translateY(-5px);
         }
 
-        .mp-step h3 {
+        .mp-node h3 {
             font-size: 1.05rem;
             margin-bottom: 6px;
         }
 
-        .mp-step p {
+        .mp-node p {
             font-size: .92rem;
             margin: 0;
-            color: var(--mp-body);
         }
 
-        /* ---------- DEMO INTERATIVA ---------- */
+        /* ============ ACOMPANHAMENTO AO VIVO (seção escura) ============ */
         .mp-demo {
-            background: linear-gradient(160deg, #0f1b34 0%, #16264a 100%);
+            background-color: #0f1b34;
+            background-image:
+                radial-gradient(60% 50% at 100% 0%, rgba(23, 92, 221, .28), transparent 60%),
+                linear-gradient(180deg, #0f1b34 0%, #101d3a 100%);
+            color: rgba(255, 255, 255, .72);
         }
 
-        .mp-demo .mp-container {
-            display: grid;
-            grid-template-columns: 1fr 1.05fr;
-            gap: clamp(2rem, 6vw, 4.5rem);
-            align-items: center;
-        }
-
-        .mp-demo h2,
-        .mp-demo .mp-eyebrow {
+        .mp-demo h2 {
             color: #fff;
         }
 
         .mp-demo .mp-eyebrow {
-            background: rgba(255, 255, 255, .1);
-            border-color: rgba(255, 255, 255, .2);
+            color: #7db0ff;
         }
 
-        .mp-demo h2 {
-            font-size: clamp(1.7rem, 3.6vw, 2.5rem);
-            margin: 18px 0 14px;
+        .mp-demo .mp-eyebrow .mp-idx {
+            color: rgba(255, 255, 255, .4);
         }
 
-        .mp-demo > .mp-container > div:first-child p {
-            color: rgba(255, 255, 255, .74);
-            font-size: 1.05rem;
+        .mp-demo-lead {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, .72);
+            max-width: 560px;
+            margin-top: 20px;
         }
 
         .mp-demo-hint {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            margin-top: 18px;
-            font-size: .9rem;
-            color: #93c5fd;
-            font-weight: 600;
+            margin-top: 24px;
+            font-size: .82rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #7db0ff;
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
         }
 
         .mp-demo-hint i {
-            animation: mp-tap 1.6s ease-in-out infinite;
+            animation: mp-bob 1.8s ease-in-out infinite;
         }
 
-        @keyframes mp-tap {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+        .mp-demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.05fr;
+            gap: clamp(2rem, 6vw, 4.5rem);
+            align-items: center;
+            margin-top: 56px;
         }
 
         .mp-panel {
             background: #fff;
             border-radius: var(--mp-radius);
-            padding: 28px;
             box-shadow: var(--mp-shadow);
+            padding: 28px;
+            color: var(--mp-body);
         }
 
         .mp-panel-head {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding-bottom: 18px;
-            border-bottom: 1px solid var(--mp-border);
+            gap: 14px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--mp-line);
         }
 
         .mp-panel-head .mp-pet {
-            width: 46px;
-            height: 46px;
-            border-radius: 13px;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             display: grid;
             place-items: center;
             background: var(--mp-accent-soft);
             color: var(--mp-accent);
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             flex: none;
         }
 
@@ -554,32 +591,9 @@
             color: var(--mp-muted);
         }
 
-        .mp-panel-head .mp-live {
+        .mp-panel-head .mp-badge-live {
             margin-left: auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            font-size: .72rem;
-            font-weight: 700;
-            color: var(--mp-green);
-            background: var(--mp-green-soft);
-            padding: 5px 11px;
-            border-radius: 999px;
             flex: none;
-        }
-
-        .mp-panel-head .mp-live .mp-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--mp-green);
-            animation: mp-pulse 2s infinite;
-        }
-
-        @keyframes mp-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, .5); }
-            70% { box-shadow: 0 0 0 9px rgba(22, 163, 74, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
         }
 
         .mp-prog-head {
@@ -588,7 +602,7 @@
             font-size: .82rem;
             font-weight: 600;
             color: var(--mp-body);
-            margin: 20px 0 8px;
+            margin: 22px 0 8px;
         }
 
         .mp-prog {
@@ -607,62 +621,8 @@
             transition: width .6s cubic-bezier(.4, 0, .2, 1);
         }
 
-        .mp-demo-tl {
-            list-style: none;
-            margin: 20px 0 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .mp-demo-tl li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 12px;
-            background: #f6f8fc;
-            font-size: .92rem;
-            color: var(--mp-muted);
-            border: 1px solid transparent;
-            transition: background .3s ease, color .3s ease, border-color .3s ease;
-        }
-
-        .mp-demo-tl li .mp-tl-ico {
-            width: 24px;
-            height: 24px;
-            flex: none;
-            display: grid;
-            place-items: center;
-            border-radius: 50%;
-            border: 2px solid #d3dbe6;
-            font-size: .7rem;
-            color: transparent;
-        }
-
-        .mp-demo-tl li.done {
-            color: var(--mp-body);
-            background: var(--mp-green-soft);
-        }
-
-        .mp-demo-tl li.done .mp-tl-ico {
-            background: var(--mp-green);
-            border-color: var(--mp-green);
-            color: #fff;
-        }
-
-        .mp-demo-tl li.now {
-            color: var(--mp-accent);
-            font-weight: 600;
-            background: var(--mp-accent-soft);
-            border-color: color-mix(in srgb, var(--mp-accent) 25%, transparent);
-        }
-
-        .mp-demo-tl li.now .mp-tl-ico {
-            border-color: var(--mp-accent);
-            color: var(--mp-accent);
-            animation: mp-pulse 2s infinite;
+        .mp-panel .mp-steps {
+            margin-top: 22px;
         }
 
         .mp-toast {
@@ -671,7 +631,7 @@
             align-items: center;
             gap: 12px;
             padding: 14px 16px;
-            border-radius: 14px;
+            border-radius: var(--mp-radius-sm);
             background: var(--mp-ink);
             color: #fff;
             font-size: .9rem;
@@ -680,7 +640,7 @@
             transition: opacity .3s ease, transform .3s ease;
         }
 
-        .mp-toast.show {
+        .mp-toast.is-show {
             opacity: 1;
             transform: translateY(0);
         }
@@ -700,6 +660,7 @@
 
         .mp-demo-controls .mp-btn {
             flex: 1 1 auto;
+            justify-content: center;
         }
 
         .mp-btn--soft {
@@ -712,98 +673,7 @@
             background: #e5eaf2;
         }
 
-        /* ---------- PRIMEIROS PASSOS (abas Tutor / Petshop) ---------- */
-        .mp-start {
-            background: var(--mp-bg);
-        }
-
-        .mp-tabs {
-            display: inline-flex;
-            gap: 6px;
-            padding: 6px;
-            background: #fff;
-            border: 1px solid var(--mp-border);
-            border-radius: 999px;
-            margin: 26px auto 0;
-        }
-
-        .mp-tab {
-            border: 0;
-            background: transparent;
-            font-family: "Montserrat", sans-serif;
-            font-weight: 600;
-            font-size: .95rem;
-            color: var(--mp-body);
-            padding: 11px 24px;
-            border-radius: 999px;
-            cursor: pointer;
-            transition: background .2s ease, color .2s ease;
-        }
-
-        .mp-tab[aria-selected="true"] {
-            background: var(--mp-accent);
-            color: #fff;
-        }
-
-        .mp-tabpanel {
-            margin-top: 40px;
-        }
-
-        .mp-start-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-        }
-
-        .mp-start-card {
-            background: #fff;
-            border: 1px solid var(--mp-border);
-            border-radius: var(--mp-radius);
-            padding: 30px;
-            position: relative;
-        }
-
-        .mp-start-card .mp-sc-num {
-            position: absolute;
-            top: 22px;
-            right: 26px;
-            font-family: "Montserrat", sans-serif;
-            font-weight: 800;
-            font-size: 2.4rem;
-            color: var(--mp-accent-soft);
-            line-height: 1;
-        }
-
-        .mp-start-card .mp-sc-ico {
-            width: 50px;
-            height: 50px;
-            display: grid;
-            place-items: center;
-            border-radius: 14px;
-            background: var(--mp-accent-soft);
-            color: var(--mp-accent);
-            font-size: 1.4rem;
-            margin-bottom: 18px;
-        }
-
-        .mp-start-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        .mp-start-card p {
-            margin: 0;
-            font-size: .94rem;
-            color: var(--mp-body);
-        }
-
-        .mp-start-cta {
-            margin-top: 34px;
-            display: flex;
-            justify-content: center;
-        }
-
-        /* ---------- RECURSOS ---------- */
+        /* ===================== RECURSOS ===================== */
         .mp-features {
             background: #fff;
         }
@@ -811,49 +681,48 @@
         .mp-cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-            margin-top: 48px;
+            gap: 24px;
+            margin-top: 58px;
         }
 
         .mp-card {
-            background: var(--mp-surface);
-            border: 1px solid var(--mp-border);
+            border: 1px solid var(--mp-line);
             border-radius: var(--mp-radius);
-            padding: 30px;
-            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            padding: 32px;
+            background: #fff;
+            transition: transform .25s ease, box-shadow .25s ease;
         }
 
         .mp-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--mp-shadow);
-            border-color: transparent;
+            transform: translateY(-6px);
+            box-shadow: var(--mp-shadow-sm);
         }
 
-        .mp-card .mp-ico {
+        .mp-card .mp-cico {
             width: 54px;
             height: 54px;
             display: grid;
             place-items: center;
-            border-radius: 15px;
-            font-size: 1.5rem;
+            border-radius: 16px;
             background: var(--mp-accent-soft);
             color: var(--mp-accent);
+            font-size: 1.5rem;
             margin-bottom: 18px;
         }
 
-        .mp-card:nth-child(2) .mp-ico {
-            background: var(--mp-green-soft);
+        .mp-card:nth-child(3n+2) .mp-cico {
+            background: #e7f8ee;
             color: var(--mp-green);
         }
 
-        .mp-card:nth-child(3) .mp-ico {
+        .mp-card:nth-child(3n) .mp-cico {
             background: #fef3e2;
             color: var(--mp-amber);
         }
 
         .mp-card h3 {
             font-size: 1.16rem;
-            margin-bottom: 8px;
+            margin: 0 0 8px;
         }
 
         .mp-card p {
@@ -862,82 +731,118 @@
             color: var(--mp-body);
         }
 
-        /* ---------- FAQ ---------- */
-        .mp-faq {
+        /* ===================== PARA QUEM É ===================== */
+        .mp-aud {
             background: var(--mp-bg);
         }
 
-        .mp-faq-list {
-            max-width: 780px;
-            margin: 44px auto 0;
+        .mp-aud-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+            margin-top: 54px;
         }
 
-        .mp-faq-list details {
+        .mp-audcard {
+            border-radius: var(--mp-radius);
+            padding: 38px;
+            border: 1px solid var(--mp-line);
             background: #fff;
-            border: 1px solid var(--mp-border);
-            border-radius: var(--mp-radius-sm);
-            padding: 20px 24px;
-            margin-bottom: 14px;
         }
 
-        .mp-faq-list summary {
-            list-style: none;
-            cursor: pointer;
+        .mp-audcard--dark {
+            background: var(--mp-ink);
+            border-color: var(--mp-ink);
+        }
+
+        .mp-audcard-top {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            font-family: "Montserrat", sans-serif;
-            font-weight: 600;
-            font-size: 1.02rem;
-            color: var(--mp-ink);
+            gap: 14px;
+            margin-bottom: 24px;
         }
 
-        .mp-faq-list summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .mp-faq-list summary i {
-            flex: none;
+        .mp-audcard-top .mp-af {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: var(--mp-accent-soft);
             color: var(--mp-accent);
-            transition: transform .3s ease;
+            font-size: 1.4rem;
         }
 
-        .mp-faq-list details[open] summary i {
-            transform: rotate(45deg);
+        .mp-audcard--dark .mp-af {
+            background: rgba(255, 255, 255, .1);
+            color: #7db0ff;
         }
 
-        .mp-faq-list details p {
-            margin: 14px 0 0;
+        .mp-audcard h3 {
+            margin: 0;
+            font-size: 1.28rem;
+        }
+
+        .mp-audcard--dark h3 {
+            color: #fff;
+        }
+
+        .mp-audcard ul {
+            list-style: none;
+            margin: 0 0 28px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .mp-audcard li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: .97rem;
             color: var(--mp-body);
-            font-size: .96rem;
         }
 
-        /* ---------- CTA FINAL ---------- */
+        .mp-audcard--dark li {
+            color: rgba(255, 255, 255, .8);
+        }
+
+        .mp-audcard li i {
+            flex: none;
+            margin-top: 3px;
+            color: var(--mp-green);
+        }
+
+        .mp-audcard--dark li i {
+            color: #4ade80;
+        }
+
+        /* ===================== CTA FINAL ===================== */
         .mp-cta {
             background: #fff;
         }
 
         .mp-cta-card {
-            background:
-                radial-gradient(40% 120% at 100% 0%, rgba(255, 255, 255, .14) 0%, transparent 60%),
-                linear-gradient(135deg, var(--mp-accent) 0%, var(--mp-accent-dark) 100%);
-            border-radius: clamp(24px, 4vw, 40px);
-            padding: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+            border-radius: clamp(24px, 4vw, 42px);
+            padding: clamp(3rem, 8vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
             text-align: center;
             color: #fff;
+            background:
+                radial-gradient(46% 130% at 100% 0%, rgba(255, 255, 255, .16), transparent 60%),
+                linear-gradient(135deg, var(--mp-accent), var(--mp-accent-dark));
         }
 
         .mp-cta-card h2 {
             color: #fff;
-            font-size: clamp(1.7rem, 4vw, 2.6rem);
+            font-size: clamp(1.8rem, 4.4vw, 2.8rem);
             margin-bottom: 14px;
         }
 
         .mp-cta-card p {
             color: rgba(255, 255, 255, .85);
             font-size: 1.1rem;
-            max-width: 560px;
+            max-width: 540px;
             margin: 0 auto 32px;
         }
 
@@ -948,81 +853,48 @@
             justify-content: center;
         }
 
-        /* ---------- RESPONSIVO ---------- */
+        /* ===================== RESPONSIVO ===================== */
         @media (max-width: 991px) {
 
             .mp-hero-grid,
-            .mp-demo .mp-container {
+            .mp-demo-grid,
+            .mp-aud-grid {
                 grid-template-columns: 1fr;
             }
 
-            .mp-cards,
-            .mp-start-grid {
+            .mp-flow {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .mp-steps-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .mp-steps-grid::before {
+            .mp-flow::before {
                 display: none;
             }
 
-            .mp-hero-visual {
-                max-width: 460px;
-                margin-inline: auto;
-            }
-
-            .mp-float--status {
-                left: -12px;
-            }
-
-            .mp-float--notif {
-                right: -6px;
+            .mp-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 575px) {
 
-            .mp-cards,
-            .mp-steps-grid,
-            .mp-start-grid {
+            .mp-flow,
+            .mp-cards {
                 grid-template-columns: 1fr;
             }
 
-            .mp-float--status {
-                position: static;
-                width: auto;
-                margin-top: 16px;
-                box-shadow: var(--mp-shadow-sm);
-            }
-
-            .mp-float--notif {
-                position: static;
-                margin-bottom: 16px;
-            }
-
-            .mp-tabs {
-                display: flex;
-                width: 100%;
-            }
-
-            .mp-tab {
-                flex: 1;
-                padding: 11px 8px;
+            .mp-audcard {
+                padding: 26px;
             }
         }
 
         @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
-            .mp-landing *,
-            .mp-landing *::before,
-            .mp-landing *::after {
+            .mp-page *,
+            .mp-page *::before,
+            .mp-page *::after {
                 animation: none !important;
                 transition: none !important;
             }
         }
-
     </style>
 </head>
 
@@ -1054,7 +926,7 @@
                 <nav id="navmenu" class="navmenu">
 
                     <ul>
-                        
+
                         @include('partials.nav-user')
                     </ul>
 
@@ -1068,22 +940,20 @@
 
     </header>
 
-    <main class="main mp-landing">
+    <main class="main mp-page">
 
-        <!-- ============ HERO ============ -->
+        <!-- ================= HERO ================= -->
         <section class="mp-hero">
-            <div class="mp-container">
+            <div class="mp-wrap">
                 <div class="mp-hero-grid">
 
-                    <div class="mp-hero-copy" data-aos="fade-right">
-                        <span class="mp-eyebrow"><i class="bi bi-stars"></i> Petshop com tecnologia</span>
-
+                    <div data-aos="fade-right">
+                        <span class="mp-eyebrow">Petshop com tecnologia</span>
                         <h1>
                             Acompanhe o banho e a tosa do seu pet
-                            <span class="mp-hl">em tempo real</span>
+                            <span class="mp-grad">em tempo real.</span>
                         </h1>
-
-                        <p class="mp-hero-lead">
+                        <p>
                             Agende em segundos e veja cada etapa do atendimento acontecer, sem
                             precisar ligar no petshop. Simples de usar, mesmo na primeira vez.
                         </p>
@@ -1113,63 +983,94 @@
                             @endif
                         </div>
 
-
-                        <div class="mp-stats">
-                            <div class="mp-stat">
-                                <b><span data-purecounter-start="0" data-purecounter-end="100"
-                                        data-purecounter-duration="2" class="purecounter"></span>+</b>
-                                <span>Funcionalidades</span>
-                            </div>
-                            <div class="mp-stat">
-                                <b><span data-purecounter-start="0" data-purecounter-end="6"
-                                        data-purecounter-duration="2" class="purecounter"></span></b>
-                                <span>Etapas monitoradas</span>
-                            </div>
-                            <div class="mp-stat">
-                                <b>24h</b>
-                                <span>Agendamento online</span>
-                            </div>
-                        </div>
+                        <span class="mp-scrollcue">
+                            <i class="bi bi-arrow-down"></i> Role para conhecer
+                        </span>
                     </div>
 
-                    <div class="mp-hero-visual" data-aos="fade-left" data-aos-delay="150">
-                        <div class="mp-frame">
-                            <img src="{{ asset('assets/img/pet_sendo_cuidado.png') }}"
-                                alt="Pet recebendo cuidados de banho e tosa no petshop">
+                    <div class="mp-live-card" data-aos="fade-left" data-aos-delay="150">
+                        <div class="mp-lc-head">
+                            <b>Rex &middot; Banho &amp; Tosa</b>
+                            <span class="mp-badge-live"><span class="mp-dot"></span> AO VIVO</span>
                         </div>
+                        <ul class="mp-steps">
+                            <li class="is-done">Agendamento confirmado</li>
+                            <li class="is-done">Pet recebido no petshop</li>
+                            <li class="is-now">Banho em andamento</li>
+                            <li>Secagem e escovação</li>
+                            <li>Pronto para retirada</li>
+                        </ul>
                     </div>
 
                 </div>
             </div>
         </section>
 
-        <!-- ============ COMO FUNCIONA ============ -->
-        <section class="mp-how">
-            <div class="mp-container">
-                <div class="mp-section-head mp-center" data-aos="fade-up">
-                    <span class="mp-eyebrow"><i class="bi bi-signpost-split"></i> Como funciona</span>
-                    <h2>Do agendamento à retirada em 4 passos</h2>
-                    <p>Nenhum passo tem segredo. Você faz tudo pelo celular ou pelo computador.</p>
+        <!-- ================= MANIFESTO ================= -->
+        <section class="mp-manifesto">
+            <div class="mp-wrap">
+                <div class="mp-narrow" style="margin-inline:0;" data-aos="fade-up">
+                    <p class="mp-big" style="margin-top:24px;">
+                        O Mobipet deixa o atendimento do seu pet
+                        <span class="mp-mark">mais rápido</span>,
+                        <span class="mp-mark">mais transparente</span> e
+                        <span class="mp-mark">sem telefone</span> &mdash;
+                        do agendamento à retirada.
+                    </p>
+                    <p class="mp-lead" style="margin-top:22px;">
+                        Você marca o horário pelo celular e acompanha cada etapa acontecer,
+                        com aviso automático a cada mudança. Sem ligação, sem fila, sem "já está pronto?".
+                    </p>
                 </div>
 
-                <div class="mp-steps-grid">
-                    <div class="mp-step" data-aos="fade-up" data-aos-delay="0">
-                        <div class="mp-num">01</div>
+                <div class="mp-pills">
+                    <div class="mp-pill" data-aos="fade-up" data-aos-delay="0">
+                        <b><span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="2"
+                                class="purecounter"></span></b>
+                        <span>etapas do atendimento monitoradas</span>
+                    </div>
+                    <div class="mp-pill" data-aos="fade-up" data-aos-delay="100">
+                        <b>24<span style="font-size:1.1rem;">h</span></b>
+                        <span>agendamento online, todos os dias</span>
+                    </div>
+                    <div class="mp-pill" data-aos="fade-up" data-aos-delay="200">
+                        <b><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2.4"
+                                class="purecounter"></span>%</b>
+                        <span>do histórico de serviços registrado</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= COMO FUNCIONA ================= -->
+        <section class="mp-how">
+            <div class="mp-wrap">
+                <div class="mp-narrow" style="margin-inline:0;" data-aos="fade-up">
+                    <span class="mp-eyebrow"><span class="mp-idx">01</span> Como funciona</span>
+                    <h2 class="mp-h2">Do agendamento à retirada em 4 passos.</h2>
+                    <p class="mp-lead" style="margin-top:18px;">
+                        Nenhum passo tem segredo. Você faz tudo pelo celular ou pelo computador.
+                    </p>
+                </div>
+
+                <div class="mp-flow">
+                    <div class="mp-node" data-aos="fade-up" data-aos-delay="0">
+                        <div class="mp-nring">01</div>
                         <h3>Escolha o serviço</h3>
                         <p>Banho, tosa ou consulta, direto na tela inicial.</p>
                     </div>
-                    <div class="mp-step" data-aos="fade-up" data-aos-delay="80">
-                        <div class="mp-num">02</div>
+                    <div class="mp-node" data-aos="fade-up" data-aos-delay="80">
+                        <div class="mp-nring">02</div>
                         <h3>Agende online</h3>
                         <p>Selecione o dia e o horário que forem melhores para você.</p>
                     </div>
-                    <div class="mp-step" data-aos="fade-up" data-aos-delay="160">
-                        <div class="mp-num">03</div>
+                    <div class="mp-node" data-aos="fade-up" data-aos-delay="160">
+                        <div class="mp-nring">03</div>
                         <h3>Acompanhe em tempo real</h3>
                         <p>Veja cada etapa avançar e receba avisos automáticos.</p>
                     </div>
-                    <div class="mp-step" data-aos="fade-up" data-aos-delay="240">
-                        <div class="mp-num">04</div>
+                    <div class="mp-node" data-aos="fade-up" data-aos-delay="240">
+                        <div class="mp-nring">04</div>
                         <h3>Retire seu pet</h3>
                         <p>Você recebe o aviso de "pronto" e o histórico fica salvo.</p>
                     </div>
@@ -1177,103 +1078,139 @@
             </div>
         </section>
 
-        <!-- ============ DEMO INTERATIVA ============ -->
+        <!-- ================= ACOMPANHAMENTO AO VIVO (demo) ================= -->
         <section class="mp-demo" id="mp-demo">
-            <div class="mp-container">
-
-                <div data-aos="fade-right">
-                    <span class="mp-eyebrow"><i class="bi bi-hand-index-thumb"></i> Experimente agora</span>
-                    <h2>É assim que você acompanha o atendimento</h2>
-                    <p>
+            <div class="mp-wrap">
+                <div data-aos="fade-up" style="max-width:640px;">
+                    <span class="mp-eyebrow"><span class="mp-idx">02</span> Experimente agora</span>
+                    <h2 class="mp-h2">É assim que você acompanha o atendimento.</h2>
+                    <p class="mp-demo-lead">
                         Toque no botão e avance o atendimento etapa por etapa. É exatamente o
-                        que o tutor vê no celular enquanto o petshop trabalha &mdash; sem
-                        precisar ligar para perguntar "já está pronto?".
+                        que o tutor vê no celular enquanto o petshop trabalha.
                     </p>
-                    <span class="mp-demo-hint"><i class="bi bi-arrow-down-circle"></i> Interaja com o painel ao lado</span>
+                    <span class="mp-demo-hint"><i class="bi bi-arrow-right"></i> Interaja com o painel</span>
                 </div>
 
-                <div class="mp-panel" data-aos="fade-left" data-aos-delay="120">
-                    <div class="mp-panel-head">
-                        <span class="mp-pet"><i class="bi bi-heart-fill"></i></span>
-                        <div>
-                            <b>Rex &middot; Banho &amp; Tosa</b>
-                            <span>Agendado para hoje, 09:00</span>
+                <div class="mp-demo-grid">
+
+                    <div data-aos="fade-right">
+                        <p style="color:rgba(255,255,255,.7);">
+                            Cada etapa concluída pelo petshop aparece na hora para o tutor, com
+                            uma notificação. Nada de ligar para perguntar como está o pet &mdash;
+                            a informação chega sozinha.
+                        </p>
+                    </div>
+
+                    <div class="mp-panel" data-aos="fade-left" data-aos-delay="120">
+                        <div class="mp-panel-head">
+                            <span class="mp-pet"><i class="bi bi-heart-fill"></i></span>
+                            <div>
+                                <b>Rex &middot; Banho &amp; Tosa</b>
+                                <span>Agendado para hoje, 09:00</span>
+                            </div>
+                            <span class="mp-badge-live"><span class="mp-dot"></span> AO VIVO</span>
                         </div>
-                        <span class="mp-live"><span class="mp-dot"></span> AO VIVO</span>
+
+                        <div class="mp-prog-head">
+                            <span>Progresso do atendimento</span>
+                            <span id="mpProgPct">0%</span>
+                        </div>
+                        <div class="mp-prog"><span id="mpProgBar"></span></div>
+
+                        <ul class="mp-steps" id="mpDemoTl">
+                            <li>Agendamento confirmado</li>
+                            <li>Pet recebido no petshop</li>
+                            <li>Banho iniciado</li>
+                            <li>Tosa e finalização</li>
+                            <li>Secagem e escovação</li>
+                            <li>Pronto para retirada</li>
+                        </ul>
+
+                        <div class="mp-toast" id="mpToast" role="status" aria-live="polite">
+                            <i class="bi bi-bell-fill"></i>
+                            <span id="mpToastMsg">Toque em "Avançar etapa" para começar a simulação.</span>
+                        </div>
+
+                        <div class="mp-demo-controls">
+                            <button type="button" class="mp-btn mp-btn--primary" id="mpNext">
+                                Avançar etapa <i class="bi bi-arrow-right"></i>
+                            </button>
+                            <button type="button" class="mp-btn mp-btn--soft" id="mpReset" aria-label="Reiniciar simulação">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="mp-prog-head">
-                        <span>Progresso do atendimento</span>
-                        <span id="mpProgPct">0%</span>
-                    </div>
-                    <div class="mp-prog"><span id="mpProgBar"></span></div>
-
-                    <ul class="mp-demo-tl" id="mpDemoTl">
-                        <li data-stage="0"><span class="mp-tl-ico"><i class="bi bi-check"></i></span> Agendamento confirmado</li>
-                        <li data-stage="1"><span class="mp-tl-ico"><i class="bi bi-check"></i></span> Pet recebido no petshop</li>
-                        <li data-stage="2"><span class="mp-tl-ico"><i class="bi bi-check"></i></span> Banho iniciado</li>
-                        <li data-stage="3"><span class="mp-tl-ico"><i class="bi bi-check"></i></span> Tosa e finalização</li>
-                        <li data-stage="4"><span class="mp-tl-ico"><i class="bi bi-check"></i></span> Secagem e escovação</li>
-                        <li data-stage="5"><span class="mp-tl-ico"><i class="bi bi-check"></i></span> Pronto para retirada</li>
-                    </ul>
-
-                    <div class="mp-toast" id="mpToast" role="status" aria-live="polite">
-                        <i class="bi bi-bell-fill"></i>
-                        <span id="mpToastMsg">Toque em "Avançar etapa" para começar a simulação.</span>
-                    </div>
-
-                    <div class="mp-demo-controls">
-                        <button type="button" class="mp-btn mp-btn--primary" id="mpNext">
-                            Avançar etapa <i class="bi bi-arrow-right"></i>
-                        </button>
-                        <button type="button" class="mp-btn mp-btn--soft" id="mpReset" aria-label="Reiniciar simulação">
-                            <i class="bi bi-arrow-counterclockwise"></i>
-                        </button>
-                    </div>
                 </div>
-
             </div>
         </section>
 
-        <!-- ============ PRIMEIROS PASSOS ============ -->
-        <section class="mp-start">
-            <div class="mp-container">
-                <div class="mp-section-head mp-center" data-aos="fade-up">
-                    <span class="mp-eyebrow"><i class="bi bi-flag"></i> Primeiros passos</span>
-                    <h2>Comece em 3 passos</h2>
-                    <p>Escolha o seu perfil e veja o caminho mais curto para usar o Mobipet.</p>
-
-                    <div class="mp-tabs" role="tablist" aria-label="Escolha o seu perfil">
-                        <button class="mp-tab" role="tab" id="mpTabTutor" aria-controls="mpPanelTutor"
-                            aria-selected="true">Sou tutor</button>
-                        <button class="mp-tab" role="tab" id="mpTabShop" aria-controls="mpPanelShop"
-                            aria-selected="false" tabindex="-1">Sou funcionário</button>
-                    </div>
+        <!-- ================= RECURSOS ================= -->
+        <section class="mp-features">
+            <div class="mp-wrap">
+                <div class="mp-narrow" style="margin-inline:0;" data-aos="fade-up">
+                    <span class="mp-eyebrow"><span class="mp-idx">03</span> Recursos</span>
+                    <h2 class="mp-h2">Pensado para facilitar a sua vida.</h2>
+                    <p class="mp-lead" style="margin-top:18px;">
+                        Cada recurso existe para tirar uma dor do dia a dia &mdash; do tutor e do petshop.
+                    </p>
                 </div>
 
-                <!-- Painel: Tutor -->
-                <div class="mp-tabpanel" id="mpPanelTutor" role="tabpanel" aria-labelledby="mpTabTutor" data-aos="fade-up">
-                    <div class="mp-start-grid">
-                        <div class="mp-start-card">
-                            <span class="mp-sc-num">1</span>
-                            <div class="mp-sc-ico"><i class="bi bi-person-plus"></i></div>
-                            <h3>Crie sua conta grátis</h3>
-                            <p>Leva menos de um minuto. Você pode entrar com o Google, se preferir.</p>
-                        </div>
-                        <div class="mp-start-card">
-                            <span class="mp-sc-num">2</span>
-                            <div class="mp-sc-ico"><i class="bi bi-clipboard2-heart"></i></div>
-                            <h3>Cadastre seu pet</h3>
-                            <p>Nome, raça e porte. Assim o petshop já sabe quem vai atender.</p>
-                        </div>
-                        <div class="mp-start-card">
-                            <span class="mp-sc-num">3</span>
-                            <div class="mp-sc-ico"><i class="bi bi-calendar-check"></i></div>
-                            <h3>Agende e acompanhe</h3>
-                            <p>Escolha o horário e receba os avisos a cada etapa do atendimento.</p>
-                        </div>
+                <div class="mp-cards">
+                    <div class="mp-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="mp-cico"><i class="bi bi-broadcast"></i></div>
+                        <h3>Acompanhamento ao vivo</h3>
+                        <p>Você vê em que etapa o pet está sem precisar ligar nem sair de casa.</p>
                     </div>
-                    <div class="mp-start-cta">
+                    <div class="mp-card" data-aos="fade-up" data-aos-delay="80">
+                        <div class="mp-cico"><i class="bi bi-bell-fill"></i></div>
+                        <h3>Avisos automáticos</h3>
+                        <p>Uma notificação a cada mudança de etapa e quando o pet está pronto.</p>
+                    </div>
+                    <div class="mp-card" data-aos="fade-up" data-aos-delay="160">
+                        <div class="mp-cico"><i class="bi bi-calendar-check-fill"></i></div>
+                        <h3>Agendamento simples</h3>
+                        <p>Poucos toques para marcar. Sem ligação, sem fila, sem confusão de horário.</p>
+                    </div>
+                    <div class="mp-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="mp-cico"><i class="bi bi-clock-history"></i></div>
+                        <h3>Histórico do pet</h3>
+                        <p>Tudo o que já foi feito fica registrado para consultar quando quiser.</p>
+                    </div>
+                    <div class="mp-card" data-aos="fade-up" data-aos-delay="80">
+                        <div class="mp-cico"><i class="bi bi-clipboard2-data-fill"></i></div>
+                        <h3>Painel para o petshop</h3>
+                        <p>Clientes, pets e agenda organizados, com menos ligações no balcão.</p>
+                    </div>
+                    <div class="mp-card" data-aos="fade-up" data-aos-delay="160">
+                        <div class="mp-cico"><i class="bi bi-universal-access-circle"></i></div>
+                        <h3>Acessível a todos</h3>
+                        <p>Interface clara e tradução automática para Libras (VLibras) integrada.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PARA QUEM É ================= -->
+        <section class="mp-aud">
+            <div class="mp-wrap">
+                <div data-aos="fade-up" style="max-width:640px;">
+                    <span class="mp-eyebrow"><span class="mp-idx">04</span> Para quem é</span>
+                    <h2 class="mp-h2">Os dois lados do balcão, no mesmo sistema.</h2>
+                </div>
+
+                <div class="mp-aud-grid">
+                    <div class="mp-audcard" data-aos="fade-up">
+                        <div class="mp-audcard-top">
+                            <span class="mp-af"><i class="bi bi-heart"></i></span>
+                            <h3>Para os tutores</h3>
+                        </div>
+                        <ul>
+                            <li><i class="bi bi-check-circle-fill"></i> Crie a conta grátis e cadastre seu pet em um minuto</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Agende banho, tosa ou consulta a qualquer hora</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Acompanhe cada etapa do atendimento em tempo real</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Receba avisos automáticos até o "pronto para retirada"</li>
+                        </ul>
                         @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
                             <a href="{{ route('agendamento') }}" class="mp-btn mp-btn--primary">
                                 Fazer um agendamento <i class="bi bi-arrow-right"></i>
@@ -1284,37 +1221,24 @@
                             </a>
                         @endif
                     </div>
-                </div>
 
-                <!-- Painel: Petshop -->
-                <div class="mp-tabpanel" id="mpPanelShop" role="tabpanel" aria-labelledby="mpTabShop" hidden>
-                    <div class="mp-start-grid">
-                        <div class="mp-start-card">
-                            <span class="mp-sc-num">1</span>
-                            <div class="mp-sc-ico"><i class="bi bi-box-arrow-in-right"></i></div>
-                            <h3>Acesse o painel</h3>
-                            <p>A equipe entra com o login de funcionário e vê a agenda do dia.</p>
+                    <div class="mp-audcard mp-audcard--dark" data-aos="fade-up" data-aos-delay="120">
+                        <div class="mp-audcard-top">
+                            <span class="mp-af"><i class="bi bi-shop"></i></span>
+                            <h3>Para o petshop</h3>
                         </div>
-                        <div class="mp-start-card">
-                            <span class="mp-sc-num">2</span>
-                            <div class="mp-sc-ico"><i class="bi bi-calendar2-week"></i></div>
-                            <h3>Organize os atendimentos</h3>
-                            <p>Horários, serviços e pets de cada cliente, tudo em um lugar só.</p>
-                        </div>
-                        <div class="mp-start-card">
-                            <span class="mp-sc-num">3</span>
-                            <div class="mp-sc-ico"><i class="bi bi-broadcast"></i></div>
-                            <h3>Atualize o status</h3>
-                            <p>A cada etapa concluída, o tutor recebe o aviso automaticamente.</p>
-                        </div>
-                    </div>
-                    <div class="mp-start-cta">
+                        <ul>
+                            <li><i class="bi bi-check-circle-fill"></i> Acesse o painel com o login de funcionário</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Veja a agenda do dia, sem conflito de horário</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Clientes, pets e serviços em um lugar só</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Atualize o status e o tutor é avisado na hora</li>
+                        </ul>
                         @if (session()->has('id') && (session('nivel_acesso') === 'FUNCIONARIO' || session('nivel_acesso') === 'ADMIN'))
-                            <a href="{{ route('painel-controle') }}" class="mp-btn mp-btn--primary">
+                            <a href="{{ route('painel-controle') }}" class="mp-btn mp-btn--light">
                                 Abrir o painel <i class="bi bi-arrow-right"></i>
                             </a>
                         @else
-                            <a href="{{ route('login.funcionario') }}" class="mp-btn mp-btn--primary">
+                            <a href="{{ route('login.funcionario') }}" class="mp-btn mp-btn--light">
                                 Entrar como funcionário <i class="bi bi-arrow-right"></i>
                             </a>
                         @endif
@@ -1323,55 +1247,9 @@
             </div>
         </section>
 
-        <!-- ============ RECURSOS ============ -->
-        <section class="mp-features">
-            <div class="mp-container">
-                <div class="mp-section-head mp-center" data-aos="fade-up">
-                    <span class="mp-eyebrow"><i class="bi bi-boxes"></i> Recursos</span>
-                    <h2>Pensado para facilitar a sua vida</h2>
-                    <p>Cada recurso existe para tirar uma dor do dia a dia &mdash; do tutor e do petshop.</p>
-                </div>
-
-                <div class="mp-cards">
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="mp-ico"><i class="bi bi-broadcast"></i></div>
-                        <h3>Acompanhamento ao vivo</h3>
-                        <p>Você vê em que etapa o pet está sem precisar ligar nem sair de casa.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="80">
-                        <div class="mp-ico"><i class="bi bi-bell-fill"></i></div>
-                        <h3>Avisos automáticos</h3>
-                        <p>Uma notificação a cada mudança de etapa e quando o pet está pronto.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="160">
-                        <div class="mp-ico"><i class="bi bi-calendar-check-fill"></i></div>
-                        <h3>Agendamento simples</h3>
-                        <p>Poucos toques para marcar. Sem ligação, sem fila, sem confusão de horário.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="mp-ico"><i class="bi bi-clock-history"></i></div>
-                        <h3>Histórico do pet</h3>
-                        <p>Tudo o que já foi feito fica registrado para consultar quando quiser.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="80">
-                        <div class="mp-ico"><i class="bi bi-clipboard2-data-fill"></i></div>
-                        <h3>Painel para o petshop</h3>
-                        <p>Clientes, pets e agenda organizados, com menos ligações no balcão.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="160">
-                        <div class="mp-ico"><i class="bi bi-universal-access-circle"></i></div>
-                        <h3>Acessível a todos</h3>
-                        <p>Interface clara e tradução automática para Libras (VLibras) integrada.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        
-
-        <!-- ============ CTA FINAL ============ -->
+        <!-- ================= CTA FINAL ================= -->
         <section class="mp-cta">
-            <div class="mp-container">
+            <div class="mp-wrap">
                 <div class="mp-cta-card" data-aos="zoom-in">
                     @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
                         <h2>Tudo pronto. Que tal agendar o próximo banho?</h2>
@@ -1380,12 +1258,13 @@
                             <a href="{{ route('agendamento') }}" class="mp-btn mp-btn--light">
                                 Agendar agora <i class="bi bi-arrow-right"></i>
                             </a>
-                            <a href="{{ route('pets.create') }}" class="mp-btn mp-btn--wpp">
+                            <a href="{{ route('pets.create') }}" class="mp-btn mp-btn--ghost"
+                                style="color:#fff;border-color:rgba(255,255,255,.4);">
                                 <i class="bi bi-plus-circle"></i> Cadastrar outro pet
                             </a>
                         </div>
                     @elseif (session()->has('id') && (session('nivel_acesso') === 'FUNCIONARIO' || session('nivel_acesso') === 'ADMIN'))
-                        <h2>Sua agenda do dia está esperando</h2>
+                        <h2>Sua agenda do dia está esperando.</h2>
                         <p>Abra o painel para organizar os atendimentos e atualizar os status.</p>
                         <div class="mp-cta-actions">
                             <a href="{{ route('painel-controle') }}" class="mp-btn mp-btn--light">
@@ -1393,13 +1272,14 @@
                             </a>
                         </div>
                     @else
-                        <h2>Crie sua conta e acompanhe seu pet</h2>
+                        <h2>Crie sua conta e acompanhe seu pet.</h2>
                         <p>É grátis, leva menos de um minuto e não precisa instalar nada.</p>
                         <div class="mp-cta-actions">
                             <a href="{{ route('cadastro') }}" class="mp-btn mp-btn--light">
                                 Criar conta grátis <i class="bi bi-arrow-right"></i>
                             </a>
-                            <a href="{{ route('login') }}" class="mp-btn mp-btn--wpp">
+                            <a href="{{ route('login') }}" class="mp-btn mp-btn--ghost"
+                                style="color:#fff;border-color:rgba(255,255,255,.4);">
                                 <i class="bi bi-box-arrow-in-right"></i> Já tenho conta
                             </a>
                         </div>
@@ -1426,26 +1306,28 @@
     <!-- Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
-    <!-- Interações da landing (barra de progresso, demo, abas) -->
+    <!-- Barra de progresso de rolagem -->
     <script>
         (function () {
-            'use strict';
-            var reduceMotion = false; // Mobipet: animações sempre ativas.
-
-            /* ---- Barra de progresso de leitura ---- */
             var bar = document.getElementById('mpProgress');
-            if (bar) {
-                var updateBar = function () {
-                    var h = document.documentElement;
-                    var max = h.scrollHeight - h.clientHeight;
-                    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-                };
-                document.addEventListener('scroll', updateBar, { passive: true });
-                window.addEventListener('resize', updateBar);
-                updateBar();
+            if (!bar) return;
+            function update() {
+                var h = document.documentElement;
+                var max = h.scrollHeight - h.clientHeight;
+                var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+                bar.style.width = pct + '%';
             }
+            document.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
+    </script>
 
-            /* ---- Scroll suave para âncoras internas ---- */
+    <!-- Demo interativa do acompanhamento -->
+    <script>
+        (function () {
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
             document.querySelectorAll('[data-mp-scroll]').forEach(function (link) {
                 link.addEventListener('click', function (e) {
                     var target = document.querySelector(this.getAttribute('href'));
@@ -1455,15 +1337,15 @@
                 });
             });
 
-            /* ---- Demo interativa do acompanhamento ---- */
             var stages = [
-                { label: 'Agendamento confirmado', msg: 'Agendamento confirmado para hoje às 09:00.' },
-                { label: 'Pet recebido no petshop', msg: 'Rex deu entrada no petshop. 🐾' },
-                { label: 'Banho iniciado', msg: 'Banho iniciado. Você será avisado na próxima etapa.' },
-                { label: 'Tosa e finalização', msg: 'Tosa e acabamento em andamento.' },
-                { label: 'Secagem e escovação', msg: 'Secagem e escovação em andamento.' },
-                { label: 'Pronto para retirada', msg: 'Rex está pronto para retirada! ✅' }
+                'Agendamento confirmado para hoje às 09:00.',
+                'Rex deu entrada no petshop. 🐾',
+                'Banho iniciado. Você será avisado na próxima etapa.',
+                'Tosa e acabamento em andamento.',
+                'Secagem e escovação em andamento.',
+                'Rex está pronto para retirada! ✅'
             ];
+
             var tl = document.getElementById('mpDemoTl');
             var nextBtn = document.getElementById('mpNext');
             var resetBtn = document.getElementById('mpReset');
@@ -1471,101 +1353,70 @@
             var progPct = document.getElementById('mpProgPct');
             var toast = document.getElementById('mpToast');
             var toastMsg = document.getElementById('mpToastMsg');
+            if (!tl || !nextBtn) return;
 
-            if (tl && nextBtn) {
-                var items = Array.prototype.slice.call(tl.querySelectorAll('li'));
-                var current = -1;
-                var autoNudged = false;
+            var items = Array.prototype.slice.call(tl.querySelectorAll('li'));
+            var current = -1;
+            var nudged = false;
 
-                var render = function () {
-                    items.forEach(function (li, i) {
-                        li.classList.toggle('done', i < current);
-                        li.classList.toggle('now', i === current);
-                    });
-                    var pct = current < 0 ? 0 : Math.round(((current + 1) / stages.length) * 100);
-                    progBar.style.width = pct + '%';
-                    progPct.textContent = pct + '%';
-
-                    if (current >= 0) {
-                        toastMsg.textContent = stages[current].msg;
-                        toast.classList.add('show');
-                    }
-
-                    if (current >= stages.length - 1) {
-                        nextBtn.innerHTML = 'Ver primeiros passos <i class="bi bi-arrow-down"></i>';
-                        nextBtn.dataset.done = '1';
-                    } else {
-                        nextBtn.innerHTML = 'Avançar etapa <i class="bi bi-arrow-right"></i>';
-                        delete nextBtn.dataset.done;
-                    }
-                };
-
-                nextBtn.addEventListener('click', function () {
-                    if (nextBtn.dataset.done === '1') {
-                        var start = document.querySelector('.mp-start');
-                        if (start) start.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-                        return;
-                    }
-                    if (current < stages.length - 1) {
-                        current++;
-                        render();
-                    }
+            function render() {
+                items.forEach(function (li, i) {
+                    li.classList.toggle('is-done', i < current);
+                    li.classList.toggle('is-now', i === current);
                 });
+                var pct = current < 0 ? 0 : Math.round(((current + 1) / stages.length) * 100);
+                progBar.style.width = pct + '%';
+                progPct.textContent = pct + '%';
 
-                resetBtn.addEventListener('click', function () {
-                    current = -1;
-                    toast.classList.remove('show');
-                    toastMsg.textContent = 'Toque em "Avançar etapa" para começar a simulação.';
-                    render();
-                });
+                if (current >= 0) {
+                    toastMsg.textContent = stages[current];
+                    toast.classList.add('is-show');
+                }
 
-                render();
-
-                /* Convida à interação: avança 1 etapa sozinho quando a seção aparece */
-                if (!reduceMotion && 'IntersectionObserver' in window) {
-                    var io = new IntersectionObserver(function (entries) {
-                        entries.forEach(function (entry) {
-                            if (entry.isIntersecting && !autoNudged) {
-                                autoNudged = true;
-                                setTimeout(function () {
-                                    if (current === -1) { current = 0; render(); }
-                                }, 900);
-                                io.disconnect();
-                            }
-                        });
-                    }, { threshold: 0.45 });
-                    io.observe(document.getElementById('mp-demo'));
+                if (current >= stages.length - 1) {
+                    nextBtn.innerHTML = 'Ver primeiros passos <i class="bi bi-arrow-down"></i>';
+                    nextBtn.dataset.done = '1';
+                } else {
+                    nextBtn.innerHTML = 'Avançar etapa <i class="bi bi-arrow-right"></i>';
+                    delete nextBtn.dataset.done;
                 }
             }
 
-            /* ---- Abas Primeiros passos (Tutor / Petshop) ---- */
-            var tabs = Array.prototype.slice.call(document.querySelectorAll('.mp-tab'));
-            var panels = {
-                mpTabTutor: document.getElementById('mpPanelTutor'),
-                mpTabShop: document.getElementById('mpPanelShop')
-            };
-
-            var selectTab = function (tab, focus) {
-                tabs.forEach(function (t) {
-                    var on = t === tab;
-                    t.setAttribute('aria-selected', on ? 'true' : 'false');
-                    t.tabIndex = on ? 0 : -1;
-                    var panel = panels[t.id];
-                    if (panel) panel.hidden = !on;
-                });
-                if (focus) tab.focus();
-            };
-
-            tabs.forEach(function (tab, idx) {
-                tab.addEventListener('click', function () { selectTab(tab); });
-                tab.addEventListener('keydown', function (e) {
-                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                        e.preventDefault();
-                        var dir = e.key === 'ArrowRight' ? 1 : -1;
-                        selectTab(tabs[(idx + dir + tabs.length) % tabs.length], true);
-                    }
-                });
+            nextBtn.addEventListener('click', function () {
+                if (nextBtn.dataset.done === '1') {
+                    var aud = document.querySelector('.mp-aud');
+                    if (aud) aud.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+                    return;
+                }
+                if (current < stages.length - 1) {
+                    current++;
+                    render();
+                }
             });
+
+            resetBtn.addEventListener('click', function () {
+                current = -1;
+                toast.classList.remove('is-show');
+                toastMsg.textContent = 'Toque em "Avançar etapa" para começar a simulação.';
+                render();
+            });
+
+            render();
+
+            if (!reduceMotion && 'IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting && !nudged) {
+                            nudged = true;
+                            setTimeout(function () {
+                                if (current === -1) { current = 0; render(); }
+                            }, 900);
+                            io.disconnect();
+                        }
+                    });
+                }, { threshold: 0.4 });
+                io.observe(document.getElementById('mp-demo'));
+            }
         })();
     </script>
 

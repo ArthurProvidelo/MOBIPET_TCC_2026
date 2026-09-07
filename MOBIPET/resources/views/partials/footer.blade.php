@@ -9,8 +9,9 @@
 <style>
     /* ===========================================================
        FOOTER MOBIPET — prefixo mpf-
-       Fundo escuro da identidade + bolhas de banho subindo,
-       onda no topo, trilha de patinhas caminhando e marca com brilho.
+       Transição suave da página para o fundo escuro + água com luz
+       (caustics), bolhas de sabão subindo, trilha de patinhas e a
+       marca com brilho. Tudo CSS + um IO minúsculo.
        =========================================================== */
     .mpf {
         --mpf-bg1: #0f1b34;
@@ -22,17 +23,55 @@
         --mpf-muted: rgba(255, 255, 255, .64);
         --mpf-faint: rgba(255, 255, 255, .42);
         --mpf-line: rgba(255, 255, 255, .12);
+        --mpf-ease: cubic-bezier(.22, .61, .36, 1);
 
         position: relative;
         isolation: isolate;
         overflow: hidden;
         border: 0;
-        margin-top: 60px;
-        padding: 138px 0 30px;
-        background: linear-gradient(160deg, var(--mpf-bg1) 0%, var(--mpf-bg2) 100%);
+        margin-top: 0;
+        padding: 150px 0 30px;
+        /* topo funde com a cor clara da página e escurece devagar
+           até o azul profundo — sem borda, sem onda */
+        background:
+            linear-gradient(180deg,
+                #f6f8fd 0,
+                rgba(233, 238, 249, .55) 38px,
+                rgba(20, 32, 60, 0) 190px),
+            linear-gradient(172deg, var(--mpf-bg1) 0%, var(--mpf-bg2) 100%);
         color: var(--mpf-muted);
         font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
         font-size: 15px;
+    }
+
+    /* luz de água atravessando o fundo (caustics) */
+    .mpf::before {
+        content: "";
+        position: absolute;
+        inset: -25%;
+        z-index: 0;
+        pointer-events: none;
+        background:
+            radial-gradient(38% 30% at 18% 26%, rgba(79, 140, 255, .12), transparent 70%),
+            radial-gradient(34% 26% at 78% 58%, rgba(120, 190, 255, .09), transparent 72%),
+            radial-gradient(30% 40% at 52% 92%, rgba(34, 197, 94, .06), transparent 72%);
+        filter: blur(22px);
+        animation: mpf-caustics 26s ease-in-out infinite alternate;
+    }
+
+    @keyframes mpf-caustics {
+        0% { transform: translate3d(-3%, -2%, 0) scale(1); }
+        100% { transform: translate3d(4%, 3%, 0) scale(1.16); }
+    }
+
+    /* leve vinheta para dar profundidade */
+    .mpf::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: radial-gradient(120% 80% at 50% 120%, transparent 55%, rgba(0, 0, 0, .28) 100%);
     }
 
     .mpf h6,
@@ -40,28 +79,22 @@
         font-family: "Montserrat", sans-serif;
     }
 
-    /* crista de espuma no topo — combina com as bolhas de banho */
-    .mpf__foam {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        line-height: 0;
-        z-index: 3;
-        pointer-events: none;
+    /* ---------- revelação no scroll ---------- */
+    .mpf--anim [data-mpf-reveal] {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(5px);
+        transition: opacity .7s var(--mpf-ease), transform .7s var(--mpf-ease), filter .7s ease;
+        transition-delay: calc(var(--d, 0) * 1ms);
     }
 
-    .mpf__foam svg {
-        display: block;
-        width: 100%;
-        height: 70px;
+    .mpf--anim [data-mpf-reveal].mpf-in {
+        opacity: 1;
+        transform: none;
+        filter: blur(0);
     }
 
-    .mpf__foam .mpf__foam-back  { fill: rgba(255, 255, 255, .05); }
-    .mpf__foam .mpf__foam-mid   { fill: rgba(120, 170, 255, .12); }
-    .mpf__foam .mpf__foam-front { fill: rgba(255, 255, 255, .11); }
-
-    /* bolhas de sabão subindo */
+    /* ---------- bolhas de sabão subindo ---------- */
     .mpf__bubbles {
         position: absolute;
         inset: 0;
@@ -102,12 +135,32 @@
         background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .75), rgba(255, 255, 255, .18) 52%, transparent 72%);
     }
 
+    /* algumas bolhas "estouram" no fim do trajeto */
+    .mpf__bubbles span:nth-child(4n)::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, .35);
+        opacity: 0;
+        animation: mpf-pop var(--d) linear var(--delay) infinite;
+    }
+
+    @keyframes mpf-pop {
+        0%, 86% { opacity: 0; transform: scale(.6); }
+        90% { opacity: .5; transform: scale(1); }
+        97% { opacity: 0; transform: scale(1.9); }
+        100% { opacity: 0; }
+    }
+
+    /* sobe balançando (S-curve) e cresce um tico */
     @keyframes mpf-rise {
-        0% { transform: translateY(0) scale(.5); opacity: 0; }
+        0% { transform: translateY(0) translateX(0) scale(.5); opacity: 0; }
         10% { opacity: .5; }
-        55% { opacity: .34; }
+        35% { transform: translateY(calc(-.35 * var(--rise))) translateX(calc(var(--drift) * .55)) scale(.9); }
+        55% { opacity: .34; transform: translateY(calc(-.55 * var(--rise))) translateX(calc(var(--drift) * -.35)) scale(1); }
         80% { opacity: .22; }
-        100% { transform: translateY(calc(-1 * var(--rise))) translateX(var(--drift)) scale(1); opacity: 0; }
+        100% { transform: translateY(calc(-1 * var(--rise))) translateX(var(--drift)) scale(1.06); opacity: 0; }
     }
 
     .mpf__inner {
@@ -115,10 +168,10 @@
         z-index: 5;
     }
 
-    /* trilha de patinhas caminhando */
+    /* ---------- trilha de patinhas caminhando ---------- */
     .mpf__pawtrail {
         position: absolute;
-        top: 124px;
+        top: 150px;
         right: 3%;
         display: flex;
         gap: 10px;
@@ -146,10 +199,28 @@
     /* ---------- layout ---------- */
     .mpf__top {
         display: grid;
-        grid-template-columns: 1.05fr 1.35fr;
-        gap: clamp(2rem, 6vw, 5rem);
+        grid-template-columns: 1fr auto;
+        gap: clamp(2rem, 8vw, 6rem);
         padding-bottom: 44px;
         border-bottom: 1px solid var(--mpf-line);
+        position: relative;
+    }
+
+    /* linha de "superfície da água" no divisor */
+    .mpf__top::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        height: 1px;
+        width: 42%;
+        background: linear-gradient(90deg, transparent, var(--mpf-accent-bright), transparent);
+        animation: mpf-surface 6s ease-in-out infinite;
+    }
+
+    @keyframes mpf-surface {
+        0%, 100% { transform: translateX(-10%); opacity: .3; }
+        50% { transform: translateX(160%); opacity: .9; }
     }
 
     @media (max-width: 991px) {
@@ -233,6 +304,12 @@
         border: 1px solid rgba(79, 140, 255, .28);
         padding: 7px 14px;
         border-radius: 999px;
+        animation: mpf-breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes mpf-breathe {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(79, 140, 255, 0); }
+        50% { box-shadow: 0 0 22px -4px rgba(79, 140, 255, .38); }
     }
 
     .mpf__status-dot {
@@ -263,6 +340,12 @@
         align-items: flex-start;
         gap: 12px;
         font-size: 14px;
+        transition: transform .25s var(--mpf-ease), color .25s ease;
+    }
+
+    .mpf__contact li:hover {
+        transform: translateX(4px);
+        color: #fff;
     }
 
     .mpf__contact i {
@@ -279,23 +362,45 @@
 
     /* ---------- colunas de navegação ---------- */
     .mpf__nav {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: clamp(1.4rem, 4vw, 2.5rem);
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(2rem, 6vw, 4.5rem);
         align-content: start;
     }
 
-    @media (max-width: 575px) {
-        .mpf__nav { grid-template-columns: 1fr 1fr; }
+    .mpf__nav .mpf__col {
+        min-width: 140px;
+    }
+
+    @media (max-width: 991px) {
+        .mpf__top { gap: 2.5rem; }
     }
 
     .mpf__col h6 {
+        position: relative;
         font-size: 13px;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: .1em;
         color: #fff;
-        margin: 0 0 18px;
+        margin: 0 0 20px;
+        padding-bottom: 10px;
+    }
+
+    .mpf__col h6::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 22px;
+        height: 2px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--mpf-accent-bright), transparent);
+        transition: width .3s var(--mpf-ease);
+    }
+
+    .mpf__col:hover h6::after {
+        width: 40px;
     }
 
     .mpf__col nav {
@@ -310,7 +415,10 @@
         color: var(--mpf-muted);
         font-size: 14px;
         text-decoration: none;
-        transition: color .25s ease, padding-left .25s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        transition: color .25s ease, padding-left .25s ease, text-shadow .25s ease;
     }
 
     .mpf__col nav a::before {
@@ -323,12 +431,13 @@
         border-radius: 50%;
         background: var(--mpf-accent-bright);
         transform: translateY(-50%) scale(0);
-        transition: transform .25s ease;
+        transition: transform .25s var(--mpf-ease);
     }
 
     .mpf__col nav a:hover {
         color: #fff;
         padding-left: 14px;
+        text-shadow: 0 0 14px rgba(79, 140, 255, .5);
     }
 
     .mpf__col nav a:hover::before {
@@ -378,59 +487,34 @@
         color: var(--mpf-accent-bright);
     }
 
-    .mpf__totop {
-        width: 44px;
-        height: 44px;
-        flex: none;
-        display: grid;
-        place-items: center;
-        border: 0;
-        border-radius: 50%;
-        cursor: pointer;
-        color: #fff;
-        background: linear-gradient(135deg, var(--mpf-accent), #1d4ed8);
-        box-shadow: 0 12px 26px -10px rgba(23, 92, 221, .9);
-        transition: transform .3s cubic-bezier(.34, 1.56, .64, 1);
-    }
-
-    .mpf__totop i {
-        animation: mpf-bob 2.4s ease-in-out infinite;
-    }
-
-    .mpf__totop:hover {
-        transform: translateY(-4px) scale(1.08);
-    }
-
-    .mpf__totop:hover i {
-        animation-play-state: paused;
-    }
-
-    @keyframes mpf-bob {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-5px); }
-    }
-
     @media (max-width: 991px) {
         .mpf__pawtrail { display: none; }
     }
 
     @media (max-width: 767px) {
-        .mpf { padding-top: 116px; }
-        .mpf__foam svg { height: 54px; }
+        .mpf { padding-top: 128px; }
         .mpf__bottom { justify-content: center; text-align: center; }
     }
 
-    @media (prefers-reduced-motion: reduce) and (max-width: 1px) {
+    @media (prefers-reduced-motion: reduce) {
         .mpf *,
         .mpf *::before,
         .mpf *::after {
-            animation: none !important;
-            transition: none !important;
+            animation-duration: .001ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: .15s !important;
         }
 
-        .mpf__foam,
+        .mpf::before,
         .mpf__bubbles,
-        .mpf__pawtrail { display: none; }
+        .mpf__pawtrail,
+        .mpf__top::after { display: none; }
+
+        .mpf--anim [data-mpf-reveal] {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+        }
 
         .mpf__logo-text {
             background: none;
@@ -441,33 +525,6 @@
 </style>
 
 <footer id="footer" class="mpf">
-
-    {{-- crista de espuma no topo (banho) --}}
-    <div class="mpf__foam" aria-hidden="true">
-        <svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="mpf__foam-back"
-                d="M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z">
-                <animate attributeName="d" dur="20s" repeatCount="indefinite"
-                    values="M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z;
-                            M0,80 L0,40 Q90,22 180,38 Q250,6 320,42 Q420,20 520,36 Q600,8 680,42 Q780,24 880,36 Q960,8 1040,42 Q1120,20 1200,36 L1200,0 L0,0 Z;
-                            M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z" />
-            </path>
-            <path class="mpf__foam-mid"
-                d="M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z">
-                <animate attributeName="d" dur="16s" repeatCount="indefinite"
-                    values="M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z;
-                            M0,80 L0,44 Q110,26 220,40 Q320,12 420,44 Q540,24 660,38 Q760,10 860,44 Q980,26 1100,38 Q1160,14 1200,44 L1200,0 L0,0 Z;
-                            M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z" />
-            </path>
-            <path class="mpf__foam-front"
-                d="M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z">
-                <animate attributeName="d" dur="13s" repeatCount="indefinite"
-                    values="M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z;
-                            M0,80 L0,48 Q60,34 120,44 Q190,22 260,47 Q340,34 420,43 Q490,22 560,47 Q650,34 740,43 Q820,22 900,47 Q980,34 1060,43 Q1140,22 1200,48 L1200,0 L0,0 Z;
-                            M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z" />
-            </path>
-        </svg>
-    </div>
 
     {{-- bolhas de banho subindo --}}
     <div class="mpf__bubbles" aria-hidden="true">
@@ -499,6 +556,10 @@
         <span style="--x:88%;--s:12px;--d:10s;--delay:1.6s;--rise:470px;--drift:-18px"></span>
         <span style="--x:94%;--s:8px;--d:8s;--delay:5.8s;--rise:440px;--drift:16px"></span>
         <span style="--x:66%;--s:6px;--d:7s;--delay:3.4s;--rise:420px;--drift:-12px"></span>
+        <span style="--x:7%;--s:16px;--d:12.5s;--delay:6.5s;--rise:500px;--drift:20px"></span>
+        <span style="--x:29%;--s:6px;--d:6.5s;--delay:7s;--rise:415px;--drift:-10px"></span>
+        <span style="--x:50%;--s:20px;--d:14s;--delay:4.4s;--rise:520px;--drift:-18px"></span>
+        <span style="--x:83%;--s:7px;--d:7s;--delay:6.2s;--rise:430px;--drift:14px"></span>
     </div>
 
     {{-- trilha de patinhas --}}
@@ -515,7 +576,7 @@
 
         <div class="mpf__top">
 
-            <div class="mpf__brand" data-aos="fade-up">
+            <div class="mpf__brand" data-mpf-reveal style="--d:0">
                 <a href="{{ route('index') }}" class="mpf__logo">
                     <span class="mpf__logo-mark"><i class="fa-solid fa-paw"></i></span>
                     <span class="mpf__logo-text">Mobipet</span>
@@ -540,7 +601,7 @@
 
             <div class="mpf__nav">
 
-                <div class="mpf__col" data-aos="fade-up" data-aos-delay="80">
+                <div class="mpf__col" data-mpf-reveal style="--d:80">
                     <h6>Navegação</h6>
                     <nav>
                         <a href="{{ route('index') }}">Início</a>
@@ -550,7 +611,7 @@
                     </nav>
                 </div>
 
-                <div class="mpf__col" data-aos="fade-up" data-aos-delay="160">
+                <div class="mpf__col" data-mpf-reveal style="--d:160">
                     <h6>Minha conta</h6>
                     <nav>
                         @if (session()->has('id') && session('nivel_acesso') == 'USUARIO')
@@ -579,15 +640,11 @@
             </div>
         </div>
 
-        <div class="mpf__bottom">
+        <div class="mpf__bottom" data-mpf-reveal style="--d:0">
             <p>&copy; {{ date('Y') }} <b>Mobipet</b>. Todos os direitos reservados.</p>
             <div class="mpf__legal">
-                <a href="{{ route('faq') }}">Dúvidas frequentes</a>
                 <a href="{{ route('devs') }}" class="mpf__credits">Feito pela equipe Mobipet</a>
             </div>
-            <button type="button" class="mpf__totop" id="mpfTop" aria-label="Voltar ao topo">
-                <i class="bi bi-arrow-up"></i>
-            </button>
         </div>
 
     </div>
@@ -606,12 +663,26 @@
 
     <script>
         (function () {
-            var btn = document.getElementById('mpfTop');
-            if (!btn) return;
-            var reduce = false; // Mobipet: animações sempre ativas.
-            btn.addEventListener('click', function () {
-                window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-            });
+            var footer = document.getElementById('footer');
+            if (!footer) return;
+
+            /* Revelação progressiva das colunas ao entrar na tela */
+            footer.classList.add('mpf--anim');
+
+            var items = footer.querySelectorAll('[data-mpf-reveal]');
+            if ('IntersectionObserver' in window && items.length) {
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (en) {
+                        if (en.isIntersecting) {
+                            en.target.classList.add('mpf-in');
+                            io.unobserve(en.target);
+                        }
+                    });
+                }, { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
+                items.forEach(function (el) { io.observe(el); });
+            } else {
+                items.forEach(function (el) { el.classList.add('mpf-in'); });
+            }
         })();
     </script>
 

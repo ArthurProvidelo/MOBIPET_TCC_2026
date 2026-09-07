@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pet', function (Blueprint $table) {
-            $table->string('status')->default('Aguardando atendimento');
-        });
+        // A coluna "status" já vem definida na tabela Pet do mobipet.sql.
+        // O guard mantém a migration segura em bancos que já a possuem.
+        if (!Schema::hasColumn('pet', 'status')) {
+            Schema::table('pet', function (Blueprint $table) {
+                $table->string('status')->default('Aguardando atendimento');
+            });
+        }
     }
 
     /**
@@ -21,8 +25,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pet', function (Blueprint $table) {
-            $table->dropColumn('status');
-        });
+        if (Schema::hasColumn('pet', 'status')) {
+            Schema::table('pet', function (Blueprint $table) {
+                $table->dropColumn('status');
+            });
+        }
     }
 };

@@ -522,11 +522,6 @@
 
                     </form>
 
-                    <div class="lg-foot">
-                        Ainda não tem acesso?
-                        <a href="{{ route('funcionario') }}">Cadastre-se aqui</a>
-                    </div>
-
                 </div>
 
             </div>

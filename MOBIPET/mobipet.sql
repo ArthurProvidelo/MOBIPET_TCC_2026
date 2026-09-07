@@ -1,40 +1,57 @@
-CREATE DATABASE mobipet;
+CREATE DATABASE IF NOT EXISTS mobipet;
 USE mobipet;
 
-CREATE TABLE Cliente(
-	id_cliente INTEGER AUTO_INCREMENT PRIMARY KEY,
+-- =========================
+-- CLIENTE
+-- =========================
+
+CREATE TABLE Cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255),
-    cpf VARCHAR(11),
+    cpf VARCHAR(14),
     telefone VARCHAR(255),
     email VARCHAR(255),
     senha VARCHAR(255),
     endereco VARCHAR(255)
-);
+) ENGINE=InnoDB;
 
 
-CREATE TABLE Pet(
-	id_pet INTEGER AUTO_INCREMENT PRIMARY KEY,
+-- =========================
+-- PET
+-- =========================
+
+CREATE TABLE Pet (
+    id_pet INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255),
     especie VARCHAR(255),
     raca VARCHAR(255),
     porte VARCHAR(255),
     data_nascimento DATE,
     status VARCHAR(255) DEFAULT 'Aguardando atendimento',
-    fk_id_cliente INTEGER,
+    fk_id_cliente INT,
+
     FOREIGN KEY (fk_id_cliente)
         REFERENCES Cliente(id_cliente)
         ON DELETE CASCADE
-);
+) ENGINE=InnoDB;
 
 
-CREATE TABLE Servico(
-	id_servico INTEGER AUTO_INCREMENT PRIMARY KEY,
+-- =========================
+-- SERVIÇO
+-- =========================
+
+CREATE TABLE Servico (
+    id_servico INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255),
     descricao VARCHAR(255),
     preco DECIMAL(10,2),
-    duracao_estimada INTEGER
-);
+    duracao_estimada INT
+) ENGINE=InnoDB;
 
+
+-- =========================
+-- FUNCIONÁRIO
+-- =========================
 
 CREATE TABLE Funcionario (
     id_funcionario INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,39 +66,39 @@ CREATE TABLE Funcionario (
     senha VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
-);
+) ENGINE=InnoDB;
 
-DROP TABLE funcionario;
 
-CREATE TABLE Agendamento(
-	id_agendamento INTEGER AUTO_INCREMENT PRIMARY KEY,
+-- =========================
+-- AGENDAMENTO
+-- =========================
+
+CREATE TABLE Agendamento (
+    id_agendamento INT AUTO_INCREMENT PRIMARY KEY,
     data_agendamento DATE,
     horario TIME,
     status_agendamento VARCHAR(255),
-    fk_id_pet INTEGER,
-    fk_id_servico INTEGER,
-    fk_id_funcionario INTEGER,
-    
+    fk_id_pet INT,
+    fk_id_servico INT,
+    fk_id_funcionario INT,
+
     FOREIGN KEY (fk_id_pet)
         REFERENCES Pet(id_pet)
         ON DELETE CASCADE,
-	
+
     FOREIGN KEY (fk_id_funcionario)
         REFERENCES Funcionario(id_funcionario)
         ON DELETE CASCADE,
-        
-	FOREIGN KEY (fk_id_servico)
+
+    FOREIGN KEY (fk_id_servico)
         REFERENCES Servico(id_servico)
         ON DELETE CASCADE
-);
+) ENGINE=InnoDB;
 
-ALTER TABLE Agendamento
-ADD COLUMN fk_id_funcionario INT,
-ADD CONSTRAINT fk_agendamento_funcionario
-FOREIGN KEY (fk_id_funcionario)
-REFERENCES Funcionario(id_funcionario)
-ON DELETE CASCADE;
 
+-- =========================
+-- PAGAMENTO
+-- =========================
 
 CREATE TABLE Pagamento (
     id_pagamento INT AUTO_INCREMENT PRIMARY KEY,
@@ -91,10 +108,14 @@ CREATE TABLE Pagamento (
     fk_id_agendamento INT,
 
     FOREIGN KEY (fk_id_agendamento)
-		REFERENCES Agendamento(id_agendamento)
+        REFERENCES Agendamento(id_agendamento)
         ON DELETE CASCADE
-);
+) ENGINE=InnoDB;
 
+
+-- =========================
+-- AVALIAÇÃO
+-- =========================
 
 CREATE TABLE Avaliacao (
     id_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
@@ -104,39 +125,6 @@ CREATE TABLE Avaliacao (
     fk_id_agendamento INT,
 
     FOREIGN KEY (fk_id_agendamento)
-		REFERENCES Agendamento(id_agendamento)
+        REFERENCES Agendamento(id_agendamento)
         ON DELETE CASCADE
-);
-
-
-
-SELECT * FROM agendamento;
-
-SELECT * FROM cliente;
-
-SELECT * FROM pet;
-
-SELECT * FROM servico;
-
-SELECT * FROM funcionario;
-
-ALTER TABLE Funcionario
-ADD COLUMN cpf VARCHAR(14),
-ADD COLUMN endereco VARCHAR(255),
-ADD COLUMN salario DECIMAL(10,2),
-ADD COLUMN data_admissao DATE,
-ADD COLUMN senha VARCHAR(255),
-ADD COLUMN funcao VARCHAR(100);
-
--- 1. Desativa a trava do Modo Seguro e a checagem de Chaves Estrangeiras
-SET SQL_SAFE_UPDATES = 0;
-SET FOREIGN_KEY_CHECKS = 0;
-
--- 2. Limpa a tabela e reinicia o contador do ID
-TRUNCATE TABLE servico;
-
--- 3. Reativa as proteções do banco de dados (Muito importante!)
-SET FOREIGN_KEY_CHECKS = 1;
-SET SQL_SAFE_UPDATES = 1;
-
-ALTER TABLE Cliente MODIFY COLUMN cpf VARCHAR(14);
+) ENGINE=InnoDB;
