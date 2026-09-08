@@ -65,6 +65,53 @@ class AtendimentoController extends Controller
     }
 
     /**
+     * Rota pública (sem token) para o leitor RFID/ESP32: recebe {"dado": "33"},
+     * onde 33 é o id do pet. Descobre o atendimento em andamento desse pet,
+     * identifica a etapa atual e avança para a próxima etapa da esteira.
+     */
+    public function avancarPorPet(Request $request)
+    {
+        $request->validate([
+            'dado' => 'required',
+        ]);
+
+        $petId = (int) $request->input('dado');
+
+        $atendimento = Atendimento::where('fk_id_pet', $petId)
+            ->whereNull('finalizado_em')
+            ->latest('iniciado_em')
+            ->first();
+
+        abort_if(!$atendimento, 404, 'Nenhum atendimento em andamento para este pet.');
+
+        $etapaAtual = $atendimento->etapa_atual;
+        $proximaEtapa = $atendimento->proximaEtapa();
+        abort_if(!$proximaEtapa, 422, 'Não há próxima etapa.');
+
+        $agora = Carbon::now();
+
+        AtendimentoEtapa::create([
+            'fk_id_atendimento' => $atendimento->id_atendimento,
+            'etapa' => $proximaEtapa,
+            'concluida_em' => $agora,
+        ]);
+
+        $atendimento->update([
+            'etapa_atual' => $proximaEtapa,
+            'finalizado_em' => $proximaEtapa === Atendimento::ETAPAS[count(Atendimento::ETAPAS) - 1] ? $agora : null,
+        ]);
+
+        return response()->json([
+            'id_atendimento' => $atendimento->id_atendimento,
+            'fk_id_pet' => $atendimento->fk_id_pet,
+            'etapa_anterior' => $etapaAtual,
+            'etapa_atual' => $proximaEtapa,
+            'finalizado' => (bool) $atendimento->finalizado_em,
+            'atendimento' => $atendimento->fresh(['etapas', 'servico', 'pet']),
+        ]);
+    }
+
+    /**
      * Simula a leitura do cartão RFID no leitor conectado ao ESP32,
      * avançando o pet para a próxima etapa da esteira de atendimento.
      */

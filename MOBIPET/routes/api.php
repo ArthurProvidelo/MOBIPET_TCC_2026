@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AgendamentoController;
+use App\Http\Controllers\Api\AtendimentoController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FuncionarioController;
 use App\Http\Controllers\Api\PetController;
@@ -16,6 +17,10 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/esqueci-senha', [AuthController::class, 'forgotPassword']);
+
+// Leitor RFID/ESP32: recebe {"dado": "33"} (id do pet), identifica a etapa
+// atual do atendimento em andamento e avança para a próxima. Sem autenticação.
+Route::post('/atendimentos/avancar-rfid', [AtendimentoController::class, 'avancarPorPet']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

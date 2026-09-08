@@ -442,33 +442,6 @@
 
 <footer id="footer" class="mpf">
 
-    {{-- crista de espuma no topo (banho) --}}
-    <div class="mpf__foam" aria-hidden="true">
-        <svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="mpf__foam-back"
-                d="M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z">
-                <animate attributeName="d" dur="20s" repeatCount="indefinite"
-                    values="M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z;
-                            M0,80 L0,40 Q90,22 180,38 Q250,6 320,42 Q420,20 520,36 Q600,8 680,42 Q780,24 880,36 Q960,8 1040,42 Q1120,20 1200,36 L1200,0 L0,0 Z;
-                            M0,80 L0,44 Q90,6 180,40 Q250,20 320,38 Q420,4 520,40 Q600,22 680,38 Q780,8 880,40 Q960,20 1040,38 Q1120,6 1200,40 L1200,0 L0,0 Z" />
-            </path>
-            <path class="mpf__foam-mid"
-                d="M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z">
-                <animate attributeName="d" dur="16s" repeatCount="indefinite"
-                    values="M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z;
-                            M0,80 L0,44 Q110,26 220,40 Q320,12 420,44 Q540,24 660,38 Q760,10 860,44 Q980,26 1100,38 Q1160,14 1200,44 L1200,0 L0,0 Z;
-                            M0,80 L0,47 Q110,14 220,42 Q320,28 420,40 Q540,10 660,42 Q760,26 860,40 Q980,14 1100,42 Q1160,28 1200,41 L1200,0 L0,0 Z" />
-            </path>
-            <path class="mpf__foam-front"
-                d="M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z">
-                <animate attributeName="d" dur="13s" repeatCount="indefinite"
-                    values="M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z;
-                            M0,80 L0,48 Q60,34 120,44 Q190,22 260,47 Q340,34 420,43 Q490,22 560,47 Q650,34 740,43 Q820,22 900,47 Q980,34 1060,43 Q1140,22 1200,48 L1200,0 L0,0 Z;
-                            M0,80 L0,51 Q60,24 120,46 Q190,32 260,44 Q340,20 420,46 Q490,34 560,44 Q650,22 740,46 Q820,34 900,44 Q980,24 1060,46 Q1140,32 1200,45 L1200,0 L0,0 Z" />
-            </path>
-        </svg>
-    </div>
-
     {{-- bolhas de banho subindo --}}
     <div class="mpf__bubbles" aria-hidden="true">
         <span style="--x:5%;--s:12px;--d:10s;--delay:0s;--rise:470px;--drift:24px"></span>
@@ -582,12 +555,8 @@
         <div class="mpf__bottom">
             <p>&copy; {{ date('Y') }} <b>Mobipet</b>. Todos os direitos reservados.</p>
             <div class="mpf__legal">
-                <a href="{{ route('faq') }}">Dúvidas frequentes</a>
                 <a href="{{ route('devs') }}" class="mpf__credits">Feito pela equipe Mobipet</a>
             </div>
-            <button type="button" class="mpf__totop" id="mpfTop" aria-label="Voltar ao topo">
-                <i class="bi bi-arrow-up"></i>
-            </button>
         </div>
 
     </div>
