@@ -190,7 +190,6 @@
 
         /* ===================== HERO ===================== */
         .sb-hero {
-            padding-top: clamp(8rem, 16vw, 12rem) !important;
             padding-bottom: clamp(3rem, 8vw, 6rem) !important;
             background:
                 radial-gradient(48% 40% at 82% 8%, var(--sb-accent-soft) 0%, transparent 62%),

@@ -184,7 +184,6 @@
 
         /* ===================== HERO ===================== */
         .dv-hero {
-            padding-top: clamp(8rem, 16vw, 12rem) !important;
             padding-bottom: clamp(3rem, 8vw, 6rem) !important;
             background:
                 radial-gradient(48% 40% at 84% 6%, var(--dv-accent-soft) 0%, transparent 62%),
@@ -803,11 +802,11 @@
                         </div>
                         <div class="dv-term-body">
                             <div class="dv-cmd">git log --oneline -5</div>
+                            <div><span class="dv-hash">2b9391b</span> <span class="dv-msg">Nova página inicial e rodapé no padrão do site</span></div>
+                            <div><span class="dv-hash">06081b1</span> <span class="dv-msg">Atualização do footer</span></div>
+                            <div><span class="dv-hash">7aacca2</span> <span class="dv-msg">Atualização do nível de acesso do Admin</span></div>
+                            <div><span class="dv-hash">7c05fa2</span> <span class="dv-msg">Atualização das views Início/Sobre/Serviços/Devs</span></div>
                             <div><span class="dv-hash">846458a</span> <span class="dv-msg">Setup do ambiente nesta máquina</span></div>
-                            <div><span class="dv-hash">a54235f</span> <span class="dv-msg">Atualização API/Flutter</span></div>
-                            <div><span class="dv-hash">4b5a22c</span> <span class="dv-msg">Atualização do footer</span></div>
-                            <div><span class="dv-hash">80a4cea</span> <span class="dv-msg">Atualização API - 18/08</span></div>
-                            <div><span class="dv-hash">018e38b</span> <span class="dv-msg">Atualização API</span></div>
                             <div class="dv-cmd">git status <span class="dv-cur"></span></div>
                         </div>
                     </div>
