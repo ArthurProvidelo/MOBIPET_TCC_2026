@@ -138,8 +138,16 @@
                     </div>
 
                     <div class="col-md-4 mb-4">
+                      <label>CEP</label>
+                      <input type="text" id="cep" name="cep" class="form-control" maxlength="9" inputmode="numeric"
+                        autocomplete="postal-code" placeholder="00000-000"
+                        data-cep data-endereco-alvo="endereco" data-cep-status="cepStatus">
+                      <small class="cep-status" id="cepStatus" aria-live="polite"></small>
+                    </div>
+
+                    <div class="col-12 mb-4">
                       <label>Endereço</label>
-                      <input type="text" name="endereco" class="form-control" value="{{ $cliente->endereco }}" required>
+                      <input type="text" id="endereco" name="endereco" class="form-control" value="{{ $cliente->endereco }}" required>
                     </div>
                   </div>
 
@@ -527,6 +535,7 @@
 
   <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
+  <script src="{{asset('assets/js/main.js')}}"></script>
   <script>
     if (typeof AOS !== 'undefined') {
       AOS.init({ duration: 650, easing: 'ease-out-cubic', once: true, offset: 100 });

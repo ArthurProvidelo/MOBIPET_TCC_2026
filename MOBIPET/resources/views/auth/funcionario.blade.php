@@ -559,14 +559,27 @@
                             </div>
                         </div>
 
-                        <!-- ENDEREÇO -->
-                        <div class="mb-2">
-                            <label class="form-label">Endereço</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-                                <input type="text" name="endereco" class="form-control"
-                                    placeholder="Rua, Número, Bairro" value="{{ old('endereco') }}" required>
+                        <!-- CEP + ENDEREÇO -->
+                        <div class="row g-2 mb-2">
+                            <div class="col-12 col-sm-5">
+                                <label class="form-label">CEP</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-mailbox"></i></span>
+                                    <input type="text" name="cep" id="funcCep" maxlength="9" inputmode="numeric"
+                                        autocomplete="postal-code" class="form-control" placeholder="00000-000"
+                                        value="{{ old('cep') }}" data-cep data-endereco-alvo="funcEndereco"
+                                        data-cep-status="funcCepStatus">
+                                </div>
                             </div>
+                            <div class="col-12 col-sm-7">
+                                <label class="form-label">Endereço</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                    <input type="text" name="endereco" id="funcEndereco" class="form-control"
+                                        placeholder="Rua, Número, Bairro" value="{{ old('endereco') }}" required>
+                                </div>
+                            </div>
+                            <small class="cep-status" id="funcCepStatus" aria-live="polite"></small>
                         </div>
 
                         <!-- EMAIL -->
@@ -584,8 +597,12 @@
                             <label class="form-label">Senha</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" name="senha" class="form-control"
+                                <input type="password" name="senha" id="funcSenha" class="form-control"
                                     placeholder="Digite uma senha" required>
+                                <span class="input-group-text toggle-senha" data-target="funcSenha" role="button"
+                                    tabindex="0" aria-label="Mostrar senha">
+                                    <i class="bi bi-eye"></i>
+                                </span>
                             </div>
                         </div>
 

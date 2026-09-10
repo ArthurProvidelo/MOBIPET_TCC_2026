@@ -654,6 +654,76 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+
+        /* ===========================================================
+           RESPONSIVO
+        =========================================================== */
+        @media (max-width: 991.98px) {
+            .main { padding-top: 130px; }
+            .hero-card { padding: 32px; border-radius: 26px; }
+            .hero-title { font-size: 34px; letter-spacing: -.5px; }
+            .hero-description { font-size: 16px; line-height: 1.7; margin-bottom: 26px; }
+            .section-title { font-size: 27px; }
+            .dashboard-section { margin-top: 42px; }
+            .dashboard-card-header { padding: 26px; }
+            .dashboard-card-header h3 { font-size: 22px; }
+            .kpi-card { padding: 26px; }
+            .kpi-value { font-size: 34px; }
+        }
+
+        @media (max-width: 575.98px) {
+            .main { padding-top: 116px; }
+            .hero-card { padding: 24px; }
+            .hero-title { font-size: 27px; }
+            .hero-actions { gap: 10px; }
+            .hero-actions .btn-dashboard { width: 100%; text-align: center; }
+            .dashboard-card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+                text-align: left;
+            }
+            .kpi-icon { width: 60px; height: 60px; font-size: 24px; border-radius: 18px; }
+            .section-title { font-size: 24px; }
+
+            /* Tabela empilhada (usa os data-label já presentes no markup) */
+            .table-dashboard thead { display: none; }
+
+            .table-dashboard tbody tr {
+                display: block;
+                border: 1px solid var(--border);
+                border-radius: 18px;
+                padding: 8px 14px;
+                margin-bottom: 14px;
+            }
+
+            .table-dashboard tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 14px;
+                padding: 10px 0 !important;
+                border: none !important;
+                text-align: right;
+            }
+
+            .table-dashboard tbody td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: .04em;
+                color: var(--text-light);
+                text-align: left;
+            }
+
+            .table-dashboard tbody td .pet-info,
+            .table-dashboard tbody td .d-flex {
+                justify-content: flex-end;
+            }
+
+            .table-dashboard .status-select { width: auto; min-width: 150px; }
+        }
     </style>
 
 </head>

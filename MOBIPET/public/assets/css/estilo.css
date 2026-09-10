@@ -163,3 +163,196 @@ textarea.form-control:not(.pt-page textarea.form-control) {
     opacity: 1 !important;
     transform: none !important;
 }
+
+/* ==========================================================================
+   RESPONSIVIDADE GLOBAL — Mobipet
+   Regras aplicadas a todas as páginas (o arquivo é carregado em todo o site).
+   Objetivo: nenhuma tela rolar na horizontal e nenhuma mídia/box estourar
+   a largura no celular, sem alterar o layout desktop.
+   ========================================================================== */
+
+/* 1. Nunca permitir rolagem horizontal da página inteira.
+   overflow-x: clip (e não hidden) evita quebrar position: sticky. */
+html,
+body {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+/* 2. Mídia fluida por padrão */
+img,
+svg,
+video,
+canvas,
+iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 3. Deixar os filhos de flex/grid encolherem (evita estouro de largura) */
+.container,
+.container-fluid,
+.row > [class^="col-"],
+.row > [class*=" col-"] {
+    min-width: 0;
+}
+
+/* 4. A marca do cabeçalho não pode ter largura fixa (estava 400px) */
+.sitename {
+    width: auto !important;
+    max-width: 62vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 5. Tabelas sempre roláveis dentro do próprio container */
+.table-responsive {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 6. Quebra de palavras longas (e-mails, URLs) em telas estreitas */
+p,
+li,
+td,
+dd,
+.card-body,
+.alert {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* 7. Ajustes das imagens/boxes com tamanho fixo definidos acima neste arquivo */
+@media (max-width: 991.98px) {
+
+    .gemini,
+    .img-pet,
+    .banho_servicos,
+    .hidratacao_servicos,
+    .secagem_servicos,
+    .escova,
+    .limpeza,
+    .corte {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+    }
+
+    .pets-deitados {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    .card-informacao {
+        margin-left: 0 !important;
+    }
+
+    .banner-funcionamento {
+        padding: 26px !important;
+    }
+}
+
+/* 8. Folga lateral um pouco maior no conteúdo em telas muito pequenas */
+@media (max-width: 575.98px) {
+    .container,
+    .container-fluid {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+}
+
+/* ==========================================================================
+   MOSTRAR / OCULTAR SENHA  —  padrão reutilizável .toggle-senha
+   Uso: <span class="input-group-text toggle-senha" data-target="idDoInput">
+            <i class="bi bi-eye"></i>
+        </span>
+   O comportamento é ligado pelo main.js (delegação global).
+   ========================================================================== */
+.toggle-senha {
+    cursor: pointer;
+    user-select: none;
+    transition: color .2s ease, background-color .2s ease;
+}
+
+.toggle-senha:hover,
+.toggle-senha:focus-visible {
+    color: #175cdd;
+    outline: none;
+}
+
+/* ==========================================================================
+   ÍCONE DE PERFIL NO HEADER  —  Iconly (SVG embutido em partials/nav-user)
+   ========================================================================== */
+.iconly {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    vertical-align: -0.15em;
+    flex: none;
+}
+
+.navmenu .nav-profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.navmenu .nav-profile__badge {
+    width: 30px;
+    height: 30px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(23, 92, 221, .10);
+    color: #175cdd;
+    font-size: 1.1rem;
+    line-height: 0;
+    transition: background-color .25s ease, color .25s ease, transform .25s ease;
+}
+
+.navmenu .nav-profile:hover .nav-profile__badge,
+.navmenu .active .nav-profile__badge {
+    background: #175cdd;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Rótulo "Perfil": escondido no menu horizontal (xl+), visível no menu mobile */
+@media (min-width: 1200px) {
+    .navmenu .nav-profile__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+/* ==========================================================================
+   CONSULTA DE CEP (ViaCEP) — feedback do campo auxiliar
+   ========================================================================== */
+.cep-status {
+    display: block;
+    margin-top: 6px;
+    font-size: .8rem;
+    min-height: 1em;
+    color: #8794a7;
+}
+
+.cep-status.is-loading {
+    color: #175cdd;
+}
+
+.cep-status.is-error {
+    color: #dc2626;
+}
+
+.cep-status.is-ok {
+    color: #12643a;
+}

@@ -207,4 +207,130 @@
     });
   });
 
+  /**
+   * Mostrar / ocultar senha — padrão global .toggle-senha
+   * Marcação esperada:
+   *   <span class="input-group-text toggle-senha" data-target="idDoInput">
+   *       <i class="bi bi-eye"></i>
+   *   </span>
+   * Alternativa sem data-target: o .toggle-senha dentro do mesmo .input-group
+   * do campo de senha.
+   */
+  safe('toggle-senha', function () {
+    function alvoDoToggle(toggle) {
+      var id = toggle.getAttribute('data-target');
+      if (id) return document.getElementById(id);
+      var grupo = toggle.closest('.input-group') || toggle.parentNode;
+      return grupo ? grupo.querySelector('input[type="password"], input[type="text"][data-senha]') : null;
+    }
+
+    function acionar(toggle) {
+      var input = alvoDoToggle(toggle);
+      if (!input) return;
+
+      var icon = toggle.querySelector('i');
+      var mostrando = input.type === 'text';
+
+      input.type = mostrando ? 'password' : 'text';
+      input.setAttribute('data-senha', '');
+      toggle.setAttribute('aria-label', mostrando ? 'Mostrar senha' : 'Ocultar senha');
+
+      if (icon) {
+        icon.classList.toggle('bi-eye', mostrando);
+        icon.classList.toggle('bi-eye-slash', !mostrando);
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      var toggle = e.target.closest('.toggle-senha');
+      if (toggle) acionar(toggle);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+      var toggle = e.target.closest('.toggle-senha');
+      if (!toggle) return;
+      e.preventDefault();
+      acionar(toggle);
+    });
+  });
+
+  /**
+   * Consulta de CEP via ViaCEP (API pública e gratuita).
+   * Marcação esperada:
+   *   <input ... data-cep data-endereco-alvo="idDoCampoEndereco">
+   *   <small class="cep-status" data-cep-status></small>  (opcional)
+   * Ao completar 8 dígitos, busca o endereço e preenche o campo alvo no
+   * formato "Logradouro, Bairro - Cidade/UF, ", deixando o cursor pronto
+   * para o usuário digitar o número.
+   */
+  safe('consulta-cep', function () {
+    var campos = document.querySelectorAll('[data-cep]');
+    if (!campos.length) return;
+
+    function statusDe(campo) {
+      var id = campo.getAttribute('data-cep-status');
+      if (id) return document.getElementById(id);
+      var grupo = campo.closest('.mb-2, .mb-3, .mb-4, .form-group, .col-6, .col-12') || campo.parentNode;
+      return grupo ? grupo.querySelector('[data-cep-status], .cep-status') : null;
+    }
+
+    function setStatus(el, texto, estado) {
+      if (!el) return;
+      el.textContent = texto || '';
+      el.classList.remove('is-loading', 'is-error', 'is-ok');
+      if (estado) el.classList.add(estado);
+    }
+
+    campos.forEach(function (campo) {
+      var status = statusDe(campo);
+      var alvo = document.getElementById(campo.getAttribute('data-endereco-alvo') || '');
+
+      campo.addEventListener('input', function () {
+        var d = campo.value.replace(/\D/g, '').slice(0, 8);
+        campo.value = d.length > 5 ? d.slice(0, 5) + '-' + d.slice(5) : d;
+        if (d.length < 8) setStatus(status, '', null);
+      });
+
+      campo.addEventListener('blur', buscar);
+
+      function buscar() {
+        var cep = campo.value.replace(/\D/g, '');
+        if (cep.length !== 8) return;
+
+        setStatus(status, 'Buscando endereço…', 'is-loading');
+
+        fetch('https://viacep.com.br/ws/' + cep + '/json/', { cache: 'force-cache' })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+          .then(function (data) {
+            if (data.erro) {
+              setStatus(status, 'CEP não encontrado. Preencha o endereço manualmente.', 'is-error');
+              return;
+            }
+
+            var partes = [];
+            if (data.logradouro) partes.push(data.logradouro);
+            if (data.bairro) partes.push(data.bairro);
+            var cidadeUf = [data.localidade, data.uf].filter(Boolean).join('/');
+
+            var texto = partes.join(', ');
+            if (cidadeUf) texto += (texto ? ' - ' : '') + cidadeUf;
+            if (texto) texto += ', ';
+
+            if (alvo) {
+              alvo.value = texto;
+              alvo.focus();
+              try { alvo.setSelectionRange(alvo.value.length, alvo.value.length); } catch (_) {}
+              alvo.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+
+            setStatus(status, 'Endereço preenchido. Complete com o número e o complemento.', 'is-ok');
+          })
+          .catch(function () {
+            setStatus(status, 'Não foi possível consultar o CEP agora. Preencha manualmente.', 'is-error');
+          });
+      }
+    });
+  });
+
 })();

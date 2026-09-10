@@ -20,7 +20,13 @@
     <li><a href="{{ route('pets.create') }}" @class(['active' => request()->routeIs('pets.create')])>Cadastrar Pet</a></li>
     <li><a href="{{ route('agendamento') }}" @class(['active' => request()->routeIs('agendamento')])>Agendamento</a></li>
     <li><a href="{{ route('pets.index') }}" @class(['active' => request()->routeIs('pets.index', 'pets.edit', 'pets.show')])>Meus Pets</a></li>
-    <li><a href="{{ route('perfil') }}" @class(['active' => request()->routeIs('perfil')])><i class="fa-solid fa-user"></i></a></li>
+    <li>
+        <a href="{{ route('perfil') }}" class="nav-profile" aria-label="Meu perfil" title="Meu perfil"
+            @class(['active' => request()->routeIs('perfil')])>
+            <span class="nav-profile__badge">@include('partials.icon-perfil')</span>
+            <span class="nav-profile__label">Perfil</span>
+        </a>
+    </li>
     <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 
 @elseif (session()->has('id') && $nivelAcesso === 'ADMIN')
@@ -29,7 +35,13 @@
     <li><a href="{{ route('funcionario.agendamentos') }}" @class(['active' => request()->routeIs('funcionario.agendamentos')])>Agendamentos</a></li>
     <li><a href="{{ route('funcionario') }}" @class(['active' => request()->routeIs('funcionario')])>Cadastrar Funcionário</a></li>
     <li><a href="{{ route('services.create') }}" @class(['active' => request()->routeIs('services.create')])>Cadastrar Serviço</a></li>
-    <li><a href="{{ route('perfil') }}" @class(['active' => request()->routeIs('perfil')])>Perfil</a></li>
+    <li>
+        <a href="{{ route('perfil') }}" class="nav-profile" aria-label="Meu perfil" title="Meu perfil"
+            @class(['active' => request()->routeIs('perfil')])>
+            <span class="nav-profile__badge">@include('partials.icon-perfil')</span>
+            <span class="nav-profile__label">Perfil</span>
+        </a>
+    </li>
     <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 
 @elseif (session()->has('id') && $nivelAcesso === 'FUNCIONARIO')
@@ -37,7 +49,13 @@
     <li><a href="{{ route('painel-controle') }}" @class(['active' => request()->routeIs('painel-controle')])>Painel</a></li>
     <li><a href="{{ route('funcionario.agendamentos') }}" @class(['active' => request()->routeIs('funcionario.agendamentos')])>Agendamentos</a></li>
     <li><a href="{{ route('services.create') }}" @class(['active' => request()->routeIs('services.create')])>Cadastrar Serviço</a></li>
-    <li><a href="{{ route('perfil') }}" @class(['active' => request()->routeIs('perfil')])>Perfil</a></li>
+    <li>
+        <a href="{{ route('perfil') }}" class="nav-profile" aria-label="Meu perfil" title="Meu perfil"
+            @class(['active' => request()->routeIs('perfil')])>
+            <span class="nav-profile__badge">@include('partials.icon-perfil')</span>
+            <span class="nav-profile__label">Perfil</span>
+        </a>
+    </li>
     <li><a href="{{ route('logout') }}">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
 
 @else

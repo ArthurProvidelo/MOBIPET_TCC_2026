@@ -609,9 +609,13 @@
                                     <span class="input-group-text">
                                         <i class="bi bi-lock"></i>
                                     </span>
-                                    <input type="password" name="senha"
-                                        class="form-control rounded-end-3"
+                                    <input type="password" name="senha" id="loginSenha"
+                                        class="form-control"
                                         placeholder="Sua senha" required>
+                                    <span class="input-group-text toggle-senha rounded-end-3" data-target="loginSenha"
+                                        role="button" tabindex="0" aria-label="Mostrar senha">
+                                        <i class="bi bi-eye"></i>
+                                    </span>
                                 </div>
                             </div>
 
@@ -683,17 +687,32 @@
                                 </div>
                             </div>
 
-                            <!-- ENDEREÇO -->
-                            <div class="mb-2">
-                                <label class="form-label">Endereço Residencial</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-geo-alt"></i>
-                                    </span>
-                                    <input type="text" name="endereco" class="form-control"
-                                        placeholder="Rua, Número, Bairro - Cidade" value="{{ old('endereco') }}"
-                                        required>
+                            <!-- CEP + ENDEREÇO -->
+                            <div class="row g-2 mb-2">
+                                <div class="col-12 col-sm-5">
+                                    <label class="form-label">CEP</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-mailbox"></i>
+                                        </span>
+                                        <input type="text" name="cep" id="cadCep" maxlength="9"
+                                            inputmode="numeric" autocomplete="postal-code" class="form-control"
+                                            placeholder="00000-000" value="{{ old('cep') }}"
+                                            data-cep data-endereco-alvo="cadEndereco" data-cep-status="cadCepStatus">
+                                    </div>
                                 </div>
+                                <div class="col-12 col-sm-7">
+                                    <label class="form-label">Endereço Residencial</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-geo-alt"></i>
+                                        </span>
+                                        <input type="text" name="endereco" id="cadEndereco" class="form-control"
+                                            placeholder="Rua, Número, Bairro - Cidade" value="{{ old('endereco') }}"
+                                            required>
+                                    </div>
+                                </div>
+                                <small class="cep-status" id="cadCepStatus" aria-live="polite"></small>
                             </div>
 
                             <!-- EMAIL -->
@@ -716,9 +735,13 @@
                                     <span class="input-group-text">
                                         <i class="bi bi-lock"></i>
                                     </span>
-                                    <input type="password" name="senha" class="form-control"
+                                    <input type="password" name="senha" id="cadSenha" class="form-control"
                                         placeholder="Crie uma senha segura"
                                         value="{{ old('senha', request('senha')) }}" required>
+                                    <span class="input-group-text toggle-senha" data-target="cadSenha"
+                                        role="button" tabindex="0" aria-label="Mostrar senha">
+                                        <i class="bi bi-eye"></i>
+                                    </span>
                                 </div>
                             </div>
 

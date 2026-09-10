@@ -48,7 +48,11 @@
                                     Nova senha
                                 </label>
 
-                                <input type="password" name="password" class="form-control" required>
+                                <div class="input-group">
+                                    <input type="password" name="password" id="rsPassword" class="form-control" required>
+                                    <button type="button" class="btn btn-outline-secondary toggle-senha"
+                                        data-target="rsPassword" aria-label="Mostrar senha">Mostrar</button>
+                                </div>
 
                             </div>
 
@@ -58,7 +62,12 @@
                                     Confirmar nova senha
                                 </label>
 
-                                <input type="password" name="password_confirmation" class="form-control" required>
+                                <div class="input-group">
+                                    <input type="password" name="password_confirmation" id="rsPasswordConfirm"
+                                        class="form-control" required>
+                                    <button type="button" class="btn btn-outline-secondary toggle-senha"
+                                        data-target="rsPasswordConfirm" aria-label="Mostrar senha">Mostrar</button>
+                                </div>
 
                             </div>
 
@@ -77,6 +86,19 @@
         </div>
 
     </div>
+
+    <script>
+        document.querySelectorAll('.toggle-senha').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var input = document.getElementById(btn.getAttribute('data-target'));
+                if (!input) return;
+                var mostrando = input.type === 'text';
+                input.type = mostrando ? 'password' : 'text';
+                btn.textContent = mostrando ? 'Mostrar' : 'Ocultar';
+                btn.setAttribute('aria-label', mostrando ? 'Mostrar senha' : 'Ocultar senha');
+            });
+        });
+    </script>
 
 </body>
 

@@ -510,8 +510,12 @@
                             <label class="form-label">Senha</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" name="senha" class="form-control rounded-end-3"
+                                <input type="password" name="senha" id="funcSenha" class="form-control"
                                     placeholder="Sua senha" required>
+                                <span class="input-group-text toggle-senha rounded-end-3" data-target="funcSenha"
+                                    role="button" tabindex="0" aria-label="Mostrar senha">
+                                    <i class="bi bi-eye"></i>
+                                </span>
                             </div>
                         </div>
 

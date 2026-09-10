@@ -33,8 +33,9 @@
     <style>
         /* ===========================================================
            CADASTRAR PET — MOBIPET  ·  isolado (prefixo pt-)
-           mesmo sistema tipográfico/visual de devs.blade.php e das
-           telas de recuperação de senha (rs-/rd-)
+           mesmo sistema tipográfico/visual de pets/index e pets/edit.
+           Front-end reconfigurado: layout em duas colunas com prévia
+           ao vivo do cadastro + barra de ações fixa no celular.
            =========================================================== */
         .pt-page {
             --pt-accent: #175cdd;
@@ -105,7 +106,7 @@
            FUNDO / HERO
            ========================================================= */
         .pt-hero {
-            padding: 170px 0 100px;
+            padding: 160px 0 100px;
             background:
                 radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
                 radial-gradient(circle at bottom left, #dcfce7 0%, transparent 30%),
@@ -114,13 +115,13 @@
         }
 
         .pt-wrap {
-            width: min(820px, 92%);
+            width: min(1080px, 92%);
             margin-inline: auto;
         }
 
         .pt-hero-head {
             text-align: center;
-            max-width: 620px;
+            max-width: 640px;
             margin: 0 auto 44px;
         }
 
@@ -135,6 +136,16 @@
             color: var(--pt-muted);
             line-height: 1.65;
             margin: 0;
+        }
+
+        /* =========================================================
+           LAYOUT EM DUAS COLUNAS
+           ========================================================= */
+        .pt-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 340px;
+            gap: 28px;
+            align-items: start;
         }
 
         /* =========================================================
@@ -155,15 +166,15 @@
             background: #fff;
             border-radius: var(--pt-radius);
             box-shadow: var(--pt-shadow);
-            padding: clamp(28px, 5vw, 54px);
+            padding: clamp(26px, 4.5vw, 48px);
         }
 
         .pt-section-title {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 28px;
-            font-size: 1.15rem;
+            margin-bottom: 24px;
+            font-size: 1.12rem;
             font-weight: 700;
             color: var(--pt-ink);
         }
@@ -216,8 +227,20 @@
             box-shadow: 0 0 0 4px var(--pt-accent-soft) !important;
         }
 
+        .pt-hint {
+            display: block;
+            margin-top: 6px;
+            font-size: .78rem;
+            font-family: "Roboto", sans-serif;
+            font-weight: 400;
+            letter-spacing: 0;
+            text-transform: none;
+            color: var(--pt-muted);
+        }
+
         /* Escolha de espécie (cartões com radio escondido) */
         .pt-choice {
+            position: relative;
             border: 2px solid var(--pt-line);
             background-color: var(--pt-bg);
             color: var(--pt-muted);
@@ -238,6 +261,21 @@
             color: var(--pt-accent);
             box-shadow: 0 8px 20px rgba(23, 92, 221, .18);
             transform: translateY(-2px);
+        }
+
+        .pt-choice .pt-choice-check {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 15px;
+            opacity: 0;
+            transform: scale(.6);
+            transition: opacity .2s ease, transform .2s ease;
+        }
+
+        .btn-check:checked+.pt-choice .pt-choice-check {
+            opacity: 1;
+            transform: scale(1);
         }
 
         /* Controle segmentado (porte) */
@@ -263,6 +301,93 @@
             color: var(--pt-accent) !important;
             font-weight: 700 !important;
             box-shadow: 0 4px 12px rgba(15, 27, 52, .08) !important;
+        }
+
+        /* =========================================================
+           PRÉVIA AO VIVO
+           ========================================================= */
+        .pt-preview {
+            position: sticky;
+            top: 110px;
+            background: #fff;
+            border-radius: var(--pt-radius);
+            box-shadow: var(--pt-shadow-sm);
+            overflow: hidden;
+        }
+
+        .pt-preview__top {
+            padding: 30px 26px 24px;
+            text-align: center;
+            background:
+                radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, .18), transparent 60%),
+                linear-gradient(135deg, var(--pt-accent), var(--pt-accent-dark));
+            color: #fff;
+        }
+
+        .pt-preview__avatar {
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .16);
+            border: 1px solid rgba(255, 255, 255, .28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .pt-preview__name {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        .pt-preview__sub {
+            margin: 4px 0 0;
+            font-size: .82rem;
+            color: rgba(255, 255, 255, .82);
+        }
+
+        .pt-preview__body {
+            padding: 20px 24px 26px;
+        }
+
+        .pt-preview__row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 11px 0;
+            border-bottom: 1px solid var(--pt-line);
+            font-size: .9rem;
+        }
+
+        .pt-preview__row:last-child {
+            border-bottom: none;
+        }
+
+        .pt-preview__row span:first-child {
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-size: .72rem;
+            color: var(--pt-muted);
+        }
+
+        .pt-preview__row span:last-child {
+            font-weight: 600;
+            color: var(--pt-ink);
+            text-align: right;
+        }
+
+        .pt-preview__row span.is-empty {
+            color: var(--pt-muted);
+            font-weight: 400;
+            font-style: italic;
         }
 
         /* =========================================================
@@ -328,19 +453,64 @@
         .pt-divider {
             border: none;
             border-top: 1px solid var(--pt-line);
-            margin: 40px 0 34px;
+            margin: 36px 0 30px;
         }
 
         /* =========================================================
            RESPONSIVO
            ========================================================= */
+        @media (max-width: 992px) {
+            .pt-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* No mobile a prévia aparece antes do formulário */
+            .pt-grid .pt-preview {
+                order: -1;
+                position: static;
+            }
+        }
+
         @media (max-width: 768px) {
             .pt-hero {
-                padding-top: 140px;
+                padding-top: 132px;
+                padding-bottom: 120px;
             }
 
             .pt-card {
                 border-radius: 20px;
+            }
+
+            /* Barra de ações fixa no rodapé */
+            .pt-actions {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1030;
+                margin: 0;
+                padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+                background: rgba(255, 255, 255, .96);
+                backdrop-filter: blur(8px);
+                border-top: 1px solid var(--pt-line);
+                box-shadow: 0 -10px 30px -18px rgba(15, 27, 52, .3);
+                flex-wrap: nowrap;
+            }
+
+            .pt-actions .pt-btn {
+                padding-top: 13px;
+                padding-bottom: 13px;
+            }
+
+            .pt-actions .pt-btn--ghost span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .pt-preview__body {
+                padding-left: 18px;
+                padding-right: 18px;
             }
         }
 
@@ -412,8 +582,11 @@
                     </div>
                 @endif
 
-                <div class="pt-card" data-aos="zoom-in" data-aos-delay="100">
-                    <form action="{{ route('pets.store') }}" method="POST">
+                <form action="{{ route('pets.store') }}" method="POST" id="petForm" class="pt-grid" data-aos="fade-up"
+                    data-aos-delay="100">
+
+                    <!-- ---------- FORMULÁRIO ---------- -->
+                    <div class="pt-card">
                         @csrf
 
                         <div class="pt-section-title">
@@ -422,9 +595,9 @@
                         </div>
 
                         <div class="mb-4">
-                            <label>Nome do pet</label>
-                            <input type="text" name="nome" class="form-control"
-                                placeholder="Ex: Thor, Mel, Max..." value="{{ old('nome') }}" required>
+                            <label for="petNome">Nome do pet</label>
+                            <input type="text" name="nome" id="petNome" class="form-control"
+                                placeholder="Ex: Thor, Mel, Max..." value="{{ old('nome') }}" required autofocus>
                         </div>
 
                         <div class="mb-4">
@@ -435,6 +608,7 @@
                                         value="Cão" {{ old('especie') == 'Cão' ? 'checked' : '' }} required>
                                     <label class="btn pt-choice w-100 py-3 rounded-4 d-flex flex-column align-items-center gap-2"
                                         for="especie_cao">
+                                        <i class="fa-solid fa-circle-check pt-choice-check"></i>
                                         <i class="fa-solid fa-dog fa-2x"></i>
                                         <span class="fw-bold small">Cão</span>
                                     </label>
@@ -444,6 +618,7 @@
                                         value="Gato" {{ old('especie') == 'Gato' ? 'checked' : '' }} required>
                                     <label class="btn pt-choice w-100 py-3 rounded-4 d-flex flex-column align-items-center gap-2"
                                         for="especie_gato">
+                                        <i class="fa-solid fa-circle-check pt-choice-check"></i>
                                         <i class="fa-solid fa-cat fa-2x"></i>
                                         <span class="fw-bold small">Gato</span>
                                     </label>
@@ -451,17 +626,26 @@
                             </div>
                         </div>
 
+                        <hr class="pt-divider">
+
+                        <div class="pt-section-title">
+                            <i class="fa-solid fa-paw"></i>
+                            <span>Detalhes do pet</span>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-6 mb-4">
-                                <label>Raça</label>
-                                <input type="text" name="raca" class="form-control"
+                                <label for="petRaca">Raça</label>
+                                <input type="text" name="raca" id="petRaca" class="form-control"
                                     placeholder="Ex: Poodle, Vira-lata, Persa..." value="{{ old('raca') }}" required>
+                                <span class="pt-hint">Não sabe a raça? Escreva "SRD" (sem raça definida).</span>
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label>Data de nascimento</label>
-                                <input type="date" name="data_nascimento" class="form-control"
+                                <label for="petNascimento">Data de nascimento</label>
+                                <input type="date" name="data_nascimento" id="petNascimento" class="form-control"
                                     max="{{ date('Y-m-d') }}" value="{{ old('data_nascimento') }}" required>
+                                <span class="pt-hint" id="petIdadeHint">Usada para calcular a idade do pet.</span>
                             </div>
                         </div>
 
@@ -486,15 +670,45 @@
 
                         <div class="pt-actions">
                             <a href="{{ route('pets.index') }}" class="pt-btn pt-btn--ghost">
-                                <i class="bi bi-arrow-left"></i> Voltar
+                                <i class="bi bi-arrow-left"></i> <span>Voltar</span>
                             </a>
                             <button type="submit" class="pt-btn pt-btn--primary">
                                 <i class="fa-solid fa-circle-check"></i> Concluir cadastro
                             </button>
                         </div>
 
-                    </form>
-                </div>
+                    </div>
+
+                    <!-- ---------- PRÉVIA AO VIVO ---------- -->
+                    <aside class="pt-preview" aria-label="Prévia do cadastro">
+                        <div class="pt-preview__top">
+                            <div class="pt-preview__avatar">
+                                <i class="fa-solid fa-paw" id="pvAvatarIcon"></i>
+                            </div>
+                            <p class="pt-preview__name" id="pvNome">Seu novo pet</p>
+                            <p class="pt-preview__sub">Prévia do cadastro</p>
+                        </div>
+                        <div class="pt-preview__body">
+                            <div class="pt-preview__row">
+                                <span>Espécie</span>
+                                <span class="is-empty" id="pvEspecie">A definir</span>
+                            </div>
+                            <div class="pt-preview__row">
+                                <span>Raça</span>
+                                <span class="is-empty" id="pvRaca">A definir</span>
+                            </div>
+                            <div class="pt-preview__row">
+                                <span>Porte</span>
+                                <span class="is-empty" id="pvPorte">A definir</span>
+                            </div>
+                            <div class="pt-preview__row">
+                                <span>Idade</span>
+                                <span class="is-empty" id="pvIdade">A definir</span>
+                            </div>
+                        </div>
+                    </aside>
+
+                </form>
 
             </div>
         </section>
@@ -525,6 +739,86 @@
             document.addEventListener('scroll', update, { passive: true });
             window.addEventListener('resize', update);
             update();
+        })();
+    </script>
+
+    <!-- Prévia ao vivo do cadastro -->
+    <script>
+        (function () {
+            var form = document.getElementById('petForm');
+            if (!form) return;
+
+            var nome = document.getElementById('petNome');
+            var raca = document.getElementById('petRaca');
+            var nascimento = document.getElementById('petNascimento');
+
+            var pvNome = document.getElementById('pvNome');
+            var pvEspecie = document.getElementById('pvEspecie');
+            var pvRaca = document.getElementById('pvRaca');
+            var pvPorte = document.getElementById('pvPorte');
+            var pvIdade = document.getElementById('pvIdade');
+            var pvAvatarIcon = document.getElementById('pvAvatarIcon');
+            var idadeHint = document.getElementById('petIdadeHint');
+
+            function set(el, valor) {
+                if (!el) return;
+                if (valor) {
+                    el.textContent = valor;
+                    el.classList.remove('is-empty');
+                } else {
+                    el.textContent = 'A definir';
+                    el.classList.add('is-empty');
+                }
+            }
+
+            function calcularIdade(iso) {
+                if (!iso) return '';
+                var nasc = new Date(iso + 'T00:00:00');
+                if (isNaN(nasc)) return '';
+                var hoje = new Date();
+                if (nasc > hoje) return '';
+
+                var meses = (hoje.getFullYear() - nasc.getFullYear()) * 12 + (hoje.getMonth() - nasc.getMonth());
+                if (hoje.getDate() < nasc.getDate()) meses--;
+                if (meses < 0) meses = 0;
+
+                var anos = Math.floor(meses / 12);
+                var rest = meses % 12;
+
+                if (anos === 0) return rest <= 1 ? (rest + ' mês').replace('0 mês', 'Recém-nascido') : rest + ' meses';
+                var txt = anos + (anos === 1 ? ' ano' : ' anos');
+                if (rest > 0) txt += ' e ' + rest + (rest === 1 ? ' mês' : ' meses');
+                return txt;
+            }
+
+            function sync() {
+                set(pvNome, nome.value.trim() || null);
+                if (!nome.value.trim()) pvNome.textContent = 'Seu novo pet';
+
+                var especie = form.querySelector('input[name="especie"]:checked');
+                set(pvEspecie, especie ? especie.value : null);
+                if (pvAvatarIcon) {
+                    pvAvatarIcon.className = 'fa-solid ' +
+                        (!especie ? 'fa-paw' : especie.value === 'Gato' ? 'fa-cat' : 'fa-dog');
+                }
+
+                set(pvRaca, raca.value.trim() || null);
+
+                var porte = form.querySelector('input[name="porte"]:checked');
+                set(pvPorte, porte ? porte.value : null);
+
+                var idade = calcularIdade(nascimento.value);
+                set(pvIdade, idade || null);
+                if (idadeHint) {
+                    idadeHint.textContent = idade
+                        ? 'Idade estimada: ' + idade + '.'
+                        : 'Usada para calcular a idade do pet.';
+                }
+            }
+
+            form.addEventListener('input', sync);
+            form.addEventListener('change', sync);
+            sync();
         })();
     </script>
 
