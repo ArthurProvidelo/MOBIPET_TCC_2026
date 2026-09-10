@@ -295,6 +295,109 @@
     }
 
     /* =========================================================
+       GRADE DE HORÁRIOS
+       ========================================================= */
+    .pt-slots {
+      margin-top: 6px;
+      border: 1px solid var(--pt-line);
+      border-radius: var(--pt-radius-sm);
+      background: var(--pt-bg);
+      padding: 16px;
+      min-height: 92px;
+    }
+
+    .pt-slots__hint,
+    .pt-slots__empty,
+    .pt-slots__loading {
+      margin: 0;
+      font-family: "Lato", sans-serif;
+      font-size: .9rem;
+      color: var(--pt-muted);
+      text-align: center;
+      padding: 14px 8px;
+    }
+
+    .pt-slots__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+      gap: 10px;
+    }
+
+    .pt-slot {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1.5px solid var(--pt-line);
+      background: #fff;
+      color: var(--pt-ink);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
+      font-size: .92rem;
+      padding: 12px 0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
+    }
+
+    .pt-slot:hover:not(:disabled) {
+      border-color: var(--pt-accent);
+      color: var(--pt-accent);
+      transform: translateY(-2px);
+    }
+
+    .pt-slot:focus-visible {
+      outline: 3px solid var(--pt-accent-soft);
+      outline-offset: 2px;
+    }
+
+    .pt-slot.is-selected {
+      background: var(--pt-accent);
+      border-color: var(--pt-accent);
+      color: #fff;
+    }
+
+    .pt-slot:disabled {
+      cursor: not-allowed;
+      background: repeating-linear-gradient(-45deg, #f1f4f9, #f1f4f9 6px, #e9edf5 6px, #e9edf5 12px);
+      color: var(--pt-muted);
+      text-decoration: line-through;
+    }
+
+    .pt-slots__legend {
+      display: flex;
+      gap: 18px;
+      margin-top: 14px;
+      font-family: "Lato", sans-serif;
+      font-size: .78rem;
+      color: var(--pt-muted);
+    }
+
+    .pt-slots__legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pt-slots__legend i {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background: #fff;
+      border: 1.5px solid var(--pt-line);
+    }
+
+    .pt-slots__legend i.busy {
+      background: repeating-linear-gradient(-45deg, #f1f4f9, #f1f4f9 3px, #e9edf5 3px, #e9edf5 6px);
+    }
+
+    .pt-slots-erro {
+      margin-top: 8px;
+      font-family: "Lato", sans-serif;
+      font-weight: 600;
+      font-size: .82rem;
+      color: #dc2626;
+    }
+
+    /* =========================================================
        RESPONSIVO
        ========================================================= */
     @media (max-width: 768px) {
@@ -469,15 +572,27 @@
                 @enderror
               </div>
 
-              <div class="col-md-6 mb-4">
-                <label>Hora <span class="pt-required-mark">*</span></label>
-                <input type="time" name="horario"
-                       value="{{ old('horario') }}"
-                       class="form-control @error('horario') is-invalid @enderror" required>
-                @error('horario')
-                  <div class="invalid-feedback d-block">{{ $message }}</div>
-                @enderror
+            </div>
+
+            <div class="mb-4">
+              <label>Horário <span class="pt-required-mark">*</span></label>
+
+              <input type="hidden" name="horario" id="horarioInput" value="{{ old('horario') }}">
+
+              <div id="gradeHorarios" class="pt-slots"
+                   data-url="{{ route('agendamento.horarios') }}"
+                   data-old="{{ old('horario') }}">
+                <p class="pt-slots__hint">Escolha o profissional e a data para ver os horários livres.</p>
               </div>
+
+              <small class="d-block mt-2" style="color: var(--pt-muted);">
+                Atendimentos das 07:00 às 18:00, de 30 em 30 minutos.
+              </small>
+
+              <div id="horarioErro" class="pt-slots-erro" hidden>Selecione um horário.</div>
+              @error('horario')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="pt-section-title">
@@ -549,11 +664,135 @@
     <script>
       Swal.fire({
         icon: 'success',
-        title: 'Agendamento concluído',
+        title: 'Agendamento confirmado',
         text: @json(session('success'))
       });
     </script>
   @endif
+
+  @if ($errors->any())
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Não foi possível agendar',
+        html: @json(implode('<br>', $errors->all()))
+      });
+    </script>
+  @endif
+
+  <!-- Grade de horários dinâmica -->
+  <script>
+    (function () {
+      var grade = document.getElementById('gradeHorarios');
+      var input = document.getElementById('horarioInput');
+      var erro  = document.getElementById('horarioErro');
+      if (!grade || !input) return;
+
+      var prof    = document.querySelector('[name="fk_id_funcionario"]');
+      var data    = document.querySelector('[name="data_agendamento"]');
+      var form    = input.closest('form');
+      var url     = grade.dataset.url;
+      var oldHora = grade.dataset.old || '';
+      var token   = 0;
+
+      function hint(texto, cls) {
+        grade.innerHTML = '<p class="' + (cls || 'pt-slots__hint') + '"></p>';
+        grade.firstChild.textContent = texto;
+      }
+
+      function selecionar(botao) {
+        grade.querySelectorAll('.pt-slot').forEach(function (b) { b.classList.remove('is-selected'); });
+        botao.classList.add('is-selected');
+        input.value = botao.dataset.hora;
+        if (erro) erro.hidden = true;
+      }
+
+      function render(horarios) {
+        if (!horarios.length) {
+          hint('Nenhum horário disponível nesta data.', 'pt-slots__empty');
+          return;
+        }
+
+        var temLivre = horarios.some(function (h) { return h.disponivel; });
+        if (!temLivre) {
+          hint('Todos os horários deste dia já estão ocupados. Tente outra data.', 'pt-slots__empty');
+          return;
+        }
+
+        var grid = document.createElement('div');
+        grid.className = 'pt-slots__grid';
+
+        horarios.forEach(function (h) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'pt-slot';
+          b.textContent = h.hora;
+          b.dataset.hora = h.hora;
+
+          if (h.disponivel) {
+            b.addEventListener('click', function () { selecionar(b); });
+          } else {
+            b.disabled = true;
+            b.title = h.motivo === 'ocupado' ? 'Horário já reservado' : 'Horário já passou';
+          }
+
+          grid.appendChild(b);
+        });
+
+        grade.innerHTML = '';
+        grade.appendChild(grid);
+
+        var legenda = document.createElement('div');
+        legenda.className = 'pt-slots__legend';
+        legenda.innerHTML = '<span><i></i> Livre</span><span><i class="busy"></i> Ocupado</span>';
+        grade.appendChild(legenda);
+
+        // Re-seleciona o horário que o usuário havia escolhido antes de um erro de validação.
+        if (oldHora) {
+          var alvo = grid.querySelector('.pt-slot[data-hora="' + oldHora + '"]:not(:disabled)');
+          if (alvo) selecionar(alvo);
+          oldHora = '';
+        }
+      }
+
+      function carregar() {
+        input.value = '';
+
+        if (!prof || !data || !prof.value || !data.value) {
+          hint('Escolha o profissional e a data para ver os horários livres.');
+          return;
+        }
+
+        var meu = ++token;
+        hint('Carregando horários...', 'pt-slots__loading');
+
+        fetch(url + '?funcionario=' + encodeURIComponent(prof.value) + '&data=' + encodeURIComponent(data.value), {
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject(r); })
+          .then(function (json) { if (meu === token) render(json.horarios || []); })
+          .catch(function () {
+            if (meu === token) hint('Não foi possível carregar os horários. Tente novamente.', 'pt-slots__empty');
+          });
+      }
+
+      if (prof) prof.addEventListener('change', carregar);
+      if (data) data.addEventListener('change', carregar);
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          if (!input.value) {
+            e.preventDefault();
+            if (erro) erro.hidden = false;
+            grade.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      }
+
+      // Página recarregada após erro de validação já com profissional + data preenchidos.
+      if (prof && data && prof.value && data.value) carregar();
+    })();
+  </script>
 
   @include('partials.logout-confirm')
 

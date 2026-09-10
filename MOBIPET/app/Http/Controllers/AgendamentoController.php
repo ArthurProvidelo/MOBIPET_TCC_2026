@@ -9,6 +9,7 @@ use App\Models\Pet;
 use App\Models\Servico;
 use App\Models\Funcionario;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -72,13 +73,21 @@ class AgendamentoController extends Controller
 
     public function store(Request $request)
     {
+        // Normaliza para HH:MM antes de validar (o <select> já envia nesse formato,
+        // mas evita que "09:30:00" ou espaços furem a regra do Rule::in).
+        $request->merge([
+            'horario' => substr(trim((string) $request->input('horario')), 0, 5),
+        ]);
+
         $request->validate([
             'fk_id_pet' => 'required|exists:Pet,id_pet',
             'fk_id_servico' => 'required|exists:Servico,id_servico',
             'fk_id_funcionario' => 'required|exists:Funcionario,id_funcionario',
             'data_agendamento' => 'required|date',
-            'horario' => 'required',
+            'horario' => ['required', Rule::in(Agendamento::horariosDisponiveis())],
             'observacoes' => 'required'
+        ], [
+            'horario.in' => 'Escolha um horário entre 07:00 e 18:00, de 30 em 30 minutos.',
         ]);
 
         // Não permite agendar para uma data anterior à data atual.
@@ -90,16 +99,33 @@ class AgendamentoController extends Controller
                 ->withErrors(['data_agendamento' => 'A data do agendamento não pode ser anterior à data atual.']);
         }
 
-        // Não permite dois agendamentos no mesmo dia e horário para o mesmo funcionário.
+        // Se o agendamento for para hoje, o horário não pode já ter passado.
+        if ($dataAgendamento->isToday()) {
+            $horarioEscolhido = Carbon::today()->setTimeFromTimeString($request->horario);
+
+            if ($horarioEscolhido->lte(Carbon::now())) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['horario' => 'Escolha um horário que ainda não passou no dia de hoje.']);
+            }
+        }
+
+        // Verificação de conflito: o mesmo profissional não pode ter dois
+        // agendamentos ativos na mesma data e horário (agendamentos cancelados
+        // liberam a vaga).
         $jaExiste = Agendamento::where('data_agendamento', $request->data_agendamento)
             ->where('horario', $request->horario)
             ->where('fk_id_funcionario', $request->fk_id_funcionario)
+            ->where(function ($q) {
+                $q->whereNull('status_agendamento')
+                  ->orWhereRaw('LOWER(status_agendamento) NOT LIKE ?', ['%cancelad%']);
+            })
             ->exists();
 
         if ($jaExiste) {
             return back()
                 ->withInput()
-                ->withErrors(['horario' => 'Já existe um agendamento para esta data e horário.']);
+                ->withErrors(['horario' => 'Este profissional já tem um agendamento nesta data e horário. Escolha outro horário.']);
         }
 
         Agendamento::create([
@@ -115,7 +141,57 @@ class AgendamentoController extends Controller
 
         return redirect()
             ->route('agendamento')
-            ->with('success', 'Agendamento realizado com sucesso!');
+            ->with('success', 'Agendamento confirmado!');
+    }
+
+    /**
+     * (AJAX) Lista os horários da agenda para um profissional numa data,
+     * marcando quais já estão ocupados ou já passaram. Alimenta a grade
+     * de horários da tela de agendamento.
+     */
+    public function horarios(Request $request)
+    {
+        if (!session()->has('id')) {
+            return response()->json(['message' => 'Sessão expirada.'], 401);
+        }
+
+        $dados = $request->validate([
+            'funcionario' => 'required|exists:Funcionario,id_funcionario',
+            'data'        => 'required|date',
+        ]);
+
+        $data = Carbon::parse($dados['data'])->startOfDay();
+
+        if ($data->lt(Carbon::today())) {
+            return response()->json(['horarios' => []]);
+        }
+
+        // Horários já reservados (agendamentos ativos) desse profissional na data.
+        $ocupados = Agendamento::where('data_agendamento', $data->toDateString())
+            ->where('fk_id_funcionario', $dados['funcionario'])
+            ->where(function ($q) {
+                $q->whereNull('status_agendamento')
+                  ->orWhereRaw('LOWER(status_agendamento) NOT LIKE ?', ['%cancelad%']);
+            })
+            ->pluck('horario')
+            ->map(fn ($h) => substr((string) $h, 0, 5))
+            ->all();
+
+        $agora = Carbon::now();
+        $ehHoje = $data->isToday();
+
+        $horarios = collect(Agendamento::horariosDisponiveis())->map(function ($hora) use ($ocupados, $ehHoje, $agora, $data) {
+            $passou = $ehHoje && $data->copy()->setTimeFromTimeString($hora)->lte($agora);
+            $ocupado = in_array($hora, $ocupados, true);
+
+            return [
+                'hora'       => $hora,
+                'disponivel' => !$passou && !$ocupado,
+                'motivo'     => $passou ? 'passou' : ($ocupado ? 'ocupado' : null),
+            ];
+        });
+
+        return response()->json(['horarios' => $horarios]);
     }
 
     public function show($id)

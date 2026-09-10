@@ -383,6 +383,7 @@
                 left: 0;
                 width: 100%;
                 height: 200%;
+                flex-direction: column;
                 transform: translateY(-50%);
             }
 
@@ -833,44 +834,79 @@
             const registerPanel = document.querySelector('.lg-form-register');
             const goRegister = document.getElementById('lgGoRegister');
             const goLogin = document.getElementById('lgGoLogin');
+            const overlay = document.querySelector('.lg-overlay');
 
             const mobileQuery = window.matchMedia('(max-width: 700px)');
             const smallQuery = window.matchMedia('(max-width: 480px)');
 
+            // Mede a altura REAL do conteúdo do painel, não a altura já
+            // renderizada. Sem isso, com o painel de login ativo o scrollHeight
+            // devolvia a própria altura do card e cada clique somava +4px,
+            // fazendo o card crescer sem parar quando o usuário clica várias vezes.
+            function measureContent(panel) {
+                if (!panel) return 0;
+                const prev = panel.style.height;
+                panel.style.height = 'auto';
+                const h = panel.scrollHeight;
+                panel.style.height = prev;
+                return h;
+            }
+
             // Ajusta a altura do card ao conteúdo do painel ativo,
             // para o cadastro (com mais campos) nunca ficar cortado ou com scroll.
+            // Coalescido em um rAF para aguentar rajadas de cliques sem thrash.
+            let syncScheduled = false;
             function syncCardHeight() {
+                if (!card || syncScheduled) return;
+                syncScheduled = true;
+
+                requestAnimationFrame(function () {
+                    syncScheduled = false;
+
+                    const activePanel = card.classList.contains('lg-register-active')
+                        ? registerPanel
+                        : signinPanel;
+
+                    const contentHeight = measureContent(activePanel) + 4;
+
+                    if (mobileQuery.matches) {
+                        const bannerHeight = smallQuery.matches ? 175 : 190;
+                        card.style.height = (bannerHeight + contentHeight) + 'px';
+                    } else {
+                        card.style.height = Math.max(contentHeight, 480) + 'px';
+                    }
+                });
+            }
+
+            // Troca de painel. Idempotente: clicar repetidamente no mesmo botão
+            // não reprocessa nada; cliques alternados rápidos apenas retomam a
+            // transição do CSS, que interpola suavemente a partir da posição atual.
+            function setMode(registerActive) {
                 if (!card) return;
-
-                const activePanel = card.classList.contains('lg-register-active')
-                    ? registerPanel
-                    : signinPanel;
-
-                if (!activePanel) return;
-
-                const contentHeight = activePanel.scrollHeight + 4;
-
-                if (mobileQuery.matches) {
-                    const bannerHeight = smallQuery.matches ? 175 : 190;
-                    card.style.height = (bannerHeight + contentHeight) + 'px';
-                } else {
-                    card.style.height = Math.max(contentHeight, 480) + 'px';
-                }
+                if (card.classList.contains('lg-register-active') === registerActive) return;
+                card.classList.toggle('lg-register-active', registerActive);
+                syncCardHeight();
             }
 
             if (goRegister) {
                 goRegister.addEventListener('click', function (e) {
                     e.preventDefault();
-                    card.classList.add('lg-register-active');
-                    syncCardHeight();
+                    setMode(true);
                 });
             }
 
             if (goLogin) {
                 goLogin.addEventListener('click', function (e) {
                     e.preventDefault();
-                    card.classList.remove('lg-register-active');
-                    syncCardHeight();
+                    setMode(false);
+                });
+            }
+
+            // Ao terminar o deslize do painel azul, reajusta a altura — cobre
+            // qualquer diferença de layout após uma sequência de cliques.
+            if (overlay) {
+                overlay.addEventListener('transitionend', function (e) {
+                    if (e.propertyName === 'transform') syncCardHeight();
                 });
             }
 
@@ -880,8 +916,7 @@
 
             // Se o formulário de cadastro voltou com erros, abre já no cadastro
             @if ($errors->any() && old('nome'))
-                card.classList.add('lg-register-active');
-                syncCardHeight();
+                setMode(true);
             @endif
 
             // =========================================

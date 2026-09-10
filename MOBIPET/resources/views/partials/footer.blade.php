@@ -540,7 +540,6 @@
                         @elseif(session()->has('id') && session('nivel_acesso') == 'FUNCIONARIO')
                             <a href="{{ route('painel-controle') }}">Painel</a>
                             <a href="{{ route('funcionario.agendamentos') }}">Agendamentos</a>
-                            <a href="{{ route('services.create') }}">Cadastrar Serviço</a>
                             <a href="{{ route('perfil') }}">Perfil</a>
                         @else
                             <a href="{{ route('login') }}">Entrar</a>

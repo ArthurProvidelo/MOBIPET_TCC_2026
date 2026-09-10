@@ -45,6 +45,10 @@ Route::get('/agendamento', [AgendamentoController::class, 'create'])
 Route::post('/agendamento/store', [AgendamentoController::class, 'store'])
     ->name('agendamento.store');
 
+// Rota (AJAX) que devolve os horários livres/ocupados de um profissional numa data
+Route::get('/agendamento/horarios', [AgendamentoController::class, 'horarios'])
+    ->name('agendamento.horarios');
+
 // Rota para exibir a página de cadastro de funcionários (somente ADMIN)
 Route::get('/funcionario', function () {
     return view('auth.funcionario');

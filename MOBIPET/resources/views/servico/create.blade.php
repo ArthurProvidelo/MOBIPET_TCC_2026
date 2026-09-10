@@ -106,22 +106,12 @@
 
                         <div class="card agendamento-card">
 
-                            <!-- Card Header Premium -->
-                            <div class="card-header">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="header-icon-list">
-                                        <i class="fa-solid fa-folder-plus"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-white">Novo Serviço</h3>
-                                        <p class="mb-0 text-metod">Preencha os campos obrigatórios (*) para salvar no
-                                            banco de dados.</p>
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- Card Body -->
                             <div class="card-body p-4 p-md-5">
+
+                                <p class="text-muted small mb-4">
+                                    Preencha os campos obrigatórios (*) para salvar o serviço no catálogo.
+                                </p>
 
                                 @if (session('success'))
                                     <div class="alert alert-success border-0 rounded-4 p-3 shadow-sm mb-4 d-flex align-items-center gap-3"
@@ -408,36 +398,6 @@
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.06);
         }
 
-        .agendamento-card .card-header {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            padding: 35px;
-            border: none;
-            color: white;
-        }
-
-        .header-icon-list {
-            width: 65px;
-            height: 65px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-        }
-
-        .card-header h3 {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .text-metod {
-            color: rgba(255, 255, 255, 0.85) !important;
-            font-size: 14px;
-        }
-
         /* INPUTS E CAMPOS MINIMALISTAS */
         .form-label-minimal {
             font-size: 13px;
@@ -518,10 +478,6 @@
 
             .hero-subtitle {
                 font-size: 16px;
-            }
-
-            .agendamento-card .card-header {
-                padding: 25px;
             }
         }
     </style>

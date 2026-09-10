@@ -3,7 +3,7 @@
      Arquivo: resources/views/partials/preloader.blade.php
 
      Uso:
-         @include('partials.preloader')   {{-- logo após <body> --}}
+         @include('partials.preloader')   (logo após a tag <body>)
 
      Conceito: um círculo com a pata do Mobipet. Cada dedo da pata
      "afunda" em sequência, como uma patinha pressionando a superfície,
