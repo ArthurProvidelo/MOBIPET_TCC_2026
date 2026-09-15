@@ -3,6 +3,7 @@
 // Web Routes -> Importação das controllers necessários
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\AtendimentoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PetController;
@@ -113,6 +114,12 @@ Route::get('/funcionario/agendamentos', [AgendamentoController::class, 'agendame
 // rota para atualizar status na tela de agendamento
 Route::patch('/agendamentos/{agendamento}/status', [AgendamentoController::class, 'atualizarStatus'])
     ->name('agendamentos.atualizarStatus');
+
+// rota (AJAX) para o funcionário atualizar manualmente a etapa da esteira de
+// atendimento, usada como backup quando o leitor RFID não funciona
+Route::patch('/atendimentos/{atendimento}/etapa', [AtendimentoController::class, 'atualizarEtapa'])
+    ->middleware('staff')
+    ->name('atendimentos.atualizarEtapa');
 
 // Rota para logout (tanto para clientes quanto para funcionários)
 Route::get('/logout', [AuthController::class, 'logout'])

@@ -489,6 +489,247 @@
         }
 
         /* ===========================================================
+           CARD DE ETAPAS DO ATENDIMENTO (esteira, igual ao app mobile)
+        =========================================================== */
+
+        .attendance-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 28px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, .06);
+            transition: .3s;
+        }
+
+        .attendance-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 55px rgba(37, 99, 235, .10);
+        }
+
+        .attendance-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .attendance-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .attendance-title {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .attendance-title strong {
+            font-size: 17px;
+            color: #111827;
+        }
+
+        .attendance-title span {
+            font-size: 14px;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .attendance-progress {
+            margin-bottom: 18px;
+        }
+
+        .attendance-progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .attendance-percent {
+            color: #111827;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 50px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            transition: width .4s ease;
+        }
+
+        .current-stage-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            align-self: flex-start;
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            margin-bottom: 24px;
+        }
+
+        .stage-timeline {
+            list-style: none;
+            margin: 0 0 24px;
+            padding: 0;
+        }
+
+        .stage-item {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding-bottom: 22px;
+            cursor: pointer;
+        }
+
+        .stage-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .stage-item::before {
+            content: "";
+            position: absolute;
+            left: 15px;
+            top: 32px;
+            bottom: -4px;
+            width: 2px;
+            background: #e5e7eb;
+        }
+
+        .stage-item:last-child::before {
+            display: none;
+        }
+
+        .stage-item.stage-done::before {
+            background: #2563eb;
+        }
+
+        .stage-icon {
+            position: relative;
+            z-index: 1;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            background: #f9fafb;
+            color: #9ca3af;
+            border: 2px solid #e5e7eb;
+            transition: .25s;
+        }
+
+        .stage-item.stage-done .stage-icon {
+            background: #2563eb;
+            color: #fff;
+            border-color: #2563eb;
+        }
+
+        .stage-item.stage-current .stage-icon {
+            background: #2563eb;
+            color: #fff;
+            border-color: #bfdbfe;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, .15);
+        }
+
+        .stage-item:hover .stage-icon {
+            transform: scale(1.08);
+        }
+
+        .stage-item:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 4px;
+            border-radius: 8px;
+        }
+
+        .stage-text {
+            display: flex;
+            flex-direction: column;
+            padding-top: 4px;
+            min-width: 0;
+        }
+
+        .stage-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .stage-item.stage-pending .stage-label {
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        .stage-item.stage-current .stage-label {
+            color: #111827;
+        }
+
+        .stage-sublabel {
+            font-size: 12px;
+            font-weight: 700;
+            color: #f59e0b;
+            margin-top: 2px;
+        }
+
+        .attendance-advance-btn {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px;
+            border-radius: 16px;
+            border: 2px solid #dbeafe;
+            background: #fff;
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .attendance-advance-btn:hover:not(:disabled) {
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+
+        .attendance-advance-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        /* ===========================================================
            BOTÕES DE AÇÃO
         =========================================================== */
 
@@ -669,6 +910,7 @@
             .dashboard-card-header h3 { font-size: 22px; }
             .kpi-card { padding: 26px; }
             .kpi-value { font-size: 34px; }
+            .attendance-card { padding: 24px; }
         }
 
         @media (max-width: 575.98px) {
@@ -677,6 +919,13 @@
             .hero-title { font-size: 27px; }
             .hero-actions { gap: 10px; }
             .hero-actions .btn-dashboard { width: 100%; text-align: center; }
+
+            .attendance-card { padding: 20px; border-radius: 20px; }
+            .attendance-avatar { width: 44px; height: 44px; font-size: 18px; border-radius: 14px; }
+            .attendance-title strong { font-size: 16px; }
+            .current-stage-pill { font-size: 12px; padding: 7px 14px; }
+            .stage-label { font-size: 13px; }
+            .attendance-advance-btn { font-size: 13px; padding: 12px; }
             .dashboard-card-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -1217,6 +1466,173 @@
         </section>
 
         <!-- =====================================================
+            ETAPAS DO ATENDIMENTO (BACKUP MANUAL DO RFID)
+        ====================================================== -->
+
+        <section class="dashboard-section">
+
+            <div class="container">
+
+                <h2 class="section-title">
+
+                    Etapas do Atendimento
+
+                </h2>
+
+                <p class="section-description">
+
+                    Acompanhamento em tempo real da esteira de atendimento, igual ao app do
+                    cliente. Se o cartão RFID do pet não for lido, clique na etapa correta
+                    para atualizar manualmente.
+
+                </p>
+
+                @if ($atendimentosEmAndamento->isEmpty())
+
+                    <div class="dashboard-card">
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+
+                                <i class="fa-solid fa-shoe-prints"></i>
+
+                            </div>
+
+                            <h4>
+
+                                Nenhum atendimento em andamento
+
+                            </h4>
+
+                            <p>
+
+                                Assim que um pet iniciar o check-in (via RFID ou pelo aplicativo), o
+                                atendimento aparecerá aqui para acompanhamento das etapas.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                @else
+
+                    <div class="row g-4">
+
+                        @foreach ($atendimentosEmAndamento as $atendimento)
+
+                            <div class="col-12 col-lg-6 col-xxl-4">
+
+                                <div class="attendance-card" data-id="{{ $atendimento->id_atendimento }}">
+
+                                    <div class="attendance-header">
+
+                                        <div class="attendance-avatar">
+
+                                            <i
+                                                class="fa-solid {{ ($atendimento->pet->especie ?? '') == 'Gato' ? 'fa-cat' : 'fa-dog' }}">
+                                            </i>
+
+                                        </div>
+
+                                        <div class="attendance-title">
+
+                                            <strong>{{ $atendimento->pet->nome ?? '-' }}</strong>
+
+                                            <span>{{ $atendimento->servico->nome ?? '-' }}</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="attendance-progress">
+
+                                        <div class="attendance-progress-info">
+
+                                            <span>
+                                                {{ $atendimento->etapasConcluidas() }} de
+                                                {{ count(\App\Models\Atendimento::ETAPAS) }} etapas concluídas
+                                            </span>
+
+                                            <strong class="attendance-percent">{{ $atendimento->percentualConcluido() }}%</strong>
+
+                                        </div>
+
+                                        <div class="progress-track">
+
+                                            <div class="progress-fill"
+                                                style="width: {{ $atendimento->percentualConcluido() }}%"></div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="current-stage-pill">
+
+                                        <i class="{{ \App\Models\Atendimento::ETAPAS_ICONS[$atendimento->etapa_atual] }}"></i>
+
+                                        {{ \App\Models\Atendimento::ETAPAS_LABELS[$atendimento->etapa_atual] }}
+
+                                    </div>
+
+                                    <ul class="stage-timeline">
+
+                                        @foreach ($atendimento->etapasParaExibicao() as $etapa)
+
+                                            <li class="stage-item stage-{{ $etapa['status'] }}"
+                                                data-etapa="{{ $etapa['chave'] }}"
+                                                role="button" tabindex="0"
+                                                title="Marcar como etapa atual">
+
+                                                <span class="stage-icon">
+
+                                                    <i class="{{ $etapa['status'] === 'done' ? 'fa-solid fa-check' : $etapa['icone'] }}"></i>
+
+                                                </span>
+
+                                                <span class="stage-text">
+
+                                                    <span class="stage-label">{{ $etapa['label'] }}</span>
+
+                                                    @if ($etapa['status'] === 'current')
+                                                        <span class="stage-sublabel">Em andamento</span>
+                                                    @endif
+
+                                                </span>
+
+                                            </li>
+
+                                        @endforeach
+
+                                    </ul>
+
+                                    <button type="button" class="attendance-advance-btn"
+                                        data-id="{{ $atendimento->id_atendimento }}"
+                                        data-proxima-etapa="{{ $atendimento->proximaEtapa() }}"
+                                        {{ $atendimento->proximaEtapa() ? '' : 'disabled' }}>
+
+                                        <i class="fa-solid fa-id-card"></i>
+
+                                        {{ $atendimento->proximaEtapa() ? 'Simular leitura RFID' : 'Atendimento finalizado' }}
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                @endif
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
         AÇÕES RÁPIDAS
         ====================================================== -->
 
@@ -1595,6 +2011,100 @@
                         });
                     });
 
+            });
+
+        });
+
+        /**
+         * Backup manual do RFID: clicar numa etapa do card (ou no botão
+         * "Simular leitura RFID") atualiza a etapa atual do atendimento no
+         * servidor. Como o card inteiro (progresso, pill, esteira) depende
+         * da etapa nova, a página recarrega após confirmar — mais simples e
+         * seguro do que reconstruir esse estado em JS.
+         */
+        function atualizarEtapaAtendimento(atendimentoId, etapa) {
+
+            Swal.fire({
+                title: 'Atualizando etapa...',
+                text: 'Por favor, aguarde.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            fetch(`/atendimentos/${atendimentoId}/etapa`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                            .getAttribute('content'),
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        etapa: etapa
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Etapa atualizada!',
+                            text: data.message || 'Etapa atualizada com sucesso!',
+                            confirmButtonText: 'OK'
+                        }).then(() => window.location.reload());
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro',
+                            text: data.message || 'Não foi possível atualizar a etapa.',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'Erro ao atualizar a etapa.',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        }
+
+        document.querySelectorAll('.stage-item').forEach(item => {
+
+            const ativarEtapa = () => {
+                const card = item.closest('.attendance-card');
+                if (!card) return;
+
+                atualizarEtapaAtendimento(card.dataset.id, item.dataset.etapa);
+            };
+
+            item.addEventListener('click', ativarEtapa);
+
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    ativarEtapa();
+                }
+            });
+
+        });
+
+        document.querySelectorAll('.attendance-advance-btn').forEach(btn => {
+
+            btn.addEventListener('click', function() {
+                const proximaEtapa = this.dataset.proximaEtapa;
+                if (!proximaEtapa) return;
+
+                atualizarEtapaAtendimento(this.dataset.id, proximaEtapa);
             });
 
         });
