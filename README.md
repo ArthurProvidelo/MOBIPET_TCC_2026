@@ -1,19 +1,25 @@
-# 🐾 MobiPet
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&height=250&section=header&text=MobiPet&fontSize=56&fontColor=FFFFFF&fontAlignY=38&desc=Gest%C3%A3o%20inteligente%20e%20monitoramento%20de%20pets&descSize=18&descAlignY=60&color=0066FF&animation=fadeIn" width="100%"/>
+
+</div>
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=220&section=header&text=MobiPet&fontSize=52&fontColor=FFFFFF&fontAlignY=35&desc=Gest%C3%A3o%20inteligente%20e%20monitoramento%20de%20pets&descSize=18&descAlignY=58&color=1B3A6B" width="100%"/>
+# 🐾 MobiPet
 
-### 🐶 Gestão. Tecnologia. Monitoramento. Conexão.
+### Gestão inteligente e monitoramento de pets
 
-**MobiPet** é uma plataforma desenvolvida para modernizar a gestão de petshops, integrando **sistema web, aplicativo mobile e tecnologia IoT** para proporcionar maior organização operacional e uma experiência mais transparente para tutores e profissionais.
+**Um ecossistema tecnológico que conecta petshops, tutores, pets e dispositivos IoT.**
 
-[![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge\&logo=laravel\&logoColor=white)](https://laravel.com/)
-[![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge\&logo=flutter\&logoColor=white)](https://flutter.dev/)
-[![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge\&logo=php\&logoColor=white)](https://www.php.net/)
-[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge\&logo=mysql\&logoColor=white)](https://www.mysql.com/)
-[![Arduino](https://img.shields.io/badge/ESP32-E7352C?style=for-the-badge\&logo=arduino\&logoColor=white)](https://www.arduino.cc/)
-[![IoT](https://img.shields.io/badge/IoT-1B3A6B?style=for-the-badge\&logo=internetofthings\&logoColor=white)](https://www.iso.org/internet-of-things.html)
+<br>
+
+[![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
+[![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)
+[![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![ESP32](https://img.shields.io/badge/ESP32-E7352C?style=for-the-badge&logo=arduino&logoColor=white)](https://www.espressif.com/)
+[![IoT](https://img.shields.io/badge/IoT-0066FF?style=for-the-badge&logo=internetofthings&logoColor=white)](https://www.iso.org/internet-of-things.html)
 
 </div>
 
