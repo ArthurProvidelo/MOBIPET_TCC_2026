@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agendamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\ValidationException;
 
 class AgendamentoController extends Controller
 {
@@ -168,6 +169,77 @@ class AgendamentoController extends Controller
         $agendamento->update(['status_agendamento' => self::ETAPAS[$indiceAtual + 1]]);
 
         return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario']));
+    }
+
+    /**
+     * Rota pública (sem token) para o leitor RFID/ESP32: recebe {"pet_id": 33},
+     * onde 33 é o id do pet gravado no cartão. Localiza o agendamento do dia
+     * (data_agendamento = hoje) daquele pet que ainda não foi concluído nem
+     * cancelado — o mais antigo pelo horário, se houver mais de um — e avança
+     * para a próxima etapa da esteira (Pendente -> Em atendimento -> Concluido).
+     *
+     * Sempre responde em JSON com uma mensagem clara: quem lê a resposta é o
+     * ESP32, que só exibe o texto no Monitor Serial.
+     */
+    public function avancarPorPet(Request $request)
+    {
+        try {
+            $dados = $request->validate([
+                'pet_id' => 'required|integer|exists:Pet,id_pet',
+            ], [
+                'pet_id.required' => 'Informe o pet_id do cartão.',
+                'pet_id.integer' => 'pet_id inválido.',
+                'pet_id.exists' => 'Pet não encontrado.',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'mensagem' => collect($e->errors())->flatten()->first(),
+            ], 422);
+        }
+
+        // Etapas que ainda contam como "pendente" (tudo antes da última do fluxo).
+        $etapasEmAberto = array_slice(self::ETAPAS, 0, -1);
+
+        $agendamento = Agendamento::where('fk_id_pet', $dados['pet_id'])
+            ->where('data_agendamento', Carbon::today()->toDateString())
+            ->whereIn('status_agendamento', $etapasEmAberto)
+            ->orderBy('horario')
+            ->orderBy('id_agendamento')
+            ->with('pet')
+            ->first();
+
+        if (!$agendamento) {
+            return response()->json([
+                'success' => false,
+                'mensagem' => 'Nenhum agendamento pendente para este pet hoje (pode já estar concluído, cancelado ou não existir).',
+            ], 404);
+        }
+
+        $indiceAtual = array_search($agendamento->status_agendamento, self::ETAPAS, true);
+
+        if ($indiceAtual === false || !isset(self::ETAPAS[$indiceAtual + 1])) {
+            return response()->json([
+                'success' => false,
+                'mensagem' => 'Este agendamento já foi concluído.',
+            ], 422);
+        }
+
+        $etapaAnterior = $agendamento->status_agendamento;
+        $proximaEtapa = self::ETAPAS[$indiceAtual + 1];
+
+        $agendamento->update(['status_agendamento' => $proximaEtapa]);
+
+        $nomePet = $agendamento->pet->nome ?? "pet {$agendamento->fk_id_pet}";
+
+        return response()->json([
+            'success' => true,
+            'mensagem' => "{$nomePet}: {$etapaAnterior} -> {$proximaEtapa}",
+            'id_agendamento' => $agendamento->id_agendamento,
+            'pet_id' => $agendamento->fk_id_pet,
+            'etapa_anterior' => $etapaAnterior,
+            'etapa_atual' => $proximaEtapa,
+        ]);
     }
 
     public function store(Request $request)

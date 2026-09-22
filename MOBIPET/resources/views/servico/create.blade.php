@@ -185,6 +185,30 @@
                                         </div>
 
                                         <div class="col-12">
+                                            <label class="form-label-minimal d-block">Etapas da esteira de
+                                                atendimento (RFID)</label>
+                                            <p class="text-muted small mb-2">
+                                                Marque as etapas que este serviço percorre (ex: um banho simples pode
+                                                não ter tosa, escovação ou perfume). Check-in, pronto para retirada e
+                                                finalizado entram automaticamente. Se nenhuma etapa for marcada, o
+                                                serviço usa a esteira completa.
+                                            </p>
+                                            <div class="d-flex flex-wrap gap-3">
+                                                @foreach (\App\Models\Atendimento::ETAPAS_CONFIGURAVEIS as $etapa)
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="etapas[]" id="etapa-{{ $etapa }}"
+                                                            value="{{ $etapa }}"
+                                                            {{ collect(old('etapas', []))->contains($etapa) ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="etapa-{{ $etapa }}">
+                                                            {{ \App\Models\Atendimento::ETAPAS_LABELS[$etapa] }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
                                             <label for="descricao" class="form-label-minimal">Descrição Detalhada do
                                                 Serviço</label>
                                             <textarea class="form-control form-control-minimal" id="descricao" name="descricao" rows="4"

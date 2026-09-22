@@ -15,6 +15,19 @@ use Illuminate\Support\Facades\Log;
 
 class AgendamentoController extends Controller
 {
+
+public function resetar($id)
+{
+    $agendamento = Agendamento::findOrFail($id);
+
+    $agendamento->status_agendamento = 'Pendente';
+    $agendamento->save();
+
+    return redirect()
+        ->route('painel-controle')
+        ->with('success', 'Agendamento resetado com sucesso!');
+}
+    
     /**
      * Nomes dos meses em português (evita depender de locale do sistema/Carbon).
      */
@@ -50,6 +63,8 @@ class AgendamentoController extends Controller
         'finalizado'     => 'concluido',
         'cancelado'      => 'cancelado',
     ];
+
+    
 
     public function index()
     {

@@ -17,14 +17,15 @@ class AtendimentoController extends Controller
      */
     public function atualizarEtapa(Request $request, $id)
     {
+        $atendimento = Atendimento::findOrFail($id);
+        $fluxo = $atendimento->etapasFluxo();
+
         $dados = $request->validate([
-            'etapa' => ['required', Rule::in(Atendimento::ETAPAS)],
+            'etapa' => ['required', Rule::in($fluxo)],
         ]);
 
-        $atendimento = Atendimento::findOrFail($id);
-
         $agora = Carbon::now();
-        $ultimaEtapa = Atendimento::ETAPAS[count(Atendimento::ETAPAS) - 1];
+        $ultimaEtapa = $fluxo[count($fluxo) - 1];
 
         AtendimentoEtapa::create([
             'fk_id_atendimento' => $atendimento->id_atendimento,

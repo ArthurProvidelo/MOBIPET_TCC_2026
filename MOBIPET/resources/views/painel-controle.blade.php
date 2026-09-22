@@ -900,43 +900,129 @@
            RESPONSIVO
         =========================================================== */
         @media (max-width: 991.98px) {
-            .main { padding-top: 130px; }
-            .hero-card { padding: 32px; border-radius: 26px; }
-            .hero-title { font-size: 34px; letter-spacing: -.5px; }
-            .hero-description { font-size: 16px; line-height: 1.7; margin-bottom: 26px; }
-            .section-title { font-size: 27px; }
-            .dashboard-section { margin-top: 42px; }
-            .dashboard-card-header { padding: 26px; }
-            .dashboard-card-header h3 { font-size: 22px; }
-            .kpi-card { padding: 26px; }
-            .kpi-value { font-size: 34px; }
-            .attendance-card { padding: 24px; }
+            .main {
+                padding-top: 130px;
+            }
+
+            .hero-card {
+                padding: 32px;
+                border-radius: 26px;
+            }
+
+            .hero-title {
+                font-size: 34px;
+                letter-spacing: -.5px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+                line-height: 1.7;
+                margin-bottom: 26px;
+            }
+
+            .section-title {
+                font-size: 27px;
+            }
+
+            .dashboard-section {
+                margin-top: 42px;
+            }
+
+            .dashboard-card-header {
+                padding: 26px;
+            }
+
+            .dashboard-card-header h3 {
+                font-size: 22px;
+            }
+
+            .kpi-card {
+                padding: 26px;
+            }
+
+            .kpi-value {
+                font-size: 34px;
+            }
+
+            .attendance-card {
+                padding: 24px;
+            }
         }
 
         @media (max-width: 575.98px) {
-            .main { padding-top: 116px; }
-            .hero-card { padding: 24px; }
-            .hero-title { font-size: 27px; }
-            .hero-actions { gap: 10px; }
-            .hero-actions .btn-dashboard { width: 100%; text-align: center; }
+            .main {
+                padding-top: 116px;
+            }
 
-            .attendance-card { padding: 20px; border-radius: 20px; }
-            .attendance-avatar { width: 44px; height: 44px; font-size: 18px; border-radius: 14px; }
-            .attendance-title strong { font-size: 16px; }
-            .current-stage-pill { font-size: 12px; padding: 7px 14px; }
-            .stage-label { font-size: 13px; }
-            .attendance-advance-btn { font-size: 13px; padding: 12px; }
+            .hero-card {
+                padding: 24px;
+            }
+
+            .hero-title {
+                font-size: 27px;
+            }
+
+            .hero-actions {
+                gap: 10px;
+            }
+
+            .hero-actions .btn-dashboard {
+                width: 100%;
+                text-align: center;
+            }
+
+            .attendance-card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .attendance-avatar {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+                border-radius: 14px;
+            }
+
+            .attendance-title strong {
+                font-size: 16px;
+            }
+
+            .current-stage-pill {
+                font-size: 12px;
+                padding: 7px 14px;
+            }
+
+            .stage-label {
+                font-size: 13px;
+            }
+
+            .attendance-advance-btn {
+                font-size: 13px;
+                padding: 12px;
+            }
+
             .dashboard-card-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 14px;
                 text-align: left;
             }
-            .kpi-icon { width: 60px; height: 60px; font-size: 24px; border-radius: 18px; }
-            .section-title { font-size: 24px; }
+
+            .kpi-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+                border-radius: 18px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
 
             /* Tabela empilhada (usa os data-label já presentes no markup) */
-            .table-dashboard thead { display: none; }
+            .table-dashboard thead {
+                display: none;
+            }
 
             .table-dashboard tbody tr {
                 display: block;
@@ -971,7 +1057,10 @@
                 justify-content: flex-end;
             }
 
-            .table-dashboard .status-select { width: auto; min-width: 150px; }
+            .table-dashboard .status-select {
+                width: auto;
+                min-width: 150px;
+            }
         }
     </style>
 
@@ -1303,6 +1392,8 @@
 
                                         <th>Status</th>
 
+                                        <th>Ações</th>
+
                                     </tr>
 
                                 </thead>
@@ -1396,6 +1487,7 @@
                                                 <select name="status"
                                                     class="status-select status-agendamento status-select-{{ \Illuminate\Support\Str::slug($agendamento->status_agendamento) }}"
                                                     data-id="{{ $agendamento->id_agendamento }}">
+
                                                     <option value="Pendente"
                                                         {{ $agendamento->status_agendamento == 'Pendente' ? 'selected' : '' }}>
                                                         Pendente
@@ -1410,17 +1502,50 @@
                                                         {{ $agendamento->status_agendamento == 'Concluido' ? 'selected' : '' }}>
                                                         Concluído
                                                     </option>
+
                                                 </select>
 
                                             </td>
 
-                                        </tr>
+                                            <td data-label="Ações">
 
-                                    @empty
+                                                <div class="acoes-agendamento">
+
+                                                    <form
+                                                        action="{{ route('agendamento.resetar', $agendamento->id_agendamento) }}"
+                                                        method="POST"
+                                                        onsubmit="return confirm('Tem certeza que deseja resetar este agendamento?');">
+
+                                                        @csrf
+
+                                                        <button type="submit" class="btn-resetar">
+                                                            <i class="bi bi-arrow-counterclockwise"></i>
+                                                            Resetar
+                                                        </button>
+
+                                                    </form>
+
+                                                    {{-- BOTÃO VER DETALHES --}}
+                                                    <button type="button" class="btn-detalhes"
+                                                        onclick="abrirDetalhes(this)"
+                                                        data-pet="{{ $agendamento->pet->nome ?? 'Pet' }}"
+                                                        data-servico="{{ $agendamento->servico->nome ?? 'Serviço' }}"
+                                                        data-status="{{ $agendamento->status_agendamento ?? 'Pendente' }}">
+
+                                                        <i class="bi bi-eye"></i>
+                                                        Ver detalhes
+
+                                                    </button>
+
+                                                </div>
+
+                                            </td>
+
+                                        @empty
 
                                         <tr>
 
-                                            <td colspan="5">
+                                            <td colspan="6">
 
                                                 <div class="empty-state">
 
@@ -1515,13 +1640,10 @@
                         </div>
 
                     </div>
-
                 @else
-
                     <div class="row g-4">
 
                         @foreach ($atendimentosEmAndamento as $atendimento)
-
                             <div class="col-12 col-lg-6 col-xxl-4">
 
                                 <div class="attendance-card" data-id="{{ $atendimento->id_atendimento }}">
@@ -1552,10 +1674,11 @@
 
                                             <span>
                                                 {{ $atendimento->etapasConcluidas() }} de
-                                                {{ count(\App\Models\Atendimento::ETAPAS) }} etapas concluídas
+                                                {{ count($atendimento->etapasFluxo()) }} etapas concluídas
                                             </span>
 
-                                            <strong class="attendance-percent">{{ $atendimento->percentualConcluido() }}%</strong>
+                                            <strong
+                                                class="attendance-percent">{{ $atendimento->percentualConcluido() }}%</strong>
 
                                         </div>
 
@@ -1570,7 +1693,8 @@
 
                                     <div class="current-stage-pill">
 
-                                        <i class="{{ \App\Models\Atendimento::ETAPAS_ICONS[$atendimento->etapa_atual] }}"></i>
+                                        <i
+                                            class="{{ \App\Models\Atendimento::ETAPAS_ICONS[$atendimento->etapa_atual] }}"></i>
 
                                         {{ \App\Models\Atendimento::ETAPAS_LABELS[$atendimento->etapa_atual] }}
 
@@ -1579,15 +1703,14 @@
                                     <ul class="stage-timeline">
 
                                         @foreach ($atendimento->etapasParaExibicao() as $etapa)
-
                                             <li class="stage-item stage-{{ $etapa['status'] }}"
-                                                data-etapa="{{ $etapa['chave'] }}"
-                                                role="button" tabindex="0"
+                                                data-etapa="{{ $etapa['chave'] }}" role="button" tabindex="0"
                                                 title="Marcar como etapa atual">
 
                                                 <span class="stage-icon">
 
-                                                    <i class="{{ $etapa['status'] === 'done' ? 'fa-solid fa-check' : $etapa['icone'] }}"></i>
+                                                    <i
+                                                        class="{{ $etapa['status'] === 'done' ? 'fa-solid fa-check' : $etapa['icone'] }}"></i>
 
                                                 </span>
 
@@ -1602,7 +1725,6 @@
                                                 </span>
 
                                             </li>
-
                                         @endforeach
 
                                     </ul>
@@ -1621,7 +1743,6 @@
                                 </div>
 
                             </div>
-
                         @endforeach
 
                     </div>
@@ -1900,7 +2021,403 @@
             color: #fff;
             font-weight: 600;
         }
+
+
+        /* =====================================================
+           AÇÕES DOS AGENDAMENTOS
+        ====================================================== */
+
+        .acoes-agendamento {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-resetar,
+        .btn-detalhes {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border-radius: 22px;
+            padding: 9px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-resetar {
+            border: 1px solid #bfdbfe;
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .btn-resetar:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .btn-detalhes {
+            border: 1px solid #dbe5f1;
+            background: #fff;
+            color: #285d99;
+        }
+
+        .btn-detalhes:hover {
+            background: #eaf2ff;
+            border-color: #9dbde0;
+        }
+
+        /* =====================================================
+           PAINEL DE DETALHES
+        ====================================================== */
+
+        .fundo-detalhes {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .35);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: .3s ease;
+        }
+
+        .fundo-detalhes.aberto {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .painel-detalhes {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 430px;
+            max-width: 92vw;
+            height: 100vh;
+            background: #f8fafc;
+            z-index: 9999;
+            transform: translateX(100%);
+            transition: transform .35s ease;
+            box-shadow: -12px 0 35px rgba(15, 23, 42, .16);
+            overflow-y: auto;
+        }
+
+        .painel-detalhes.aberto {
+            transform: translateX(0);
+        }
+
+        .detalhes-conteudo {
+            padding: 28px 30px 35px;
+        }
+
+        .detalhes-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .detalhes-pet {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .icone-pet {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #eaf2ff;
+            color: #3169a5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .detalhes-pet h2 {
+            margin: 0;
+            color: #1e293b;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .btn-fechar-detalhes {
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 50%;
+            background: transparent;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .btn-fechar-detalhes:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .progresso-texto {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .progresso-texto strong {
+            color: #3169a5;
+            font-size: 18px;
+        }
+
+        .barra-progresso {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .barra-progresso-preenchida {
+            height: 100%;
+            background: #f59e0b;
+            border-radius: 20px;
+            transition: width .35s ease;
+        }
+
+        .detalhes-servico {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin: 22px 0 22px;
+            padding: 9px 18px;
+            border: 1px solid #9dbde0;
+            background: #eaf2ff;
+            color: #285d99;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .etapas-atendimento {
+            position: relative;
+        }
+
+        .etapa {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            min-height: 68px;
+            color: #64748b;
+        }
+
+        .etapa:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 42px;
+            width: 2px;
+            height: 34px;
+            background: #e2e8f0;
+        }
+
+        .etapa-icone {
+            position: relative;
+            z-index: 2;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .etapa-concluida .etapa-icone,
+        .etapa-andamento .etapa-icone {
+            background: #3169a5;
+            border-color: #3169a5;
+            color: #fff;
+        }
+
+        .etapa-concluida {
+            color: #1e293b;
+        }
+
+        .etapa-concluida::after {
+            background: #3169a5 !important;
+        }
+
+        .etapa-andamento .etapa-icone {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            margin-left: -4px;
+            box-shadow: 0 5px 15px rgba(49, 105, 165, .25);
+        }
+
+        .etapa-texto {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .etapa-texto strong {
+            color: #1e293b;
+            font-size: 17px;
+        }
+
+        .etapa-texto span {
+            font-size: 16px;
+        }
+
+        .etapa-andamento .etapa-texto span {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .btn-rfid {
+            width: 100%;
+            margin-top: 18px;
+            padding: 13px;
+            border: 1px solid #dbe5f1;
+            border-radius: 17px;
+            background: transparent;
+            color: #285d99;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-rfid:hover {
+            background: #eaf2ff;
+        }
+
+        @media (max-width: 600px) {
+            .painel-detalhes {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .detalhes-conteudo {
+                padding: 24px 20px 30px;
+            }
+
+            .acoes-agendamento {
+                justify-content: flex-end;
+            }
+        }
     </style>
+
+
+
+    <!-- =====================================================
+         PAINEL DE DETALHES DO AGENDAMENTO
+    ====================================================== -->
+
+    <div id="fundoDetalhes" class="fundo-detalhes" onclick="fecharDetalhes()"></div>
+
+    <aside id="painelDetalhes" class="painel-detalhes" aria-hidden="true">
+
+        <div class="detalhes-conteudo">
+
+            <div class="detalhes-header">
+
+                <div class="detalhes-pet">
+
+                    <div class="icone-pet">
+                        <i id="detalhesIconePet" class="fa-solid fa-cat"></i>
+                    </div>
+
+                    <h2 id="detalhesNomePet">Pet</h2>
+
+                </div>
+
+                <button type="button" class="btn-fechar-detalhes" onclick="fecharDetalhes()"
+                    aria-label="Fechar detalhes">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+            </div>
+
+            <div class="detalhes-progresso">
+
+                <div class="progresso-texto">
+                    <span id="detalhesEtapas">2 de 8 etapas concluídas</span>
+                    <strong id="detalhesPorcentagem">25%</strong>
+                </div>
+
+                <div class="barra-progresso">
+                    <div id="barraProgresso" class="barra-progresso-preenchida" style="width: 25%;"></div>
+                </div>
+
+            </div>
+
+            <div class="detalhes-servico">
+                <i class="bi bi-droplet-fill"></i>
+                <span id="detalhesServico">Banho</span>
+            </div>
+
+            <div class="etapas-atendimento">
+
+                <div class="etapa etapa-concluida">
+                    <div class="etapa-icone"><i class="bi bi-check"></i></div>
+                    <div class="etapa-texto"><strong>Pendente</strong></div>
+                </div>
+
+                <div class="etapa etapa-andamento">
+                    <div class="etapa-icone"><i class="bi bi-droplet-fill"></i></div>
+                    <div class="etapa-texto"><strong>Banho</strong><span>Em andamento</span></div>
+                </div>
+
+                <div class="etapa">
+                    <div class="etapa-icone"><i class="bi bi-wind"></i></div>
+                    <div class="etapa-texto"><span>Secagem</span></div>
+                </div>
+
+                <div class="etapa">
+                    <div class="etapa-icone"><i class="bi bi-scissors"></i></div>
+                    <div class="etapa-texto"><span>Tosa</span></div>
+                </div>
+
+                <div class="etapa">
+                    <div class="etapa-icone"><i class="bi bi-brush"></i></div>
+                    <div class="etapa-texto"><span>Escovação</span></div>
+                </div>
+
+                <div class="etapa">
+                    <div class="etapa-icone"><i class="bi bi-scissors"></i></div>
+                    <div class="etapa-texto"><span>Corte de unhas</span></div>
+                </div>
+
+                <div class="etapa">
+                    <div class="etapa-icone"><i class="bi bi-droplet"></i></div>
+                    <div class="etapa-texto"><span>Perfume</span></div>
+                </div>
+
+                <div class="etapa">
+                    <div class="etapa-icone"><i class="bi bi-check-circle-fill"></i></div>
+                    <div class="etapa-texto"><span>Finalizado</span></div>
+                </div>
+
+            </div>
+
+            <button type="button" class="btn-rfid">
+                <i class="bi bi-upc-scan"></i>
+                Simular leitura RFID
+            </button>
+
+        </div>
+
+    </aside>
 
     @include('partials.footer')
 
@@ -2109,9 +2626,63 @@
 
         });
     </script>
+    <script>
+        function abrirDetalhes(botao) {
+
+            const nomePet = botao.dataset.pet || 'Pet';
+            const servico = botao.dataset.servico || 'Serviço';
+            const status = botao.dataset.status || 'Pendente';
+
+            document.getElementById('detalhesNomePet').textContent = nomePet;
+            document.getElementById('detalhesServico').textContent = servico;
+
+            const etapasTexto = document.getElementById('detalhesEtapas');
+            const porcentagemTexto = document.getElementById('detalhesPorcentagem');
+            const barra = document.getElementById('barraProgresso');
+
+            let etapas = 1;
+            let porcentagem = 12.5;
+
+            if (status === 'Em atendimento') {
+                etapas = 2;
+                porcentagem = 25;
+            } else if (status === 'Concluido' || status === 'Concluído') {
+                etapas = 8;
+                porcentagem = 100;
+            }
+
+            etapasTexto.textContent = etapas + ' de 8 etapas concluídas';
+            porcentagemTexto.textContent = porcentagem + '%';
+            barra.style.width = porcentagem + '%';
+
+            const painel = document.getElementById('painelDetalhes');
+            const fundo = document.getElementById('fundoDetalhes');
+
+            painel.classList.add('aberto');
+            fundo.classList.add('aberto');
+            painel.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharDetalhes() {
+
+            const painel = document.getElementById('painelDetalhes');
+            const fundo = document.getElementById('fundoDetalhes');
+
+            painel.classList.remove('aberto');
+            fundo.classList.remove('aberto');
+            painel.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                fecharDetalhes();
+            }
+        });
+    </script>
 
     @include('partials.logout-confirm')
-
 </body>
 
 </html>

@@ -29,7 +29,7 @@ Route::get('404', function () {
 })->name('404');
 
 // Rota para a página de sobre
-Route::get('/sobre', function () {  
+Route::get('/sobre', function () {
     return view('sobre');
 })->name('sobre');
 
@@ -147,14 +147,14 @@ Route::post('/servicos/salvar', [ServicoController::class, 'store'])
 
 // Google
 Route::get('/auth/google', [GoogleController::class, 'redirect'])
-->name('google.login');
+    ->name('google.login');
 
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])
     ->name('google.callback');
 
 // Google Funcionario
 Route::get('/auth/googleFuncionario', [GoogleFuncionarioController::class, 'redirect'])
-->name('google.loginFuncionario');
+    ->name('google.loginFuncionario');
 
 Route::get('/auth/google/callbackFuncionario', [GoogleFuncionarioController::class, 'callbackFuncionario'])
     ->name('google.callbackFuncionario');
@@ -189,3 +189,8 @@ Route::get('/redefinir-senha', [SenhaController::class, 'formulario'])
 // Atualiza a senha
 Route::post('/redefinir-senha', [SenhaController::class, 'atualizar'])
     ->name('senha.atualizar');
+
+Route::post(
+    '/agendamento/{id}/resetar',
+    [AgendamentoController::class, 'resetar']
+)->name('agendamento.resetar');

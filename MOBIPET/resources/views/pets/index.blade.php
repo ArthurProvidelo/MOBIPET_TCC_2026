@@ -101,7 +101,7 @@
             padding: 170px 0 100px;
             background:
                 radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
-                radial-gradient(circle at bottom left, #dcfce7 0%, transparent 30%),
+                radial-gradient(circle at bottom left, #ffffff 0%, transparent 30%),
                 var(--pt-bg);
             min-height: 100vh;
         }

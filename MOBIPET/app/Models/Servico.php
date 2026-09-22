@@ -21,7 +21,12 @@ class Servico extends Model
         'categoria',
         'descricao',
         'preco',
-        'duracao_estimada'
+        'duracao_estimada',
+        'etapas',
+    ];
+
+    protected $casts = [
+        'etapas' => 'array',
     ];
 
     // Sem timestamps
@@ -34,5 +39,33 @@ class Servico extends Model
             'fk_id_servico',
             'id_servico'
         );
+    }
+
+    /**
+     * Esteira de atendimento (RFID) deste serviço: check_in, as etapas "do
+     * meio" configuradas no cadastro (Atendimento::ETAPAS_CONFIGURAVEIS,
+     * ex.: banho, tosa...) e, por fim, pronto_retirada + finalizado.
+     *
+     * Sem etapas configuradas (coluna vazia/nula — serviço cadastrado antes
+     * dela existir, ou nenhuma marcada no formulário): usa a esteira
+     * completa (Atendimento::ETAPAS), mantendo o comportamento anterior.
+     */
+    public function etapasAtendimento(): array
+    {
+        $configuradas = array_values(array_intersect(
+            Atendimento::ETAPAS_CONFIGURAVEIS,
+            $this->etapas ?? []
+        ));
+
+        if (empty($configuradas)) {
+            return Atendimento::ETAPAS;
+        }
+
+        return [
+            Atendimento::ETAPAS[0], // check_in
+            ...$configuradas,
+            'pronto_retirada',
+            'finalizado',
+        ];
     }
 }

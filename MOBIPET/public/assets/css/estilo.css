@@ -356,3 +356,507 @@ dd,
 .cep-status.is-ok {
     color: #12643a;
 }
+
+.btn-resetar {
+    border: none;
+    background: #e0ecff;
+    color: #2563eb;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-resetar:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-resetar i {
+    margin-right: 5px;
+}
+
+/* =========================================================
+   BOTÕES DA TABELA
+========================================================= */
+
+.acoes-agendamento {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-resetar {
+    margin: 0;
+}
+
+.btn-resetar,
+.btn-detalhes {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    height: 42px;
+    padding: 0 18px;
+
+    border-radius: 22px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+/* RESETAR */
+
+.btn-resetar {
+    border: none;
+    background: #eef4ff;
+    color: #2563eb;
+}
+
+.btn-resetar:hover {
+    background: #2563eb;
+    color: white;
+}
+
+
+/* VER DETALHES */
+
+.btn-detalhes {
+    border: 1px solid #bfdbfe;
+    background: white;
+    color: #2563eb;
+}
+
+.btn-detalhes:hover {
+    background: #eff6ff;
+    border-color: #2563eb;
+}
+
+
+/* =========================================================
+   FUNDO
+========================================================= */
+
+.fundo-detalhes {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.25);
+
+    z-index: 9998;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: all 0.3s ease;
+}
+
+.fundo-detalhes.aberto {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =========================================================
+   PAINEL LATERAL
+========================================================= */
+
+.painel-detalhes {
+    position: fixed;
+
+    top: 0;
+    right: -480px;
+
+    width: 450px;
+    max-width: 90vw;
+    height: 100vh;
+
+    background: #ffffff;
+
+    z-index: 9999;
+
+    box-shadow: -10px 0 40px rgba(15, 23, 42, 0.15);
+
+    transition: right 0.35s ease;
+
+    overflow-y: auto;
+}
+
+.painel-detalhes.aberto {
+    right: 0;
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.painel-detalhes-conteudo {
+    padding: 35px 32px 30px;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.detalhes-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 35px;
+}
+
+.detalhes-pet {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.detalhes-pet-icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+}
+
+.detalhes-pet h2 {
+    margin: 0;
+
+    color: #1e293b;
+
+    font-size: 22px;
+
+    font-weight: 700;
+}
+
+.btn-fechar-detalhes {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #64748b;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    transition: 0.2s;
+}
+
+.btn-fechar-detalhes:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+.detalhes-progresso {
+    margin-bottom: 25px;
+}
+
+.progresso-topo {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 13px;
+
+    color: #64748b;
+
+    font-size: 16px;
+}
+
+.progresso-topo strong {
+    color: #2563eb;
+
+    font-size: 18px;
+}
+
+.barra-progresso {
+    width: 100%;
+    height: 12px;
+
+    background: #e2e8f0;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.barra-progresso-preenchida {
+    height: 100%;
+
+    background: #f59e0b;
+
+    border-radius: 20px;
+
+    transition: width 0.4s ease;
+}
+
+
+/* =========================================================
+   SERVIÇO
+========================================================= */
+
+.detalhes-servico {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 20px;
+
+    margin-bottom: 20px;
+
+    border: 1px solid #9bbce3;
+
+    border-radius: 25px;
+
+    background: #eaf2fb;
+
+    color: #28609c;
+
+    font-weight: 600;
+}
+
+.detalhes-servico i {
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   ETAPAS
+========================================================= */
+
+.lista-etapas {
+    position: relative;
+
+    margin-top: 5px;
+}
+
+
+/* linha vertical */
+
+.lista-etapas::before {
+    content: "";
+
+    position: absolute;
+
+    left: 18px;
+
+    top: 20px;
+    bottom: 20px;
+
+    width: 3px;
+
+    background: #e2e8f0;
+}
+
+
+/* etapa */
+
+.etapa {
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+
+    min-height: 72px;
+
+    z-index: 1;
+}
+
+
+/* ícone */
+
+.etapa-icone {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: white;
+
+    border: 2px solid #e2e8f0;
+
+    color: #64748b;
+
+    font-size: 15px;
+}
+
+
+/* etapa concluída */
+
+.etapa.concluida .etapa-icone {
+    background: #28609c;
+
+    border-color: #28609c;
+
+    color: white;
+}
+
+
+/* etapa atual */
+
+.etapa.atual .etapa-icone {
+    width: 44px;
+    height: 44px;
+
+    margin-left: -3px;
+
+    margin-top: -3px;
+
+    background: #28609c;
+
+    border-color: #28609c;
+
+    color: white;
+
+    box-shadow: 0 5px 15px rgba(40, 96, 156, 0.25);
+}
+
+
+/* conteúdo */
+
+.etapa-conteudo {
+    padding-top: 7px;
+
+    color: #64748b;
+
+    font-size: 17px;
+}
+
+.etapa.atual .etapa-conteudo {
+    padding-top: 3px;
+}
+
+.etapa.atual .etapa-conteudo strong {
+    display: block;
+
+    color: #1e293b;
+
+    font-size: 18px;
+
+    margin-bottom: 3px;
+}
+
+.etapa.atual .etapa-conteudo small {
+    display: block;
+
+    color: #f59e0b;
+
+    font-size: 16px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   RFID
+========================================================= */
+
+.btn-rfid {
+    width: 100%;
+
+    height: 50px;
+
+    margin-top: 10px;
+
+    border: 1px solid #dbe5f0;
+
+    border-radius: 15px;
+
+    background: white;
+
+    color: #28609c;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    transition: 0.2s;
+}
+
+.btn-rfid:hover {
+    background: #eff6ff;
+
+    border-color: #93c5fd;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .painel-detalhes {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .painel-detalhes-conteudo {
+        padding: 25px 20px;
+    }
+
+    .acoes-agendamento {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-resetar,
+    .btn-detalhes {
+        width: 100%;
+    }
+}

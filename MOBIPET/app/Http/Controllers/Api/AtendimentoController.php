@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Atendimento;
 use App\Models\AtendimentoEtapa;
+use App\Models\Servico;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -46,8 +47,9 @@ class AtendimentoController extends Controller
         $emAndamento = Atendimento::where('fk_id_pet', $dados['fk_id_pet'])->whereNull('finalizado_em')->exists();
         abort_if($emAndamento, 422, 'Este pet já possui um atendimento em andamento.');
 
+        $servico = Servico::findOrFail($dados['fk_id_servico']);
         $agora = Carbon::now();
-        $primeiraEtapa = Atendimento::ETAPAS[0];
+        $primeiraEtapa = $servico->etapasAtendimento()[0];
 
         $atendimento = Atendimento::create([
             ...$dados,
@@ -89,6 +91,7 @@ class AtendimentoController extends Controller
         abort_if(!$proximaEtapa, 422, 'Não há próxima etapa.');
 
         $agora = Carbon::now();
+        $fluxo = $atendimento->etapasFluxo();
 
         AtendimentoEtapa::create([
             'fk_id_atendimento' => $atendimento->id_atendimento,
@@ -98,7 +101,7 @@ class AtendimentoController extends Controller
 
         $atendimento->update([
             'etapa_atual' => $proximaEtapa,
-            'finalizado_em' => $proximaEtapa === Atendimento::ETAPAS[count(Atendimento::ETAPAS) - 1] ? $agora : null,
+            'finalizado_em' => $proximaEtapa === $fluxo[count($fluxo) - 1] ? $agora : null,
         ]);
 
         return response()->json([
@@ -127,6 +130,7 @@ class AtendimentoController extends Controller
         abort_if(!$proximaEtapa, 422, 'Não há próxima etapa.');
 
         $agora = Carbon::now();
+        $fluxo = $atendimento->etapasFluxo();
 
         AtendimentoEtapa::create([
             'fk_id_atendimento' => $atendimento->id_atendimento,
@@ -136,7 +140,7 @@ class AtendimentoController extends Controller
 
         $atendimento->update([
             'etapa_atual' => $proximaEtapa,
-            'finalizado_em' => $proximaEtapa === Atendimento::ETAPAS[count(Atendimento::ETAPAS) - 1] ? $agora : null,
+            'finalizado_em' => $proximaEtapa === $fluxo[count($fluxo) - 1] ? $agora : null,
         ]);
 
         return response()->json($atendimento->fresh(['etapas', 'servico', 'pet']));
