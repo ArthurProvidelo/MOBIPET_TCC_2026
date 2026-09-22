@@ -62,4 +62,10 @@ class Agendamento extends Model
     {
         return $this->belongsTo(Funcionario::class, 'fk_id_funcionario', 'id_funcionario');
     }
+
+    public function atendimento()
+    {
+        return $this->hasOne(Atendimento::class, 'fk_id_agendamento', 'id_agendamento')
+            ->latestOfMany('id_atendimento');
+    }
 }

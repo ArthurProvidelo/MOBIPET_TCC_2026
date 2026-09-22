@@ -160,8 +160,46 @@ class Atendimento extends Model
      */
     public function etapasParaExibicao(): array
     {
-        $fluxo = $this->etapasFluxo();
-        $indiceAtual = $this->etapaIndex();
+        return self::montarEsteira($this->etapasFluxo(), $this->etapaIndex());
+    }
+
+    /**
+     * Esteira "simulada" para agendamentos que nunca passaram pelo check-in
+     * RFID (não têm Atendimento vinculado) — ex.: concluídos manualmente
+     * antes do sistema de esteira existir. Deriva a etapa atual do próprio
+     * status_agendamento, já que não há registro de progresso real: 100%
+     * (Concluido) mostra a esteira toda finalizada, os demais status mostram
+     * a esteira de acordo com o ponto em que o serviço normalmente estaria.
+     * Usada pelo painel do funcionário no "Ver detalhes".
+     */
+    public static function esteiraSimulada(array $fluxo, string $statusAgendamento): array
+    {
+        $ultimoIndice = count($fluxo) - 1;
+
+        $indiceAtual = match ($statusAgendamento) {
+            'Concluido' => $ultimoIndice,
+            'Em atendimento' => min(1, $ultimoIndice),
+            default => -1,
+        };
+
+        $concluidas = $indiceAtual === $ultimoIndice ? count($fluxo) : max($indiceAtual, 0);
+
+        return [
+            'etapas' => self::montarEsteira($fluxo, $indiceAtual),
+            'concluidas' => $concluidas,
+            'total' => count($fluxo),
+            'percentual' => (int) round($concluidas / count($fluxo) * 100),
+        ];
+    }
+
+    /**
+     * Monta a esteira (rótulo, ícone e status done/current/pending) para um
+     * fluxo de etapas e um índice de etapa atual — compartilhado entre
+     * etapasParaExibicao() (Atendimento real) e esteiraSimulada() (sem
+     * Atendimento vinculado).
+     */
+    private static function montarEsteira(array $fluxo, int $indiceAtual): array
+    {
         $ultimoIndice = count($fluxo) - 1;
         $etapaAtualEhFinal = $indiceAtual === $ultimoIndice;
 

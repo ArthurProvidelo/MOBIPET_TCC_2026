@@ -1400,6 +1400,32 @@
 
                                 <tbody>
                                     @forelse($ultimosAgendamentos as $agendamento)
+                                        @php
+                                            $atendimentoReal = $agendamento->atendimento;
+
+                                            if ($atendimentoReal) {
+                                                $idAtendimentoAttr = $atendimentoReal->id_atendimento;
+                                                $etapasAttr = $atendimentoReal->etapasParaExibicao();
+                                                $proximaEtapaAttr = $atendimentoReal->proximaEtapa() ?? '';
+                                                $percentualAttr = $atendimentoReal->percentualConcluido();
+                                                $concluidasAttr = $atendimentoReal->etapasConcluidas();
+                                                $totalEtapasAttr = count($atendimentoReal->etapasFluxo());
+                                            } else {
+                                                $fluxoServico = $agendamento->servico?->etapasAtendimento()
+                                                    ?? \App\Models\Atendimento::ETAPAS;
+                                                $esteiraSimulada = \App\Models\Atendimento::esteiraSimulada(
+                                                    $fluxoServico,
+                                                    $agendamento->status_agendamento ?? 'Pendente'
+                                                );
+
+                                                $idAtendimentoAttr = '';
+                                                $etapasAttr = $esteiraSimulada['etapas'];
+                                                $proximaEtapaAttr = '';
+                                                $percentualAttr = $esteiraSimulada['percentual'];
+                                                $concluidasAttr = $esteiraSimulada['concluidas'];
+                                                $totalEtapasAttr = $esteiraSimulada['total'];
+                                            }
+                                        @endphp
                                         <tr>
 
                                             <!-- PET -->
@@ -1528,9 +1554,17 @@
                                                     {{-- BOTÃO VER DETALHES --}}
                                                     <button type="button" class="btn-detalhes"
                                                         onclick="abrirDetalhes(this)"
+                                                        data-id-pet="{{ $agendamento->pet->id_pet ?? '' }}"
                                                         data-pet="{{ $agendamento->pet->nome ?? 'Pet' }}"
+                                                        data-especie="{{ $agendamento->pet->especie ?? '' }}"
                                                         data-servico="{{ $agendamento->servico->nome ?? 'Serviço' }}"
-                                                        data-status="{{ $agendamento->status_agendamento ?? 'Pendente' }}">
+                                                        data-status="{{ $agendamento->status_agendamento ?? 'Pendente' }}"
+                                                        data-id-atendimento="{{ $idAtendimentoAttr }}"
+                                                        data-proxima-etapa="{{ $proximaEtapaAttr }}"
+                                                        data-percentual="{{ $percentualAttr }}"
+                                                        data-concluidas="{{ $concluidasAttr }}"
+                                                        data-total-etapas="{{ $totalEtapasAttr }}"
+                                                        data-etapas="{{ json_encode($etapasAttr) }}">
 
                                                         <i class="bi bi-eye"></i>
                                                         Ver detalhes
@@ -2029,10 +2063,12 @@
 
         .acoes-agendamento {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            align-items: stretch;
             gap: 8px;
-            flex-wrap: wrap;
+            width: 100%;
+            max-width: 160px;
+            margin: 0 auto;
         }
 
         .btn-resetar,
@@ -2040,6 +2076,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
             gap: 6px;
             border-radius: 22px;
             padding: 9px 14px;
@@ -2144,6 +2181,44 @@
             color: #1e293b;
             font-size: 21px;
             font-weight: 700;
+        }
+
+        .detalhes-pet-id {
+            display: inline-block;
+            margin-top: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .3px;
+            color: #3169a5;
+            background: #eaf2ff;
+            border: 1px solid #9dbde0;
+            padding: 3px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .detalhes-sem-atendimento {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            padding: 30px 10px;
+            color: #64748b;
+        }
+
+        .detalhes-sem-atendimento i {
+            font-size: 34px;
+            color: #9dbde0;
+        }
+
+        .btn-rfid:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .btn-rfid:disabled:hover {
+            background: transparent;
         }
 
         .btn-fechar-detalhes {
@@ -2312,7 +2387,7 @@
             }
 
             .acoes-agendamento {
-                justify-content: flex-end;
+                margin: 0 0 0 auto;
             }
         }
     </style>
@@ -2337,7 +2412,10 @@
                         <i id="detalhesIconePet" class="fa-solid fa-cat"></i>
                     </div>
 
-                    <h2 id="detalhesNomePet">Pet</h2>
+                    <div>
+                        <h2 id="detalhesNomePet">Pet</h2>
+                        <span id="detalhesIdPet" class="detalhes-pet-id">ID #-</span>
+                    </div>
 
                 </div>
 
@@ -2348,71 +2426,33 @@
 
             </div>
 
-            <div class="detalhes-progresso">
+            <div id="detalhesProgresso" class="detalhes-progresso">
 
                 <div class="progresso-texto">
-                    <span id="detalhesEtapas">2 de 8 etapas concluídas</span>
-                    <strong id="detalhesPorcentagem">25%</strong>
+                    <span id="detalhesEtapas">0 de 0 etapas concluídas</span>
+                    <strong id="detalhesPorcentagem">0%</strong>
                 </div>
 
                 <div class="barra-progresso">
-                    <div id="barraProgresso" class="barra-progresso-preenchida" style="width: 25%;"></div>
+                    <div id="barraProgresso" class="barra-progresso-preenchida" style="width: 0%;"></div>
                 </div>
 
             </div>
 
             <div class="detalhes-servico">
                 <i class="bi bi-droplet-fill"></i>
-                <span id="detalhesServico">Banho</span>
+                <span id="detalhesServico">Serviço</span>
             </div>
 
-            <div class="etapas-atendimento">
+            <div id="detalhesEtapasLista" class="etapas-atendimento">
 
-                <div class="etapa etapa-concluida">
-                    <div class="etapa-icone"><i class="bi bi-check"></i></div>
-                    <div class="etapa-texto"><strong>Pendente</strong></div>
-                </div>
-
-                <div class="etapa etapa-andamento">
-                    <div class="etapa-icone"><i class="bi bi-droplet-fill"></i></div>
-                    <div class="etapa-texto"><strong>Banho</strong><span>Em andamento</span></div>
-                </div>
-
-                <div class="etapa">
-                    <div class="etapa-icone"><i class="bi bi-wind"></i></div>
-                    <div class="etapa-texto"><span>Secagem</span></div>
-                </div>
-
-                <div class="etapa">
-                    <div class="etapa-icone"><i class="bi bi-scissors"></i></div>
-                    <div class="etapa-texto"><span>Tosa</span></div>
-                </div>
-
-                <div class="etapa">
-                    <div class="etapa-icone"><i class="bi bi-brush"></i></div>
-                    <div class="etapa-texto"><span>Escovação</span></div>
-                </div>
-
-                <div class="etapa">
-                    <div class="etapa-icone"><i class="bi bi-scissors"></i></div>
-                    <div class="etapa-texto"><span>Corte de unhas</span></div>
-                </div>
-
-                <div class="etapa">
-                    <div class="etapa-icone"><i class="bi bi-droplet"></i></div>
-                    <div class="etapa-texto"><span>Perfume</span></div>
-                </div>
-
-                <div class="etapa">
-                    <div class="etapa-icone"><i class="bi bi-check-circle-fill"></i></div>
-                    <div class="etapa-texto"><span>Finalizado</span></div>
-                </div>
+                {{-- Preenchido dinamicamente via JS a partir da esteira real do atendimento --}}
 
             </div>
 
-            <button type="button" class="btn-rfid">
+            <button type="button" id="btnSimularRfidDetalhes" class="btn-rfid">
                 <i class="bi bi-upc-scan"></i>
-                Simular leitura RFID
+                <span id="btnSimularRfidTexto">Simular leitura RFID</span>
             </button>
 
         </div>
@@ -2629,31 +2669,93 @@
     <script>
         function abrirDetalhes(botao) {
 
+            const idPet = botao.dataset.idPet || '';
             const nomePet = botao.dataset.pet || 'Pet';
+            const especie = botao.dataset.especie || '';
             const servico = botao.dataset.servico || 'Serviço';
-            const status = botao.dataset.status || 'Pendente';
+            const idAtendimento = botao.dataset.idAtendimento || '';
+            const proximaEtapa = botao.dataset.proximaEtapa || '';
+            const percentual = parseFloat(botao.dataset.percentual || '0');
+            const concluidas = parseInt(botao.dataset.concluidas || '0', 10);
+            const totalEtapas = parseInt(botao.dataset.totalEtapas || '0', 10);
+
+            let etapas = [];
+            try {
+                etapas = JSON.parse(botao.dataset.etapas || '[]');
+            } catch (e) {
+                etapas = [];
+            }
 
             document.getElementById('detalhesNomePet').textContent = nomePet;
+            document.getElementById('detalhesIdPet').textContent = idPet ? `ID #${idPet}` : 'ID indisponível';
+            document.getElementById('detalhesIconePet').className = especie === 'Gato' ?
+                'fa-solid fa-cat' : 'fa-solid fa-dog';
             document.getElementById('detalhesServico').textContent = servico;
 
             const etapasTexto = document.getElementById('detalhesEtapas');
             const porcentagemTexto = document.getElementById('detalhesPorcentagem');
             const barra = document.getElementById('barraProgresso');
+            const listaEtapas = document.getElementById('detalhesEtapasLista');
+            const btnRfid = document.getElementById('btnSimularRfidDetalhes');
+            const btnRfidTexto = document.getElementById('btnSimularRfidTexto');
 
-            let etapas = 1;
-            let porcentagem = 12.5;
+            listaEtapas.innerHTML = '';
 
-            if (status === 'Em atendimento') {
-                etapas = 2;
-                porcentagem = 25;
-            } else if (status === 'Concluido' || status === 'Concluído') {
-                etapas = 8;
-                porcentagem = 100;
+            // Esteira: com Atendimento real (RFID) ou sem ele, o servidor já manda
+            // a esteira do serviço pronta (real ou simulada pelo status do
+            // agendamento) — aqui só decide "tem etapas pra mostrar" ou não.
+            if (etapas.length === 0) {
+
+                document.getElementById('detalhesProgresso').style.display = 'none';
+
+                listaEtapas.innerHTML = `
+                    <div class="detalhes-sem-atendimento">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>Não há etapas de atendimento configuradas para este serviço.</span>
+                    </div>
+                `;
+
+            } else {
+
+                document.getElementById('detalhesProgresso').style.display = '';
+
+                etapasTexto.textContent = `${concluidas} de ${totalEtapas} etapas concluídas`;
+                porcentagemTexto.textContent = `${percentual}%`;
+                barra.style.width = `${percentual}%`;
+
+                etapas.forEach(etapa => {
+                    const div = document.createElement('div');
+                    div.className = 'etapa' + (etapa.status === 'done' ? ' etapa-concluida' :
+                        etapa.status === 'current' ? ' etapa-andamento' : '');
+
+                    const icone = etapa.status === 'done' ? 'fa-solid fa-check' : etapa.icone;
+
+                    div.innerHTML = `
+                        <div class="etapa-icone"><i class="${icone}"></i></div>
+                        <div class="etapa-texto">
+                            <strong>${etapa.label}</strong>
+                            ${etapa.status === 'current' ? '<span>Em andamento</span>' : ''}
+                        </div>
+                    `;
+
+                    listaEtapas.appendChild(div);
+                });
             }
 
-            etapasTexto.textContent = etapas + ' de 8 etapas concluídas';
-            porcentagemTexto.textContent = porcentagem + '%';
-            barra.style.width = porcentagem + '%';
+            // Botão de RFID: só é possível simular a leitura quando existe um
+            // Atendimento real vinculado (é ele que guarda o progresso de
+            // verdade). Esteiras simuladas (sem check-in) não têm o que avançar.
+            if (idAtendimento && proximaEtapa) {
+                btnRfid.disabled = false;
+                btnRfid.dataset.id = idAtendimento;
+                btnRfid.dataset.proximaEtapa = proximaEtapa;
+                btnRfidTexto.textContent = 'Simular leitura RFID';
+            } else {
+                btnRfid.disabled = true;
+                btnRfid.removeAttribute('data-id');
+                btnRfid.removeAttribute('data-proxima-etapa');
+                btnRfidTexto.textContent = idAtendimento ? 'Atendimento finalizado' : 'Sem check-in registrado';
+            }
 
             const painel = document.getElementById('painelDetalhes');
             const fundo = document.getElementById('fundoDetalhes');
@@ -2663,6 +2765,15 @@
             painel.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
         }
+
+        document.getElementById('btnSimularRfidDetalhes').addEventListener('click', function() {
+            const atendimentoId = this.dataset.id;
+            const proximaEtapa = this.dataset.proximaEtapa;
+
+            if (!atendimentoId || !proximaEtapa) return;
+
+            atualizarEtapaAtendimento(atendimentoId, proximaEtapa);
+        });
 
         function fecharDetalhes() {
 
