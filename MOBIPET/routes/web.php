@@ -23,9 +23,9 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-// Rota para a página de erro 404
+// Rota para a página de erro 404 (a view fica em resources/views/errors/404.blade.php)
 Route::get('404', function () {
-    return view('404');
+    return response()->view('errors.404', [], 404);
 })->name('404');
 
 // Rota para a página de sobre
@@ -194,3 +194,14 @@ Route::post(
     '/agendamento/{id}/resetar',
     [AgendamentoController::class, 'resetar']
 )->name('agendamento.resetar');
+
+// ===============================
+// PÁGINA 404 (FALLBACK)
+// ===============================
+
+// Qualquer URL que não bateu com nenhuma rota acima cai aqui.
+// Passa pelo grupo "web", então a sessão existe e o menu mostra o usuário logado.
+// Deve ficar SEMPRE por último neste arquivo.
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});

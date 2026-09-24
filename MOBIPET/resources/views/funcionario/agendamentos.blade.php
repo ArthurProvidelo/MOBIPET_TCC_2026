@@ -828,6 +828,7 @@
 
           dayItems.forEach(function (dayItem) {
             var dayHeader = dayItem.querySelector(':scope > .day-item__header');
+            var dayBody = dayItem.querySelector(':scope > .day-item__body');
 
             dayHeader.addEventListener('click', function (event) {
               event.stopPropagation();
@@ -843,8 +844,25 @@
               isOpenDay ? closeDay(dayItem) : openDay(dayItem);
 
               if (monthCard.classList.contains('is-open')) {
-                requestAnimationFrame(function () {
-                  expandPanel(monthBody);
+                // Ajusta a altura do mês já de cara (deixa a abertura fluida)...
+                expandPanel(monthBody);
+
+                // ...e de novo quando a transição do dia realmente terminar. O
+                // dia leva 250ms pra chegar na altura final; medir a altura do
+                // mês antes disso (ex.: só no próximo frame) trava o contêiner
+                // do mês menor do que o necessário, e o "overflow: hidden" dele
+                // corta o conteúdo do dia recém-aberto pra sempre (mesmo depois
+                // da animação acabar).
+                dayBody.addEventListener('transitionend', function ajustarAposTransicao(evento) {
+                  if (evento.propertyName !== 'max-height') {
+                    return;
+                  }
+
+                  dayBody.removeEventListener('transitionend', ajustarAposTransicao);
+
+                  if (monthCard.classList.contains('is-open') && dayItem.classList.contains('is-open')) {
+                    expandPanel(monthBody);
+                  }
                 });
               }
             });

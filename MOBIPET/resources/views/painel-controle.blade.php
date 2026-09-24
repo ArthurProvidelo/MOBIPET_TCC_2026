@@ -2165,20 +2165,21 @@
         }
 
         .icone-pet {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #eaf2ff;
-            color: #3169a5;
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: #eff6ff;
+            color: #2563eb;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 22px;
+            flex-shrink: 0;
         }
 
         .detalhes-pet h2 {
             margin: 0;
-            color: #1e293b;
+            color: #111827;
             font-size: 21px;
             font-weight: 700;
         }
@@ -2189,9 +2190,9 @@
             font-size: 12px;
             font-weight: 700;
             letter-spacing: .3px;
-            color: #3169a5;
-            background: #eaf2ff;
-            border: 1px solid #9dbde0;
+            color: #2563eb;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
             padding: 3px 12px;
             border-radius: 20px;
             white-space: nowrap;
@@ -2204,21 +2205,17 @@
             text-align: center;
             gap: 10px;
             padding: 30px 10px;
-            color: #64748b;
+            color: #6b7280;
         }
 
         .detalhes-sem-atendimento i {
             font-size: 34px;
-            color: #9dbde0;
+            color: #bfdbfe;
         }
 
         .btn-rfid:disabled {
-            opacity: .55;
+            opacity: .5;
             cursor: not-allowed;
-        }
-
-        .btn-rfid:disabled:hover {
-            background: transparent;
         }
 
         .btn-fechar-detalhes {
@@ -2227,14 +2224,15 @@
             border: 0;
             border-radius: 50%;
             background: transparent;
-            color: #64748b;
+            color: #6b7280;
             cursor: pointer;
             font-size: 18px;
+            transition: .2s ease;
         }
 
         .btn-fechar-detalhes:hover {
-            background: #e2e8f0;
-            color: #1e293b;
+            background: #eff6ff;
+            color: #2563eb;
         }
 
         .progresso-texto {
@@ -2242,25 +2240,25 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            color: #64748b;
+            color: #6b7280;
             font-size: 16px;
         }
 
         .progresso-texto strong {
-            color: #3169a5;
+            color: #2563eb;
             font-size: 18px;
         }
 
         .barra-progresso {
             height: 12px;
-            background: #e2e8f0;
+            background: #f1f5f9;
             border-radius: 20px;
             overflow: hidden;
         }
 
         .barra-progresso-preenchida {
             height: 100%;
-            background: #f59e0b;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
             border-radius: 20px;
             transition: width .35s ease;
         }
@@ -2270,12 +2268,12 @@
             align-items: center;
             gap: 9px;
             margin: 22px 0 22px;
-            padding: 9px 18px;
-            border: 1px solid #9dbde0;
-            background: #eaf2ff;
-            color: #285d99;
-            border-radius: 25px;
-            font-weight: 600;
+            padding: 8px 18px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 13px;
         }
 
         .etapas-atendimento {
@@ -2288,7 +2286,7 @@
             align-items: center;
             gap: 18px;
             min-height: 68px;
-            color: #64748b;
+            color: #374151;
         }
 
         .etapa:not(:last-child)::after {
@@ -2298,7 +2296,7 @@
             top: 42px;
             width: 2px;
             height: 34px;
-            background: #e2e8f0;
+            background: #e5e7eb;
         }
 
         .etapa-icone {
@@ -2308,27 +2306,33 @@
             height: 36px;
             min-width: 36px;
             border-radius: 50%;
-            border: 2px solid #e2e8f0;
-            background: #fff;
-            color: #64748b;
+            border: 2px solid #e5e7eb;
+            background: #f9fafb;
+            color: #9ca3af;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: .25s;
         }
 
         .etapa-concluida .etapa-icone,
         .etapa-andamento .etapa-icone {
-            background: #3169a5;
-            border-color: #3169a5;
+            background: #2563eb;
+            border-color: #2563eb;
             color: #fff;
         }
 
-        .etapa-concluida {
-            color: #1e293b;
+        .etapa-concluida::after {
+            background: #2563eb !important;
         }
 
-        .etapa-concluida::after {
-            background: #3169a5 !important;
+        .etapa-pendente .etapa-texto strong {
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        .etapa-andamento .etapa-texto strong {
+            color: #111827;
         }
 
         .etapa-andamento .etapa-icone {
@@ -2336,7 +2340,7 @@
             height: 44px;
             min-width: 44px;
             margin-left: -4px;
-            box-shadow: 0 5px 15px rgba(49, 105, 165, .25);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, .15);
         }
 
         .etapa-texto {
@@ -2346,12 +2350,13 @@
         }
 
         .etapa-texto strong {
-            color: #1e293b;
+            color: #374151;
             font-size: 17px;
+            font-weight: 600;
         }
 
         .etapa-texto span {
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .etapa-andamento .etapa-texto span {
@@ -2362,18 +2367,20 @@
         .btn-rfid {
             width: 100%;
             margin-top: 18px;
-            padding: 13px;
-            border: 1px solid #dbe5f1;
-            border-radius: 17px;
-            background: transparent;
-            color: #285d99;
-            font-size: 16px;
+            padding: 14px;
+            border: 2px solid #dbeafe;
+            border-radius: 16px;
+            background: #fff;
+            color: #2563eb;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
+            transition: .25s;
         }
 
-        .btn-rfid:hover {
-            background: #eaf2ff;
+        .btn-rfid:hover:not(:disabled) {
+            background: #eff6ff;
+            transform: translateY(-2px);
         }
 
         @media (max-width: 600px) {
@@ -2726,7 +2733,7 @@
                 etapas.forEach(etapa => {
                     const div = document.createElement('div');
                     div.className = 'etapa' + (etapa.status === 'done' ? ' etapa-concluida' :
-                        etapa.status === 'current' ? ' etapa-andamento' : '');
+                        etapa.status === 'current' ? ' etapa-andamento' : ' etapa-pendente');
 
                     const icone = etapa.status === 'done' ? 'fa-solid fa-check' : etapa.icone;
 

@@ -347,3 +347,6 @@
     });
 })();
 </script>
+
+{{-- Monitor de conexão + registro do service worker (página offline) --}}
+@include('partials.conexao')
