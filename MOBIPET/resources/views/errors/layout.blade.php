@@ -338,10 +338,10 @@
         }
 
         @keyframes erToe {
-            0%   { transform: translateY(0) scale(1); }
-            9%   { transform: translateY(4px) scale(1.08, .72); }
-            24%  { transform: translateY(0) scale(1); }
-            100% { transform: translateY(0) scale(1); }
+            0%   { transform: rotate(var(--r, 0deg)) translateY(0) scale(1); }
+            9%   { transform: rotate(var(--r, 0deg)) translateY(4px) scale(1.08, .72); }
+            24%  { transform: rotate(var(--r, 0deg)) translateY(0) scale(1); }
+            100% { transform: rotate(var(--r, 0deg)) translateY(0) scale(1); }
         }
 
         @keyframes erStep {
@@ -418,10 +418,10 @@
                                 <svg viewBox="0 0 72 72">
                                     <path class="er-pad"
                                         d="M36 30c-10.6 0-19 7.9-19 17.4 0 6.7 4.6 10.6 11.4 10.6 3.8 0 6-1.6 7.6-1.6s3.8 1.6 7.6 1.6c6.8 0 11.4-3.9 11.4-10.6C55 37.9 46.6 30 36 30z" />
-                                    <ellipse class="er-toe" style="--i:0" cx="16" cy="30" rx="6.6" ry="8.8" transform="rotate(-24 16 30)" />
-                                    <ellipse class="er-toe" style="--i:1" cx="29" cy="19" rx="6.6" ry="9" transform="rotate(-8 29 19)" />
-                                    <ellipse class="er-toe" style="--i:2" cx="43" cy="19" rx="6.6" ry="9" transform="rotate(8 43 19)" />
-                                    <ellipse class="er-toe" style="--i:3" cx="56" cy="30" rx="6.6" ry="8.8" transform="rotate(24 56 30)" />
+                                    <ellipse class="er-toe" style="--i:0; --r:-24deg" cx="16" cy="30" rx="6.6" ry="8.8" />
+                                    <ellipse class="er-toe" style="--i:1; --r:-8deg" cx="29" cy="19" rx="6.6" ry="9" />
+                                    <ellipse class="er-toe" style="--i:2; --r:8deg" cx="43" cy="19" rx="6.6" ry="9" />
+                                    <ellipse class="er-toe" style="--i:3; --r:24deg" cx="56" cy="30" rx="6.6" ry="8.8" />
                                 </svg>
                             </span>
                         @else

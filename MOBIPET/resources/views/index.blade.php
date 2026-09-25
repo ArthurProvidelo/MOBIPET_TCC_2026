@@ -9,8 +9,12 @@
         content="Mobipet: agende banho, tosa e consultas em segundos e acompanhe cada etapa do atendimento do seu pet em tempo real.">
     <meta name="keywords" content="petshop, banho e tosa, monitoramento pet, agendamento pet, mobipet">
 
-    <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    <!-- Favicons (troca sozinho conforme o tema claro/escuro do navegador) -->
+    <link href="{{ asset('assets/img/favicon-light.png') }}" rel="icon" type="image/png" sizes="512x512"
+        media="(prefers-color-scheme: light)">
+    <link href="{{ asset('assets/img/favicon-dark.png') }}" rel="icon" type="image/png" sizes="512x512"
+        media="(prefers-color-scheme: dark)">
+    <link href="{{ asset('assets/img/logo_nova_claro_favicon.png') }}" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
