@@ -7,7 +7,7 @@
     <title>Meus Pets | Mobipet</title>
     <meta name="description" content="Gerencie os pets cadastrados na sua conta Mobipet e acompanhe o status de cada atendimento.">
 
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -521,7 +521,6 @@
             <div class="pt-wrap">
 
                 <div class="pt-hero-head" data-aos="fade-up">
-                    <span class="pt-eyebrow" style="justify-content:center;"><span class="pt-idx">Minha conta</span> · Meus pets</span>
                     <h1 class="pt-h1">Meus companheiros</h1>
                     <p class="pt-lead">
                         Gerencie os dados dos seus pets cadastrados, acompanhe o status dos atendimentos ou adicione

@@ -10,7 +10,7 @@
     <meta name="keywords" content="faq mobipet, duvidas petshop, agendamento pet, acompanhamento pet, mobipet">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -518,7 +518,6 @@
         <!-- ================= HERO ================= -->
         <section class="fq-hero">
             <div class="fq-wrap">
-                <span class="fq-eyebrow" style="justify-content:center;">Central de ajuda</span>
                 <h1 data-aos="fade-up">
                     Perguntas frequentes sobre o <span class="fq-grad">Mobipet</span>
                 </h1>

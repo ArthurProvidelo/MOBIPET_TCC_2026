@@ -9,7 +9,7 @@
     <meta name="keywords" content="editar pet mobipet, atualizar pet, dados do animal">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -405,7 +405,6 @@
             <div class="pt-wrap">
 
                 <div class="pt-hero-head" data-aos="fade-up">
-                    <span class="pt-eyebrow" style="justify-content:center;"><span class="pt-idx">Meus pets</span> · Edição</span>
                     <h1 class="pt-h1">Editar dados de {{ $pet->nome }}</h1>
                     <p class="pt-lead">Altere os campos necessários abaixo e salve para manter o cadastro do seu pet em dia.</p>
                 </div>

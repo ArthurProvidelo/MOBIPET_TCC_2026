@@ -10,7 +10,7 @@
     <meta name="keywords" content="login funcionário mobipet, acesso equipe, painel petshop, agendamentos">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -477,7 +477,6 @@
                 <!-- ---------- PAINEL DE MARCA ---------- -->
                 <div class="lg-media">
                     <div class="lg-media-icon"><i class="bi bi-shield-lock"></i></div>
-                    <span class="lg-eyebrow">Portal da equipe</span>
                     <h2>Bem-vindo de volta ao Mobipet</h2>
                     <p>Faça login para acompanhar a rotina do petshop e manter os tutores informados.</p>
                     <ul>
@@ -490,7 +489,6 @@
                 <!-- ---------- FORMULÁRIO ---------- -->
                 <div class="lg-panel">
 
-                    <span class="lg-eyebrow">Acesso restrito</span>
                     <h2>Entrar como funcionário</h2>
                     <p class="lg-sub">Use o e-mail e a senha cadastrados pela administração.</p>
 

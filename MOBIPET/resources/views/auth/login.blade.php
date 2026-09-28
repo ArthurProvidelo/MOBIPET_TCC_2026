@@ -10,7 +10,7 @@
     <meta name="keywords" content="login mobipet, entrar, acesso cliente, cadastro tutor, agendamento pet">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -584,7 +584,6 @@
                     <!-- LOGIN -->
                     <div class="lg-panel lg-form-signin">
 
-                        <span class="lg-eyebrow"><span class="lg-idx">01</span> Acesso</span>
 
                         <h2>Entrar</h2>
                         <p class="lg-sub">É um prazer ter você de volta conosco!</p>
@@ -640,7 +639,6 @@
                     <!-- CADASTRO DO CLIENTE -->
                     <div class="lg-panel lg-form-register">
 
-                        <span class="lg-eyebrow"><span class="lg-idx">02</span> Nova conta</span>
 
                         <h2>Criar cadastro</h2>
                         <p class="lg-sub">Preencha seus dados para criar sua conta no Mobipet.</p>

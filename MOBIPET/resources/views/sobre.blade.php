@@ -10,7 +10,7 @@
     <meta name="keywords" content="petshop, monitoramento pet, banho e tosa, agendamento pet, mobipet">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -385,51 +385,221 @@
 
         /* ===================== MANIFESTO ===================== */
         .sb-manifesto {
-            background: #fff;
+            background:
+                radial-gradient(40% 55% at 100% 50%, var(--sb-accent-soft), transparent 70%),
+                #fff;
             border-top: 1px solid var(--sb-line);
         }
 
-        .sb-manifesto .sb-big {
-            font-family: "Montserrat", sans-serif;
-            font-weight: 700;
-            color: var(--sb-ink);
-            font-size: clamp(1.5rem, 3.6vw, 2.4rem);
-            line-height: 1.32;
-            letter-spacing: -0.02em;
+        .sb-mf {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: clamp(2.5rem, 6vw, 5rem);
+            align-items: center;
         }
 
-        .sb-pills {
+        .sb-mf-title {
+            font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+            line-height: 1.18;
+            margin: 0 0 18px;
+        }
+
+        /* Palavras-chave em azul, com marca-texto suave */
+        .sb-mf-word {
+            color: var(--sb-accent);
+            background: linear-gradient(transparent 64%, var(--sb-accent-soft) 64%);
+            border-radius: 4px;
+            transition: background .35s ease, color .35s ease;
+        }
+
+        .sb-mf-text .sb-lead {
+            max-width: 460px;
+            margin: 0;
+        }
+
+        /* Mini visual: tutor e petshop sincronizados */
+        .sb-sync {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 14px;
-            margin-top: 44px;
+            margin-top: 34px;
+            max-width: 420px;
         }
 
-        .sb-pill {
-            flex: 1 1 200px;
+        .sb-sync-node {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: var(--sb-accent-soft);
+            color: var(--sb-accent);
+            font-family: "Montserrat", sans-serif;
+            font-weight: 600;
+            font-size: .9rem;
+            white-space: nowrap;
+        }
+
+        .sb-sync-node--shop {
+            background: var(--sb-ink);
+            color: #fff;
+        }
+
+        .sb-sync-line {
+            flex: 1;
+            height: 2px;
+            position: relative;
+            background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--sb-accent) 25%, transparent) 0 6px, transparent 6px 12px);
+        }
+
+        .sb-sync-line span {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            margin-top: -4px;
+            border-radius: 50%;
+            background: var(--sb-accent);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--sb-accent) 18%, transparent);
+            animation: sb-sync 2.4s linear infinite;
+        }
+
+        .sb-sync-line span:nth-child(2) {
+            animation-delay: .8s;
+            animation-direction: reverse;
+            background: var(--sb-ink);
+            box-shadow: 0 0 0 4px rgba(15, 27, 52, .12);
+        }
+
+        .sb-sync-line span:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        @keyframes sb-sync {
+            0% {
+                left: 0;
+                opacity: 0;
+            }
+
+            15%,
+            85% {
+                opacity: 1;
+            }
+
+            100% {
+                left: calc(100% - 8px);
+                opacity: 0;
+            }
+        }
+
+        /* Cards dos três pilares */
+        .sb-mf-cards {
+            display: grid;
+            gap: 14px;
+        }
+
+        .sb-mf-card {
+            position: relative;
+            display: grid;
+            grid-template-columns: 52px 1fr auto;
+            gap: 18px;
+            align-items: center;
+            padding: 22px 24px;
+            background: #fff;
             border: 1px solid var(--sb-line);
             border-radius: var(--sb-radius-sm);
-            padding: 22px 24px;
-            background: var(--sb-bg);
-            transition: transform .25s ease, box-shadow .25s ease;
+            overflow: hidden;
+            transition: transform .3s cubic-bezier(.22, 1, .36, 1), box-shadow .3s ease, border-color .3s ease;
         }
 
-        .sb-pill:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--sb-shadow-sm);
+        /* Faixa azul que cresce na lateral ao passar o mouse */
+        .sb-mf-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--sb-accent);
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform .35s cubic-bezier(.22, 1, .36, 1);
         }
 
-        .sb-pill b {
-            display: block;
+        .sb-mf-card::after {
+            content: attr(data-k);
             font-family: "Montserrat", sans-serif;
-            font-size: clamp(1.7rem, 4vw, 2.2rem);
-            color: var(--sb-ink);
+            font-weight: 800;
+            font-size: 1.9rem;
             line-height: 1;
+            color: var(--sb-accent-soft);
+            transition: color .3s ease;
         }
 
-        .sb-pill span {
-            font-size: .9rem;
-            color: var(--sb-muted);
+        .sb-mf-cards .sb-mf-card[data-k].aos-animate:hover,
+        .sb-mf-cards .sb-mf-card[data-k]:hover {
+            transform: translateX(-6px);
+            border-color: color-mix(in srgb, var(--sb-accent) 30%, transparent);
+            box-shadow: 0 18px 40px -22px rgba(23, 92, 221, .55);
+        }
+
+        .sb-mf-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .sb-mf-card:hover::after {
+            color: color-mix(in srgb, var(--sb-accent) 30%, #fff);
+        }
+
+        .sb-mf-ico {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: var(--sb-accent-soft);
+            color: var(--sb-accent);
+            font-size: 1.45rem;
+            transition: background .3s ease, color .3s ease, transform .35s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .sb-mf-card:hover .sb-mf-ico {
+            background: var(--sb-accent);
+            color: #fff;
+            transform: rotate(-8deg) scale(1.05);
+        }
+
+        .sb-mf-card h3 {
+            font-size: 1.08rem;
+            margin: 0 0 4px;
+        }
+
+        .sb-mf-card p {
+            margin: 0;
+            font-size: .93rem;
+            line-height: 1.55;
+            color: var(--sb-body);
+        }
+
+        /* Passar o mouse no card destaca a palavra correspondente no título */
+        .sb-mf:has(.sb-mf-card[data-k="1"]:hover) .sb-mf-word[data-k="1"],
+        .sb-mf:has(.sb-mf-card[data-k="2"]:hover) .sb-mf-word[data-k="2"],
+        .sb-mf:has(.sb-mf-card[data-k="3"]:hover) .sb-mf-word[data-k="3"] {
+            color: #fff;
+            background: linear-gradient(var(--sb-accent), var(--sb-accent));
+            box-shadow: 0 0 0 4px var(--sb-accent);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sb-sync-line span {
+                animation: none;
+                left: calc(50% - 4px);
+            }
+
+            .sb-sync-line span:nth-child(n+2) {
+                display: none;
+            }
         }
 
         /* ===================== O PROBLEMA (seção escura) ===================== */
@@ -857,7 +1027,8 @@
 
             .sb-hero-grid,
             .sb-values-grid,
-            .sb-aud-grid {
+            .sb-aud-grid,
+            .sb-mf {
                 grid-template-columns: 1fr;
             }
 
@@ -1022,14 +1193,13 @@
                 <div class="sb-hero-grid">
 
                     <div data-aos="fade-right">
-                        <span class="sb-eyebrow">Sobre o Mobipet</span>
                         <h1>
                             Seu pet bem cuidado e
                             <span class="sb-grad">você tranquilo do início ao fim.</span>
                         </h1>
                         <p>
                             Acompanhe cada etapa do atendimento em tempo real e saiba que seu pet está
-                            bem — sem ligações, sem espera e sem incerteza.
+                            bem sem ligações, sem espera e sem incerteza.
                         </p>
 
                         <div class="sb-hero-actions">
@@ -1062,37 +1232,59 @@
 
         <!-- ================= MANIFESTO ================= -->
         <section class="sb-manifesto">
-            <div class="sb-wrap">
-                <div class="sb-narrow" style="margin-inline:0;" data-aos="fade-up">
-                    <p class="sb-big" style="margin-top:24px;">
-                        O Mobipet tornou o atendimento do seu  pet
-                        <span class="sb-mark">mais rápido</span>,
-                        <span class="sb-mark">mais organizado</span> e
-                        <span class="sb-mark">mais transparente</span> para quem leva
-                        o pet e para quem cuida dele.
+            <div class="sb-wrap sb-mf">
+
+                <div class="sb-mf-text" data-aos="fade-right">
+                    <h2 class="sb-mf-title">
+                        Banho e tosa
+                        <span class="sb-mf-word" data-k="1">mais rápido</span>,
+                        <span class="sb-mf-word" data-k="2">organizado</span> e
+                        <span class="sb-mf-word" data-k="3">transparente</span>.
+                    </h2>
+                    <p class="sb-lead">
+                        Tutor e petshop veem a mesma informação, ao mesmo tempo. Sem ligações e sem
+                        &ldquo;já está pronto?&rdquo;.
                     </p>
-                    <p class="sb-lead" style="margin-top:22px;">
-                        Do agendamento à retirada, tutor e petshop enxergam a mesma informação,
-                        ao mesmo tempo. Sem ligações repetidas, sem "já está pronto?".
-                    </p>
+
+                    <div class="sb-sync" aria-hidden="true">
+                        <div class="sb-sync-node">
+                            <i class="bi bi-person-heart"></i>
+                            <span>Tutor</span>
+                        </div>
+                        <div class="sb-sync-line">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="sb-sync-node sb-sync-node--shop">
+                            <i class="bi bi-shop"></i>
+                            <span>Petshop</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="sb-pills">
-                    <div class="sb-pill" data-aos="fade-up" data-aos-delay="0">
-                        <b><span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="2"
-                                class="purecounter"></span></b>
-                        <span>etapas do atendimento monitoradas</span>
+                <div class="sb-mf-cards">
+                    <div class="sb-mf-card" data-k="1" data-aos="fade-left" data-aos-delay="0">
+                        <div class="sb-mf-ico"><i class="bi bi-lightning-charge"></i></div>
+                        <div>
+                            <h3>Rápido</h3>
+                            <p>Agende em poucos cliques, a qualquer hora do dia.</p>
+                        </div>
                     </div>
-                    <div class="sb-pill" data-aos="fade-up" data-aos-delay="100">
-                        <b>24<span style="font-size:1.1rem;">h</span></b>
-                        <span>agendamento online, todos os dias</span>
+                    <div class="sb-mf-card" data-k="2" data-aos="fade-left" data-aos-delay="100">
+                        <div class="sb-mf-ico"><i class="bi bi-calendar2-week"></i></div>
+                        <div>
+                            <h3>Organizado</h3>
+                            <p>Agenda, pets e histórico de serviços em um só lugar.</p>
+                        </div>
                     </div>
-                    <div class="sb-pill" data-aos="fade-up" data-aos-delay="200">
-                        <b><span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2.4"
-                                class="purecounter"></span>%</b>
-                        <span>do histórico de serviços registrado</span>
+                    <div class="sb-mf-card" data-k="3" data-aos="fade-left" data-aos-delay="200">
+                        <div class="sb-mf-ico"><i class="bi bi-broadcast"></i></div>
+                        <div>
+                            <h3>Transparente</h3>
+                            <p>Cada etapa do atendimento aparece para o tutor em tempo real.</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -1100,7 +1292,6 @@
         <section class="sb-problem">
             <div class="sb-wrap">
                 <div data-aos="fade-up">
-                    <span class="sb-eyebrow"><span class="sb-idx">02</span> Antes do Mobipet</span>
                     <h2 class="sb-h2">Deixar o pet no petshop virava um exercício de paciência.</h2>
                     <p class="sb-problem-lead">
                         Marcar horário dependia de telefone e mensagem. Acompanhar o atendimento,
@@ -1141,7 +1332,6 @@
         <section class="sb-turn">
             <div class="sb-wrap">
                 <div class="sb-narrow" style="margin-inline:0;" data-aos="fade-up">
-                    <span class="sb-eyebrow"><span class="sb-idx">03</span> Com o Mobipet</span>
                     <h2 class="sb-h2">A mesma rotina, agora sob controle.</h2>
                     <p class="sb-lead" style="margin-top:18px;">
                         O que era incerteza vira acompanhamento. O que era ligação vira notificação.
@@ -1179,7 +1369,6 @@
                 <div class="sb-values-grid">
 
                     <div class="sb-values-aside" data-aos="fade-up">
-                        <span class="sb-eyebrow"><span class="sb-idx">05</span> No que acreditamos</span>
                         <h2 class="sb-h2" style="margin-top:20px;">Princípios que guiam cada tela do Mobipet.</h2>
                     </div>
 
@@ -1226,7 +1415,6 @@
         <section class="sb-aud">
             <div class="sb-wrap">
                 <div data-aos="fade-up" style="max-width:640px;">
-                    <span class="sb-eyebrow"><span class="sb-idx">06</span> Para quem é</span>
                     <h2 class="sb-h2">Os dois lados do balcão, no mesmo sistema.</h2>
                 </div>
 
@@ -1265,7 +1453,6 @@
         <!-- ================= QUEM CONSTRÓI ================= -->
         <section class="sb-team">
             <div class="sb-wrap" data-aos="fade-up">
-                <span class="sb-eyebrow" style="justify-content:center;"><span class="sb-idx">07</span> Quem constrói</span>
                 <h2 class="sb-h2">Um produto feito por seis desenvolvedores.</h2>
                 <p>
                     O Mobipet é desenvolvido por um time enxuto que cuida de cada detalhe do
@@ -1282,7 +1469,7 @@
             <div class="sb-wrap">
                 <div class="sb-cta-card" data-aos="zoom-in">
                     <h2>Pronto para acompanhar o próximo atendimento do seu pet?</h2>
-                    <p>Agende em segundos e veja cada etapa acontecer &mdash; do check-in à retirada.</p>
+                    <p>Agende em segundos e veja cada etapa acontecer.</p>
                     <div class="sb-cta-actions">
                         <a href="{{ route('agendamento') }}" class="sb-btn sb-btn--light">
                             Agendar agora <i class="bi bi-arrow-right"></i>

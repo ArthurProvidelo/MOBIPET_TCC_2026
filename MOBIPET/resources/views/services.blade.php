@@ -10,7 +10,7 @@
     <meta name="keywords" content="banho e tosa, serviços petshop, hidratação pet, agendamento pet, mobipet">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -430,100 +430,249 @@
             font-size: 1.5rem;
         }
 
-        /* ===================== GRID DE SERVIÇOS ===================== */
+        /* ===================== COMO O MOBIPET CUIDA DO ATENDIMENTO ===================== */
         .sv-catalog {
             background: #fff;
             border-top: 1px solid var(--sv-line);
         }
 
-        .sv-grid {
+        .sv-pillars {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
             margin-top: 54px;
-        }
-
-        .sv-card {
             position: relative;
-            background: var(--sv-bg);
-            border: 1px solid var(--sv-line);
-            border-radius: var(--sv-radius);
-            padding: 32px;
-            overflow: hidden;
-            transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
         }
 
-        .sv-card::before {
+        /* Linha pontilhada ligando as quatro etapas */
+        .sv-pillars::before {
             content: "";
             position: absolute;
-            inset: auto auto -40px -40px;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: var(--sv-accent-soft);
-            opacity: 0;
-            transition: opacity .3s ease;
+            top: 136px;
+            left: 8%;
+            right: 8%;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--sv-accent) 35%, transparent) 0 8px, transparent 8px 16px);
+            z-index: 0;
         }
 
-        .sv-card:hover {
+        .sv-pillar {
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            border: 1px solid var(--sv-line);
+            border-radius: var(--sv-radius);
+            padding: 18px 18px 30px;
+            transition: transform .3s cubic-bezier(.22, 1, .36, 1), box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .sv-pillars .sv-pillar[data-aos].aos-animate:hover,
+        .sv-pillars .sv-pillar:hover {
             transform: translateY(-8px);
             box-shadow: var(--sv-shadow);
             border-color: transparent;
         }
 
-        .sv-card:hover::before {
-            opacity: 1;
+        .sv-pillar--main {
+            border-color: color-mix(in srgb, var(--sv-accent) 30%, transparent);
+            box-shadow: 0 24px 60px -34px rgba(23, 92, 221, .45);
         }
 
-        .sv-card .sv-ico {
-            position: relative;
-            width: 56px;
-            height: 56px;
-            display: grid;
-            place-items: center;
+        /* Mini-tela ilustrativa de cada etapa */
+        .sv-mock {
+            height: 118px;
             border-radius: 16px;
-            font-size: 1.6rem;
+            background: var(--sv-bg);
+            border: 1px solid var(--sv-line);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .sv-mock small {
+            font-size: .78rem;
+            color: var(--sv-muted);
+        }
+
+        .sv-slots {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .sv-slots span {
+            padding: 6px 10px;
+            border-radius: 9px;
             background: #fff;
             border: 1px solid var(--sv-line);
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--sv-ink);
+            transition: transform .3s ease;
+        }
+
+        .sv-slots .is-picked {
+            background: var(--sv-accent);
+            border-color: var(--sv-accent);
+            color: #fff;
+            box-shadow: 0 8px 18px -8px var(--sv-accent);
+        }
+
+        .sv-slots .is-off {
+            color: var(--sv-muted);
+            text-decoration: line-through;
+            opacity: .6;
+        }
+
+        .sv-pillar:hover .sv-slots .is-picked {
+            transform: scale(1.08);
+        }
+
+        .sv-mock-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: .9rem;
+            color: var(--sv-ink);
+        }
+
+        .sv-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--sv-green);
+        }
+
+        .sv-live .sv-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--sv-green);
+            animation: sv-pulse 2s infinite;
+        }
+
+        .sv-track {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .sv-track span {
+            height: 6px;
+            border-radius: 99px;
+            background: var(--sv-line);
+        }
+
+        .sv-track .is-done {
+            background: var(--sv-accent);
+        }
+
+        .sv-track .is-now {
+            background: linear-gradient(90deg, var(--sv-accent) 0 50%, var(--sv-line) 50%);
+            background-size: 200% 100%;
+            animation: sv-track 2.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes sv-track {
+            from { background-position: 100% 0; }
+            to { background-position: 30% 0; }
+        }
+
+        .sv-toast {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            border: 1px solid var(--sv-line);
+            border-radius: 14px;
+            padding: 12px 14px;
+            box-shadow: var(--sv-shadow-sm);
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .sv-toast i {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: var(--sv-accent-soft);
             color: var(--sv-accent);
-            margin-bottom: 20px;
-            transition: transform .28s ease;
+            flex: 0 0 auto;
         }
 
-        .sv-card:hover .sv-ico {
-            transform: translateY(-4px) rotate(-6deg);
+        .sv-toast b {
+            display: block;
+            font-size: .88rem;
+            color: var(--sv-ink);
+            line-height: 1.2;
         }
 
-        .sv-card h3 {
+        .sv-pillar:hover .sv-toast {
+            transform: translateY(-4px) rotate(-1.5deg);
+        }
+
+        .sv-pillar:hover .sv-toast i {
+            animation: sv-ring .6s ease;
+        }
+
+        @keyframes sv-ring {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(-14deg); }
+            50% { transform: rotate(12deg); }
+            75% { transform: rotate(-6deg); }
+        }
+
+        /* Número da etapa, sobre a linha pontilhada */
+        .sv-step {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            margin: -17px auto 0;
             position: relative;
-            font-size: 1.18rem;
-            margin-bottom: 8px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--sv-accent);
+            color: var(--sv-accent);
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: .9rem;
+            transition: background .3s ease, color .3s ease;
         }
 
-        .sv-card p {
-            position: relative;
-            margin: 0;
-            font-size: .95rem;
+        .sv-pillar:hover .sv-step,
+        .sv-pillar--main .sv-step {
+            background: var(--sv-accent);
+            color: #fff;
+        }
+
+        .sv-pillar h3 {
+            font-size: 1.15rem;
+            margin: 16px 12px 8px;
+            text-align: center;
+        }
+
+        .sv-pillar p {
+            margin: 0 12px;
+            font-size: .94rem;
+            text-align: center;
             color: var(--sv-body);
         }
 
-        .sv-card .sv-more {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            margin-top: 16px;
-            font-size: .85rem;
-            font-weight: 600;
-            color: var(--sv-accent);
-            opacity: 0;
-            transform: translateX(-6px);
-            transition: opacity .28s ease, transform .28s ease;
-        }
-
-        .sv-card:hover .sv-more {
-            opacity: 1;
-            transform: translateX(0);
+        @media (prefers-reduced-motion: reduce) {
+            .sv-track .is-now,
+            .sv-live .sv-dot,
+            .sv-pillar:hover .sv-toast i {
+                animation: none;
+            }
         }
 
         /* ===================== ACOMPANHAMENTO (split) ===================== */
@@ -718,66 +867,6 @@
             font-family: "Montserrat", sans-serif;
         }
 
-        /* ===================== PASSO A PASSO ===================== */
-        .sv-how {
-            background: #fff;
-        }
-
-        .sv-flow {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
-            margin-top: 58px;
-            position: relative;
-        }
-
-        .sv-flow::before {
-            content: "";
-            position: absolute;
-            top: 27px;
-            left: 11%;
-            right: 11%;
-            height: 2px;
-            background: repeating-linear-gradient(90deg, var(--sv-line) 0 8px, transparent 8px 16px);
-        }
-
-        .sv-node {
-            position: relative;
-            text-align: center;
-        }
-
-        .sv-node .sv-nring {
-            width: 56px;
-            height: 56px;
-            margin: 0 auto 20px;
-            display: grid;
-            place-items: center;
-            border-radius: 50%;
-            background: #fff;
-            border: 2px solid var(--sv-line);
-            font-family: "Montserrat", sans-serif;
-            font-weight: 700;
-            color: var(--sv-accent);
-            transition: .25s ease;
-        }
-
-        .sv-node:hover .sv-nring {
-            background: var(--sv-accent);
-            border-color: var(--sv-accent);
-            color: #fff;
-            transform: translateY(-5px);
-        }
-
-        .sv-node h3 {
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-        }
-
-        .sv-node p {
-            font-size: .92rem;
-            margin: 0;
-        }
-
         /* ===================== DIFERENCIAIS ===================== */
         .sv-diff {
             background: var(--sv-bg);
@@ -821,17 +910,110 @@
 
         /* ===================== FAQ ===================== */
         .sv-faq {
-            background: #fff;
+            background:
+                radial-gradient(45% 60% at 0% 100%, var(--sv-accent-soft), transparent 70%),
+                linear-gradient(180deg, #fff 0%, var(--sv-bg) 100%);
         }
 
+        .sv-faq-grid {
+            display: grid;
+            grid-template-columns: .85fr 1.15fr;
+            gap: clamp(2.5rem, 6vw, 5rem);
+            align-items: start;
+        }
+
+        /* Coluna esquerda fica presa enquanto a pessoa rola as perguntas */
+        .sv-faq-side {
+            position: sticky;
+            top: 110px;
+        }
+
+        .sv-faq-side .sv-lead {
+            margin: 16px 0 0;
+        }
+
+        .sv-help {
+            margin-top: 32px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 14px 16px;
+            align-items: center;
+            padding: 22px;
+            background: #fff;
+            border: 1px solid var(--sv-line);
+            border-radius: var(--sv-radius-sm);
+            box-shadow: var(--sv-shadow-sm);
+        }
+
+        .sv-help-ico {
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: var(--sv-accent-soft);
+            color: var(--sv-accent);
+            font-size: 1.3rem;
+        }
+
+        .sv-help b {
+            display: block;
+            font-family: "Montserrat", sans-serif;
+            color: var(--sv-ink);
+        }
+
+        .sv-help span {
+            font-size: .9rem;
+            color: var(--sv-muted);
+        }
+
+        .sv-help-links {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .sv-help-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 16px;
+            border-radius: 999px;
+            font-size: .88rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--sv-accent);
+            background: var(--sv-accent-soft);
+            transition: background .25s ease, color .25s ease, transform .25s ease;
+        }
+
+        .sv-help-links a:hover {
+            background: var(--sv-accent);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Lista de perguntas em cards */
         .sv-faq-list {
-            margin-top: 48px;
-            max-width: 780px;
+            display: grid;
+            gap: 12px;
         }
 
         .sv-faq-list details {
-            border-bottom: 1px solid var(--sv-line);
-            padding: 22px 0;
+            background: #fff;
+            border: 1px solid var(--sv-line);
+            border-radius: var(--sv-radius-sm);
+            transition: border-color .3s ease, box-shadow .3s ease;
+        }
+
+        .sv-faq-list details:hover {
+            border-color: color-mix(in srgb, var(--sv-accent) 30%, transparent);
+        }
+
+        .sv-faq-list details[open] {
+            border-color: color-mix(in srgb, var(--sv-accent) 40%, transparent);
+            box-shadow: 0 20px 44px -28px rgba(23, 92, 221, .45);
         }
 
         .sv-faq-list summary {
@@ -839,32 +1021,90 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 20px;
+            gap: 16px;
+            padding: 20px 22px;
             font-family: "Montserrat", sans-serif;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             color: var(--sv-ink);
+            border-radius: var(--sv-radius-sm);
         }
 
         .sv-faq-list summary::-webkit-details-marker {
             display: none;
         }
 
-        .sv-faq-list summary i {
-            flex: none;
-            color: var(--sv-accent);
-            transition: transform .3s ease;
+        .sv-faq-list summary:focus-visible {
+            outline: 3px solid color-mix(in srgb, var(--sv-accent) 45%, transparent);
+            outline-offset: 2px;
         }
 
-        .sv-faq-list details[open] summary i {
+        .sv-q-ico {
+            width: 40px;
+            height: 40px;
+            flex: none;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--sv-bg);
+            color: var(--sv-accent);
+            font-size: 1.1rem;
+            transition: background .3s ease, color .3s ease;
+        }
+
+        .sv-faq-list details[open] .sv-q-ico {
+            background: var(--sv-accent);
+            color: #fff;
+        }
+
+        .sv-q-text {
+            flex: 1;
+        }
+
+        .sv-q-toggle {
+            width: 32px;
+            height: 32px;
+            flex: none;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--sv-accent-soft);
+            color: var(--sv-accent);
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), background .3s ease;
+        }
+
+        .sv-faq-list details[open] .sv-q-toggle {
             transform: rotate(45deg);
         }
 
-        .sv-faq-list details p {
-            margin: 14px 0 0;
+        .sv-answer {
+            overflow: hidden;
+        }
+
+        .sv-answer p {
+            margin: 0;
+            padding: 0 22px 22px 78px;
             color: var(--sv-body);
-            max-width: 680px;
+        }
+
+        @media (max-width: 991px) {
+            .sv-faq-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sv-faq-side {
+                position: static;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .sv-answer p {
+                padding-left: 22px;
+            }
+
+            .sv-q-ico {
+                display: none;
+            }
         }
 
         /* ===================== CTA ===================== */
@@ -911,28 +1151,20 @@
                 grid-template-columns: 1fr;
             }
 
-            .sv-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
+            .sv-pillars,
             .sv-diff-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .sv-flow {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .sv-flow::before {
+            .sv-pillars::before {
                 display: none;
             }
         }
 
         @media (max-width: 575px) {
 
-            .sv-grid,
-            .sv-diff-grid,
-            .sv-flow {
+            .sv-pillars,
+            .sv-diff-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -1060,12 +1292,11 @@
                 <div class="sv-hero-grid">
 
                     <div data-aos="fade-right">
-                        <span class="sv-eyebrow">Serviços Mobipet</span>
                         <h1>
                             Todo cuidado do petshop, <span class="sv-grad">acompanhado etapa por etapa.</span>
                         </h1>
                         <p>
-                            Banho, tosa, hidratação e mais &mdash; agendados em segundos e
+                            Banho, tosa, hidratação e mais agendados em segundos e
                             acompanhados em tempo real, do check-in ao "pode buscar".
                         </p>
 
@@ -1074,14 +1305,8 @@
                                 Agendar um serviço <i class="bi bi-arrow-right"></i>
                             </a>
                             <a href="#sv-catalogo" class="sv-btn sv-btn--ghost">
-                                <i class="bi bi-grid"></i> Ver o catálogo
+                                <i class="bi bi-play-circle"></i> Como funciona
                             </a>
-                        </div>
-
-                        <div class="sv-hero-chips">
-                            <span class="sv-chip"><i class="bi bi-broadcast"></i> Acompanhamento ao vivo</span>
-                            <span class="sv-chip"><i class="bi bi-bell"></i> Aviso a cada etapa</span>
-                            <span class="sv-chip"><i class="bi bi-clock-history"></i> Histórico salvo</span>
                         </div>
                     </div>
 
@@ -1125,55 +1350,78 @@
         <section class="sv-catalog" id="sv-catalogo">
             <div class="sv-wrap">
                 <div data-aos="fade-up" style="max-width:640px;">
-                    <span class="sv-eyebrow"><span class="sv-idx">01</span> O que oferecemos</span>
-                    <h2 class="sv-h2">Um catálogo completo de banho e tosa</h2>
+                    <h2 class="sv-h2">Do horário marcado ao &ldquo;pode buscar&rdquo;</h2>
                     <p class="sv-lead" style="margin-top:18px;">
-                        Cada serviço abaixo entra no mesmo fluxo monitorado: você agenda,
-                        acompanha e recebe o aviso quando termina.
+                        O petshop cuida do seu pet. O Mobipet cuida de manter você por dentro
+                        de tudo, sem precisar ligar.
                     </p>
                 </div>
 
-                <div class="sv-grid">
-                    <article class="sv-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="sv-ico"><i class="bi bi-droplet-half"></i></div>
-                        <h3>Banho</h3>
-                        <p>Higienização completa com produtos adequados ao pelo e à pele do pet.</p>
-                        <span class="sv-more">Incluído no monitoramento <i class="bi bi-arrow-right"></i></span>
+                <div class="sv-pillars">
+                    <!-- 1. Escolha o serviço -->
+                    <article class="sv-pillar" data-aos="fade-up" data-aos-delay="0">
+                        <div class="sv-mock" aria-hidden="true">
+                            <small>Qual serviço?</small>
+                            <div class="sv-slots">
+                                <span class="is-picked">Banho</span>
+                                <span>Tosa</span>
+                                <span>Consulta</span>
+                            </div>
+                        </div>
+                        <span class="sv-step">1</span>
+                        <h3>Escolha o serviço</h3>
+                        <p>Banho, tosa ou consulta, direto na tela inicial.</p>
                     </article>
 
-                    <article class="sv-card" data-aos="fade-up" data-aos-delay="80">
-                        <div class="sv-ico"><i class="bi bi-scissors"></i></div>
-                        <h3>Tosa</h3>
-                        <p>Tosa higiênica ou completa, no padrão da raça ou do jeito que você prefere.</p>
-                        <span class="sv-more">Incluído no monitoramento <i class="bi bi-arrow-right"></i></span>
+                    <!-- 2. Agende online -->
+                    <article class="sv-pillar" data-aos="fade-up" data-aos-delay="80">
+                        <div class="sv-mock" aria-hidden="true">
+                            <small>Quinta, 12 de março</small>
+                            <div class="sv-slots">
+                                <span>09:00</span>
+                                <span class="is-picked">10:30</span>
+                                <span class="is-off">13:00</span>
+                            </div>
+                        </div>
+                        <span class="sv-step">2</span>
+                        <h3>Agende online</h3>
+                        <p>Selecione o dia e o horário que forem melhores para você.</p>
                     </article>
 
-                    <article class="sv-card" data-aos="fade-up" data-aos-delay="160">
-                        <div class="sv-ico"><i class="bi bi-stars"></i></div>
-                        <h3>Hidratação</h3>
-                        <p>Tratamento que devolve maciez e brilho ao pelo depois do banho.</p>
-                        <span class="sv-more">Incluído no monitoramento <i class="bi bi-arrow-right"></i></span>
+                    <!-- 3. Acompanhe em tempo real -->
+                    <article class="sv-pillar sv-pillar--main" data-aos="fade-up" data-aos-delay="160">
+                        <div class="sv-mock" aria-hidden="true">
+                            <div class="sv-mock-row">
+                                <b>Rex</b>
+                                <span class="sv-live"><span class="sv-dot"></span> ao vivo</span>
+                            </div>
+                            <div class="sv-track">
+                                <span class="is-done"></span>
+                                <span class="is-done"></span>
+                                <span class="is-now"></span>
+                                <span></span>
+                            </div>
+                            <small>Banho em andamento</small>
+                        </div>
+                        <span class="sv-step">3</span>
+                        <h3>Acompanhe em tempo real</h3>
+                        <p>Veja cada etapa avançar e receba avisos automáticos.</p>
                     </article>
 
-                    <article class="sv-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="sv-ico"><i class="bi bi-wind"></i></div>
-                        <h3>Escovação e secagem</h3>
-                        <p>Desembolo e secagem cuidadosa para o pelo ficar soltinho e sem nós.</p>
-                        <span class="sv-more">Incluído no monitoramento <i class="bi bi-arrow-right"></i></span>
-                    </article>
-
-                    <article class="sv-card" data-aos="fade-up" data-aos-delay="80">
-                        <div class="sv-ico"><i class="bi bi-flower1"></i></div>
-                        <h3>Corte de unhas</h3>
-                        <p>Corte seguro no comprimento certo, evitando desconforto ao caminhar.</p>
-                        <span class="sv-more">Incluído no monitoramento <i class="bi bi-arrow-right"></i></span>
-                    </article>
-
-                    <article class="sv-card" data-aos="fade-up" data-aos-delay="160">
-                        <div class="sv-ico"><i class="bi bi-ear"></i></div>
-                        <h3>Limpeza de ouvidos</h3>
-                        <p>Limpeza delicada da região auricular, parte da rotina de higiene do pet.</p>
-                        <span class="sv-more">Incluído no monitoramento <i class="bi bi-arrow-right"></i></span>
+                    <!-- 4. Retire seu pet -->
+                    <article class="sv-pillar" data-aos="fade-up" data-aos-delay="240">
+                        <div class="sv-mock" aria-hidden="true">
+                            <div class="sv-toast">
+                                <i class="bi bi-bell-fill"></i>
+                                <div>
+                                    <b>Rex está pronto!</b>
+                                    <small>Pode vir buscar</small>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="sv-step">4</span>
+                        <h3>Retire seu pet</h3>
+                        <p>Você recebe o aviso de "pronto" e o histórico fica salvo.</p>
                     </article>
                 </div>
             </div>
@@ -1186,11 +1434,10 @@
                 <div class="sv-notif-grid">
 
                     <div data-aos="fade-right">
-                        <span class="sv-eyebrow"><span class="sv-idx">03</span> Você fica sabendo</span>
                         <h2 class="sv-h2">Um aviso automático a cada mudança de etapa</h2>
                         <p class="sv-lead" style="margin-top:16px;">
                             Nada de ficar atualizando a tela. Quando o serviço avança, a
-                            notificação chega até você &mdash; inclusive quando o pet está
+                            notificação chega até você, inclusive quando o pet está
                             pronto para buscar.
                         </p>
                     </div>
@@ -1201,7 +1448,7 @@
                             Mobipet &middot; Atendimento do Rex
                         </div>
                         <div class="sv-bubble" data-aos="fade-up" data-aos-delay="150">
-                            <b>Rex</b> deu entrada no petshop 🐾
+                            <b>Rex</b> deu entrada no petshop 
                             <time>09:42</time>
                         </div>
                         <div class="sv-bubble" data-aos="fade-up" data-aos-delay="250">
@@ -1209,7 +1456,7 @@
                             <time>10:05</time>
                         </div>
                         <div class="sv-bubble" data-aos="fade-up" data-aos-delay="350">
-                            Secagem em andamento — tempo estimado 15 min
+                            Secagem em andamento —- tempo estimado 15 min
                             <time>10:38</time>
                         </div>
                         <div class="sv-bubble" data-aos="fade-up" data-aos-delay="450">
@@ -1222,44 +1469,10 @@
             </div>
         </section>
 
-        <!-- ================= PASSO A PASSO ================= -->
-        <section class="sv-how">
-            <div class="sv-wrap">
-                <div data-aos="fade-up" style="max-width:640px;">
-                    <span class="sv-eyebrow"><span class="sv-idx">04</span> Como agendar</span>
-                    <h2 class="sv-h2">Do agendamento à retirada em quatro passos</h2>
-                </div>
-
-                <div class="sv-flow">
-                    <div class="sv-node" data-aos="fade-up" data-aos-delay="0">
-                        <div class="sv-nring">01</div>
-                        <h3>Escolha o serviço</h3>
-                        <p>Banho, tosa, hidratação ou um combo.</p>
-                    </div>
-                    <div class="sv-node" data-aos="fade-up" data-aos-delay="90">
-                        <div class="sv-nring">02</div>
-                        <h3>Agende online</h3>
-                        <p>Selecione o melhor dia e horário para você.</p>
-                    </div>
-                    <div class="sv-node" data-aos="fade-up" data-aos-delay="180">
-                        <div class="sv-nring">03</div>
-                        <h3>Acompanhe</h3>
-                        <p>Veja cada etapa e receba as notificações.</p>
-                    </div>
-                    <div class="sv-node" data-aos="fade-up" data-aos-delay="270">
-                        <div class="sv-nring">04</div>
-                        <h3>Retire seu pet</h3>
-                        <p>Com aviso de "pronto" e histórico registrado.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- ================= DIFERENCIAIS ================= -->
         <section class="sv-diff">
             <div class="sv-wrap">
                 <div data-aos="fade-up" style="max-width:640px;">
-                    <span class="sv-eyebrow"><span class="sv-idx">05</span> Por que pelo Mobipet</span>
                     <h2 class="sv-h2">O serviço é o mesmo. <br>A experiência, não.</h2>
                 </div>
 
@@ -1284,40 +1497,6 @@
                         <h3>Histórico completo</h3>
                         <p>Tudo o que foi feito fica registrado para consultar depois.</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= FAQ ================= -->
-        <section class="sv-faq">
-            <div class="sv-wrap">
-                <div data-aos="fade-up" style="max-width:640px;">
-                    <span class="sv-eyebrow"><span class="sv-idx">06</span> Dúvidas frequentes</span>
-                    <h2 class="sv-h2">Perguntas rápidas sobre os serviços</h2>
-                </div>
-
-                <div class="sv-faq-list" data-aos="fade-up">
-                    <details open>
-                        <summary>Como funciona o acompanhamento em tempo real? <i class="bi bi-plus-lg"></i></summary>
-                        <p>A cada etapa concluída, a equipe do petshop atualiza o atendimento no
-                            sistema. Essa mudança aparece na hora para você, junto com uma
-                            notificação automática.</p>
-                    </details>
-                    <details>
-                        <summary>Preciso ter conta para agendar? <i class="bi bi-plus-lg"></i></summary>
-                        <p>Sim. Com a conta, o Mobipet vincula o agendamento ao seu pet, guarda o
-                            histórico dos serviços e envia as notificações para você.</p>
-                    </details>
-                    <details>
-                        <summary>Posso agendar mais de um serviço de uma vez? <i class="bi bi-plus-lg"></i></summary>
-                        <p>Pode. Banho, tosa, hidratação e os demais serviços podem ser combinados
-                            no mesmo agendamento e aparecem juntos na linha do tempo.</p>
-                    </details>
-                    <details>
-                        <summary>E se eu precisar remarcar? <i class="bi bi-plus-lg"></i></summary>
-                        <p>É só acessar a área de agendamento pela sua conta e escolher um novo
-                            horário disponível.</p>
-                    </details>
                 </div>
             </div>
         </section>
@@ -1379,6 +1558,52 @@
             document.addEventListener('scroll', update, { passive: true });
             window.addEventListener('resize', update);
             update();
+        })();
+
+        /* FAQ: abre e fecha com animação suave, uma pergunta por vez */
+        (function () {
+            var items = Array.prototype.slice.call(document.querySelectorAll('.sv-faq-list details'));
+            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!items.length || reduce || !Element.prototype.animate) return;
+
+            var ease = 'cubic-bezier(.22, 1, .36, 1)';
+
+            var close = function (d) {
+                var body = d.querySelector('.sv-answer');
+                var anim = body.animate(
+                    [{ height: body.offsetHeight + 'px', opacity: 1 }, { height: '0px', opacity: 0 }],
+                    { duration: 280, easing: ease }
+                );
+                d.classList.add('is-closing');
+                anim.onfinish = function () {
+                    d.open = false;
+                    d.classList.remove('is-closing');
+                };
+            };
+
+            var open = function (d) {
+                d.open = true;
+                var body = d.querySelector('.sv-answer');
+                body.animate(
+                    [{ height: '0px', opacity: 0 }, { height: body.offsetHeight + 'px', opacity: 1 }],
+                    { duration: 380, easing: ease }
+                );
+            };
+
+            items.forEach(function (d) {
+                d.querySelector('summary').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (d.classList.contains('is-closing')) return;
+                    if (d.open) {
+                        close(d);
+                    } else {
+                        items.forEach(function (o) {
+                            if (o !== d && o.open && !o.classList.contains('is-closing')) close(o);
+                        });
+                        open(d);
+                    }
+                });
+            });
         })();
     </script>
 

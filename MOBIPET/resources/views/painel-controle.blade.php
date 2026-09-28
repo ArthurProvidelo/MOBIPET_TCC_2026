@@ -11,7 +11,7 @@
     <meta name="description"
         content="Painel administrativo do Mobipet para gerenciamento de agendamentos, funcionários e serviços.">
 
-    <link rel="icon" href="{{ asset('assets/img/logo_favicon_transparent.png') }}">
+    @include('partials.favicon')
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

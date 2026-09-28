@@ -10,7 +10,7 @@
     <meta name="keywords" content="equipe mobipet, desenvolvedores, senai, laravel, flutter">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -819,7 +819,6 @@
         <section class="dv-team" id="dv-time">
             <div class="dv-wrap">
                 <div data-aos="fade-up" style="max-width:640px;">
-                    <span class="dv-eyebrow"><span class="dv-idx">01</span> Quem faz acontecer</span>
                     <h2 class="dv-h2">Seis pessoas, uma plataforma</h2>
                     <p class="dv-lead" style="margin-top:18px;">
                         Cada integrante cuida de uma parte do Mobipet &mdash; da tela que o tutor
@@ -905,7 +904,6 @@
                 <div class="dv-areas-grid">
 
                     <div class="dv-areas-aside" data-aos="fade-up">
-                        <span class="dv-eyebrow"><span class="dv-idx">02</span> Como nos dividimos</span>
                         <h2 class="dv-h2" style="margin-top:20px;">Quatro frentes trabalhando junto.</h2>
                     </div>
 
@@ -952,7 +950,6 @@
         <section class="dv-stack">
             <div class="dv-wrap">
                 <div data-aos="fade-up" style="max-width:640px;">
-                    <span class="dv-eyebrow"><span class="dv-idx">03</span> Ferramentas</span>
                     <h2 class="dv-h2">A stack que move o Mobipet</h2>
                     <p class="dv-lead" style="margin-top:18px;">
                         Tecnologias escolhidas para dar conta da web, da API e do aplicativo

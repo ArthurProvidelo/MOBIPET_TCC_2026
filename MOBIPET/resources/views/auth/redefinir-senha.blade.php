@@ -10,7 +10,7 @@
     <meta name="keywords" content="redefinir senha mobipet, nova senha, recuperar acesso">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -503,7 +503,6 @@
                 <!-- ---------- FORMULÁRIO ---------- -->
                 <div class="rd-panel">
 
-                    <span class="rd-eyebrow"><span class="rd-idx">02</span> Nova senha</span>
 
                     <h2>Criar nova senha</h2>
                     <p class="rd-sub">Escolha uma senha forte e diferente das anteriores para proteger sua conta.</p>

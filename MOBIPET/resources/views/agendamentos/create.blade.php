@@ -11,7 +11,7 @@
   <meta name="keywords" content="agendamento mobipet, agendar atendimento pet, banho e tosa">
 
   <!-- Favicons -->
-  <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -469,7 +469,6 @@
       <div class="pt-wrap">
 
         <div class="pt-hero-head" data-aos="fade-up">
-          <span class="pt-eyebrow" style="justify-content:center;"><span class="pt-idx">Atendimento</span> · Novo agendamento</span>
           <h1 class="pt-h1">Agende o atendimento do seu pet</h1>
           <p class="pt-lead">
             Mais praticidade, segurança e monitoramento completo para acompanhar cada etapa do atendimento.

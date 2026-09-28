@@ -10,7 +10,7 @@
     <meta name="keywords" content="recuperar senha mobipet, esqueci minha senha, redefinir senha">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -509,7 +509,6 @@
                 <!-- ---------- FORMULÁRIO ---------- -->
                 <div class="rs-panel">
 
-                    <span class="rs-eyebrow"><span class="rs-idx">01</span> Recuperação</span>
 
                     <h2>Esqueceu sua senha?</h2>
                     <p class="rs-sub">Informe o e-mail e o CPF cadastrados na sua conta. Se os dois conferirem, você cria uma nova senha na hora.</p>

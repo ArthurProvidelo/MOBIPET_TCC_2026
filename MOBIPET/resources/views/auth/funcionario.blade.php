@@ -10,7 +10,7 @@
     <meta name="keywords" content="cadastro funcionário mobipet, novo colaborador, equipe petshop, admissão">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -477,7 +477,6 @@
                 <!-- ---------- PAINEL DE MARCA ---------- -->
                 <div class="lg-media">
                     <div class="lg-media-icon"><i class="fa-solid fa-user-tie"></i></div>
-                    <span class="lg-eyebrow">Equipe Mobipet</span>
                     <h2>Registre um novo colaborador</h2>
                     <p>Preencha os dados do funcionário para liberar o acesso ao painel de atendimento.</p>
                     <ul>
@@ -490,7 +489,6 @@
                 <!-- ---------- FORMULÁRIO ---------- -->
                 <div class="lg-panel">
 
-                    <span class="lg-eyebrow">Novo funcionário</span>
                     <h2>Cadastro de funcionário</h2>
                     <p class="lg-sub">Todos os campos são obrigatórios.</p>
 

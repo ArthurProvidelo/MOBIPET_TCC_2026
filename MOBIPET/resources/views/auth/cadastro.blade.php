@@ -10,7 +10,7 @@
     <meta name="keywords" content="criar conta mobipet, cadastro tutor, cadastro cliente, agendamento pet">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -482,7 +482,6 @@
                 <!-- ---------- PAINEL DE MARCA ---------- -->
                 <div class="lg-media">
                     <div class="lg-media-icon"><i class="bi bi-heart-pulse"></i></div>
-                    <span class="lg-eyebrow">Bem-vindo</span>
                     <h2>Cuidar do seu pet ficou mais simples</h2>
                     <p>Crie sua conta e tenha tudo em um só lugar.</p>
                     <ul>
@@ -498,7 +497,6 @@
                 <!-- ---------- FORMULÁRIO ---------- -->
                 <div class="lg-panel">
 
-                    <span class="lg-eyebrow">Nova conta</span>
                     <h2>Criar cadastro</h2>
                     <p class="lg-sub">Preencha seus dados para começar a usar o Mobipet.</p>
 

@@ -9,12 +9,7 @@
         content="Mobipet: agende banho, tosa e consultas em segundos e acompanhe cada etapa do atendimento do seu pet em tempo real.">
     <meta name="keywords" content="petshop, banho e tosa, monitoramento pet, agendamento pet, mobipet">
 
-    <!-- Favicons (troca sozinho conforme o tema claro/escuro do navegador) -->
-    <link href="{{ asset('assets/img/favicon-light.png') }}" rel="icon" type="image/png" sizes="512x512"
-        media="(prefers-color-scheme: light)">
-    <link href="{{ asset('assets/img/favicon-dark.png') }}" rel="icon" type="image/png" sizes="512x512"
-        media="(prefers-color-scheme: dark)">
-    <link href="{{ asset('assets/img/logo_nova_claro_favicon.png') }}" rel="apple-touch-icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -288,28 +283,6 @@
         .mp-trust i {
             color: var(--mp-green);
             font-size: 1.05rem;
-        }
-
-        .mp-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: clamp(1.5rem, 5vw, 3rem);
-            margin-top: 34px;
-            padding-top: 26px;
-            border-top: 1px solid var(--mp-border);
-        }
-
-        .mp-stat b {
-            display: block;
-            font-family: "Montserrat", sans-serif;
-            font-size: clamp(1.6rem, 4vw, 2.1rem);
-            color: var(--mp-ink);
-            line-height: 1;
-        }
-
-        .mp-stat span {
-            font-size: .9rem;
-            color: var(--mp-muted);
         }
 
         /* Visual do hero */
@@ -721,7 +694,50 @@
 
         /* ---------- PRIMEIROS PASSOS (abas Tutor / Petshop) ---------- */
         .mp-start {
+            --role: var(--mp-accent);
+            --role-dark: var(--mp-accent-dark);
+            --role-soft: var(--mp-accent-soft);
             background: var(--mp-bg);
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        /* Brilho de fundo que troca de lado conforme o perfil */
+        .mp-start::before,
+        .mp-start::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            width: 620px;
+            height: 620px;
+            top: 18%;
+            border-radius: 50%;
+            filter: blur(10px);
+            pointer-events: none;
+            transition: opacity .7s ease, transform .9s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .mp-start::before {
+            left: -220px;
+            background: radial-gradient(closest-side, var(--mp-accent-soft), transparent);
+        }
+
+        .mp-start::after {
+            right: -220px;
+            background: radial-gradient(closest-side, var(--mp-accent-soft), transparent);
+            opacity: 0;
+            transform: translateX(80px) scale(.8);
+        }
+
+        .mp-start[data-role="shop"]::before {
+            opacity: 0;
+            transform: translateX(-80px) scale(.8);
+        }
+
+        .mp-start[data-role="shop"]::after {
+            opacity: 1;
+            transform: none;
         }
 
         .mp-tabs {
@@ -732,6 +748,8 @@
             border: 1px solid var(--mp-border);
             border-radius: 999px;
             margin: 26px auto 0;
+            position: relative;
+            box-shadow: var(--mp-shadow-sm);
         }
 
         .mp-tab {
@@ -744,12 +762,77 @@
             padding: 11px 24px;
             border-radius: 999px;
             cursor: pointer;
-            transition: background .2s ease, color .2s ease;
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background .2s ease, color .35s ease;
+        }
+
+        .mp-tab:not([aria-selected="true"]):hover {
+            color: var(--role);
         }
 
         .mp-tab[aria-selected="true"] {
             background: var(--mp-accent);
             color: #fff;
+        }
+
+
+        /* Pílula que desliza entre as abas (ativada via JS) */
+        .mp-tab-pill {
+            position: absolute;
+            top: 6px;
+            left: 0;
+            height: calc(100% - 12px);
+            width: 0;
+            border-radius: 999px;
+            background: var(--role);
+            box-shadow: 0 10px 24px -10px var(--role);
+            transition: transform .55s cubic-bezier(.34, 1.4, .64, 1), width .55s cubic-bezier(.34, 1.4, .64, 1), background .45s ease, box-shadow .45s ease;
+            opacity: 0;
+        }
+
+        .mp-tabs.has-pill .mp-tab-pill {
+            opacity: 1;
+        }
+
+        .mp-tabs.has-pill .mp-tab[aria-selected="true"] {
+            background: transparent;
+        }
+
+        /* Frase de contexto abaixo das abas */
+        .mp-role-hint {
+            margin: 16px auto 0;
+            height: 1.6em;
+            position: relative;
+            font-size: .95rem;
+            font-weight: 600;
+            color: var(--role);
+            transition: color .4s ease;
+        }
+
+        .mp-role-hint span {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: opacity .35s ease, transform .45s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .mp-role-hint span[data-for="shop"],
+        .mp-start[data-role="shop"] .mp-role-hint span[data-for="tutor"] {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .mp-start[data-role="shop"] .mp-role-hint span[data-for="shop"] {
+            opacity: 1;
+            transform: none;
         }
 
         .mp-tabpanel {
@@ -760,6 +843,32 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 22px;
+            position: relative;
+        }
+
+        /* Linha que "desenha" o caminho entre os passos */
+        .mp-start-grid::before {
+            content: "";
+            position: absolute;
+            top: 55px;
+            left: 12%;
+            right: 12%;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, var(--role) 0 8px, transparent 8px 16px);
+            opacity: .35;
+            transform: scaleX(0);
+            transform-origin: left center;
+            z-index: 0;
+        }
+
+        #mpPanelShop .mp-start-grid::before {
+            transform-origin: right center;
+        }
+
+        .mp-tabpanel.is-entering .mp-start-grid::before,
+        .mp-tabpanel.is-shown .mp-start-grid::before {
+            transform: scaleX(1);
+            transition: transform .9s cubic-bezier(.22, 1, .36, 1) .25s;
         }
 
         .mp-start-card {
@@ -768,6 +877,14 @@
             border-radius: var(--mp-radius);
             padding: 30px;
             position: relative;
+            z-index: 1;
+            transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease, border-color .35s ease;
+        }
+
+        .mp-start-card:hover {
+            transform: translateY(-6px);
+            border-color: color-mix(in srgb, var(--role) 35%, transparent);
+            box-shadow: 0 22px 44px -24px color-mix(in srgb, var(--role) 60%, transparent);
         }
 
         .mp-start-card .mp-sc-num {
@@ -777,8 +894,14 @@
             font-family: "Montserrat", sans-serif;
             font-weight: 800;
             font-size: 2.4rem;
-            color: var(--mp-accent-soft);
+            color: var(--role-soft);
             line-height: 1;
+            transition: color .35s ease, transform .35s ease;
+        }
+
+        .mp-start-card:hover .mp-sc-num {
+            color: color-mix(in srgb, var(--role) 22%, #fff);
+            transform: scale(1.12);
         }
 
         .mp-start-card .mp-sc-ico {
@@ -787,10 +910,128 @@
             display: grid;
             place-items: center;
             border-radius: 14px;
-            background: var(--mp-accent-soft);
-            color: var(--mp-accent);
+            background: var(--role-soft);
+            color: var(--role);
             font-size: 1.4rem;
             margin-bottom: 18px;
+            transition: background .35s ease, color .35s ease, transform .35s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .mp-start-card:hover .mp-sc-ico {
+            background: var(--role);
+            color: #fff;
+            transform: rotate(-8deg) scale(1.06);
+        }
+
+        #mpPanelShop .mp-btn--primary {
+            background: var(--role);
+            box-shadow: 0 14px 30px -14px var(--role);
+        }
+
+        #mpPanelShop .mp-btn--primary:hover {
+            background: var(--role-dark);
+        }
+
+        /* Entrada / saída dos cards: tutor vem da esquerda, funcionário da direita */
+        .mp-tabpanel {
+            --dir: -1;
+        }
+
+        #mpPanelShop {
+            --dir: 1;
+        }
+
+        .mp-tabpanel.is-entering .mp-start-card {
+            animation: mpCardIn .65s cubic-bezier(.22, 1, .36, 1) both;
+        }
+
+        .mp-tabpanel.is-entering .mp-start-card:nth-child(2) {
+            animation-delay: .08s;
+        }
+
+        .mp-tabpanel.is-entering .mp-start-card:nth-child(3) {
+            animation-delay: .16s;
+        }
+
+        .mp-tabpanel.is-entering .mp-sc-ico {
+            animation: mpIcoPop .6s cubic-bezier(.34, 1.56, .64, 1) both;
+        }
+
+        .mp-tabpanel.is-entering .mp-start-card:nth-child(2) .mp-sc-ico {
+            animation-delay: .2s;
+        }
+
+        .mp-tabpanel.is-entering .mp-start-card:nth-child(3) .mp-sc-ico {
+            animation-delay: .28s;
+        }
+
+        .mp-tabpanel.is-entering .mp-start-card:nth-child(1) .mp-sc-ico {
+            animation-delay: .12s;
+        }
+
+        .mp-tabpanel.is-entering .mp-start-cta {
+            animation: mpFadeUp .5s ease .3s both;
+        }
+
+        .mp-tabpanel.is-leaving {
+            animation: mpPanelOut .22s ease both;
+            pointer-events: none;
+        }
+
+        @keyframes mpCardIn {
+            from {
+                opacity: 0;
+                transform: translateX(calc(var(--dir) * 48px)) rotate(calc(var(--dir) * 2deg)) scale(.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes mpIcoPop {
+            0% {
+                transform: scale(.4) rotate(calc(var(--dir) * 30deg));
+                opacity: 0;
+            }
+
+            100% {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        @keyframes mpFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes mpPanelOut {
+            to {
+                opacity: 0;
+                transform: translateX(calc(var(--dir) * -30px));
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .mp-tabpanel.is-entering *,
+            .mp-tabpanel.is-leaving,
+            .mp-tab-pill,
+            .mp-start::before,
+            .mp-start::after,
+            .mp-role-hint span {
+                animation: none !important;
+                transition: none !important;
+            }
         }
 
         .mp-start-card h3 {
@@ -972,8 +1213,15 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .mp-steps-grid::before {
+            .mp-steps-grid::before,
+            .mp-start-grid::before {
                 display: none;
+            }
+
+            .mp-start::before,
+            .mp-start::after {
+                width: 380px;
+                height: 380px;
             }
 
             .mp-hero-visual {
@@ -1083,7 +1331,6 @@
                 <div class="mp-hero-grid">
 
                     <div class="mp-hero-copy" data-aos="fade-right">
-                        <span class="mp-eyebrow"><i class="bi bi-stars"></i> Petshop com tecnologia</span>
 
                         <h1>
                             Acompanhe o banho e a tosa do seu pet
@@ -1119,24 +1366,6 @@
                                 </a>
                             @endif
                         </div>
-
-
-                        <div class="mp-stats">
-                            <div class="mp-stat">
-                                <b><span data-purecounter-start="0" data-purecounter-end="100"
-                                        data-purecounter-duration="2" class="purecounter"></span>+</b>
-                                <span>Funcionalidades</span>
-                            </div>
-                            <div class="mp-stat">
-                                <b><span data-purecounter-start="0" data-purecounter-end="6"
-                                        data-purecounter-duration="2" class="purecounter"></span></b>
-                                <span>Etapas monitoradas</span>
-                            </div>
-                            <div class="mp-stat">
-                                <b>24h</b>
-                                <span>Agendamento online</span>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="mp-hero-visual" data-aos="fade-left" data-aos-delay="150">
@@ -1154,7 +1383,6 @@
         <section class="mp-how">
             <div class="mp-container">
                 <div class="mp-section-head mp-center" data-aos="fade-up">
-                    <span class="mp-eyebrow"><i class="bi bi-signpost-split"></i> Como funciona</span>
                     <h2>Do agendamento à retirada em 4 passos</h2>
                     <p>Nenhum passo tem segredo. Você faz tudo pelo celular ou pelo computador.</p>
                 </div>
@@ -1189,7 +1417,6 @@
             <div class="mp-container">
 
                 <div data-aos="fade-right">
-                    <span class="mp-eyebrow"><i class="bi bi-hand-index-thumb"></i> Experimente agora</span>
                     <h2>É assim que você acompanha o atendimento</h2>
                     <p>
                         Toque no botão e avance o atendimento etapa por etapa. É exatamente o
@@ -1243,19 +1470,21 @@
         </section>
 
         <!-- ============ PRIMEIROS PASSOS ============ -->
-        <section class="mp-start">
+        <section class="mp-start" data-role="tutor">
             <div class="mp-container">
                 <div class="mp-section-head mp-center" data-aos="fade-up">
-                    <span class="mp-eyebrow"><i class="bi bi-flag"></i> Primeiros passos</span>
                     <h2>Comece em 3 passos</h2>
                     <p>Escolha o seu perfil e veja o caminho mais curto para usar o Mobipet.</p>
 
                     <div class="mp-tabs" role="tablist" aria-label="Escolha o seu perfil">
+                        <span class="mp-tab-pill" aria-hidden="true"></span>
                         <button class="mp-tab" role="tab" id="mpTabTutor" aria-controls="mpPanelTutor"
-                            aria-selected="true">Sou tutor</button>
+                            aria-selected="true" data-role="tutor">Sou tutor</button>
                         <button class="mp-tab" role="tab" id="mpTabShop" aria-controls="mpPanelShop"
-                            aria-selected="false" tabindex="-1">Sou funcionário</button>
+                            aria-selected="false" tabindex="-1" data-role="shop">Sou funcionário</button>
                     </div>
+
+                    
                 </div>
 
                 <!-- Painel: Tutor -->
@@ -1334,7 +1563,6 @@
         <section class="mp-features">
             <div class="mp-container">
                 <div class="mp-section-head mp-center" data-aos="fade-up">
-                    <span class="mp-eyebrow"><i class="bi bi-boxes"></i> Recursos</span>
                     <h2>Pensado para facilitar a sua vida</h2>
                     <p>Cada recurso existe para tirar uma dor do dia a dia &mdash; do tutor e do petshop.</p>
                 </div>
@@ -1552,16 +1780,92 @@
                 mpTabShop: document.getElementById('mpPanelShop')
             };
 
+            var startSection = document.querySelector('.mp-start');
+            var tabList = document.querySelector('.mp-tabs');
+            var pill = tabList ? tabList.querySelector('.mp-tab-pill') : null;
+            var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var switchToken = 0;
+
+            var movePill = function (tab) {
+                if (!pill || !tab) return;
+                pill.style.width = tab.offsetWidth + 'px';
+                pill.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
+                tabList.classList.add('has-pill');
+            };
+
+            var showPanel = function (panel) {
+                panel.hidden = false;
+                panel.classList.remove('is-leaving', 'is-shown');
+                void panel.offsetWidth; // reinicia as animações de entrada
+                panel.classList.add('is-entering');
+                setTimeout(function () {
+                    panel.classList.remove('is-entering');
+                    panel.classList.add('is-shown');
+                }, 900);
+            };
+
             var selectTab = function (tab, focus) {
+                if (tab.getAttribute('aria-selected') === 'true') {
+                    if (focus) tab.focus();
+                    return;
+                }
+
+                var token = ++switchToken;
+                var current = null;
+                var next = panels[tab.id];
+
                 tabs.forEach(function (t) {
                     var on = t === tab;
                     t.setAttribute('aria-selected', on ? 'true' : 'false');
                     t.tabIndex = on ? 0 : -1;
                     var panel = panels[t.id];
-                    if (panel) panel.hidden = !on;
+                    if (panel && !on && !panel.hidden) current = panel;
+                    if (panel && !on && panel !== current) panel.hidden = true;
                 });
+
+                if (startSection) startSection.setAttribute('data-role', tab.getAttribute('data-role'));
+                movePill(tab);
                 if (focus) tab.focus();
+
+                if (!next) return;
+                if (!current || reduceMotion) {
+                    if (current) current.hidden = true;
+                    showPanel(next);
+                    return;
+                }
+
+                current.classList.remove('is-entering', 'is-shown');
+                current.classList.add('is-leaving');
+                setTimeout(function () {
+                    if (token !== switchToken) return; // outro clique já assumiu a troca
+                    current.hidden = true;
+                    current.classList.remove('is-leaving');
+                    showPanel(next);
+                }, 220);
             };
+
+            // Posiciona a pílula na aba inicial e acompanha redimensionamentos
+            var initialTab = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
+            if (initialTab) {
+                if (pill) pill.style.transition = 'none';
+                movePill(initialTab);
+                if (pill) {
+                    void pill.offsetWidth;
+                    pill.style.transition = '';
+                }
+                if (panels[initialTab.id]) panels[initialTab.id].classList.add('is-shown');
+            }
+            var resyncPill = function () {
+                var active = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
+                if (pill) pill.style.transition = 'none';
+                movePill(active);
+                if (pill) {
+                    void pill.offsetWidth;
+                    pill.style.transition = '';
+                }
+            };
+            window.addEventListener('resize', resyncPill);
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(resyncPill);
 
             tabs.forEach(function (tab, idx) {
                 tab.addEventListener('click', function () { selectTab(tab); });

@@ -29,7 +29,7 @@
     <title>@yield('title') | Mobipet</title>
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -431,7 +431,6 @@
                 </div>
 
                 <div>
-                    <span class="er-eyebrow">@yield('eyebrow')</span>
                 </div>
 
                 <h1 class="er-title">@yield('heading')</h1>

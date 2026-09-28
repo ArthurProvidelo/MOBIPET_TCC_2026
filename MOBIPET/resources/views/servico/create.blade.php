@@ -10,7 +10,7 @@
     <meta name="keywords" content="petshop, monitoramento pet, banho e tosa, laravel, mobipet, cadastrar servico">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">

@@ -9,7 +9,7 @@
     <meta name="keywords" content="cadastrar pet mobipet, novo pet, cadastro de animal">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo_favicon_transparent.png') }}" rel="icon">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -567,7 +567,6 @@
             <div class="pt-wrap">
 
                 <div class="pt-hero-head" data-aos="fade-up">
-                    <span class="pt-eyebrow" style="justify-content:center;"><span class="pt-idx">Meus pets</span> · Novo cadastro</span>
                     <h1 class="pt-h1">Adicionar companheiro</h1>
                     <p class="pt-lead">Preencha os campos abaixo para concluir o registro do seu pet e liberar o agendamento de atendimentos.</p>
                 </div>
