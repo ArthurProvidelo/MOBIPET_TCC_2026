@@ -8,13 +8,13 @@
 
   <title>Agenda | Mobipet</title>
 
-    @include('partials.favicon')
+  @include('partials.favicon')
 
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700;800&family=Lato:wght@400;700&display=swap"
     rel="stylesheet">
 
   <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -25,238 +25,1006 @@
   <link href="{{asset('assets/css/main.css')}}" rel="stylesheet">
   <link href="{{asset('assets/css/estilo.css')}}" rel="stylesheet">
 
+  <style>
+    /* ===========================================================
+       AGENDA DOS FUNCIONÁRIOS — MOBIPET  ·  isolado (prefixo pt-/ag-)
+       Mesmo sistema visual de "Meus Pets", agendamento e cadastro de
+       serviço: título centralizado e card com faixa azul. Dentro do
+       card: calendário do mês (esquerda) + atendimentos do dia (direita).
+       =========================================================== */
+    .pt-page {
+      --pt-accent: #175cdd;
+      --pt-accent-dark: #0f47b3;
+      --pt-accent-soft: #eaf1fe;
+      --pt-ink: #0f1b34;
+      --pt-body: #4a5568;
+      --pt-muted: #8794a7;
+      --pt-line: #e6ecf5;
+      --pt-bg: #f7f9ff;
+      --pt-radius: 26px;
+      --pt-radius-sm: 14px;
+      --pt-shadow-sm: 0 10px 30px -14px rgba(15, 27, 52, .2);
+      --pt-shadow: 0 40px 90px -40px rgba(23, 92, 221, .4);
+
+      /* cores de status (mesmas do painel de controle) */
+      --st-pendente: #d97706;
+      --st-pendente-bg: #fff7e6;
+      --st-andamento: #2563eb;
+      --st-andamento-bg: #eff6ff;
+      --st-concluido: #059669;
+      --st-concluido-bg: #ecfdf5;
+      --st-cancelado: #dc2626;
+      --st-cancelado-bg: #fef2f2;
+
+      font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--pt-body);
+    }
+
+    .pt-page h1,
+    .pt-page h2,
+    .pt-page h3,
+    .pt-page h4 {
+      font-family: "Montserrat", sans-serif;
+      color: var(--pt-ink);
+      letter-spacing: -0.022em;
+      line-height: 1.12;
+    }
+
+    .pt-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, var(--pt-accent), #4ade80);
+      z-index: 1100;
+      transition: width .12s linear;
+    }
+
+    /* ---------- Hero ---------- */
+    .pt-hero {
+      padding: 170px 0 100px;
+      background:
+        radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
+        radial-gradient(circle at bottom left, #e0f2fe 0%, transparent 30%),
+        var(--pt-bg);
+      min-height: 100vh;
+    }
+
+    .pt-wrap {
+      width: min(1180px, 92%);
+      margin-inline: auto;
+    }
+
+    .pt-hero-head {
+      text-align: center;
+      max-width: 660px;
+      margin: 0 auto 36px;
+    }
+
+    .pt-h1 {
+      font-size: clamp(2rem, 4.4vw, 2.9rem);
+      font-weight: 800;
+      margin: 0 0 14px;
+    }
+
+    .pt-lead {
+      font-size: 1.02rem;
+      color: var(--pt-muted);
+      line-height: 1.65;
+      margin: 0 0 26px;
+    }
+
+    .pt-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* ---------- Botões ---------- */
+    .pt-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
+      font-size: .96rem;
+      padding: 14px 26px;
+      border-radius: 999px;
+      border: 1.5px solid transparent;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+    }
+
+    .pt-btn--primary {
+      background: var(--pt-accent);
+      color: #fff;
+      box-shadow: 0 18px 34px -16px rgba(23, 92, 221, .75);
+    }
+
+    .pt-btn--primary:hover {
+      background: var(--pt-accent-dark);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    .pt-btn--outline {
+      background: #fff;
+      color: var(--pt-accent);
+      border-color: rgba(23, 92, 221, .25);
+    }
+
+    .pt-btn--outline:hover {
+      background: var(--pt-accent-soft);
+      color: var(--pt-accent);
+      transform: translateY(-3px);
+    }
+
+    /* ---------- Resumo (hoje / 7 dias / pendentes) ---------- */
+    .ag-resumo {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .ag-resumo-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      border: 0;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: var(--pt-shadow-sm);
+      text-align: left;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .ag-resumo-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 36px -18px rgba(23, 92, 221, .45);
+    }
+
+    .ag-resumo-icone {
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-size: 18px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--pt-accent), #3b82f6);
+    }
+
+    .ag-resumo-item:nth-child(2) .ag-resumo-icone {
+      background: linear-gradient(135deg, #10b981, #34d399);
+    }
+
+    .ag-resumo-item:nth-child(3) .ag-resumo-icone {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    }
+
+    .ag-resumo-valor {
+      display: block;
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--pt-ink);
+      line-height: 1.1;
+    }
+
+    .ag-resumo-rotulo {
+      font-size: .85rem;
+      color: var(--pt-muted);
+      font-weight: 500;
+    }
+
+    /* ---------- Card com faixa azul ---------- */
+    .pt-card {
+      background: #fff;
+      border-radius: var(--pt-radius);
+      box-shadow: var(--pt-shadow);
+      overflow: hidden;
+    }
+
+    .pt-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 26px clamp(20px, 4vw, 38px);
+      background: linear-gradient(135deg, var(--pt-accent), var(--pt-accent-dark));
+      color: #fff;
+    }
+
+    .pt-card-head h3 {
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0 0 3px;
+    }
+
+    .pt-card-head p {
+      margin: 0;
+      font-size: .86rem;
+      color: rgba(255, 255, 255, .82);
+    }
+
+    .pt-head-icon {
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    /* Navegação de mês na faixa azul */
+    .ag-mes-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ag-mes-nav button {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .16);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color .2s ease;
+    }
+
+    .ag-mes-nav button:hover,
+    .ag-mes-nav button:focus-visible {
+      background: rgba(255, 255, 255, .3);
+      outline: none;
+    }
+
+    .ag-mes-nome {
+      min-width: 170px;
+      text-align: center;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--pt-accent);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+    }
+
+    /* ---------- Filtros ---------- */
+    .ag-filtros {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 20px clamp(20px, 4vw, 38px);
+      border-bottom: 1px solid var(--pt-line);
+    }
+
+    .ag-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1.5px solid var(--pt-line);
+      background: #fff;
+      color: var(--pt-body);
+      font-family: "Montserrat", sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+    }
+
+    .ag-chip:hover {
+      border-color: rgba(23, 92, 221, .35);
+      color: var(--pt-accent);
+    }
+
+    .ag-chip.ativo {
+      background: var(--pt-accent);
+      border-color: var(--pt-accent);
+      color: #fff;
+    }
+
+    .ag-chip .ag-ponto {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .ag-campos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .ag-campos select,
+    .ag-campos input {
+      height: 44px;
+      border-radius: 12px;
+      border: 1.5px solid var(--pt-line);
+      background-color: var(--pt-bg);
+      padding: 0 14px;
+      font-size: .9rem;
+      color: var(--pt-ink);
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .ag-campos select:focus,
+    .ag-campos input:focus {
+      outline: none;
+      border-color: var(--pt-accent);
+      box-shadow: 0 0 0 4px var(--pt-accent-soft);
+    }
+
+    .ag-busca {
+      position: relative;
+    }
+
+    .ag-busca i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--pt-muted);
+      font-size: .85rem;
+    }
+
+    .ag-busca input {
+      padding-left: 38px;
+      width: 230px;
+    }
+
+    /* ---------- Calendário + dia ---------- */
+    .ag-corpo {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    }
+
+    .ag-calendario {
+      padding: clamp(18px, 3vw, 30px);
+      border-right: 1px solid var(--pt-line);
+    }
+
+    .ag-semana,
+    .ag-grade {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .ag-semana span {
+      text-align: center;
+      padding-bottom: 8px;
+      font-family: "Lato", sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--pt-muted);
+    }
+
+    .ag-dia {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      min-height: 54px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: 1.5px solid transparent;
+      border-radius: 14px;
+      background: var(--pt-bg);
+      color: var(--pt-ink);
+      font-family: "Montserrat", sans-serif;
+      transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+    }
+
+    .ag-dia:hover {
+      border-color: rgba(23, 92, 221, .35);
+      transform: translateY(-1px);
+    }
+
+    .ag-dia:focus-visible {
+      outline: 3px solid #bfdbfe;
+      outline-offset: 2px;
+    }
+
+    .ag-dia-num {
+      font-size: .95rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .ag-dia.fora {
+      background: transparent;
+      color: #c3ccda;
+    }
+
+    .ag-dia.passado:not(.fora) .ag-dia-num {
+      color: var(--pt-muted);
+    }
+
+    .ag-dia.com-agenda .ag-dia-num {
+      font-weight: 800;
+    }
+
+    .ag-dia.hoje {
+      border-color: var(--pt-accent);
+    }
+
+    .ag-dia.hoje .ag-dia-num {
+      color: var(--pt-accent);
+    }
+
+    .ag-dia.selecionado {
+      background: var(--pt-accent);
+      border-color: var(--pt-accent);
+      box-shadow: 0 12px 24px -12px rgba(23, 92, 221, .9);
+    }
+
+    .ag-dia.selecionado .ag-dia-num {
+      color: #fff;
+    }
+
+    /* Pontinhos por status + total do dia */
+    .ag-dia-pontos {
+      display: flex;
+      gap: 3px;
+      height: 6px;
+    }
+
+    .ag-dia-pontos i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .ag-dia-total {
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--pt-accent-soft);
+      color: var(--pt-accent);
+      font-size: .66rem;
+      font-weight: 800;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .ag-dia.selecionado .ag-dia-total {
+      background: rgba(255, 255, 255, .25);
+      color: #fff;
+    }
+
+    .ag-dia.selecionado .ag-dia-pontos i {
+      box-shadow: 0 0 0 1.5px #fff;
+    }
+
+    .ag-legenda {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 18px;
+      font-size: .8rem;
+      color: var(--pt-muted);
+    }
+
+    .ag-legenda span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ag-legenda i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* cores dos pontos/legenda por status */
+    .st-pendente {
+      background: var(--st-pendente);
+    }
+
+    .st-andamento {
+      background: var(--st-andamento);
+    }
+
+    .st-concluido {
+      background: var(--st-concluido);
+    }
+
+    .st-cancelado {
+      background: var(--st-cancelado);
+    }
+
+    /* ---------- Painel do dia ---------- */
+    .ag-painel {
+      padding: clamp(18px, 3vw, 30px);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .ag-painel-topo {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .ag-painel-topo h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+
+    .ag-painel-topo p {
+      margin: 0;
+      font-size: .86rem;
+      color: var(--pt-muted);
+    }
+
+    .ag-painel-badge {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--pt-accent-soft);
+      color: var(--pt-accent);
+      font-family: "Montserrat", sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .ag-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 620px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .ag-item {
+      display: flex;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--pt-line);
+      border-left: 4px solid var(--st-cor, var(--pt-accent));
+      border-radius: 16px;
+      background: #fff;
+      animation: ag-entra .3s ease both;
+      animation-delay: calc(var(--i, 0) * 45ms);
+      transition: box-shadow .2s ease, transform .2s ease;
+    }
+
+    .ag-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -18px rgba(15, 27, 52, .35);
+    }
+
+    @keyframes ag-entra {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .ag-item-hora {
+      flex-shrink: 0;
+      width: 58px;
+      text-align: center;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .ag-item-hora strong {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--pt-ink);
+    }
+
+    .ag-item-hora span {
+      font-size: .7rem;
+      color: var(--pt-muted);
+    }
+
+    .ag-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ag-item-topo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      margin-bottom: 6px;
+    }
+
+    .ag-item-pet {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "Montserrat", sans-serif;
+      font-size: .98rem;
+      font-weight: 700;
+      color: var(--pt-ink);
+    }
+
+    .ag-item-pet i {
+      color: var(--pt-accent);
+    }
+
+    .ag-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: .76rem;
+      font-weight: 700;
+      color: var(--st-cor);
+      background: var(--st-fundo);
+      white-space: nowrap;
+    }
+
+    .ag-item-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      font-size: .82rem;
+      color: var(--pt-muted);
+    }
+
+    .ag-item-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ag-servico {
+      padding: 3px 10px;
+      border-radius: 8px;
+      background: var(--pt-accent-soft);
+      color: var(--pt-accent);
+      font-weight: 600;
+    }
+
+    .ag-item-obs {
+      margin: 8px 0 0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: var(--pt-bg);
+      font-size: .8rem;
+      color: var(--pt-body);
+      line-height: 1.45;
+    }
+
+    .ag-vazio {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 240px;
+      padding: 30px 16px;
+      border: 2px dashed var(--pt-line);
+      border-radius: 20px;
+      text-align: center;
+      color: var(--pt-muted);
+      font-size: .9rem;
+    }
+
+    .ag-vazio i {
+      font-size: 2rem;
+      color: #c3ccda;
+    }
+
+    .ag-vazio button {
+      border: 0;
+      background: none;
+      color: var(--pt-accent);
+      font-weight: 700;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    /* ---------- Responsivo ---------- */
+    @media (max-width: 991.98px) {
+      .ag-corpo {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .ag-calendario {
+        border-right: 0;
+        border-bottom: 1px solid var(--pt-line);
+      }
+
+      .ag-lista {
+        max-height: none;
+        overflow: visible;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .pt-hero {
+        padding-top: 140px;
+      }
+
+      .pt-card {
+        border-radius: 20px;
+      }
+
+      /* Resumo: 3 cartões compactos lado a lado */
+      .ag-resumo {
+        gap: 8px;
+      }
+
+      .ag-resumo-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 16px;
+      }
+
+      .ag-resumo-icone {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        font-size: 13px;
+      }
+
+      .ag-resumo-valor {
+        font-size: 1.2rem;
+      }
+
+      .ag-resumo-rotulo {
+        font-size: .72rem;
+        line-height: 1.3;
+        display: block;
+      }
+
+      .ag-mes-nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .ag-campos,
+      .ag-campos select,
+      .ag-busca,
+      .ag-busca input {
+        width: 100%;
+      }
+
+      .ag-dia {
+        min-height: 42px;
+        border-radius: 10px;
+      }
+
+      .ag-dia-total {
+        top: 2px;
+        right: 2px;
+        min-width: 15px;
+        height: 15px;
+        line-height: 15px;
+        font-size: .58rem;
+        padding: 0 3px;
+      }
+
+      .ag-dia-num {
+        font-size: .85rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ag-item {
+        animation: none;
+      }
+    }
+  </style>
+
 </head>
 
 <body class="index-page">
 
-    @include('partials.preloader')
+  @include('partials.preloader')
 
+  <div class="pt-progress" id="ptProgress"></div>
 
   <header id="header" class="header fixed-top">
 
-    
-    <a href="#"
-       id="scroll-top"
-       class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
-       style="width: 50px;
-              height: 50px;
-              position: fixed;
-              bottom: 20px;
-              right: 20px;
-              z-index: 999;
-              font-size: 24px;">
-
-        <i class="bi bi-arrow-up-short"></i>
-
+    <a href="#" id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
+      style="width: 50px; height: 50px; position: fixed; bottom: 20px; right: 20px; z-index: 999; font-size: 24px;">
+      <i class="bi bi-arrow-up-short"></i>
     </a>
 
     <div class="branding d-flex align-items-center">
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="{{ route('index') }}" class="logo d-flex align-items-center">
+          <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
+        </a>
 
-        <div class="container position-relative d-flex align-items-center justify-content-between">
-
-            <a href="{{ route('index') }}"
-               class="logo d-flex align-items-center">
-
-                <h1 class="sitename">
-                    Mobipet
-                </h1>
-
-            </a>
-
-            <nav id="navmenu" class="navmenu">
-
-                <ul>
-
-                    
-                    @include('partials.nav-user')
-                </ul>
-
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-
-            </nav>
-
-        </div>
-
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            @include('partials.nav-user')
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+      </div>
     </div>
 
-</header>
+  </header>
 
-  <main class="main">
+  <main class="main pt-page">
+    <section class="pt-hero">
+      <div class="pt-wrap">
 
-    <section class="agendamento-section">
-      <div class="container">
-
-        <div class="hero-agendamento text-center" data-aos="fade-up">
-          <h1 class="hero-title">Agenda de Agendamentos</h1>
-          <p class="hero-subtitle">
-            Navegue por mês e dia para ver os atendimentos marcados, no estilo do Calendário do iPhone.
+        <div class="pt-hero-head" data-aos="fade-up">
+          <h1 class="pt-h1">Agenda de atendimentos</h1>
+          <p class="pt-lead">
+            Veja o mês inteiro de relance, clique em um dia e confira cada atendimento: horário, pet, tutor,
+            serviço, profissional e status.
           </p>
-        </div>
-
-        <div class="row justify-content-center">
-          <div class="col-lg-12">
-            <div class="card agendamento-card" data-aos="zoom-in" data-aos-delay="200">
-
-              <div class="card-header">
-                <div class="d-flex align-items-center gap-3">
-                  <div class="header-icon">
-                    <i class="fa-solid fa-calendar-days"></i>
-                  </div>
-                  <div>
-                    <h3 class="text-white mb-0">Agenda por Mês</h3>
-                    <p class="mb-0 text-metod" style="color: rgba(255,255,255,0.7);">Selecione um mês para ver os dias com atendimentos.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card-body">
-
-                @if (empty($agenda))
-
-                  <div class="text-center py-5">
-                    <div class="mb-3 text-muted fs-1">
-                      <i class="fa-solid fa-calendar-xmark"></i>
-                    </div>
-                    <h5 class="text-muted fw-semibold">
-                      Nenhum agendamento encontrado.
-                    </h5>
-                  </div>
-
-                @else
-
-                  <div class="months-list" id="monthsList">
-
-                    @foreach ($agenda as $nomeMes => $mesDados)
-                      @php
-                        $mesSlug = \Illuminate\Support\Str::slug($nomeMes);
-                        $totalMes = $mesDados['total_agendamentos'] ?? 0;
-                      @endphp
-
-                      <div class="month-card" data-month="{{ $mesSlug }}">
-
-                        <button type="button"
-                                class="month-card__header"
-                                aria-expanded="false"
-                                data-toggle="month"
-                                data-target="month-{{ $mesSlug }}">
-
-                          <span class="month-card__icon">
-                            <i class="fa-solid fa-calendar"></i>
-                          </span>
-
-                          <span class="month-card__name">{{ $nomeMes }}</span>
-
-                          <span class="month-card__count">
-                            {{ $totalMes }} {{ $totalMes === 1 ? 'agendamento' : 'agendamentos' }}
-                          </span>
-
-                          <span class="month-card__chevron">
-                            <i class="fa-solid fa-chevron-down"></i>
-                          </span>
-                        </button>
-
-                        <div class="month-card__body" id="month-{{ $mesSlug }}">
-                          <div class="month-card__body-inner">
-
-                            <div class="days-list">
-                              @foreach (($mesDados['dias'] ?? []) as $diaDados)
-                                @php
-                                  $diaSlug = $mesSlug . '-' . \Illuminate\Support\Str::slug($diaDados['data'] ?? $diaDados['dia']);
-                                  $qtdDia = count($diaDados['agendamentos'] ?? []);
-                                @endphp
-
-                                <div class="day-item" data-day="{{ $diaSlug }}">
-
-                                  <button type="button"
-                                          class="day-item__header"
-                                          aria-expanded="false"
-                                          data-toggle="day"
-                                          data-target="day-{{ $diaSlug }}">
-
-                                    <span class="day-item__date">
-                                      <span class="day-item__weekday">{{ $diaDados['dia_semana'] }}</span>
-                                      <span class="day-item__number">{{ $diaDados['dia'] }}</span>
-                                    </span>
-
-                                    <span class="day-item__count">
-                                      {{ $qtdDia }} {{ $qtdDia === 1 ? 'atendimento' : 'atendimentos' }}
-                                    </span>
-
-                                    <span class="day-item__chevron">
-                                      <i class="fa-solid fa-chevron-down"></i>
-                                    </span>
-                                  </button>
-
-                                  <div class="day-item__body" id="day-{{ $diaSlug }}">
-                                    <div class="day-item__body-inner">
-
-                                      <div class="appointments-list">
-                                        @foreach (($diaDados['agendamentos'] ?? []) as $i => $ag)
-                                          @php
-                                            $status = strtolower($ag['status']);
-                                            $statusMap = [
-                                                'agendado'  => ['label' => 'Agendado',     'classe' => 'bg-primary-subtle text-primary',   'icone' => 'fa-calendar'],
-                                                'andamento' => ['label' => 'Em andamento', 'classe' => 'bg-warning-subtle text-warning-dark', 'icone' => 'fa-spinner fa-spin'],
-                                                'concluido' => ['label' => 'Concluído',    'classe' => 'bg-success-subtle text-success',   'icone' => 'fa-circle-check'],
-                                                'cancelado' => ['label' => 'Cancelado',    'classe' => 'bg-danger-subtle text-danger',     'icone' => 'fa-circle-xmark'],
-                                            ];
-                                            $statusInfo = $statusMap[$status] ?? $statusMap['agendado'];
-                                          @endphp
-
-                                          <div class="appointment-card" style="--stagger: {{ $i }}">
-                                            <div class="appointment-card__time">
-                                              <span class="horario-badge">{{ $ag['horario'] }}</span>
-                                            </div>
-
-                                            <div class="appointment-card__content">
-                                              <div class="appointment-card__top">
-                                                <span class="appointment-card__pet">
-                                                  {{ $ag['pet'] }} - {{  $ag['especie']}}
-                                                </span>
-                                                <span class="badge badge-status {{ $statusInfo['classe'] }}">
-                                                  <i class="fa-solid {{ $statusInfo['icone'] }} me-1"></i>{{ $statusInfo['label'] }}
-                                                </span>
-                                              </div>
-
-                                              <div class="appointment-card__meta">
-                                                <span class="appointment-card__meta-item">
-                                                  <i class="fa-solid fa-user"></i> {{ $ag['tutor'] }}
-                                                </span>
-                                                <span class="appointment-card__meta-item">
-                                                  <span class="servico-tag">{{ $ag['servico'] }}</span>
-                                                </span>
-                                                <span class="appointment-card__meta-item">
-                                                  <i class="fa-solid fa-id-badge"></i> {{ $ag['funcionario'] }}
-                                                </span>
-                                              </div>
-
-                                              @if (!empty($ag['observacao']))
-                                                <p class="appointment-card__note">{{ $ag['observacao'] }}</p>
-                                              @endif
-                                            </div>
-                                          </div>
-                                        @endforeach
-                                      </div>
-
-                                    </div>
-                                  </div>
-                                </div>
-                              @endforeach
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    @endforeach
-
-                  </div>
-
-                @endif
-
-              </div>
-            </div>
+          <div class="pt-hero-actions">
+            <button type="button" class="pt-btn pt-btn--primary" data-ir-hoje>
+              <i class="fa-solid fa-calendar-day"></i> Ir para hoje
+            </button>
+            <a href="{{ route('painel-controle') }}" class="pt-btn pt-btn--outline">
+              <i class="fa-solid fa-gauge-high"></i> Painel de controle
+            </a>
           </div>
         </div>
+
+        {{-- Resumo rápido (calculado no navegador a partir dos agendamentos) --}}
+        <div class="ag-resumo" data-aos="fade-up">
+          <button type="button" class="ag-resumo-item" data-ir-hoje>
+            <span class="ag-resumo-icone"><i class="fa-solid fa-calendar-day"></i></span>
+            <span>
+              <span class="ag-resumo-valor" id="resumoHoje">0</span>
+              <span class="ag-resumo-rotulo">atendimentos hoje</span>
+            </span>
+          </button>
+          <button type="button" class="ag-resumo-item" data-proximo>
+            <span class="ag-resumo-icone"><i class="fa-solid fa-calendar-week"></i></span>
+            <span>
+              <span class="ag-resumo-valor" id="resumoSemana">0</span>
+              <span class="ag-resumo-rotulo">nos próximos 7 dias</span>
+            </span>
+          </button>
+          <button type="button" class="ag-resumo-item" data-filtro-atalho="agendado">
+            <span class="ag-resumo-icone"><i class="fa-solid fa-hourglass-half"></i></span>
+            <span>
+              <span class="ag-resumo-valor" id="resumoPendentes">0</span>
+              <span class="ag-resumo-rotulo">pendentes a partir de hoje</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="pt-card" data-aos="zoom-in" data-aos-delay="100">
+
+          <div class="pt-card-head">
+            <div class="d-flex align-items-center gap-3">
+              <div class="pt-head-icon">
+                <i class="fa-solid fa-calendar-days"></i>
+              </div>
+              <div>
+                <h3>Agenda</h3>
+                <p>Clique em um dia para ver os atendimentos.</p>
+              </div>
+            </div>
+
+            <div class="ag-mes-nav">
+              <button type="button" id="mesAnterior" aria-label="Mês anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <span class="ag-mes-nome" id="mesNome" aria-live="polite">—</span>
+              <button type="button" id="mesProximo" aria-label="Próximo mês">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="ag-filtros">
+            <div class="ag-chips" role="group" aria-label="Filtrar por status">
+              <button type="button" class="ag-chip ativo" data-status="todos">Todos</button>
+              <button type="button" class="ag-chip" data-status="agendado"><i class="ag-ponto st-pendente"></i> Pendente</button>
+              <button type="button" class="ag-chip" data-status="andamento"><i class="ag-ponto st-andamento"></i> Em atendimento</button>
+              <button type="button" class="ag-chip" data-status="concluido"><i class="ag-ponto st-concluido"></i> Concluído</button>
+              <button type="button" class="ag-chip" data-status="cancelado"><i class="ag-ponto st-cancelado"></i> Cancelado</button>
+            </div>
+
+            <div class="ag-campos">
+              <select id="filtroProfissional" aria-label="Filtrar por profissional">
+                <option value="">Todos os profissionais</option>
+                @if (session('id'))
+                  <option value="{{ session('id') }}">Somente os meus</option>
+                @endif
+                @foreach ($funcionarios as $f)
+                  <option value="{{ $f->id_funcionario }}">{{ $f->nome }}</option>
+                @endforeach
+              </select>
+              <label class="ag-busca mb-0">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="search" id="filtroBusca" placeholder="Buscar pet, tutor ou serviço"
+                  aria-label="Buscar pet, tutor ou serviço" autocomplete="off">
+              </label>
+            </div>
+          </div>
+
+          <div class="ag-corpo">
+
+            <!-- Calendário do mês -->
+            <div class="ag-calendario">
+              <div class="ag-semana" aria-hidden="true">
+                <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+              </div>
+              <div class="ag-grade" id="grade" role="grid" aria-label="Dias do mês"></div>
+
+              <div class="ag-legenda" aria-hidden="true">
+                <span><i class="st-pendente"></i> Pendente</span>
+                <span><i class="st-andamento"></i> Em atendimento</span>
+                <span><i class="st-concluido"></i> Concluído</span>
+                <span><i class="st-cancelado"></i> Cancelado</span>
+              </div>
+            </div>
+
+            <!-- Atendimentos do dia selecionado -->
+            <div class="ag-painel">
+              <div class="ag-painel-topo">
+                <div>
+                  <h4 id="diaTitulo">—</h4>
+                  <p id="diaSub"></p>
+                </div>
+                <span class="ag-painel-badge" id="diaTotal">0</span>
+              </div>
+              <div class="ag-lista" id="lista" aria-live="polite"></div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </section>
   </main>
@@ -399,521 +1167,302 @@
 
   @include('partials.footer')
 
-  <style>
-
-    body{
-      background: #f7f9fc;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .agendamento-section{
-      padding: 180px 0 100px;
-      background:
-      radial-gradient(circle at top right, #dbeafe 0%, transparent 30%),
-      radial-gradient(circle at bottom left, #ffffff 0%, transparent 30%);
-      min-height: 100vh;
-    }
-
-    .hero-agendamento{
-      margin-bottom: 60px;
-    }
-
-    .hero-title{
-      font-size: 52px;
-      font-weight: 800;
-      color: #111827;
-      margin-bottom: 20px;
-    }
-
-    .hero-subtitle{
-      font-size: 18px;
-      color: #6b7280;
-      max-width: 700px;
-      margin: auto;
-    }
-
-    .agendamento-card{
-      border: none;
-      border-radius: 35px;
-      overflow: hidden;
-      background: white;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.08);
-    }
-
-    .agendamento-card .card-header{
-      background: linear-gradient(135deg,#2563eb,#1d4ed8);
-      padding: 35px;
-      border: none;
-      color: white;
-    }
-
-    .header-icon{
-      width: 70px;
-      height: 70px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .header-icon i{
-      font-size: 28px;
-      color: white;
-    }
-
-    .card-header h3{
-      font-size: 28px;
-      font-weight: 700;
-    }
-
-    .horario-badge {
-      background-color: #f8fafc;
-      border: 1px solid #e2e8f0;
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-family: monospace;
-      font-size: 14px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .servico-tag {
-      background: #eff6ff;
-      color: #2563eb;
-      padding: 4px 12px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    .badge-status {
-      padding: 8px 14px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .bg-primary-subtle { background-color: #eff6ff !important; }
-    .bg-warning-subtle { background-color: #fefce8 !important; }
-    .bg-success-subtle { background-color: #f0fdf4 !important; }
-    .bg-danger-subtle { background-color: #fef2f2 !important; }
-    .text-warning-dark { color: #854d0e !important; }
-
-    /* ==========================================================
-       Accordion Mês > Dia > Agendamentos
-       ========================================================== */
-
-    .months-list{
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .month-card{
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 20px;
-      overflow: hidden;
-      transition: box-shadow 300ms ease, border-color 300ms ease;
-    }
-
-    .month-card:hover{
-      box-shadow: 0 8px 20px rgba(17,24,39,0.06);
-    }
-
-    .month-card.is-open{
-      border-color: #2563eb;
-      background: #ffffff;
-      box-shadow: 0 12px 30px rgba(37,99,235,0.10);
-    }
-
-    .month-card__header{
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 18px 20px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-      font-family: 'Montserrat', sans-serif;
-      min-height: 48px;
-      transition: transform 150ms ease;
-    }
-
-    .month-card__header:active{
-      transform: scale(0.98);
-    }
-
-    .month-card__icon{
-      width: 36px;
-      height: 36px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      background: #eff6ff;
-      color: #2563eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .month-card__name{
-      font-size: 17px;
-      font-weight: 700;
-      color: #111827;
-      flex: 1;
-    }
-
-    .month-card__count{
-      font-size: 13px;
-      font-weight: 500;
-      color: #6b7280;
-      white-space: nowrap;
-    }
-
-    .month-card__chevron{
-      color: #6b7280;
-      display: flex;
-      transition: transform 300ms ease;
-      flex-shrink: 0;
-    }
-
-    .month-card.is-open .month-card__chevron{
-      transform: rotate(180deg);
-      color: #2563eb;
-    }
-
-    .month-card__body{
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 300ms ease;
-    }
-
-    .month-card__body-inner{
-      padding: 0 20px 18px;
-    }
-
-    .days-list{
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-top: 6px;
-      border-top: 1px solid #eef0f3;
-    }
-
-    .day-item{
-      border-radius: 14px;
-      background: #f7f9fc;
-      overflow: hidden;
-      transition: background 250ms ease;
-    }
-
-    .day-item:first-child{ margin-top: 12px; }
-
-    .day-item.is-open{
-      background: #ffffff;
-      box-shadow: 0 0 0 1px #eef0f3;
-    }
-
-    .day-item__header{
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 14px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-      font-family: 'Montserrat', sans-serif;
-      min-height: 48px;
-      border-radius: 14px;
-      transition: background 200ms ease, transform 150ms ease;
-    }
-
-    .day-item__header:hover{
-      background: rgba(37,99,235,0.05);
-      transform: translateY(-1px);
-    }
-
-    .day-item__header:active{
-      transform: scale(0.98);
-    }
-
-    .day-item__date{
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      min-width: 128px;
-    }
-
-    .day-item__weekday{
-      font-size: 13px;
-      font-weight: 500;
-      color: #6b7280;
-    }
-
-    .day-item__number{
-      font-size: 15px;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .day-item__count{
-      font-size: 13px;
-      color: #6b7280;
-      flex: 1;
-    }
-
-    .day-item__chevron{
-      color: #6b7280;
-      display: flex;
-      transition: transform 250ms ease;
-      flex-shrink: 0;
-    }
-
-    .day-item.is-open .day-item__chevron{
-      transform: rotate(180deg);
-      color: #2563eb;
-    }
-
-    .day-item__body{
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 250ms ease;
-    }
-
-    .day-item__body-inner{
-      padding: 4px 12px 14px;
-    }
-
-    .appointments-list{
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .appointment-card{
-      display: flex;
-      gap: 14px;
-      background: #ffffff;
-      border: 1px solid #eef0f3;
-      border-radius: 14px;
-      padding: 14px 16px;
-      opacity: 0;
-      transform: translateY(6px);
-      animation: cardAppear 320ms ease forwards;
-      animation-delay: calc(var(--stagger, 0) * 55ms);
-      transition: transform 200ms ease, box-shadow 200ms ease;
-    }
-
-    .appointment-card:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(17,24,39,0.07);
-    }
-
-    @keyframes cardAppear{
-      to{ opacity: 1; transform: translateY(0); }
-    }
-
-    .appointment-card__time{
-      flex-shrink: 0;
-      padding-top: 2px;
-    }
-
-    .appointment-card__content{
-      flex: 1;
-      min-width: 0;
-    }
-
-    .appointment-card__top{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    .appointment-card__pet{
-      font-size: 15px;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .appointment-card__meta{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 14px;
-      margin-bottom: 4px;
-      font-size: 13px;
-      color: #6b7280;
-      font-weight: 500;
-    }
-
-    .appointment-card__meta-item{
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .appointment-card__note{
-      font-size: 12.5px;
-      color: #6b7280;
-      background: #f7f9fc;
-      border-radius: 10px;
-      padding: 8px 10px;
-      margin: 6px 0 0;
-      line-height: 1.4;
-    }
-
-    @media (max-width: 768px){
-      .month-card__count{ display: none; }
-      .day-item__date{ min-width: 96px; }
-      .appointment-card{ flex-direction: column; }
-    }
-
-    @media (prefers-reduced-motion: reduce) and (max-width: 1px){
-      *, *::before, *::after{
-        animation-duration: 0.001ms !important;
-        transition-duration: 0.001ms !important;
-      }
-    }
-
-  </style>
-
   <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
+
+  {{-- Agendamentos (lista simples vinda do controller) --}}
+  <script type="application/json" id="agendaDados">@json($eventos)</script>
 
   <script>
     if (typeof AOS !== 'undefined') {
       AOS.init({ duration: 650, easing: 'ease-out-cubic', once: true, offset: 100 });
     }
 
+    // Barra de progresso de rolagem
+    (function () {
+      const barra = document.getElementById('ptProgress');
+      const atualizar = () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        barra.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : '0';
+      };
+      window.addEventListener('scroll', atualizar, { passive: true });
+      atualizar();
+    })();
+
+    /* =============================================================
+       AGENDA: calendário do mês + atendimentos do dia selecionado.
+       Filtros (status, profissional, busca) valem para os dois.
+    ============================================================= */
     (function () {
       'use strict';
 
-      function expandPanel(panel) {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
+      const eventos = JSON.parse(document.getElementById('agendaDados').textContent || '[]');
+
+      const STATUS = {
+        agendado:  { rotulo: 'Pendente',       classe: 'st-pendente',  cor: 'var(--st-pendente)',  fundo: 'var(--st-pendente-bg)',  icone: 'fa-regular fa-clock' },
+        andamento: { rotulo: 'Em atendimento', classe: 'st-andamento', cor: 'var(--st-andamento)', fundo: 'var(--st-andamento-bg)', icone: 'fa-solid fa-shower' },
+        concluido: { rotulo: 'Concluído',      classe: 'st-concluido', cor: 'var(--st-concluido)', fundo: 'var(--st-concluido-bg)', icone: 'fa-solid fa-circle-check' },
+        cancelado: { rotulo: 'Cancelado',      classe: 'st-cancelado', cor: 'var(--st-cancelado)', fundo: 'var(--st-cancelado-bg)', icone: 'fa-solid fa-circle-xmark' },
+      };
+      const ORDEM_STATUS = ['agendado', 'andamento', 'concluido', 'cancelado'];
+
+      const $ = (id) => document.getElementById(id);
+      const grade = $('grade');
+      const lista = $('lista');
+
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
+
+      const estado = {
+        mes: new Date(hoje.getFullYear(), hoje.getMonth(), 1),
+        selecionado: chave(hoje),
+        status: 'todos',
+        profissional: '',
+        busca: '',
+      };
+
+      /* ---------- utilitários ---------- */
+      function chave(data) {
+        const m = String(data.getMonth() + 1).padStart(2, '0');
+        const d = String(data.getDate()).padStart(2, '0');
+        return `${data.getFullYear()}-${m}-${d}`;
       }
 
-      function collapsePanel(panel) {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-        requestAnimationFrame(function () {
-          panel.style.maxHeight = '0px';
-        });
+      function paraData(chaveData) {
+        const [a, m, d] = chaveData.split('-').map(Number);
+        return new Date(a, m - 1, d);
       }
 
-      document.addEventListener('DOMContentLoaded', function () {
-        var monthCards = document.querySelectorAll('.month-card');
+      function esc(texto) {
+        return String(texto ?? '').replace(/[&<>"']/g, (c) => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+      }
 
-        monthCards.forEach(function (monthCard) {
-          var monthHeader = monthCard.querySelector(':scope > .month-card__header');
-          var monthBody = monthCard.querySelector(':scope > .month-card__body');
+      function normalizar(texto) {
+        return String(texto ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      }
 
-          monthHeader.addEventListener('click', function () {
-            var isOpen = monthCard.classList.contains('is-open');
+      const fmtMes = new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' });
+      const fmtDia = new Intl.DateTimeFormat('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
 
-            monthCards.forEach(function (otherCard) {
-              if (otherCard !== monthCard && otherCard.classList.contains('is-open')) {
-                closeMonth(otherCard);
-              }
-            });
+      // "setembro de 2026" -> "Setembro de 2026" (só a primeira letra)
+      function inicialMaiuscula(texto) {
+        return texto.charAt(0).toUpperCase() + texto.slice(1);
+      }
 
-            isOpen ? closeMonth(monthCard) : openMonth(monthCard);
-          });
+      /* ---------- filtros ---------- */
+      function passaFiltros(ev) {
+        if (estado.status !== 'todos' && ev.status !== estado.status) return false;
+        if (estado.profissional && String(ev.id_funcionario) !== estado.profissional) return false;
+        if (estado.busca) {
+          const alvo = normalizar(`${ev.pet} ${ev.tutor} ${ev.servico} ${ev.funcionario}`);
+          if (!alvo.includes(normalizar(estado.busca))) return false;
+        }
+        return true;
+      }
 
-          var dayItems = monthCard.querySelectorAll('.day-item');
-
-          dayItems.forEach(function (dayItem) {
-            var dayHeader = dayItem.querySelector(':scope > .day-item__header');
-            var dayBody = dayItem.querySelector(':scope > .day-item__body');
-
-            dayHeader.addEventListener('click', function (event) {
-              event.stopPropagation();
-
-              var isOpenDay = dayItem.classList.contains('is-open');
-
-              dayItems.forEach(function (otherDay) {
-                if (otherDay !== dayItem && otherDay.classList.contains('is-open')) {
-                  closeDay(otherDay);
-                }
-              });
-
-              isOpenDay ? closeDay(dayItem) : openDay(dayItem);
-
-              if (monthCard.classList.contains('is-open')) {
-                // Ajusta a altura do mês já de cara (deixa a abertura fluida)...
-                expandPanel(monthBody);
-
-                // ...e de novo quando a transição do dia realmente terminar. O
-                // dia leva 250ms pra chegar na altura final; medir a altura do
-                // mês antes disso (ex.: só no próximo frame) trava o contêiner
-                // do mês menor do que o necessário, e o "overflow: hidden" dele
-                // corta o conteúdo do dia recém-aberto pra sempre (mesmo depois
-                // da animação acabar).
-                dayBody.addEventListener('transitionend', function ajustarAposTransicao(evento) {
-                  if (evento.propertyName !== 'max-height') {
-                    return;
-                  }
-
-                  dayBody.removeEventListener('transitionend', ajustarAposTransicao);
-
-                  if (monthCard.classList.contains('is-open') && dayItem.classList.contains('is-open')) {
-                    expandPanel(monthBody);
-                  }
-                });
-              }
-            });
-          });
+      // Agrupa os eventos filtrados por dia (YYYY-MM-DD)
+      function porDia() {
+        const mapa = new Map();
+        eventos.filter(passaFiltros).forEach((ev) => {
+          if (!mapa.has(ev.data)) mapa.set(ev.data, []);
+          mapa.get(ev.data).push(ev);
         });
+        return mapa;
+      }
 
-        function openMonth(monthCard) {
-          var header = monthCard.querySelector(':scope > .month-card__header');
-          var body = monthCard.querySelector(':scope > .month-card__body');
-          monthCard.classList.add('is-open');
-          header.setAttribute('aria-expanded', 'true');
-          expandPanel(body);
+      /* ---------- calendário ---------- */
+      function desenharCalendario(mapa) {
+        const ano = estado.mes.getFullYear();
+        const mes = estado.mes.getMonth();
+        $('mesNome').textContent = inicialMaiuscula(fmtMes.format(estado.mes));
+
+        // Começa no domingo da semana do dia 1 e mostra 6 semanas
+        const inicio = new Date(ano, mes, 1 - new Date(ano, mes, 1).getDay());
+        const celulas = [];
+
+        for (let i = 0; i < 42; i++) {
+          const dia = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate() + i);
+          const k = chave(dia);
+          const doDia = mapa.get(k) || [];
+
+          const classes = ['ag-dia'];
+          if (dia.getMonth() !== mes) classes.push('fora');
+          if (dia < hoje) classes.push('passado');
+          if (k === chave(hoje)) classes.push('hoje');
+          if (k === estado.selecionado) classes.push('selecionado');
+          if (doDia.length) classes.push('com-agenda');
+
+          const statusDoDia = ORDEM_STATUS.filter((s) => doDia.some((ev) => ev.status === s));
+          const pontos = statusDoDia.map((s) => `<i class="${STATUS[s].classe}"></i>`).join('');
+
+          const rotulo = `${fmtDia.format(dia)}: ${doDia.length ? doDia.length + (doDia.length === 1 ? ' atendimento' : ' atendimentos') : 'sem atendimentos'}`;
+
+          celulas.push(`
+            <button type="button" class="${classes.join(' ')}" data-dia="${k}" role="gridcell"
+              aria-label="${esc(rotulo)}" ${k === estado.selecionado ? 'aria-selected="true"' : ''}>
+              ${doDia.length ? `<span class="ag-dia-total">${doDia.length}</span>` : ''}
+              <span class="ag-dia-num">${dia.getDate()}</span>
+              <span class="ag-dia-pontos">${pontos}</span>
+            </button>`);
         }
 
-        function closeMonth(monthCard) {
-          var header = monthCard.querySelector(':scope > .month-card__header');
-          var body = monthCard.querySelector(':scope > .month-card__body');
-          monthCard.classList.remove('is-open');
-          header.setAttribute('aria-expanded', 'false');
-          collapsePanel(body);
+        grade.innerHTML = celulas.join('');
+      }
 
-          var openDay = monthCard.querySelector('.day-item.is-open');
-          if (openDay) closeDay(openDay);
+      /* ---------- lista do dia ---------- */
+      function desenharDia(mapa) {
+        const data = paraData(estado.selecionado);
+        const doDia = (mapa.get(estado.selecionado) || []).slice().sort((a, b) => a.horario.localeCompare(b.horario));
+
+        $('diaTitulo').textContent = inicialMaiuscula(fmtDia.format(data));
+        $('diaSub').textContent = estado.selecionado === chave(hoje)
+          ? 'Hoje'
+          : (data < hoje ? 'Dia que já passou' : 'Próximo dia de atendimento');
+        $('diaTotal').textContent = `${doDia.length} ${doDia.length === 1 ? 'atendimento' : 'atendimentos'}`;
+
+        if (!doDia.length) {
+          const filtrando = estado.status !== 'todos' || estado.profissional || estado.busca;
+          lista.innerHTML = `
+            <div class="ag-vazio">
+              <i class="fa-regular fa-calendar-xmark"></i>
+              <span>Nenhum atendimento ${filtrando ? 'com esses filtros ' : ''}neste dia.</span>
+              ${proximoDiaCom(mapa) ? '<button type="button" data-proximo>Ver o próximo dia com atendimento</button>' : ''}
+            </div>`;
+          return;
         }
 
-        function openDay(dayItem) {
-          var header = dayItem.querySelector(':scope > .day-item__header');
-          var body = dayItem.querySelector(':scope > .day-item__body');
-          dayItem.classList.add('is-open');
-          header.setAttribute('aria-expanded', 'true');
-          expandPanel(body);
-        }
+        lista.innerHTML = doDia.map((ev, i) => {
+          const st = STATUS[ev.status] || STATUS.agendado;
+          const icone = normalizar(ev.especie) === 'gato' ? 'fa-cat' : 'fa-dog';
+          const etapa = ev.status === 'andamento' && ev.etapa ? ` · ${esc(ev.etapa)}` : '';
 
-        function closeDay(dayItem) {
-          var header = dayItem.querySelector(':scope > .day-item__header');
-          var body = dayItem.querySelector(':scope > .day-item__body');
-          dayItem.classList.remove('is-open');
-          header.setAttribute('aria-expanded', 'false');
-          collapsePanel(body);
-        }
+          return `
+            <article class="ag-item" style="--i:${i}; --st-cor:${st.cor}; --st-fundo:${st.fundo}">
+              <div class="ag-item-hora">
+                <strong>${esc(ev.horario)}</strong>
+                <span>#${esc(ev.id)}</span>
+              </div>
+              <div class="ag-item-info">
+                <div class="ag-item-topo">
+                  <span class="ag-item-pet"><i class="fa-solid ${icone}"></i> ${esc(ev.pet)}</span>
+                  <span class="ag-status"><i class="${st.icone}"></i> ${st.rotulo}${etapa}</span>
+                </div>
+                <div class="ag-item-meta">
+                  <span class="ag-servico">${esc(ev.servico)}</span>
+                  <span><i class="fa-solid fa-user"></i> ${esc(ev.tutor)}</span>
+                  <span><i class="fa-solid fa-id-badge"></i> ${esc(ev.funcionario)}</span>
+                </div>
+                ${ev.observacao ? `<p class="ag-item-obs"><i class="fa-regular fa-note-sticky me-1"></i> ${esc(ev.observacao)}</p>` : ''}
+              </div>
+            </article>`;
+        }).join('');
+      }
 
-        window.addEventListener('resize', function () {
-          document.querySelectorAll('.month-card.is-open > .month-card__body, .day-item.is-open > .day-item__body').forEach(function (panel) {
-            panel.style.maxHeight = panel.scrollHeight + 'px';
-          });
-        });
+      // Próximo dia (a partir do selecionado) que tem atendimento com os filtros atuais
+      function proximoDiaCom(mapa) {
+        return [...mapa.keys()].sort().find((k) => k > estado.selecionado) || null;
+      }
+
+      function atualizarResumo() {
+        const k = chave(hoje);
+        const em7 = chave(new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + 7));
+        $('resumoHoje').textContent = eventos.filter((ev) => ev.data === k && ev.status !== 'cancelado').length;
+        $('resumoSemana').textContent = eventos.filter((ev) => ev.data >= k && ev.data < em7 && ev.status !== 'cancelado').length;
+        $('resumoPendentes').textContent = eventos.filter((ev) => ev.data >= k && ev.status === 'agendado').length;
+      }
+
+      function render() {
+        const mapa = porDia();
+        desenharCalendario(mapa);
+        desenharDia(mapa);
+      }
+
+      function selecionar(chaveData) {
+        estado.selecionado = chaveData;
+        const d = paraData(chaveData);
+        estado.mes = new Date(d.getFullYear(), d.getMonth(), 1);
+        render();
+      }
+
+      /* ---------- eventos ---------- */
+      grade.addEventListener('click', (e) => {
+        const botao = e.target.closest('[data-dia]');
+        if (botao) selecionar(botao.dataset.dia);
       });
+
+      $('mesAnterior').addEventListener('click', () => {
+        estado.mes = new Date(estado.mes.getFullYear(), estado.mes.getMonth() - 1, 1);
+        render();
+      });
+
+      $('mesProximo').addEventListener('click', () => {
+        estado.mes = new Date(estado.mes.getFullYear(), estado.mes.getMonth() + 1, 1);
+        render();
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-ir-hoje]')) {
+          selecionar(chave(hoje));
+          document.querySelector('.pt-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+
+        if (e.target.closest('[data-proximo]')) {
+          const alvo = proximoDiaCom(porDia());
+          if (alvo) selecionar(alvo);
+          return;
+        }
+
+        const atalho = e.target.closest('[data-filtro-atalho]');
+        if (atalho) {
+          definirStatus(atalho.dataset.filtroAtalho);
+          document.querySelector('.pt-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+
+        const chip = e.target.closest('.ag-chip');
+        if (chip) definirStatus(chip.dataset.status);
+      });
+
+      function definirStatus(status) {
+        estado.status = status;
+        document.querySelectorAll('.ag-chip').forEach((c) => {
+          const ativo = c.dataset.status === status;
+          c.classList.toggle('ativo', ativo);
+          c.setAttribute('aria-pressed', ativo ? 'true' : 'false');
+        });
+        render();
+      }
+
+      $('filtroProfissional').addEventListener('change', (e) => {
+        estado.profissional = e.target.value;
+        render();
+      });
+
+      $('filtroBusca').addEventListener('input', (e) => {
+        estado.busca = e.target.value.trim();
+        render();
+      });
+
+      // Setas do teclado navegam entre os dias do calendário
+      grade.addEventListener('keydown', (e) => {
+        const passos = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 };
+        if (!(e.key in passos)) return;
+        e.preventDefault();
+        const d = paraData(estado.selecionado);
+        d.setDate(d.getDate() + passos[e.key]);
+        selecionar(chave(d));
+        grade.querySelector(`[data-dia="${estado.selecionado}"]`)?.focus();
+      });
+
+      atualizarResumo();
+      render();
     })();
   </script>
 
-    @include('partials.logout-confirm')
+  @include('partials.logout-confirm')
 
 </body>
 

@@ -206,6 +206,39 @@ iframe {
     text-overflow: ellipsis;
 }
 
+/* Logo oficial no cabeçalho (sem o nome escrito). O PNG tem bastante margem
+   transparente em volta do escudo (ele ocupa ~57% da imagem), então a imagem
+   é ampliada com transform: aumenta o escudo sem mudar a altura do cabeçalho.
+   O transform-origin à esquerda mantém o escudo alinhado com o container. */
+.header .logo .logo-marca {
+    width: 52px;
+    height: 52px;
+    max-height: none;
+    margin: 0;
+    flex-shrink: 0;
+    object-fit: contain;
+    transform: scale(1.55);
+    transform-origin: 30% 50%;
+    transition: transform .2s ease;
+}
+
+.header .logo:hover .logo-marca {
+    transform: scale(1.6) rotate(-3deg);
+}
+
+@media (max-width: 575.98px) {
+    .header .logo .logo-marca {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header .logo .logo-marca {
+        transition: none;
+    }
+}
+
 /* 5. Tabelas sempre roláveis dentro do próprio container */
 .table-responsive {
     -webkit-overflow-scrolling: touch;
@@ -279,6 +312,158 @@ dd,
 .toggle-senha:focus-visible {
     color: #175cdd;
     outline: none;
+}
+
+/* ==========================================================================
+   CAMPOS DAS TELAS DE LOGIN / CADASTRO / SENHA  (.lg-panel, .rs-panel, .rd-panel)
+   --------------------------------------------------------------------------
+   O .input-group vira um campo único: ícone, input e botão de olho ficam
+   dentro da mesma borda arredondada, sem as "quinas" internas que a regra
+   global de .form-control (border-radius 12px !important) criava. O foco
+   destaca o campo inteiro. Os !important são necessários para vencer a
+   regra global acima e os utilitários rounded-* do Bootstrap.
+   ========================================================================== */
+:is(.lg-panel, .rs-panel, .rd-panel) {
+    --campo-accent: #175cdd;
+    --campo-accent-soft: #eaf1fe;
+    --campo-line: #e6ecf5;
+    --campo-line-hover: #cfd9ea;
+    --campo-muted: #8794a7;
+    --campo-placeholder: #a3aec0;
+    --campo-ink: #0f1b34;
+    --campo-erro: #dc3545;
+    --campo-raio: 16px;
+    --campo-altura: 54px;
+}
+
+/* Rótulo um pouco maior e mais afastado do campo: leitura mais confortável */
+:is(.lg-panel, .rs-panel, .rd-panel) form .form-label {
+    font-size: .74rem;
+    margin-bottom: 8px;
+}
+
+/* ---------- Contêiner: a "pílula" do campo ---------- */
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group {
+    flex-wrap: nowrap;
+    align-items: stretch;
+    background: #fff;
+    border: 1.5px solid var(--campo-line);
+    border-radius: var(--campo-raio);
+    overflow: hidden;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group:hover {
+    border-color: var(--campo-line-hover);
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group:focus-within {
+    border-color: var(--campo-accent);
+    box-shadow: 0 0 0 4px var(--campo-accent-soft);
+}
+
+/* ---------- Ícone da esquerda ---------- */
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .input-group-text {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    margin-left: 0 !important;
+    min-width: 50px;
+    justify-content: center;
+    padding: 0 4px 0 14px;
+    color: var(--campo-muted);
+    font-size: 1.05rem;
+    transition: color .2s ease, background-color .2s ease;
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group:focus-within > .input-group-text:first-child {
+    color: var(--campo-accent);
+}
+
+/* ---------- Input / select dentro do grupo ---------- */
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .form-control,
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .form-select {
+    height: var(--campo-altura) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    margin-left: 0 !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    padding: 0 16px 0 8px !important;
+    font-size: 1rem;           /* 16px: evita o zoom automático do iOS */
+    color: var(--campo-ink);
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .form-control:focus,
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .form-select:focus {
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/* ---------- Botão de mostrar/ocultar senha ---------- */
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .toggle-senha {
+    min-width: 44px;
+    margin: 6px 6px 6px 0 !important;
+    padding: 0 12px;
+    border-radius: 12px !important;
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .toggle-senha:hover,
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .toggle-senha:focus-visible {
+    background: var(--campo-accent-soft) !important;
+    color: var(--campo-accent);
+}
+
+/* ---------- Campos soltos (fora de .input-group) seguem o mesmo visual ---------- */
+:is(.lg-panel, .rs-panel, .rd-panel) .form-control:not(.input-group > .form-control),
+:is(.lg-panel, .rs-panel, .rd-panel) .form-select:not(.input-group > .form-select) {
+    height: var(--campo-altura) !important;
+    border: 1.5px solid var(--campo-line) !important;
+    border-radius: var(--campo-raio) !important;
+    padding: 0 16px !important;
+    font-size: 1rem;
+    color: var(--campo-ink);
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .form-control:not(.input-group > .form-control):focus,
+:is(.lg-panel, .rs-panel, .rd-panel) .form-select:not(.input-group > .form-select):focus {
+    border-color: var(--campo-accent) !important;
+    box-shadow: 0 0 0 4px var(--campo-accent-soft) !important;
+}
+
+/* ---------- Placeholder, preenchimento automático e erro ---------- */
+:is(.lg-panel, .rs-panel, .rd-panel) .form-control::placeholder {
+    color: var(--campo-placeholder);
+    opacity: 1;
+}
+
+/* Sem o fundo amarelo/azul do autocompletar do navegador */
+:is(.lg-panel, .rs-panel, .rd-panel) .form-control:-webkit-autofill,
+:is(.lg-panel, .rs-panel, .rd-panel) .form-control:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-text-fill-color: var(--campo-ink);
+    caret-color: var(--campo-ink);
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group:has(.is-invalid) {
+    border-color: var(--campo-erro);
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, .12);
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group:has(.is-invalid) > .input-group-text:first-child {
+    color: var(--campo-erro);
+}
+
+:is(.lg-panel, .rs-panel, .rd-panel) .input-group > .form-control.is-invalid {
+    background-image: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    :is(.lg-panel, .rs-panel, .rd-panel) .input-group,
+    :is(.lg-panel, .rs-panel, .rd-panel) .input-group > .input-group-text {
+        transition: none;
+    }
 }
 
 /* ==========================================================================

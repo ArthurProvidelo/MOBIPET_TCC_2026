@@ -26,6 +26,7 @@ class LoginController extends Controller
         $request->merge([
             'cpf'      => $cpf,
             'telefone' => $telefone,
+            'cep'      => preg_replace('/[^0-9]/', '', (string) $request->cep) ?: null,
         ]);
 
         // Validação
@@ -36,6 +37,9 @@ class LoginController extends Controller
             'email'    => 'required|email|max:255',
             'senha'    => 'required|min:6|max:255',
             'endereco' => 'required|string|max:255',
+            'cep'      => 'nullable|digits:8',
+        ], [
+            'cep.digits' => 'Informe um CEP válido com 8 números.',
         ]);
 
         // Verifica se já existe CPF cadastrado
@@ -72,6 +76,7 @@ class LoginController extends Controller
             'email'    => $request->email,
             'senha'    => Hash::make($request->senha),
             'endereco' => $request->endereco,
+            'cep'      => $request->cep,
         ]);
 
         // Cria sessão

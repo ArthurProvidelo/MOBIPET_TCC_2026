@@ -161,6 +161,25 @@
             transform: translateY(-3px);
         }
 
+        .pt-btn--outline {
+            background: #fff;
+            color: var(--pt-accent);
+            border-color: rgba(23, 92, 221, .25);
+        }
+
+        .pt-btn--outline:hover {
+            background: var(--pt-accent-soft);
+            color: var(--pt-accent);
+            transform: translateY(-3px);
+        }
+
+        .pt-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
         /* =========================================================
            ALERTA DE SUCESSO
            ========================================================= */
@@ -383,6 +402,17 @@
             transform: translateY(-2px);
         }
 
+        .pt-icon-btn--agendar {
+            background-color: #e7f8ee;
+            color: #12643a;
+        }
+
+        .pt-icon-btn--agendar:hover {
+            background-color: #16a34a;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
         .pt-icon-btn--delete {
             background-color: #fee2e2;
             color: #dc2626;
@@ -502,7 +532,7 @@
         <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                    <h1 class="sitename">Mobipet</h1>
+                    <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
                 </a>
 
                 <nav id="navmenu" class="navmenu">
@@ -526,9 +556,18 @@
                         Gerencie os dados dos seus pets cadastrados, acompanhe o status dos atendimentos ou adicione
                         novos membros à família.
                     </p>
-                    <a href="{{ route('pets.create') }}" class="pt-btn pt-btn--primary">
-                        <i class="fa-solid fa-plus"></i> Cadastrar novo pet
-                    </a>
+                    <div class="pt-hero-actions">
+                        @if (isset($pets) && count($pets) > 0)
+                            <a href="{{ route('agendamento') }}" class="pt-btn pt-btn--primary">
+                                <i class="fa-solid fa-calendar-plus"></i> Agendar serviço
+                            </a>
+                        @endif
+
+                        <a href="{{ route('pets.create') }}"
+                            class="pt-btn {{ isset($pets) && count($pets) > 0 ? 'pt-btn--outline' : 'pt-btn--primary' }}">
+                            <i class="fa-solid fa-plus"></i> Cadastrar novo pet
+                        </a>
+                    </div>
                 </div>
 
                 @if (session('success'))
@@ -626,6 +665,13 @@
 
                                                 <td class="text-end pe-4" data-label="Ações">
                                                     <div class="d-flex justify-content-end gap-2">
+                                                        <a href="{{ route('agendamento', ['pet' => $pet->id_pet]) }}"
+                                                            class="pt-icon-btn pt-icon-btn--agendar"
+                                                            title="Agendar serviço para {{ $pet->nome }}"
+                                                            aria-label="Agendar serviço para {{ $pet->nome }}">
+                                                            <i class="fa-solid fa-calendar-plus"></i>
+                                                        </a>
+
                                                         <a href="{{ route('pets.edit', $pet->id_pet) }}"
                                                             class="pt-icon-btn pt-icon-btn--edit" title="Editar pet">
                                                             <i class="fa-solid fa-pen-to-square"></i>

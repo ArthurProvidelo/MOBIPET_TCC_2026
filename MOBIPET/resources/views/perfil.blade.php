@@ -36,7 +36,7 @@
     <div class="branding d-flex align-items-center">
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                <h1 class="sitename">Mobipet</h1>
+                <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
             </a>
 
             <nav id="navmenu" class="navmenu">
@@ -137,11 +137,20 @@
                       <input type="text" id="cpf" name="cpf" class="form-control" value="{{ $cliente->cpf ?? '' }}" placeholder="000.000.000-00" required>
                     </div>
 
+                    @php
+                      // CEP salvo só com números: aplica a máscara 00000-000 para exibir
+                      $cepSalvo = preg_replace('/\D/', '', (string) ($cliente->cep ?? ''));
+                      $cepExibicao = strlen($cepSalvo) === 8 ? substr($cepSalvo, 0, 5) . '-' . substr($cepSalvo, 5) : $cepSalvo;
+                    @endphp
                     <div class="col-md-4 mb-4">
-                      <label>CEP</label>
-                      <input type="text" id="cep" name="cep" class="form-control" maxlength="9" inputmode="numeric"
-                        autocomplete="postal-code" placeholder="00000-000"
+                      <label for="cep">CEP</label>
+                      <input type="text" id="cep" name="cep" class="form-control @error('cep') is-invalid @enderror"
+                        maxlength="9" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000"
+                        value="{{ old('cep', $cepExibicao) }}"
                         data-cep data-endereco-alvo="endereco" data-cep-status="cepStatus">
+                      @error('cep')
+                        <small class="text-danger d-block mt-1">{{ $message }}</small>
+                      @enderror
                       <small class="cep-status" id="cepStatus" aria-live="polite"></small>
                     </div>
 

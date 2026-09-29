@@ -209,6 +209,26 @@
             margin-bottom: 24px;
         }
 
+        /* Logo da Mobipet no lugar do ícone genérico */
+        /* Logo oficial (azul, fundo transparente) sobre um bloco branco,
+           para não sumir no azul do painel */
+        .lg-media-logo {
+            width: 80px;
+            height: 80px;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 14px 30px -12px rgba(0, 0, 0, .45);
+            margin-bottom: 24px;
+        }
+
+        /* O PNG tem margem transparente: amplia para o escudo preencher o bloco */
+        .lg-media-logo img {
+            width: 100%;
+            height: 100%;
+            transform: scale(1.45);
+        }
+
         .lg-media h2 {
             color: #fff;
             font-size: clamp(1.6rem, 3vw, 2.15rem);
@@ -429,7 +449,7 @@
         <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                    <h1 class="sitename">Mobipet</h1>
+                    <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
                 </a>
 
                 <nav id="navmenu" class="navmenu">
@@ -476,14 +496,11 @@
 
                 <!-- ---------- PAINEL DE MARCA ---------- -->
                 <div class="lg-media">
-                    <div class="lg-media-icon"><i class="bi bi-shield-lock"></i></div>
-                    <h2>Bem-vindo de volta ao Mobipet</h2>
-                    <p>Faça login para acompanhar a rotina do petshop e manter os tutores informados.</p>
-                    <ul>
-                        <li><i class="bi bi-check-circle-fill"></i> Gerencie os agendamentos do dia</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Acompanhe cada etapa do atendimento</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Atualize o status em tempo real</li>
-                    </ul>
+                    <div class="lg-media-logo">
+                        <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="" width="80" height="80">
+                    </div>
+                    <h2>Área da equipe</h2>
+                    <p>Acompanhe os atendimentos do dia em um só lugar.</p>
                 </div>
 
                 <!-- ---------- FORMULÁRIO ---------- -->

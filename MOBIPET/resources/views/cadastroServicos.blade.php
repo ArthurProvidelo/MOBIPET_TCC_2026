@@ -85,9 +85,7 @@
 
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
 
-                    <h1 class="sitename">
-                        Mobipet
-                    </h1>
+                    <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
 
                 </a>
 
