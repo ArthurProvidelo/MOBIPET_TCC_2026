@@ -22,12 +22,13 @@ class Servico extends Model
         'descricao',
         'preco',
         'duracao_estimada',
-        'etapas',
     ];
 
-    protected $casts = [
-        'etapas' => 'array',
-    ];
+    // No JSON (API/app mobile) as etapas continuam saindo como lista de
+    // chaves (ex.: ["banho", "tosa"]), agora vindas da tabela servico_etapas.
+    protected $appends = ['etapas'];
+
+    protected $hidden = ['servicoEtapas'];
 
     // Sem timestamps
     public $timestamps = false;
@@ -42,19 +43,40 @@ class Servico extends Model
     }
 
     /**
+     * Etapas "do meio" da esteira que este serviço percorre, na ordem em
+     * que foram cadastradas (tabela servico_etapas).
+     */
+    public function servicoEtapas()
+    {
+        return $this->hasMany(
+            ServicoEtapa::class,
+            'fk_id_servico',
+            'id_servico'
+        )->orderBy('ordem');
+    }
+
+    /**
+     * Chaves das etapas configuradas (ex.: ["banho", "tosa"]).
+     */
+    public function getEtapasAttribute(): array
+    {
+        return $this->servicoEtapas->pluck('etapa')->all();
+    }
+
+    /**
      * Esteira de atendimento (RFID) deste serviço: check_in, as etapas "do
      * meio" configuradas no cadastro (Atendimento::ETAPAS_CONFIGURAVEIS,
      * ex.: banho, tosa...) e, por fim, pronto_retirada + finalizado.
      *
-     * Sem etapas configuradas (coluna vazia/nula — serviço cadastrado antes
-     * dela existir, ou nenhuma marcada no formulário): usa a esteira
-     * completa (Atendimento::ETAPAS), mantendo o comportamento anterior.
+     * Sem etapas configuradas (nenhuma linha em servico_etapas — serviço
+     * sem etapas marcadas no formulário): usa a esteira completa
+     * (Atendimento::ETAPAS), mantendo o comportamento anterior.
      */
     public function etapasAtendimento(): array
     {
         $configuradas = array_values(array_intersect(
             Atendimento::ETAPAS_CONFIGURAVEIS,
-            $this->etapas ?? []
+            $this->etapas
         ));
 
         if (empty($configuradas)) {

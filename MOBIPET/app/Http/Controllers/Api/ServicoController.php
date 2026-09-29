@@ -9,6 +9,6 @@ class ServicoController extends Controller
 {
     public function index()
     {
-        return response()->json(Servico::orderBy('nome')->get());
+        return response()->json(Servico::with('servicoEtapas')->orderBy('nome')->get());
     }
 }

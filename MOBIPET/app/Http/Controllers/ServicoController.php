@@ -87,14 +87,23 @@ class ServicoController extends Controller
             $request->input('etapas', [])
         ));
 
-        DB::table('servico')->insert([
-            'nome' => $request->nome,
-            'categoria' => $request->categoria,
-            'descricao' => $request->descricao,
-            'preco' => $request->preco,
-            'duracao_estimada' => $duracaoMinutos,
-            'etapas' => empty($etapas) ? null : json_encode($etapas),
-        ]);
+        DB::transaction(function () use ($request, $duracaoMinutos, $etapas) {
+            $idServico = DB::table('servico')->insertGetId([
+                'nome' => $request->nome,
+                'categoria' => $request->categoria,
+                'descricao' => $request->descricao,
+                'preco' => $request->preco,
+                'duracao_estimada' => $duracaoMinutos,
+            ], 'id_servico');
+
+            foreach ($etapas as $indice => $etapa) {
+                DB::table('servico_etapas')->insert([
+                    'fk_id_servico' => $idServico,
+                    'etapa' => $etapa,
+                    'ordem' => $indice + 1,
+                ]);
+            }
+        });
 
         return redirect()->route('services.create')
                          ->with('success', 'Serviço cadastrado com sucesso!');
