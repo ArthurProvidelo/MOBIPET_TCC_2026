@@ -19,7 +19,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/esqueci-senha', [AuthController::class, 'forgotPassword']);
 
-// Leitor RFID/ESP32: recebe {"dado": "33"} (id do pet), identifica a etapa
+// Leitor RFID/ESP32: recebe {"pet_id": "33"} (id do pet), identifica a etapa
 // atual do atendimento em andamento e avança para a próxima. Sem autenticação.
 Route::post('/atendimentos/avancar-rfid', [AtendimentoController::class, 'avancarPorPet']);
 

@@ -14,16 +14,26 @@ class PetController extends Controller
             return redirect()->route('login');
         }
 
-        $pets = DB::table('pet')
-            ->leftJoin('Agendamento', 'pet.id_pet', '=', 'Agendamento.fk_id_pet')
-            ->where('pet.fk_id_cliente', session('id'))
-            ->select(
-                'pet.*',
-                'Agendamento.status_agendamento as status_agendamento'
-            )
-            ->get();
+        $pets = $this->petsComUltimoStatus();
 
         return view('pets.index', compact('pets'));
+    }
+
+    // Pets do cliente logado com o status do agendamento mais recente de cada um.
+    // (Um leftJoin direto com Agendamento repetiria o pet a cada agendamento.)
+    private function petsComUltimoStatus()
+    {
+        $ultimoStatus = DB::table('Agendamento')
+            ->select('status_agendamento')
+            ->whereColumn('Agendamento.fk_id_pet', 'pet.id_pet')
+            ->orderByDesc('id_agendamento')
+            ->limit(1);
+
+        return DB::table('pet')
+            ->where('pet.fk_id_cliente', session('id'))
+            ->select('pet.*')
+            ->selectSub($ultimoStatus, 'status_agendamento')
+            ->get();
     }
 
     // Formulário de criação
@@ -146,14 +156,7 @@ class PetController extends Controller
         return response('Não autorizado', 401);
     }
 
-    $pets = DB::table('pet')
-        ->leftJoin('agendamento', 'pet.id_pet', '=', 'agendamento.fk_id_pet')
-        ->where('pet.fk_id_cliente', session('id'))
-        ->select(
-            'pet.*',
-            'agendamento.status_agendamento'
-        )
-        ->get();
+    $pets = $this->petsComUltimoStatus();
 
     return view('pets.partials.tabela', compact('pets'));
 }

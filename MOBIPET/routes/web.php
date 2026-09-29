@@ -173,9 +173,6 @@ Route::get('/recuperar-senha', [SenhaController::class, 'formularioRecuperar'])
 Route::post('/recuperar-senha', [SenhaController::class, 'verificarIdentidade'])
     ->name('senha.verificar');
 
-Route::get('/resetar-senha/{token}', [ClienteController::class, 'mostrarFormularioReset'])
-    ->name('password.reset');
-
 
 // ===============================
 // REDEFINIÇÃO DE SENHA

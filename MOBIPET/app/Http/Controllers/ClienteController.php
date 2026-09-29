@@ -168,11 +168,4 @@ class ClienteController extends Controller
         return redirect()->route('clientes.index')
             ->with('success', 'Cliente excluído com sucesso!');
     }
-
-    public function mostrarFormularioReset($token)
-    {
-        return view('auth.resetar-senha', [
-            'token' => $token
-        ]);
-    }
 }

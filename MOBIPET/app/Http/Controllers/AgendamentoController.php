@@ -253,7 +253,7 @@ public function resetar($id)
      */
     public function agendamentosFuncionario()
     {
-        if(!session()->has('id') || session('nivel_acesso') != 'FUNCIONARIO')
+        if(!session()->has('id') || !in_array(session('nivel_acesso'), ['FUNCIONARIO', 'ADMIN'], true))
         {
             return redirect()->route('login.funcionario');
         }

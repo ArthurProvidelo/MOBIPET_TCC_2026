@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
 use Exception;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Socialite;
@@ -33,23 +32,25 @@ class GoogleFuncionarioController extends Controller
                 $usuarioGoogle->getEmail()
             )->first();
 
-            // Se não existir usuario, criar usuario
+            // Funcionário não é criado automaticamente: precisa ter sido
+            // cadastrado antes pelo administrador (CPF, cargo, admissão...).
             if(!$user){
-                $user = Funcionario::create([
-                    'nome' => $usuarioGoogle->getName(),
-                    'email' => $usuarioGoogle->getEmail(),
-                    'senha' => Hash::make('1234')
-                ]);
+                return redirect()
+                    ->route('login.funcionario')
+                    ->with('erro', 'Este e-mail do Google não pertence a nenhum funcionário cadastrado.');
             }
+
+            // O nível vem do banco: 'FUNCIONARIO' (padrão) ou 'ADMIN'.
+            $nivel = $user->nivel_acesso ?: 'FUNCIONARIO';
 
             // Faço o login no sistema
             // Auth::login($user);
             Session::put('id', $user->id_funcionario);
             Session::put('nome', $user->nome);
-            Session::put('nivel_acesso', 'FUNCIONARIO');
+            Session::put('nivel_acesso', $nivel);
 
-            // redireciona para a tela
-            return redirect('/');
+            // Administrador cai direto no painel de gestão.
+            return $nivel === 'ADMIN' ? redirect()->route('painel-controle') : redirect('/');
 
         } catch(Exception $e){
             Log::error('Falha no login com Google (funcionário): ' . $e->getMessage());

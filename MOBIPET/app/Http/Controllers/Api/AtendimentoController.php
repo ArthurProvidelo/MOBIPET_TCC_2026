@@ -74,17 +74,24 @@ class AtendimentoController extends Controller
     public function avancarPorPet(Request $request)
     {
         $request->validate([
-            'dado' => 'required',
+            'pet_id' => 'required',
         ]);
 
-        $petId = (int) $request->input('dado');
+        $petId = (int) $request->input('pet_id');
 
         $atendimento = Atendimento::where('fk_id_pet', $petId)
             ->whereNull('finalizado_em')
             ->latest('iniciado_em')
             ->first();
 
-        abort_if(!$atendimento, 404, 'Nenhum atendimento em andamento para este pet.');
+        if (!$atendimento) {
+            return response()->json([
+            'success' => false,
+            'message' => 'Nenhum atendimento em andamento para este pet.',
+            'pet_id' => $petId,
+            'atendimento' => null,
+        ], 404);
+    }
 
         $etapaAtual = $atendimento->etapa_atual;
         $proximaEtapa = $atendimento->proximaEtapa();
