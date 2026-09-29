@@ -286,6 +286,12 @@
       var status = statusDe(campo);
       var alvo = document.getElementById(campo.getAttribute('data-endereco-alvo') || '');
 
+      // CEP que já veio preenchido junto com o endereço (ex.: tela de perfil):
+      // não consulta de novo só por entrar e sair do campo, senão o endereço
+      // salvo (com número e complemento) seria sobrescrito. Só busca quando
+      // o CEP for alterado.
+      var ultimoCep = (alvo && alvo.value.trim()) ? campo.value.replace(/\D/g, '') : '';
+
       campo.addEventListener('input', function () {
         var d = campo.value.replace(/\D/g, '').slice(0, 8);
         campo.value = d.length > 5 ? d.slice(0, 5) + '-' + d.slice(5) : d;
@@ -296,7 +302,8 @@
 
       function buscar() {
         var cep = campo.value.replace(/\D/g, '');
-        if (cep.length !== 8) return;
+        if (cep.length !== 8 || cep === ultimoCep) return;
+        ultimoCep = cep;
 
         setStatus(status, 'Buscando endereço…', 'is-loading');
 
@@ -327,6 +334,7 @@
             setStatus(status, 'Endereço preenchido. Complete com o número e o complemento.', 'is-ok');
           })
           .catch(function () {
+            ultimoCep = ''; // falha de rede: permite tentar de novo ao sair do campo
             setStatus(status, 'Não foi possível consultar o CEP agora. Preencha manualmente.', 'is-error');
           });
       }

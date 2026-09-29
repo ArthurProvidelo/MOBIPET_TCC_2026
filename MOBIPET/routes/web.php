@@ -115,11 +115,23 @@ Route::get('/funcionario/agendamentos', [AgendamentoController::class, 'agendame
 Route::patch('/agendamentos/{agendamento}/status', [AgendamentoController::class, 'atualizarStatus'])
     ->name('agendamentos.atualizarStatus');
 
-// rota (AJAX) para o funcionário atualizar manualmente a etapa da esteira de
-// atendimento, usada como backup quando o leitor RFID não funciona
-Route::patch('/atendimentos/{atendimento}/etapa', [AtendimentoController::class, 'atualizarEtapa'])
+// rotas (AJAX) da esteira de atendimento no painel do funcionário: o
+// check-in/avançar segue a ordem de servico_etapas; o PATCH coloca o
+// agendamento direto numa etapa (backup quando o leitor RFID não funciona)
+Route::post('/agendamentos/{agendamento}/avancar-etapa', [AgendamentoController::class, 'avancarEtapa'])
     ->middleware('staff')
-    ->name('atendimentos.atualizarEtapa');
+    ->name('agendamentos.avancarEtapa');
+
+Route::patch('/agendamentos/{agendamento}/etapa', [AgendamentoController::class, 'definirEtapa'])
+    ->middleware('staff')
+    ->name('agendamentos.definirEtapa');
+
+// (AJAX) Esteira atual do agendamento, consultada pelo "Ver detalhes" do
+// painel enquanto está aberto — reflete as leituras do RFID e as ações do
+// app mobile sem recarregar a página.
+Route::get('/agendamentos/{agendamento}/esteira', [AgendamentoController::class, 'esteira'])
+    ->middleware('staff')
+    ->name('agendamentos.esteira');
 
 // Rota para logout (tanto para clientes quanto para funcionários)
 Route::get('/logout', [AuthController::class, 'logout'])

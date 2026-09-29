@@ -20,33 +20,13 @@ public function resetar($id)
 {
     $agendamento = Agendamento::findOrFail($id);
 
-    $agendamento->status_agendamento = 'Pendente';
-    $agendamento->save();
+    $agendamento->definirStatus('Pendente');
 
     return redirect()
         ->route('painel-controle')
         ->with('success', 'Agendamento resetado com sucesso!');
 }
     
-    /**
-     * Nomes dos meses em português (evita depender de locale do sistema/Carbon).
-     */
-    private const MESES = [
-        1  => 'Janeiro',   2  => 'Fevereiro', 3  => 'Março',
-        4  => 'Abril',     5  => 'Maio',      6  => 'Junho',
-        7  => 'Julho',     8  => 'Agosto',    9  => 'Setembro',
-        10 => 'Outubro',   11 => 'Novembro',  12 => 'Dezembro',
-    ];
-
-    /**
-     * Nomes dos dias da semana em português.
-     * Carbon::dayOfWeek: 0 = domingo ... 6 = sábado.
-     */
-    private const DIAS_SEMANA = [
-        0 => 'Domingo', 1 => 'Segunda', 2 => 'Terça',
-        3 => 'Quarta',  4 => 'Quinta',  5 => 'Sexta', 6 => 'Sábado',
-    ];
-
     /**
      * Mapeia o texto livre salvo em status_agendamento para as chaves
      * que o Blade/CSS reconhecem: agendado | andamento | concluido | cancelado.
@@ -128,16 +108,7 @@ public function resetar($id)
         // Verificação de conflito: o mesmo profissional não pode ter dois
         // agendamentos ativos na mesma data e horário (agendamentos cancelados
         // liberam a vaga).
-        $jaExiste = Agendamento::where('data_agendamento', $request->data_agendamento)
-            ->where('horario', $request->horario)
-            ->where('fk_id_funcionario', $request->fk_id_funcionario)
-            ->where(function ($q) {
-                $q->whereNull('status_agendamento')
-                  ->orWhereRaw('LOWER(status_agendamento) NOT LIKE ?', ['%cancelad%']);
-            })
-            ->exists();
-
-        if ($jaExiste) {
+        if (Agendamento::horarioOcupado($request->fk_id_funcionario, $request->data_agendamento, $request->horario)) {
             return back()
                 ->withInput()
                 ->withErrors(['horario' => 'Este profissional já tem um agendamento nesta data e horário. Escolha outro horário.']);
@@ -175,36 +146,8 @@ public function resetar($id)
             'data'        => 'required|date',
         ]);
 
-        $data = Carbon::parse($dados['data'])->startOfDay();
-
-        if ($data->lt(Carbon::today())) {
-            return response()->json(['horarios' => []]);
-        }
-
-        // Horários já reservados (agendamentos ativos) desse profissional na data.
-        $ocupados = Agendamento::where('data_agendamento', $data->toDateString())
-            ->where('fk_id_funcionario', $dados['funcionario'])
-            ->where(function ($q) {
-                $q->whereNull('status_agendamento')
-                  ->orWhereRaw('LOWER(status_agendamento) NOT LIKE ?', ['%cancelad%']);
-            })
-            ->pluck('horario')
-            ->map(fn ($h) => substr((string) $h, 0, 5))
-            ->all();
-
-        $agora = Carbon::now();
-        $ehHoje = $data->isToday();
-
-        $horarios = collect(Agendamento::horariosDisponiveis())->map(function ($hora) use ($ocupados, $ehHoje, $agora, $data) {
-            $passou = $ehHoje && $data->copy()->setTimeFromTimeString($hora)->lte($agora);
-            $ocupado = in_array($hora, $ocupados, true);
-
-            return [
-                'hora'       => $hora,
-                'disponivel' => !$passou && !$ocupado,
-                'motivo'     => $passou ? 'passou' : ($ocupado ? 'ocupado' : null),
-            ];
-        });
+        // Mesma grade usada pela API do app mobile (Agendamento::gradeHorarios).
+        $horarios = Agendamento::gradeHorarios($dados['funcionario'], Carbon::parse($dados['data']));
 
         return response()->json(['horarios' => $horarios]);
     }
@@ -261,75 +204,37 @@ public function resetar($id)
         $agendamentos = Agendamento::with([
             'pet.cliente',
             'servico',
-            'funcionario'
+            'funcionario',
+            'servicoEtapaAtual',
         ])
+        ->whereNotNull('data_agendamento')
         ->orderBy('data_agendamento')
         ->orderBy('horario')
         ->get();
 
-        $agenda = $this->agruparAgendamentos($agendamentos);
+        // Lista simples: o calendário da view agrupa por mês/dia e aplica os
+        // filtros (status, profissional, busca) no navegador.
+        $eventos = $agendamentos->map(fn (Agendamento $ag) => [
+            'id'             => $ag->id_agendamento,
+            'data'           => Carbon::parse($ag->data_agendamento)->format('Y-m-d'),
+            'horario'        => $ag->horario ? Carbon::parse($ag->horario)->format('H:i') : '--:--',
+            'pet'            => $ag->pet->nome ?? 'Pet não informado',
+            'especie'        => $ag->pet->especie ?? '',
+            'tutor'          => $ag->pet->cliente->nome ?? 'Tutor não informado',
+            'servico'        => $ag->servico->nome ?? 'Serviço não informado',
+            'funcionario'    => $ag->funcionario->nome ?? 'Não atribuído',
+            'id_funcionario' => $ag->fk_id_funcionario,
+            'status'         => $this->normalizarStatus($ag->status_agendamento),
+            'etapa'          => $ag->status_agendamento === 'Em atendimento' ? $ag->servicoEtapaAtual?->label() : null,
+            'observacao'     => $ag->observacao,
+        ])->values();
+
+        $funcionarios = Funcionario::orderBy('nome')->get(['id_funcionario', 'nome']);
 
         return view(
             'funcionario.agendamentos',
-            compact('agenda')
+            compact('eventos', 'funcionarios')
         );
-    }
-
-    /**
-     * Agrupa a coleção de Agendamentos em:
-     * ['Mês Ano' => ['total_agendamentos' => int, 'dias' => [ [data, dia_semana, dia, agendamentos[]] ]]]
-     */
-    private function agruparAgendamentos($agendamentos): array
-    {
-        $agenda = [];
-
-        foreach ($agendamentos as $ag) {
-            if (!$ag->data_agendamento) {
-                continue;
-            }
-
-            $data = Carbon::parse($ag->data_agendamento);
-            $mesChave = self::MESES[$data->month] . ' ' . $data->year;
-            $dataKey = $data->format('Y-m-d');
-
-            if (!isset($agenda[$mesChave])) {
-                $agenda[$mesChave] = [
-                    'total_agendamentos' => 0,
-                    'dias' => [],
-                ];
-            }
-
-            if (!isset($agenda[$mesChave]['dias'][$dataKey])) {
-                $agenda[$mesChave]['dias'][$dataKey] = [
-                    'data' => $dataKey,
-                    'dia_semana' => self::DIAS_SEMANA[$data->dayOfWeek],
-                    'dia' => $data->format('d'),
-                    'agendamentos' => [],
-                ];
-            }
-
-            $agenda[$mesChave]['dias'][$dataKey]['agendamentos'][] = [
-                'horario'     => $ag->horario ? Carbon::parse($ag->horario)->format('H:i') : '--:--',
-                'pet'         => $ag->pet->nome ?? 'Pet não informado',
-                'especie'     => $ag->pet->especie ?? 'Não informado',
-                'tutor'       => $ag->pet->cliente->nome ?? 'Tutor não informado',
-                'servico'     => $ag->servico->nome ?? 'Serviço não informado',
-                'funcionario' => $ag->funcionario->nome ?? 'Não atribuído',
-                'status'      => $this->normalizarStatus($ag->status_agendamento),
-                'observacao'  => $ag->observacao,
-            ];
-
-            $agenda[$mesChave]['total_agendamentos']++;
-        }
-
-        // Reindexa 'dias' de array associativo (por data) para lista sequencial,
-        // já ordenada por data pois a query original usa orderBy('data_agendamento').
-        foreach ($agenda as $mesChave => &$mesDados) {
-            $mesDados['dias'] = array_values($mesDados['dias']);
-        }
-        unset($mesDados);
-
-        return $agenda;
     }
 
     /**
@@ -364,13 +269,81 @@ public function resetar($id)
 
         $agendamento = Agendamento::findOrFail($id);
 
-        $agendamento->status_agendamento = $request->status;
-        $agendamento->save();
+        $agendamento->definirStatus($request->status);
 
         return response()->json([
             'success' => true,
             'message' => 'Status atualizado com sucesso!',
             'status' => $agendamento->status_agendamento,
+        ]);
+    }
+
+    /**
+     * (AJAX) Botão do painel: faz o check-in (Pendente -> Em atendimento, na
+     * 1ª etapa) ou avança para a próxima etapa do serviço; depois da última,
+     * conclui o agendamento.
+     */
+    public function avancarEtapa($id)
+    {
+        $agendamento = Agendamento::findOrFail($id);
+        $eraCheckIn = $agendamento->status_agendamento === 'Pendente';
+
+        if (!$agendamento->avancarEtapa()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Este agendamento não tem próxima etapa (já concluído ou cancelado).',
+            ], 422);
+        }
+
+        return $this->respostaEtapa($agendamento, $eraCheckIn ? 'Check-in realizado!' : 'Etapa avançada!');
+    }
+
+    /**
+     * (AJAX) Backup manual do RFID: coloca o agendamento direto numa etapa
+     * do seu serviço (id de servico_etapas).
+     */
+    public function definirEtapa(Request $request, $id)
+    {
+        $dados = $request->validate([
+            'etapa' => 'required|integer',
+        ]);
+
+        $agendamento = Agendamento::findOrFail($id);
+
+        if (!$agendamento->irParaEtapa((int) $dados['etapa'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Essa etapa não pertence ao serviço deste agendamento.',
+            ], 422);
+        }
+
+        return $this->respostaEtapa($agendamento, 'Etapa atualizada!');
+    }
+
+    /**
+     * (AJAX) Esteira do agendamento (servico_etapas + etapa_atual), no mesmo
+     * formato que o app mobile recebe. Consultada pelo "Ver detalhes".
+     */
+    public function esteira($id)
+    {
+        $agendamento = Agendamento::findOrFail($id)->comEsteira();
+
+        return response()->json([
+            'status' => $agendamento->status_agendamento,
+            'pode_avancar' => in_array($agendamento->status_agendamento, ['Pendente', 'Em atendimento'], true),
+            'etapas' => $agendamento->etapas_esteira,
+            'resumo' => $agendamento->resumo_etapas,
+        ]);
+    }
+
+    private function respostaEtapa(Agendamento $agendamento, string $titulo)
+    {
+        return response()->json([
+            'success' => true,
+            'title' => $titulo,
+            'message' => $agendamento->descricaoEtapa(),
+            'status' => $agendamento->status_agendamento,
+            'etapa_atual' => $agendamento->etapa_atual,
         ]);
     }
 }

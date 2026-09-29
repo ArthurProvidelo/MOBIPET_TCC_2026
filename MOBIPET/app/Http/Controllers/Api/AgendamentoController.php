@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agendamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class AgendamentoController extends Controller
@@ -111,6 +112,10 @@ class AgendamentoController extends Controller
     /**
      * Agendamento "atual" do cliente para a Home do app: o que já está em
      * atendimento (status "Em atendimento") ou, na falta desse, o próximo pendente.
+     *
+     * Inclui a esteira (etapas_esteira + resumo_etapas), a mesma do painel
+     * web, montada a partir de servico_etapas e etapa_atual — o app só
+     * desenha o que vem daqui e acompanha as leituras do RFID.
      */
     public function atual(Request $request)
     {
@@ -118,20 +123,20 @@ class AgendamentoController extends Controller
 
         $agendamento = Agendamento::whereIn('fk_id_pet', $petIds)
             ->where('status_agendamento', 'Em atendimento')
-            ->with(['pet', 'servico', 'funcionario'])
+            ->with(['pet', 'servico.servicoEtapas', 'funcionario'])
             ->latest('id_agendamento')
             ->first();
 
         if (!$agendamento) {
             $agendamento = Agendamento::whereIn('fk_id_pet', $petIds)
                 ->where('status_agendamento', 'Pendente')
-                ->with(['pet', 'servico', 'funcionario'])
+                ->with(['pet', 'servico.servicoEtapas', 'funcionario'])
                 ->orderBy('data_agendamento')
                 ->orderBy('horario')
                 ->first();
         }
 
-        return response()->json(['agendamento' => $agendamento]);
+        return response()->json(['agendamento' => $agendamento?->comEsteira()]);
     }
 
     /**
@@ -147,14 +152,15 @@ class AgendamentoController extends Controller
         abort_if(!$agendamento, 404, 'Agendamento não encontrado.');
         abort_if($agendamento->status_agendamento !== 'Pendente', 422, 'Este agendamento não está pendente.');
 
-        $agendamento->update(['status_agendamento' => 'Em atendimento']);
+        $agendamento->definirStatus('Em atendimento');
 
-        return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario']));
+        return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario'])->comEsteira());
     }
 
     /**
-     * Avança o agendamento para a próxima etapa da esteira (Pendente ->
-     * Em atendimento -> Concluido).
+     * Avança o agendamento para a próxima etapa da esteira: Pendente ->
+     * Em atendimento (1ª etapa do serviço) -> demais etapas na ordem de
+     * servico_etapas -> Concluido. Ver Agendamento::avancarEtapa().
      */
     public function avancar(Request $request, int $id)
     {
@@ -163,12 +169,9 @@ class AgendamentoController extends Controller
         $agendamento = Agendamento::whereIn('fk_id_pet', $petIds)->where('id_agendamento', $id)->first();
         abort_if(!$agendamento, 404, 'Agendamento não encontrado.');
 
-        $indiceAtual = array_search($agendamento->status_agendamento, self::ETAPAS, true);
-        abort_if($indiceAtual === false || !isset(self::ETAPAS[$indiceAtual + 1]), 422, 'Não há próxima etapa.');
+        abort_if(!$agendamento->avancarEtapa(), 422, 'Não há próxima etapa.');
 
-        $agendamento->update(['status_agendamento' => self::ETAPAS[$indiceAtual + 1]]);
-
-        return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario']));
+        return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario'])->comEsteira());
     }
 
     /**
@@ -216,19 +219,17 @@ class AgendamentoController extends Controller
             ], 404);
         }
 
-        $indiceAtual = array_search($agendamento->status_agendamento, self::ETAPAS, true);
+        $etapaAnterior = $agendamento->descricaoEtapa();
 
-        if ($indiceAtual === false || !isset(self::ETAPAS[$indiceAtual + 1])) {
+        if (!$agendamento->avancarEtapa()) {
             return response()->json([
                 'success' => false,
                 'mensagem' => 'Este agendamento já foi concluído.',
             ], 422);
         }
 
-        $etapaAnterior = $agendamento->status_agendamento;
-        $proximaEtapa = self::ETAPAS[$indiceAtual + 1];
-
-        $agendamento->update(['status_agendamento' => $proximaEtapa]);
+        $agendamento->load('servicoEtapaAtual');
+        $proximaEtapa = $agendamento->descricaoEtapa();
 
         $nomePet = $agendamento->pet->nome ?? "pet {$agendamento->fk_id_pet}";
 
@@ -239,22 +240,70 @@ class AgendamentoController extends Controller
             'pet_id' => $agendamento->fk_id_pet,
             'etapa_anterior' => $etapaAnterior,
             'etapa_atual' => $proximaEtapa,
+            'id_etapa_atual' => $agendamento->etapa_atual,
+            'status_agendamento' => $agendamento->status_agendamento,
+        ]);
+    }
+
+    /**
+     * GET /horarios?funcionario=3&data=2026-09-30
+     *
+     * Grade de horários do profissional na data (07:00-18:00, de 30 em 30
+     * min), marcando ocupados e já passados — a mesma do formulário web
+     * (Agendamento::gradeHorarios).
+     */
+    public function horarios(Request $request)
+    {
+        $dados = $request->validate([
+            'funcionario' => 'required|exists:Funcionario,id_funcionario',
+            'data'        => 'required|date',
+        ]);
+
+        return response()->json([
+            'horarios' => Agendamento::gradeHorarios($dados['funcionario'], Carbon::parse($dados['data'])),
         ]);
     }
 
     public function store(Request $request)
     {
+        // Normaliza para HH:MM (mesma regra do formulário web).
+        $request->merge([
+            'horario' => substr(trim((string) $request->input('horario')), 0, 5),
+        ]);
+
         $dados = $request->validate([
             'fk_id_pet' => 'required|exists:Pet,id_pet',
             'fk_id_servico' => 'required|exists:Servico,id_servico',
             'fk_id_funcionario' => 'required|exists:Funcionario,id_funcionario',
             'data_agendamento' => 'required|date',
-            'horario' => 'required',
+            'horario' => ['required', Rule::in(Agendamento::horariosDisponiveis())],
             'observacao' => 'nullable|string',
+        ], [
+            'horario.in' => 'Escolha um horário entre 07:00 e 18:00, de 30 em 30 minutos.',
         ]);
 
         $petValido = $request->user()->pets()->where('id_pet', $dados['fk_id_pet'])->exists();
         abort_if(!$petValido, 403, 'Este pet não pertence à sua conta.');
+
+        $data = Carbon::parse($dados['data_agendamento'])->startOfDay();
+
+        if ($data->lt(Carbon::today())) {
+            throw ValidationException::withMessages([
+                'data_agendamento' => 'A data do agendamento não pode ser anterior à data atual.',
+            ]);
+        }
+
+        if ($data->isToday() && $data->copy()->setTimeFromTimeString($dados['horario'])->lte(Carbon::now())) {
+            throw ValidationException::withMessages([
+                'horario' => 'Escolha um horário que ainda não passou no dia de hoje.',
+            ]);
+        }
+
+        if (Agendamento::horarioOcupado($dados['fk_id_funcionario'], $data->toDateString(), $dados['horario'])) {
+            throw ValidationException::withMessages([
+                'horario' => 'Este profissional já tem um agendamento nesta data e horário. Escolha outro horário.',
+            ]);
+        }
 
         $agendamento = Agendamento::create([
             ...$dados,

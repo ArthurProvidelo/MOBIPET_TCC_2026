@@ -21,6 +21,7 @@ class Funcionario extends Model
         'telefone',
         'email',
         'endereco',
+        'cep',
         'salario',
         'data_admissao',
         'senha',

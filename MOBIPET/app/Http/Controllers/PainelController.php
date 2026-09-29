@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agendamento;
-use App\Models\Atendimento;
 use App\Models\Pet;
 use App\Models\Funcionario;
 use Carbon\Carbon;
@@ -28,19 +27,21 @@ class PainelController extends Controller
 
         $ultimosAgendamentos = Agendamento::with([
             'pet',
-            'servico',
+            'servico.servicoEtapas',
             'funcionario',
-            'atendimento.servico'
         ])
         ->latest('id_agendamento')
         ->take(10)
         ->get();
 
-        // Atendimentos com a esteira (RFID) em andamento, para o backup
-        // manual de etapa no painel do funcionário.
-        $atendimentosEmAndamento = Atendimento::whereNull('finalizado_em')
-            ->with(['pet', 'servico'])
-            ->orderByDesc('iniciado_em')
+        // Esteira de atendimento do dia: agendamentos de hoje aguardando o
+        // check-in ou já em atendimento, para o funcionário passar as etapas
+        // (backup manual do RFID).
+        $agendamentosEsteira = Agendamento::whereDate('data_agendamento', Carbon::today())
+            ->whereIn('status_agendamento', ['Pendente', 'Em atendimento'])
+            ->with(['pet', 'servico.servicoEtapas'])
+            ->orderByRaw("status_agendamento = 'Em atendimento' DESC")
+            ->orderBy('horario')
             ->get();
 
         return view(
@@ -51,7 +52,7 @@ class PainelController extends Controller
                 'pendentes',
                 'funcionarios',
                 'ultimosAgendamentos',
-                'atendimentosEmAndamento'
+                'agendamentosEsteira'
             )
         );
     }

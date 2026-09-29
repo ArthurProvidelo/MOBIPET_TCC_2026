@@ -26,7 +26,8 @@ class Cliente extends Authenticatable
         'telefone',
         'email',
         'senha',
-        'endereco'
+        'endereco',
+        'cep'
     ];
 
     // Se não tiver created_at e updated_at

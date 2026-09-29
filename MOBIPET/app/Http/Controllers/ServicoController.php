@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Atendimento;
+use App\Models\ServicoEtapa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -69,7 +69,7 @@ class ServicoController extends Controller
             'preco' => 'required|numeric|min:0',
             'tempoEstimado' => 'required',
             'etapas' => 'nullable|array',
-            'etapas.*' => ['string', Rule::in(Atendimento::ETAPAS_CONFIGURAVEIS)],
+            'etapas.*' => ['string', Rule::in(ServicoEtapa::CONFIGURAVEIS)],
         ]);
 
         $duracaoMinutos = $this->parseDuracaoParaMinutos((string) $request->tempoEstimado);
@@ -80,21 +80,30 @@ class ServicoController extends Controller
                 ->withErrors(['tempoEstimado' => 'Informe a duração em um formato válido, ex: "45 min", "1h 30min" ou "01:30".']);
         }
 
-        // Mantém sempre a ordem mestre (Atendimento::ETAPAS_CONFIGURAVEIS),
+        // Mantém sempre a ordem mestre (ServicoEtapa::CONFIGURAVEIS),
         // independente da ordem em que os checkboxes chegam no request.
         $etapas = array_values(array_intersect(
-            Atendimento::ETAPAS_CONFIGURAVEIS,
+            ServicoEtapa::CONFIGURAVEIS,
             $request->input('etapas', [])
         ));
 
-        DB::table('servico')->insert([
-            'nome' => $request->nome,
-            'categoria' => $request->categoria,
-            'descricao' => $request->descricao,
-            'preco' => $request->preco,
-            'duracao_estimada' => $duracaoMinutos,
-            'etapas' => empty($etapas) ? null : json_encode($etapas),
-        ]);
+        DB::transaction(function () use ($request, $duracaoMinutos, $etapas) {
+            $idServico = DB::table('servico')->insertGetId([
+                'nome' => $request->nome,
+                'categoria' => $request->categoria,
+                'descricao' => $request->descricao,
+                'preco' => $request->preco,
+                'duracao_estimada' => $duracaoMinutos,
+            ], 'id_servico');
+
+            foreach ($etapas as $indice => $etapa) {
+                DB::table('servico_etapas')->insert([
+                    'fk_id_servico' => $idServico,
+                    'etapa' => $etapa,
+                    'ordem' => $indice + 1,
+                ]);
+            }
+        });
 
         return redirect()->route('services.create')
                          ->with('success', 'Serviço cadastrado com sucesso!');

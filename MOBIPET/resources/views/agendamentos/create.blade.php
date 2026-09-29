@@ -155,6 +155,60 @@
       background: #fff;
       border-radius: var(--pt-radius);
       box-shadow: var(--pt-shadow);
+      overflow: hidden;
+    }
+
+    /* Faixa azul no topo do card (mesmo padrão de "Meus Pets") */
+    .pt-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 28px clamp(20px, 4vw, 38px);
+      background: linear-gradient(135deg, var(--pt-accent), var(--pt-accent-dark));
+      color: #fff;
+    }
+
+    .pt-card-head h3 {
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0 0 3px;
+    }
+
+    .pt-card-head p {
+      margin: 0;
+      font-size: .86rem;
+      color: rgba(255, 255, 255, .82);
+    }
+
+    .pt-head-icon {
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .pt-head-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      color: var(--pt-accent);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: .85rem;
+      padding: 8px 16px;
+      border-radius: 999px;
+    }
+
+    .pt-card-body {
       padding: clamp(28px, 5vw, 54px);
     }
 
@@ -181,7 +235,7 @@
     }
 
     .pt-section-title:not(:first-of-type) {
-      margin-top: 34px;
+      margin-top: 44px;
     }
 
     .pt-section-title i {
@@ -195,6 +249,41 @@
       align-items: center;
       justify-content: center;
       font-size: 16px;
+    }
+
+    /* "Passo 1 de 3" à direita do título de cada seção */
+    .pt-section-title .pt-passo {
+      margin-left: auto;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--pt-accent-soft);
+      color: var(--pt-accent);
+      font-family: "Lato", sans-serif;
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    /* Cliente sem pet: aviso + botão lado a lado */
+    .pt-sem-pet {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: var(--pt-radius-sm);
+      background: #fff8e6;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      font-size: .92rem;
+      font-weight: 600;
+    }
+
+    .pt-sem-pet .pt-btn {
+      padding: 11px 20px;
+      font-size: .88rem;
     }
 
     .pt-page label {
@@ -445,7 +534,7 @@
     <div class="branding d-flex align-items-center">
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                <h1 class="sitename">Mobipet</h1>
+                <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
             </a>
 
             <nav id="navmenu" class="navmenu">
@@ -487,6 +576,23 @@
 
         <div class="pt-card" data-aos="zoom-in" data-aos-delay="100">
 
+          <div class="pt-card-head">
+            <div class="d-flex align-items-center gap-3">
+              <div class="pt-head-icon">
+                <i class="fa-solid fa-calendar-plus"></i>
+              </div>
+              <div>
+                <h3>Novo agendamento</h3>
+                <p>Escolha o pet, o serviço e o melhor horário.</p>
+              </div>
+            </div>
+            <span class="pt-head-chip">
+              <i class="fa-regular fa-clock"></i> Das 07:00 às 18:00
+            </span>
+          </div>
+
+          <div class="pt-card-body">
+
           <form action="{{ route('agendamento.store') }}" method="POST">
             @csrf
 
@@ -494,56 +600,40 @@
               <span class="pt-required-mark">*</span> Todos os campos são obrigatórios
             </p>
 
+            {{-- ---------- 1. PET E SERVIÇO: o que vai ser feito ---------- --}}
             <div class="pt-section-title">
-              <i class="fa-solid fa-dog"></i>
-              <span>Dados do pet</span>
+              <i class="fa-solid fa-paw"></i>
+              <span>Pet e serviço</span>
+              <small class="pt-passo">Passo 1 de 3</small>
             </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-4">
-                <label>Nome do pet <span class="pt-required-mark">*</span></label>
+            <div class="row g-4">
+              <div class="{{ $pets->count() > 0 ? 'col-md-6' : 'col-12' }}">
+                <label for="agPet">Pet <span class="pt-required-mark">*</span></label>
                 @if($pets->count() > 0)
-                  <select name="fk_id_pet" class="form-select @error('fk_id_pet') is-invalid @enderror" required>
+                  <select name="fk_id_pet" id="agPet" class="form-select @error('fk_id_pet') is-invalid @enderror" required>
                     <option value="">Selecione um pet</option>
                     @foreach($pets as $pet)
-                      <option value="{{ $pet->id_pet }}" @selected(old('fk_id_pet') == $pet->id_pet)>{{ $pet->nome }}</option>
+                      <option value="{{ $pet->id_pet }}" @selected(old('fk_id_pet', request('pet')) == $pet->id_pet)>{{ $pet->nome }}</option>
                     @endforeach
                   </select>
                   @error('fk_id_pet')
                     <div class="invalid-feedback d-block">{{ $message }}</div>
                   @enderror
                 @else
-                  <div class="pt-alert alert alert-warning mb-3">Você ainda não possui pets cadastrados.</div>
-                  <a href="{{ route('pets.create') }}" class="pt-btn pt-btn--primary">
-                    <i class="fa-solid fa-paw"></i> Cadastrar pet
-                  </a>
+                  <div class="pt-sem-pet">
+                    <span><i class="fa-solid fa-circle-info"></i> Você ainda não possui pets cadastrados.</span>
+                    <a href="{{ route('pets.create') }}" class="pt-btn pt-btn--primary">
+                      <i class="fa-solid fa-paw"></i> Cadastrar pet
+                    </a>
+                  </div>
                 @endif
               </div>
-            </div>
 
-            <div class="pt-section-title">
-              <i class="fa-solid fa-scissors"></i>
-              <span>Serviço</span>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 mb-4">
-                <label>Profissional <span class="pt-required-mark">*</span></label>
-                <select name="fk_id_funcionario" class="form-select @error('fk_id_funcionario') is-invalid @enderror" required>
-                  <option value="">Selecione</option>
-                  @foreach($funcionarios as $funcionario)
-                    <option value="{{ $funcionario->id_funcionario }}" @selected(old('fk_id_funcionario') == $funcionario->id_funcionario)>{{ $funcionario->nome }}</option>
-                  @endforeach
-                </select>
-                @error('fk_id_funcionario')
-                  <div class="invalid-feedback d-block">{{ $message }}</div>
-                @enderror
-              </div>
-
-              <div class="col-md-6 mb-4">
-                <label>Serviço <span class="pt-required-mark">*</span></label>
-                <select name="fk_id_servico" class="form-select @error('fk_id_servico') is-invalid @enderror" required>
-                  <option value="">Selecione</option>
+              <div class="col-md-6">
+                <label for="agServico">Serviço <span class="pt-required-mark">*</span></label>
+                <select name="fk_id_servico" id="agServico" class="form-select @error('fk_id_servico') is-invalid @enderror" required>
+                  <option value="">Selecione um serviço</option>
                   @foreach($servicos as $servico)
                     <option value="{{ $servico->id_servico }}" @selected(old('fk_id_servico') == $servico->id_servico)>{{ $servico->nome }}</option>
                   @endforeach
@@ -554,15 +644,30 @@
               </div>
             </div>
 
+            {{-- ---------- 2. QUANDO: profissional + data definem os horários livres ---------- --}}
             <div class="pt-section-title">
               <i class="fa-solid fa-calendar-days"></i>
-              <span>Data e horário</span>
+              <span>Quando</span>
+              <small class="pt-passo">Passo 2 de 3</small>
             </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-4">
-                <label>Data <span class="pt-required-mark">*</span></label>
-                <input type="date" name="data_agendamento"
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label for="agProfissional">Profissional <span class="pt-required-mark">*</span></label>
+                <select name="fk_id_funcionario" id="agProfissional" class="form-select @error('fk_id_funcionario') is-invalid @enderror" required>
+                  <option value="">Selecione o profissional</option>
+                  @foreach($funcionarios as $funcionario)
+                    <option value="{{ $funcionario->id_funcionario }}" @selected(old('fk_id_funcionario') == $funcionario->id_funcionario)>{{ $funcionario->nome }}</option>
+                  @endforeach
+                </select>
+                @error('fk_id_funcionario')
+                  <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+              </div>
+
+              <div class="col-md-6">
+                <label for="agData">Data <span class="pt-required-mark">*</span></label>
+                <input type="date" name="data_agendamento" id="agData"
                        value="{{ old('data_agendamento') }}"
                        min="{{ date('Y-m-d') }}"
                        class="form-control @error('data_agendamento') is-invalid @enderror" required>
@@ -571,38 +676,39 @@
                 @enderror
               </div>
 
-            </div>
+              <div class="col-12">
+                <label>Horário <span class="pt-required-mark">*</span></label>
 
-            <div class="mb-4">
-              <label>Horário <span class="pt-required-mark">*</span></label>
+                <input type="hidden" name="horario" id="horarioInput" value="{{ old('horario') }}">
 
-              <input type="hidden" name="horario" id="horarioInput" value="{{ old('horario') }}">
+                <div id="gradeHorarios" class="pt-slots"
+                     data-url="{{ route('agendamento.horarios') }}"
+                     data-old="{{ old('horario') }}">
+                  <p class="pt-slots__hint">Escolha o profissional e a data para ver os horários livres.</p>
+                </div>
 
-              <div id="gradeHorarios" class="pt-slots"
-                   data-url="{{ route('agendamento.horarios') }}"
-                   data-old="{{ old('horario') }}">
-                <p class="pt-slots__hint">Escolha o profissional e a data para ver os horários livres.</p>
+                <small class="d-block mt-2" style="color: var(--pt-muted);">
+                  Atendimentos das 07:00 às 18:00, de 30 em 30 minutos.
+                </small>
+
+                <div id="horarioErro" class="pt-slots-erro" hidden>Selecione um horário.</div>
+                @error('horario')
+                  <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
               </div>
-
-              <small class="d-block mt-2" style="color: var(--pt-muted);">
-                Atendimentos das 07:00 às 18:00, de 30 em 30 minutos.
-              </small>
-
-              <div id="horarioErro" class="pt-slots-erro" hidden>Selecione um horário.</div>
-              @error('horario')
-                <div class="invalid-feedback d-block">{{ $message }}</div>
-              @enderror
             </div>
 
+            {{-- ---------- 3. OBSERVAÇÕES ---------- --}}
             <div class="pt-section-title">
               <i class="fa-solid fa-note-sticky"></i>
               <span>Observações</span>
+              <small class="pt-passo">Passo 3 de 3</small>
             </div>
 
-            <div class="mb-2">
-              <label>Observações <span class="pt-required-mark">*</span></label>
-              <textarea name="observacoes" class="form-control @error('observacoes') is-invalid @enderror" rows="5"
-                        placeholder="Digite alguma observação, alergia..." required>{{ old('observacoes') }}</textarea>
+            <div>
+              <label for="agObservacoes">Algo que a equipe precisa saber? <span class="pt-required-mark">*</span></label>
+              <textarea name="observacoes" id="agObservacoes" class="form-control @error('observacoes') is-invalid @enderror" rows="4"
+                        placeholder="Ex.: alergias, comportamento com estranhos, cuidados especiais..." required>{{ old('observacoes') }}</textarea>
               @error('observacoes')
                 <div class="invalid-feedback d-block">{{ $message }}</div>
               @enderror
@@ -615,6 +721,8 @@
             </button>
 
           </form>
+
+          </div>
 
         </div>
 

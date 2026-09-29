@@ -20,8 +20,10 @@ class AuthController extends Controller
             'cpf' => preg_replace('/\D/', '', (string) $request->cpf),
             'telefone' => preg_replace('/\D/', '', (string) $request->telefone),
         ]);
+        $this->normalizarCep($request);
 
         $dados = $request->validate([
+            'cep' => 'nullable|digits:8',
             'nome' => 'required|string|max:255',
             'cpf' => 'required|digits:11|unique:Cliente,cpf',
             'telefone' => 'required|string|max:255',
@@ -37,6 +39,7 @@ class AuthController extends Controller
             'email' => $dados['email'],
             'senha' => Hash::make($dados['senha']),
             'endereco' => $dados['endereco'],
+            'cep' => $dados['cep'] ?? null,
         ]);
 
         return response()->json([
@@ -81,8 +84,10 @@ class AuthController extends Controller
     public function updateProfile(Request $request)
     {
         $cliente = $request->user();
+        $this->normalizarCep($request);
 
         $dados = $request->validate([
+            'cep' => 'nullable|digits:8',
             'nome' => 'required|string|max:255',
             'email' => [
                 'required',
@@ -126,5 +131,19 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Se o e-mail existir em nossa base, enviaremos as instruções.',
         ]);
+    }
+
+    /**
+     * CEP é opcional no app: só normaliza (tira a máscara) quando ele vem na
+     * requisição, para uma atualização de perfil sem o campo não apagar o
+     * CEP já salvo.
+     */
+    private function normalizarCep(Request $request): void
+    {
+        if ($request->has('cep')) {
+            $request->merge([
+                'cep' => preg_replace('/\D/', '', (string) $request->cep) ?: null,
+            ]);
+        }
     }
 }

@@ -30,7 +30,8 @@ class FuncionarioController extends Controller
                 ',',
                 '.',
                 str_replace('.', '', $request->salario)
-            )
+            ),
+            'cep' => preg_replace('/\D/', '', (string) $request->cep) ?: null,
         ]);
 
         $request->validate([
@@ -40,9 +41,12 @@ class FuncionarioController extends Controller
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'endereco' => 'nullable|string|max:255',
+            'cep' => 'nullable|digits:8',
             'salario' => 'nullable|numeric|min:0',
             'data_admissao' => 'required|date',
             'senha' => 'required|min:6'
+        ], [
+            'cep.digits' => 'Informe um CEP válido com 8 números.',
         ]);
 
         // O Eloquent trata as strings de forma segura, evitando o erro de "coluna não encontrada"
@@ -53,6 +57,7 @@ class FuncionarioController extends Controller
             'telefone' => $request->telefone,
             'email' => $request->email,
             'endereco' => $request->endereco,
+            'cep' => $request->cep,
             'salario' => $request->salario,
             'data_admissao' => $request->data_admissao,
             'senha' => Hash::make($request->senha) // O cast no model já faz isso, mas mantemos por segurança
@@ -88,11 +93,19 @@ class FuncionarioController extends Controller
     // Atualizar funcionário
     public function update(Request $request, $id)
     {
+        // CEP é salvo só com os números (a máscara volta na exibição)
+        $request->merge([
+            'cep' => preg_replace('/\D/', '', (string) $request->cep) ?: null,
+        ]);
+
         $request->validate([
             'nome' => 'required|string|max:255',
             'telefone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'endereco' => 'nullable|string|max:255',
+            'cep' => 'nullable|digits:8',
+        ], [
+            'cep.digits' => 'Informe um CEP válido com 8 números.',
         ]);
 
         // Atualizando com base na chave correta
@@ -101,6 +114,7 @@ class FuncionarioController extends Controller
             'telefone' => $request->telefone,
             'email' => $request->email,
             'endereco' => $request->endereco,
+            'cep' => $request->cep,
         ]);
 
         return redirect()->route('perfil')

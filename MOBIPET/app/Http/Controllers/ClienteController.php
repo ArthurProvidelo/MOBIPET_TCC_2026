@@ -137,11 +137,19 @@ class ClienteController extends Controller
             return redirect()->route('login');
         }
 
+        // CEP é salvo só com os números (a máscara volta na exibição)
+        $request->merge([
+            'cep' => preg_replace('/\D/', '', (string) $request->cep) ?: null,
+        ]);
+
         $request->validate([
             'nome' => 'required|max:255',
             'email' => 'required|email|max:255',
             'telefone' => 'required|max:255',
-            'endereco' => 'required|max:255'
+            'endereco' => 'required|max:255',
+            'cep' => 'nullable|digits:8',
+        ], [
+            'cep.digits' => 'Informe um CEP válido com 8 números.',
         ]);
 
         DB::table('cliente')
@@ -150,7 +158,8 @@ class ClienteController extends Controller
                 'nome' => $request->nome,
                 'email' => $request->email,
                 'telefone' => $request->telefone,
-                'endereco' => $request->endereco
+                'endereco' => $request->endereco,
+                'cep' => $request->cep,
             ]);
 
         return redirect()

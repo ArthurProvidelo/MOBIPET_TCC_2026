@@ -428,64 +428,65 @@
         }
 
         /* ===========================================================
-           SELECT DE STATUS (dropdown)
+           SELO DE STATUS AO VIVO (tabela de últimos agendamentos)
         =========================================================== */
 
-        .status-select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
+        .status-live {
+            gap: 8px;
+            max-width: 100%;
+            white-space: nowrap;
+            transition: background-color .35s, color .35s, border-color .35s;
+        }
 
-            font-family: 'Montserrat', sans-serif;
+        .status-live-icone {
             font-size: 13px;
-            font-weight: 700;
-            letter-spacing: .3px;
-
-            padding: 9px 38px 9px 18px;
-            border-radius: 50px;
-
-            cursor: pointer;
-            transition: .25s;
-
-            background-color: #f8fafc;
-            color: #6b7280;
-            border: 1px solid #e5e7eb;
-
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b7280' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 11px;
         }
 
-        .status-select:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(15, 23, 42, .08);
+        .status-live-texto {
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .status-select:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+        /* Em atendimento: ícone da etapa pulsa, indicando que está ao vivo */
+        .status-live.status-andamento .status-live-icone {
+            animation: status-live-pulso 1.8s ease-in-out infinite;
         }
 
-        .status-select-pendente {
-            background-color: #fff7e6;
-            color: #d97706;
-            border-color: #fde68a;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23d97706' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        @keyframes status-live-pulso {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .45;
+            }
         }
 
-        .status-select-concluido {
-            background-color: #ecfdf5;
-            color: #059669;
-            border-color: #a7f3d0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23059669' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        /* Destaque rápido quando o status muda (RFID, app ou painel) */
+        .status-live.status-live-mudou {
+            animation: status-live-destaque 1.6s ease;
         }
 
-        .status-select-em-atendimento {
-            background-color: #eff6ff;
-            color: #2563eb;
-            border-color: #bfdbfe;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%232563eb' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        @keyframes status-live-destaque {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, .45);
+                transform: scale(1.06);
+            }
+
+            100% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .status-live.status-andamento .status-live-icone,
+            .status-live.status-live-mudou {
+                animation: none;
+            }
         }
 
         /* ===========================================================
@@ -727,6 +728,26 @@
         .attendance-advance-btn:disabled {
             opacity: .5;
             cursor: not-allowed;
+        }
+
+        .attendance-advance-btn.is-checkin {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+        }
+
+        .attendance-advance-btn.is-checkin:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+
+        /* Check-in e Finalizado não são linhas de servico_etapas: não dá
+           para clicar nelas, só chegar pelo botão. */
+        .stage-item.stage-fixa {
+            cursor: default;
+        }
+
+        .stage-item.stage-fixa:hover .stage-icon {
+            transform: none;
         }
 
         /* ===========================================================
@@ -1057,9 +1078,9 @@
                 justify-content: flex-end;
             }
 
-            .table-dashboard .status-select {
-                width: auto;
-                min-width: 150px;
+            .table-dashboard .status-live {
+                white-space: normal;
+                text-align: right;
             }
         }
     </style>
@@ -1094,9 +1115,7 @@
             <div class="container position-relative d-flex align-items-center justify-content-between">
 
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
-                    <h1 class="sitename">
-                        Mobipet
-                    </h1>
+                    <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
                 </a>
 
                 <nav id="navmenu" class="navmenu">
@@ -1401,29 +1420,35 @@
                                 <tbody>
                                     @forelse($ultimosAgendamentos as $agendamento)
                                         @php
-                                            $atendimentoReal = $agendamento->atendimento;
+                                            $etapasAttr = $agendamento->esteira();
+                                            $resumoAttr = \App\Models\Agendamento::resumoEsteira($etapasAttr);
+                                            $podeAvancarAttr = in_array(
+                                                $agendamento->status_agendamento,
+                                                ['Pendente', 'Em atendimento'],
+                                                true
+                                            );
 
-                                            if ($atendimentoReal) {
-                                                $idAtendimentoAttr = $atendimentoReal->id_atendimento;
-                                                $etapasAttr = $atendimentoReal->etapasParaExibicao();
-                                                $proximaEtapaAttr = $atendimentoReal->proximaEtapa() ?? '';
-                                                $percentualAttr = $atendimentoReal->percentualConcluido();
-                                                $concluidasAttr = $atendimentoReal->etapasConcluidas();
-                                                $totalEtapasAttr = count($atendimentoReal->etapasFluxo());
+                                            // Selo de status (só leitura), igual ao que o JS redesenha ao vivo
+                                            // em aparenciaStatus().
+                                            $statusAttr = (string) $agendamento->status_agendamento;
+                                            $etapaAtualAttr = collect($etapasAttr)->firstWhere('status', 'current');
+
+                                            if ($statusAttr === 'Em atendimento') {
+                                                $seloClasse = 'status-andamento';
+                                                $seloIcone = $etapaAtualAttr['icone'] ?? 'fa-solid fa-shower';
+                                                $seloTexto = 'Em atendimento' . ($etapaAtualAttr ? ' · ' . $etapaAtualAttr['label'] : '');
+                                            } elseif ($statusAttr === 'Concluido') {
+                                                $seloClasse = 'status-concluido';
+                                                $seloIcone = 'fa-solid fa-circle-check';
+                                                $seloTexto = 'Concluído';
+                                            } elseif (\Illuminate\Support\Str::contains(\Illuminate\Support\Str::lower($statusAttr), 'cancelad')) {
+                                                $seloClasse = 'status-cancelado';
+                                                $seloIcone = 'fa-solid fa-ban';
+                                                $seloTexto = 'Cancelado';
                                             } else {
-                                                $fluxoServico = $agendamento->servico?->etapasAtendimento()
-                                                    ?? \App\Models\Atendimento::ETAPAS;
-                                                $esteiraSimulada = \App\Models\Atendimento::esteiraSimulada(
-                                                    $fluxoServico,
-                                                    $agendamento->status_agendamento ?? 'Pendente'
-                                                );
-
-                                                $idAtendimentoAttr = '';
-                                                $etapasAttr = $esteiraSimulada['etapas'];
-                                                $proximaEtapaAttr = '';
-                                                $percentualAttr = $esteiraSimulada['percentual'];
-                                                $concluidasAttr = $esteiraSimulada['concluidas'];
-                                                $totalEtapasAttr = $esteiraSimulada['total'];
+                                                $seloClasse = 'status-pendente';
+                                                $seloIcone = 'fa-regular fa-clock';
+                                                $seloTexto = $statusAttr ?: 'Pendente';
                                             }
                                         @endphp
                                         <tr>
@@ -1510,26 +1535,18 @@
                                             <!-- STATUS -->
                                             <td data-label="Status">
 
-                                                <select name="status"
-                                                    class="status-select status-agendamento status-select-{{ \Illuminate\Support\Str::slug($agendamento->status_agendamento) }}"
-                                                    data-id="{{ $agendamento->id_agendamento }}">
+                                                {{-- Só leitura: acompanha ao vivo a esteira (RFID/app/painel) --}}
+                                                <span class="status-badge status-live {{ $seloClasse }}"
+                                                    data-status-live="{{ $agendamento->id_agendamento }}"
+                                                    data-status="{{ $statusAttr }}"
+                                                    data-assinatura="{{ $statusAttr }}|{{ $etapaAtualAttr['chave'] ?? '' }}"
+                                                    role="status" aria-live="polite">
 
-                                                    <option value="Pendente"
-                                                        {{ $agendamento->status_agendamento == 'Pendente' ? 'selected' : '' }}>
-                                                        Pendente
-                                                    </option>
+                                                    <i class="status-live-icone {{ $seloIcone }}"></i>
 
-                                                    <option value="Em atendimento"
-                                                        {{ $agendamento->status_agendamento == 'Em atendimento' ? 'selected' : '' }}>
-                                                        Em atendimento
-                                                    </option>
+                                                    <span class="status-live-texto">{{ $seloTexto }}</span>
 
-                                                    <option value="Concluido"
-                                                        {{ $agendamento->status_agendamento == 'Concluido' ? 'selected' : '' }}>
-                                                        Concluído
-                                                    </option>
-
-                                                </select>
+                                                </span>
 
                                             </td>
 
@@ -1559,11 +1576,11 @@
                                                         data-especie="{{ $agendamento->pet->especie ?? '' }}"
                                                         data-servico="{{ $agendamento->servico->nome ?? 'Serviço' }}"
                                                         data-status="{{ $agendamento->status_agendamento ?? 'Pendente' }}"
-                                                        data-id-atendimento="{{ $idAtendimentoAttr }}"
-                                                        data-proxima-etapa="{{ $proximaEtapaAttr }}"
-                                                        data-percentual="{{ $percentualAttr }}"
-                                                        data-concluidas="{{ $concluidasAttr }}"
-                                                        data-total-etapas="{{ $totalEtapasAttr }}"
+                                                        data-id-agendamento="{{ $agendamento->id_agendamento }}"
+                                                        data-pode-avancar="{{ $podeAvancarAttr ? '1' : '' }}"
+                                                        data-percentual="{{ $resumoAttr['percentual'] }}"
+                                                        data-concluidas="{{ $resumoAttr['concluidas'] }}"
+                                                        data-total-etapas="{{ $resumoAttr['total'] }}"
                                                         data-etapas="{{ json_encode($etapasAttr) }}">
 
                                                         <i class="bi bi-eye"></i>
@@ -1624,7 +1641,7 @@
 
         </section>
 
-        <!-- =====================================================
+        {{-- <!-- =====================================================
             ETAPAS DO ATENDIMENTO (BACKUP MANUAL DO RFID)
         ====================================================== -->
 
@@ -1640,13 +1657,13 @@
 
                 <p class="section-description">
 
-                    Acompanhamento em tempo real da esteira de atendimento, igual ao app do
-                    cliente. Se o cartão RFID do pet não for lido, clique na etapa correta
-                    para atualizar manualmente.
+                    Agendamentos de hoje. Clique em "Fazer check-in" quando o pet chegar e
+                    avance as etapas conforme o serviço anda. Se o cartão RFID do pet não for
+                    lido, clique direto na etapa correta para atualizar manualmente.
 
                 </p>
 
-                @if ($atendimentosEmAndamento->isEmpty())
+                @if ($agendamentosEsteira->isEmpty())
 
                     <div class="dashboard-card">
 
@@ -1660,14 +1677,14 @@
 
                             <h4>
 
-                                Nenhum atendimento em andamento
+                                Nenhum atendimento para hoje
 
                             </h4>
 
                             <p>
 
-                                Assim que um pet iniciar o check-in (via RFID ou pelo aplicativo), o
-                                atendimento aparecerá aqui para acompanhamento das etapas.
+                                Os agendamentos de hoje aguardando check-in ou em atendimento
+                                aparecerão aqui para acompanhamento das etapas.
 
                             </p>
 
@@ -1677,26 +1694,48 @@
                 @else
                     <div class="row g-4">
 
-                        @foreach ($atendimentosEmAndamento as $atendimento)
+                        @foreach ($agendamentosEsteira as $agendamento)
+                            @php
+                                $esteira = $agendamento->esteira();
+                                $resumo = \App\Models\Agendamento::resumoEsteira($esteira);
+                                $indiceAtual = collect($esteira)->search(fn ($e) => $e['status'] === 'current');
+                                $etapaAtual = $indiceAtual === false ? null : $esteira[$indiceAtual];
+                                $proxima = $indiceAtual === false ? null : ($esteira[$indiceAtual + 1] ?? null);
+                                $pendente = $agendamento->status_agendamento === 'Pendente';
+
+                                if ($pendente) {
+                                    $textoBotao = 'Fazer check-in';
+                                    $iconeBotao = 'fa-solid fa-clipboard-check';
+                                } elseif ($proxima && $proxima['chave'] === 'finalizado') {
+                                    $textoBotao = 'Finalizar atendimento';
+                                    $iconeBotao = 'fa-solid fa-circle-check';
+                                } else {
+                                    $textoBotao = 'Avançar para ' . ($proxima['label'] ?? 'próxima etapa');
+                                    $iconeBotao = 'fa-solid fa-forward';
+                                }
+                            @endphp
                             <div class="col-12 col-lg-6 col-xxl-4">
 
-                                <div class="attendance-card" data-id="{{ $atendimento->id_atendimento }}">
+                                <div class="attendance-card" data-id="{{ $agendamento->id_agendamento }}">
 
                                     <div class="attendance-header">
 
                                         <div class="attendance-avatar">
 
                                             <i
-                                                class="fa-solid {{ ($atendimento->pet->especie ?? '') == 'Gato' ? 'fa-cat' : 'fa-dog' }}">
+                                                class="fa-solid {{ ($agendamento->pet->especie ?? '') == 'Gato' ? 'fa-cat' : 'fa-dog' }}">
                                             </i>
 
                                         </div>
 
                                         <div class="attendance-title">
 
-                                            <strong>{{ $atendimento->pet->nome ?? '-' }}</strong>
+                                            <strong>{{ $agendamento->pet->nome ?? '-' }}</strong>
 
-                                            <span>{{ $atendimento->servico->nome ?? '-' }}</span>
+                                            <span>
+                                                {{ $agendamento->servico->nome ?? '-' }} ·
+                                                {{ substr((string) $agendamento->horario, 0, 5) }}
+                                            </span>
 
                                         </div>
 
@@ -1707,19 +1746,16 @@
                                         <div class="attendance-progress-info">
 
                                             <span>
-                                                {{ $atendimento->etapasConcluidas() }} de
-                                                {{ count($atendimento->etapasFluxo()) }} etapas concluídas
+                                                {{ $resumo['concluidas'] }} de {{ $resumo['total'] }} etapas concluídas
                                             </span>
 
-                                            <strong
-                                                class="attendance-percent">{{ $atendimento->percentualConcluido() }}%</strong>
+                                            <strong class="attendance-percent">{{ $resumo['percentual'] }}%</strong>
 
                                         </div>
 
                                         <div class="progress-track">
 
-                                            <div class="progress-fill"
-                                                style="width: {{ $atendimento->percentualConcluido() }}%"></div>
+                                            <div class="progress-fill" style="width: {{ $resumo['percentual'] }}%"></div>
 
                                         </div>
 
@@ -1727,19 +1763,26 @@
 
                                     <div class="current-stage-pill">
 
-                                        <i
-                                            class="{{ \App\Models\Atendimento::ETAPAS_ICONS[$atendimento->etapa_atual] }}"></i>
-
-                                        {{ \App\Models\Atendimento::ETAPAS_LABELS[$atendimento->etapa_atual] }}
+                                        @if ($etapaAtual)
+                                            <i class="{{ $etapaAtual['icone'] }}"></i>
+                                            {{ $etapaAtual['label'] }}
+                                        @else
+                                            <i class="fa-regular fa-clock"></i>
+                                            Aguardando check-in
+                                        @endif
 
                                     </div>
 
                                     <ul class="stage-timeline">
 
-                                        @foreach ($atendimento->etapasParaExibicao() as $etapa)
-                                            <li class="stage-item stage-{{ $etapa['status'] }}"
-                                                data-etapa="{{ $etapa['chave'] }}" role="button" tabindex="0"
-                                                title="Marcar como etapa atual">
+                                        @foreach ($esteira as $etapa)
+                                            @if ($etapa['id'])
+                                                <li class="stage-item stage-{{ $etapa['status'] }}"
+                                                    data-etapa="{{ $etapa['id'] }}" role="button" tabindex="0"
+                                                    title="Marcar como etapa atual">
+                                            @else
+                                                <li class="stage-item stage-fixa stage-{{ $etapa['status'] }}">
+                                            @endif
 
                                                 <span class="stage-icon">
 
@@ -1763,14 +1806,13 @@
 
                                     </ul>
 
-                                    <button type="button" class="attendance-advance-btn"
-                                        data-id="{{ $atendimento->id_atendimento }}"
-                                        data-proxima-etapa="{{ $atendimento->proximaEtapa() }}"
-                                        {{ $atendimento->proximaEtapa() ? '' : 'disabled' }}>
+                                    <button type="button"
+                                        class="attendance-advance-btn {{ $pendente ? 'is-checkin' : '' }}"
+                                        data-id="{{ $agendamento->id_agendamento }}">
 
-                                        <i class="fa-solid fa-id-card"></i>
+                                        <i class="{{ $iconeBotao }}"></i>
 
-                                        {{ $atendimento->proximaEtapa() ? 'Simular leitura RFID' : 'Atendimento finalizado' }}
+                                        {{ $textoBotao }}
 
                                     </button>
 
@@ -1785,7 +1827,7 @@
 
             </div>
 
-        </section>
+        </section> --}}
 
         <!-- =====================================================
         AÇÕES RÁPIDAS
@@ -2497,135 +2539,224 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        document.querySelectorAll('.status-agendamento').forEach(select => {
+        /**
+         * Status ao vivo da tabela "Últimos Agendamentos": o selo é só
+         * leitura e acompanha a esteira do agendamento (leitura do cartão
+         * RFID, app mobile ou ações do painel). A cada INTERVALO_STATUS_MS
+         * consulta GET /agendamentos/{id}/esteira — a mesma usada pelo "Ver
+         * detalhes" — apenas dos agendamentos que ainda podem mudar
+         * (Pendente / Em atendimento).
+         */
+        const INTERVALO_STATUS_MS = 5000;
+        const STATUS_QUE_MUDAM = ['Pendente', 'Em atendimento'];
 
-            select.addEventListener('change', function() {
+        /** Mesmo mapeamento do @php da tabela (classe, ícone e texto do selo). */
+        function aparenciaStatus(status, etapaAtual) {
+            if (status === 'Em atendimento') {
+                return {
+                    classe: 'status-andamento',
+                    icone: etapaAtual?.icone || 'fa-solid fa-shower',
+                    texto: 'Em atendimento' + (etapaAtual ? ` · ${etapaAtual.label}` : '')
+                };
+            }
 
-                const agendamentoId = this.dataset.id;
-                const status = this.value;
-                const statusSlug = status.toLowerCase().replace(/\s+/g, '-');
-                const previousClass = Array.from(this.classList).find(c => c.startsWith('status-select-'));
+            if (status === 'Concluido') {
+                return {
+                    classe: 'status-concluido',
+                    icone: 'fa-solid fa-circle-check',
+                    texto: 'Concluído'
+                };
+            }
 
-                this.classList.remove('status-select-pendente', 'status-select-concluido',
-                    'status-select-em-atendimento');
-                this.classList.add(`status-select-${statusSlug}`);
+            if ((status || '').toLowerCase().includes('cancelad')) {
+                return {
+                    classe: 'status-cancelado',
+                    icone: 'fa-solid fa-ban',
+                    texto: 'Cancelado'
+                };
+            }
 
-                Swal.fire({
-                    title: 'Atualizando status...',
-                    text: 'Por favor, aguarde.',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    didOpen: () => {
-                        Swal.showLoading();
+            return {
+                classe: 'status-pendente',
+                icone: 'fa-regular fa-clock',
+                texto: status || 'Pendente'
+            };
+        }
+
+        /**
+         * Avisos no canto da tela (SweetAlert em modo toast): não travam a
+         * página, somem sozinhos e pausam com o mouse em cima — igual às
+         * notificações do app mobile.
+         */
+        const Aviso = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: aviso => {
+                aviso.addEventListener('mouseenter', Swal.stopTimer);
+                aviso.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+
+        // id -> momento em que o próprio funcionário mudou pelo painel; nesses
+        // casos o aviso de sucesso já apareceu, então a sincronização não
+        // repete o aviso de "leitura do cartão".
+        const JANELA_ALTERACAO_LOCAL_MS = 15000;
+        const alteracoesLocais = new Map();
+
+        function foiAlteradoAqui(id) {
+            const momento = alteracoesLocais.get(String(id));
+            return Boolean(momento) && (Date.now() - momento) < JANELA_ALTERACAO_LOCAL_MS;
+        }
+
+        /** Redesenha o selo; retorna true se o status/etapa mudou. */
+        function atualizarSeloStatus(selo, dados) {
+            const etapaAtual = (dados.etapas || []).find(etapa => etapa.status === 'current') || null;
+            const assinatura = `${dados.status}|${etapaAtual?.chave || ''}`;
+
+            if (selo.dataset.assinatura === assinatura) return false;
+
+            const aparencia = aparenciaStatus(dados.status, etapaAtual);
+
+            selo.classList.remove('status-pendente', 'status-andamento', 'status-concluido', 'status-cancelado');
+            selo.classList.add(aparencia.classe);
+            selo.querySelector('.status-live-icone').className = `status-live-icone ${aparencia.icone}`;
+            selo.querySelector('.status-live-texto').textContent = aparencia.texto;
+            selo.dataset.status = dados.status;
+            selo.dataset.assinatura = assinatura;
+
+            // Reinicia a animação de destaque mesmo se mudar duas vezes seguidas.
+            selo.classList.remove('status-live-mudou');
+            void selo.offsetWidth;
+            selo.classList.add('status-live-mudou');
+
+            // Mantém o "Ver detalhes" da mesma linha em dia para a próxima abertura.
+            const botao = selo.closest('tr')?.querySelector('.btn-detalhes');
+            if (botao) {
+                botao.dataset.status = dados.status;
+                botao.dataset.podeAvancar = dados.pode_avancar ? '1' : '';
+                botao.dataset.percentual = dados.resumo.percentual;
+                botao.dataset.concluidas = dados.resumo.concluidas;
+                botao.dataset.totalEtapas = dados.resumo.total;
+                botao.dataset.etapas = JSON.stringify(dados.etapas);
+            }
+
+            return true;
+        }
+
+        /** Busca a esteira de um selo e o atualiza; avisa quando a mudança veio do cartão/app. */
+        function sincronizarSelo(selo) {
+            const id = selo.dataset.statusLive;
+
+            return fetch(`/agendamentos/${id}/esteira`, {
+                    headers: {
+                        'Accept': 'application/json'
                     }
-                });
+                })
+                .then(response => response.ok ? response.json() : null)
+                .then(dados => {
+                    if (!dados || !atualizarSeloStatus(selo, dados) || foiAlteradoAqui(id)) return;
 
-                fetch(`/agendamentos/${agendamentoId}/status`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content'),
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            status: status
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
+                    const pet = selo.closest('tr')?.querySelector('.btn-detalhes')?.dataset.pet || 'Pet';
 
-                        if (data.success) {
-                            console.log(data.message);
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Status atualizado!',
-                                text: data.message || 'Status atualizado com sucesso!',
-                                confirmButtonText: 'OK'
-                            });
-                        } else {
-                            if (previousClass) {
-                                this.classList.remove(`status-select-${statusSlug}`);
-                                this.classList.add(previousClass);
-                            }
-
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Erro',
-                                text: data.message || 'Não foi possível atualizar o status.',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-
-                        if (previousClass) {
-                            this.classList.remove(`status-select-${statusSlug}`);
-                            this.classList.add(previousClass);
-                        }
-
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Erro',
-                            text: 'Erro ao atualizar o status.',
-                            confirmButtonText: 'OK'
-                        });
+                    Aviso.fire({
+                        icon: dados.status === 'Concluido' ? 'success' : 'info',
+                        title: pet,
+                        html: `<i class="fa-solid fa-id-card me-1"></i> ${selo.querySelector('.status-live-texto').textContent}`
                     });
+                })
+                .catch(() => {
+                    // Falha momentânea de rede: tenta de novo no próximo ciclo.
+                });
+        }
 
-            });
+        let sincronizandoStatus = false;
 
+        async function sincronizarStatusTabela() {
+            if (sincronizandoStatus || document.hidden) return;
+            sincronizandoStatus = true;
+
+            const selos = Array.from(document.querySelectorAll('[data-status-live]'))
+                .filter(selo => STATUS_QUE_MUDAM.includes(selo.dataset.status));
+
+            await Promise.all(selos.map(sincronizarSelo));
+
+            sincronizandoStatus = false;
+        }
+
+        /** Depois de uma ação no painel: atualiza o selo (e a gaveta aberta) na hora. */
+        function atualizarAgora(agendamentoId) {
+            alteracoesLocais.set(String(agendamentoId), Date.now());
+
+            const selo = document.querySelector(`[data-status-live="${agendamentoId}"]`);
+            if (selo) sincronizarSelo(selo);
+
+            if (typeof sincronizarDetalhes === 'function' &&
+                botaoDetalhesAberto?.dataset.idAgendamento === String(agendamentoId)) {
+                sincronizarDetalhes(agendamentoId);
+            }
+        }
+
+        setInterval(sincronizarStatusTabela, INTERVALO_STATUS_MS);
+
+        // Ao voltar para a aba, atualiza na hora em vez de esperar o ciclo.
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) sincronizarStatusTabela();
         });
 
         /**
-         * Backup manual do RFID: clicar numa etapa do card (ou no botão
-         * "Simular leitura RFID") atualiza a etapa atual do atendimento no
-         * servidor. Como o card inteiro (progresso, pill, esteira) depende
-         * da etapa nova, a página recarrega após confirmar — mais simples e
-         * seguro do que reconstruir esse estado em JS.
+         * Esteira do agendamento no painel. Sem "etapa", faz o check-in ou
+         * avança para a próxima etapa (POST avancar-etapa); com "etapa" (id
+         * de servico_etapas), coloca o agendamento direto nela — backup
+         * manual quando o cartão RFID não é lido. Tudo ao vivo: o selo da
+         * tabela e a gaveta aberta se atualizam na hora, sem recarregar.
          */
-        function atualizarEtapaAtendimento(atendimentoId, etapa) {
+        function atualizarEtapaAgendamento(agendamentoId, etapa = null) {
 
             Swal.fire({
+                toast: true,
+                position: 'top-end',
                 title: 'Atualizando etapa...',
-                text: 'Por favor, aguarde.',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
+                showConfirmButton: false,
+                didOpen: () => Swal.showLoading()
             });
 
-            fetch(`/atendimentos/${atendimentoId}/etapa`, {
-                    method: 'PATCH',
+            const url = etapa ?
+                `/agendamentos/${agendamentoId}/etapa` :
+                `/agendamentos/${agendamentoId}/avancar-etapa`;
+
+            fetch(url, {
+                    method: etapa ? 'PATCH' : 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
                             .getAttribute('content'),
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({
+                    body: JSON.stringify(etapa ? {
                         etapa: etapa
-                    })
+                    } : {})
                 })
                 .then(response => response.json())
                 .then(data => {
 
                     if (data.success) {
-                        Swal.fire({
+                        atualizarAgora(agendamentoId);
+
+                        Aviso.fire({
                             icon: 'success',
-                            title: 'Etapa atualizada!',
-                            text: data.message || 'Etapa atualizada com sucesso!',
-                            confirmButtonText: 'OK'
-                        }).then(() => window.location.reload());
+                            title: data.title || 'Etapa atualizada!',
+                            text: data.message || ''
+                        });
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Erro',
                             text: data.message || 'Não foi possível atualizar a etapa.',
-                            confirmButtonText: 'OK'
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#2563eb'
                         });
                     }
 
@@ -2637,18 +2768,19 @@
                         icon: 'error',
                         title: 'Erro',
                         text: 'Erro ao atualizar a etapa.',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#2563eb'
                     });
                 });
         }
 
-        document.querySelectorAll('.stage-item').forEach(item => {
+        document.querySelectorAll('.stage-item[data-etapa]').forEach(item => {
 
             const ativarEtapa = () => {
                 const card = item.closest('.attendance-card');
                 if (!card) return;
 
-                atualizarEtapaAtendimento(card.dataset.id, item.dataset.etapa);
+                atualizarEtapaAgendamento(card.dataset.id, item.dataset.etapa);
             };
 
             item.addEventListener('click', ativarEtapa);
@@ -2665,26 +2797,32 @@
         document.querySelectorAll('.attendance-advance-btn').forEach(btn => {
 
             btn.addEventListener('click', function() {
-                const proximaEtapa = this.dataset.proximaEtapa;
-                if (!proximaEtapa) return;
-
-                atualizarEtapaAtendimento(this.dataset.id, proximaEtapa);
+                atualizarEtapaAgendamento(this.dataset.id);
             });
 
         });
     </script>
     <script>
+        /**
+         * "Ver detalhes" em tempo real: enquanto a gaveta está aberta, busca a
+         * esteira no servidor (GET /agendamentos/{id}/esteira — a mesma que o
+         * app mobile recebe, vinda de servico_etapas + etapa_atual) a cada
+         * INTERVALO_DETALHES_MS. Assim a leitura do cartão RFID ou o avanço
+         * feito pelo app aparecem aqui sem recarregar a página.
+         */
+        const INTERVALO_DETALHES_MS = 5000;
+        let timerDetalhes = null;
+        let botaoDetalhesAberto = null;
+        let assinaturaDetalhes = '';
+        let detalhesMudaram = false;
+
         function abrirDetalhes(botao) {
 
             const idPet = botao.dataset.idPet || '';
             const nomePet = botao.dataset.pet || 'Pet';
             const especie = botao.dataset.especie || '';
             const servico = botao.dataset.servico || 'Serviço';
-            const idAtendimento = botao.dataset.idAtendimento || '';
-            const proximaEtapa = botao.dataset.proximaEtapa || '';
-            const percentual = parseFloat(botao.dataset.percentual || '0');
-            const concluidas = parseInt(botao.dataset.concluidas || '0', 10);
-            const totalEtapas = parseInt(botao.dataset.totalEtapas || '0', 10);
+            const idAgendamento = botao.dataset.idAgendamento || '';
 
             let etapas = [];
             try {
@@ -2699,6 +2837,78 @@
                 'fa-solid fa-cat' : 'fa-solid fa-dog';
             document.getElementById('detalhesServico').textContent = servico;
 
+            botaoDetalhesAberto = botao;
+            detalhesMudaram = false;
+
+            renderizarEsteiraDetalhes(idAgendamento, {
+                status: botao.dataset.status || 'Pendente',
+                pode_avancar: botao.dataset.podeAvancar === '1',
+                etapas: etapas,
+                resumo: {
+                    percentual: parseFloat(botao.dataset.percentual || '0'),
+                    concluidas: parseInt(botao.dataset.concluidas || '0', 10),
+                    total: parseInt(botao.dataset.totalEtapas || '0', 10),
+                },
+            });
+
+            clearInterval(timerDetalhes);
+            if (idAgendamento) {
+                timerDetalhes = setInterval(() => sincronizarDetalhes(idAgendamento), INTERVALO_DETALHES_MS);
+            }
+
+            const painel = document.getElementById('painelDetalhes');
+            const fundo = document.getElementById('fundoDetalhes');
+
+            painel.classList.add('aberto');
+            fundo.classList.add('aberto');
+            painel.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function sincronizarDetalhes(idAgendamento) {
+            fetch(`/agendamentos/${idAgendamento}/esteira`, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.ok ? response.json() : null)
+                .then(dados => {
+                    if (!dados || botaoDetalhesAberto?.dataset.idAgendamento !== String(idAgendamento)) return;
+
+                    if (renderizarEsteiraDetalhes(idAgendamento, dados)) {
+                        detalhesMudaram = true;
+
+                        // Mantém o botão da tabela em dia para a próxima abertura.
+                        const botao = botaoDetalhesAberto;
+                        botao.dataset.status = dados.status;
+                        botao.dataset.podeAvancar = dados.pode_avancar ? '1' : '';
+                        botao.dataset.percentual = dados.resumo.percentual;
+                        botao.dataset.concluidas = dados.resumo.concluidas;
+                        botao.dataset.totalEtapas = dados.resumo.total;
+                        botao.dataset.etapas = JSON.stringify(dados.etapas);
+                    }
+                })
+                .catch(() => {
+                    // Falha momentânea de rede: tenta de novo no próximo ciclo.
+                });
+        }
+
+        /**
+         * Desenha progresso, esteira e botão de RFID da gaveta. Retorna true
+         * se algo mudou desde o último desenho (para não piscar à toa).
+         */
+        function renderizarEsteiraDetalhes(idAgendamento, dados) {
+
+            const etapas = dados.etapas || [];
+            const assinatura = JSON.stringify([idAgendamento, dados.status, etapas.map(e => e.status)]);
+            if (assinatura === assinaturaDetalhes) return false;
+            assinaturaDetalhes = assinatura;
+
+            const podeAvancar = dados.pode_avancar;
+            const percentual = dados.resumo.percentual;
+            const concluidas = dados.resumo.concluidas;
+            const totalEtapas = dados.resumo.total;
+
             const etapasTexto = document.getElementById('detalhesEtapas');
             const porcentagemTexto = document.getElementById('detalhesPorcentagem');
             const barra = document.getElementById('barraProgresso');
@@ -2708,9 +2918,8 @@
 
             listaEtapas.innerHTML = '';
 
-            // Esteira: com Atendimento real (RFID) ou sem ele, o servidor já manda
-            // a esteira do serviço pronta (real ou simulada pelo status do
-            // agendamento) — aqui só decide "tem etapas pra mostrar" ou não.
+            // Esteira: o servidor já manda pronta (Agendamento::esteira()) —
+            // aqui só decide "tem etapas pra mostrar" ou não.
             if (etapas.length === 0) {
 
                 document.getElementById('detalhesProgresso').style.display = 'none';
@@ -2749,37 +2958,28 @@
                 });
             }
 
-            // Botão de RFID: só é possível simular a leitura quando existe um
-            // Atendimento real vinculado (é ele que guarda o progresso de
-            // verdade). Esteiras simuladas (sem check-in) não têm o que avançar.
-            if (idAtendimento && proximaEtapa) {
+            // Botão de RFID: faz o check-in (Pendente) ou avança a etapa (Em
+            // atendimento); concluídos/cancelados não têm o que avançar.
+            if (idAgendamento && podeAvancar) {
                 btnRfid.disabled = false;
-                btnRfid.dataset.id = idAtendimento;
-                btnRfid.dataset.proximaEtapa = proximaEtapa;
-                btnRfidTexto.textContent = 'Simular leitura RFID';
+                btnRfid.dataset.id = idAgendamento;
+                btnRfidTexto.textContent = dados.status === 'Pendente' ?
+                    'Fazer check-in' : 'Simular leitura RFID';
             } else {
                 btnRfid.disabled = true;
                 btnRfid.removeAttribute('data-id');
-                btnRfid.removeAttribute('data-proxima-etapa');
-                btnRfidTexto.textContent = idAtendimento ? 'Atendimento finalizado' : 'Sem check-in registrado';
+                btnRfidTexto.textContent = 'Atendimento finalizado';
             }
 
-            const painel = document.getElementById('painelDetalhes');
-            const fundo = document.getElementById('fundoDetalhes');
-
-            painel.classList.add('aberto');
-            fundo.classList.add('aberto');
-            painel.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
+            return true;
         }
 
         document.getElementById('btnSimularRfidDetalhes').addEventListener('click', function() {
-            const atendimentoId = this.dataset.id;
-            const proximaEtapa = this.dataset.proximaEtapa;
+            const agendamentoId = this.dataset.id;
 
-            if (!atendimentoId || !proximaEtapa) return;
+            if (!agendamentoId) return;
 
-            atualizarEtapaAtendimento(atendimentoId, proximaEtapa);
+            atualizarEtapaAgendamento(agendamentoId);
         });
 
         function fecharDetalhes() {
@@ -2791,6 +2991,16 @@
             fundo.classList.remove('aberto');
             painel.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+
+            clearInterval(timerDetalhes);
+            timerDetalhes = null;
+            botaoDetalhesAberto = null;
+            assinaturaDetalhes = '';
+            detalhesMudaram = false;
+
+            // Sem recarregar: o selo da tabela já acompanha ao vivo; só
+            // sincroniza agora para refletir o que a gaveta mostrou.
+            sincronizarStatusTabela();
         }
 
         document.addEventListener('keydown', function(event) {
