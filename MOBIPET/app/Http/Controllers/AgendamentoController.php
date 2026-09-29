@@ -20,8 +20,7 @@ public function resetar($id)
 {
     $agendamento = Agendamento::findOrFail($id);
 
-    $agendamento->status_agendamento = 'Pendente';
-    $agendamento->save();
+    $agendamento->definirStatus('Pendente');
 
     return redirect()
         ->route('painel-controle')
@@ -364,13 +363,65 @@ public function resetar($id)
 
         $agendamento = Agendamento::findOrFail($id);
 
-        $agendamento->status_agendamento = $request->status;
-        $agendamento->save();
+        $agendamento->definirStatus($request->status);
 
         return response()->json([
             'success' => true,
             'message' => 'Status atualizado com sucesso!',
             'status' => $agendamento->status_agendamento,
+        ]);
+    }
+
+    /**
+     * (AJAX) Botão do painel: faz o check-in (Pendente -> Em atendimento, na
+     * 1ª etapa) ou avança para a próxima etapa do serviço; depois da última,
+     * conclui o agendamento.
+     */
+    public function avancarEtapa($id)
+    {
+        $agendamento = Agendamento::findOrFail($id);
+        $eraCheckIn = $agendamento->status_agendamento === 'Pendente';
+
+        if (!$agendamento->avancarEtapa()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Este agendamento não tem próxima etapa (já concluído ou cancelado).',
+            ], 422);
+        }
+
+        return $this->respostaEtapa($agendamento, $eraCheckIn ? 'Check-in realizado!' : 'Etapa avançada!');
+    }
+
+    /**
+     * (AJAX) Backup manual do RFID: coloca o agendamento direto numa etapa
+     * do seu serviço (id de servico_etapas).
+     */
+    public function definirEtapa(Request $request, $id)
+    {
+        $dados = $request->validate([
+            'etapa' => 'required|integer',
+        ]);
+
+        $agendamento = Agendamento::findOrFail($id);
+
+        if (!$agendamento->irParaEtapa((int) $dados['etapa'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Essa etapa não pertence ao serviço deste agendamento.',
+            ], 422);
+        }
+
+        return $this->respostaEtapa($agendamento, 'Etapa atualizada!');
+    }
+
+    private function respostaEtapa(Agendamento $agendamento, string $titulo)
+    {
+        return response()->json([
+            'success' => true,
+            'title' => $titulo,
+            'message' => $agendamento->descricaoEtapa(),
+            'status' => $agendamento->status_agendamento,
+            'etapa_atual' => $agendamento->etapa_atual,
         ]);
     }
 }

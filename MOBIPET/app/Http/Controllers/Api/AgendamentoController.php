@@ -147,14 +147,15 @@ class AgendamentoController extends Controller
         abort_if(!$agendamento, 404, 'Agendamento não encontrado.');
         abort_if($agendamento->status_agendamento !== 'Pendente', 422, 'Este agendamento não está pendente.');
 
-        $agendamento->update(['status_agendamento' => 'Em atendimento']);
+        $agendamento->definirStatus('Em atendimento');
 
-        return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario']));
+        return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario', 'servicoEtapaAtual']));
     }
 
     /**
-     * Avança o agendamento para a próxima etapa da esteira (Pendente ->
-     * Em atendimento -> Concluido).
+     * Avança o agendamento para a próxima etapa da esteira: Pendente ->
+     * Em atendimento (1ª etapa do serviço) -> demais etapas na ordem de
+     * servico_etapas -> Concluido. Ver Agendamento::avancarEtapa().
      */
     public function avancar(Request $request, int $id)
     {
@@ -163,12 +164,9 @@ class AgendamentoController extends Controller
         $agendamento = Agendamento::whereIn('fk_id_pet', $petIds)->where('id_agendamento', $id)->first();
         abort_if(!$agendamento, 404, 'Agendamento não encontrado.');
 
-        $indiceAtual = array_search($agendamento->status_agendamento, self::ETAPAS, true);
-        abort_if($indiceAtual === false || !isset(self::ETAPAS[$indiceAtual + 1]), 422, 'Não há próxima etapa.');
+        abort_if(!$agendamento->avancarEtapa(), 422, 'Não há próxima etapa.');
 
-        $agendamento->update(['status_agendamento' => self::ETAPAS[$indiceAtual + 1]]);
-
-        return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario']));
+        return response()->json($agendamento->fresh(['pet', 'servico', 'funcionario', 'servicoEtapaAtual']));
     }
 
     /**
@@ -216,19 +214,17 @@ class AgendamentoController extends Controller
             ], 404);
         }
 
-        $indiceAtual = array_search($agendamento->status_agendamento, self::ETAPAS, true);
+        $etapaAnterior = $agendamento->descricaoEtapa();
 
-        if ($indiceAtual === false || !isset(self::ETAPAS[$indiceAtual + 1])) {
+        if (!$agendamento->avancarEtapa()) {
             return response()->json([
                 'success' => false,
                 'mensagem' => 'Este agendamento já foi concluído.',
             ], 422);
         }
 
-        $etapaAnterior = $agendamento->status_agendamento;
-        $proximaEtapa = self::ETAPAS[$indiceAtual + 1];
-
-        $agendamento->update(['status_agendamento' => $proximaEtapa]);
+        $agendamento->load('servicoEtapaAtual');
+        $proximaEtapa = $agendamento->descricaoEtapa();
 
         $nomePet = $agendamento->pet->nome ?? "pet {$agendamento->fk_id_pet}";
 
@@ -239,6 +235,8 @@ class AgendamentoController extends Controller
             'pet_id' => $agendamento->fk_id_pet,
             'etapa_anterior' => $etapaAnterior,
             'etapa_atual' => $proximaEtapa,
+            'id_etapa_atual' => $agendamento->etapa_atual,
+            'status_agendamento' => $agendamento->status_agendamento,
         ]);
     }
 

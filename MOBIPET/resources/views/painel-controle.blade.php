@@ -729,6 +729,26 @@
             cursor: not-allowed;
         }
 
+        .attendance-advance-btn.is-checkin {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+        }
+
+        .attendance-advance-btn.is-checkin:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+
+        /* Check-in e Finalizado não são linhas de servico_etapas: não dá
+           para clicar nelas, só chegar pelo botão. */
+        .stage-item.stage-fixa {
+            cursor: default;
+        }
+
+        .stage-item.stage-fixa:hover .stage-icon {
+            transform: none;
+        }
+
         /* ===========================================================
            BOTÕES DE AÇÃO
         =========================================================== */
@@ -1401,30 +1421,13 @@
                                 <tbody>
                                     @forelse($ultimosAgendamentos as $agendamento)
                                         @php
-                                            $atendimentoReal = $agendamento->atendimento;
-
-                                            if ($atendimentoReal) {
-                                                $idAtendimentoAttr = $atendimentoReal->id_atendimento;
-                                                $etapasAttr = $atendimentoReal->etapasParaExibicao();
-                                                $proximaEtapaAttr = $atendimentoReal->proximaEtapa() ?? '';
-                                                $percentualAttr = $atendimentoReal->percentualConcluido();
-                                                $concluidasAttr = $atendimentoReal->etapasConcluidas();
-                                                $totalEtapasAttr = count($atendimentoReal->etapasFluxo());
-                                            } else {
-                                                $fluxoServico = $agendamento->servico?->etapasAtendimento()
-                                                    ?? \App\Models\Atendimento::ETAPAS;
-                                                $esteiraSimulada = \App\Models\Atendimento::esteiraSimulada(
-                                                    $fluxoServico,
-                                                    $agendamento->status_agendamento ?? 'Pendente'
-                                                );
-
-                                                $idAtendimentoAttr = '';
-                                                $etapasAttr = $esteiraSimulada['etapas'];
-                                                $proximaEtapaAttr = '';
-                                                $percentualAttr = $esteiraSimulada['percentual'];
-                                                $concluidasAttr = $esteiraSimulada['concluidas'];
-                                                $totalEtapasAttr = $esteiraSimulada['total'];
-                                            }
+                                            $etapasAttr = $agendamento->esteira();
+                                            $resumoAttr = \App\Models\Agendamento::resumoEsteira($etapasAttr);
+                                            $podeAvancarAttr = in_array(
+                                                $agendamento->status_agendamento,
+                                                ['Pendente', 'Em atendimento'],
+                                                true
+                                            );
                                         @endphp
                                         <tr>
 
@@ -1559,11 +1562,11 @@
                                                         data-especie="{{ $agendamento->pet->especie ?? '' }}"
                                                         data-servico="{{ $agendamento->servico->nome ?? 'Serviço' }}"
                                                         data-status="{{ $agendamento->status_agendamento ?? 'Pendente' }}"
-                                                        data-id-atendimento="{{ $idAtendimentoAttr }}"
-                                                        data-proxima-etapa="{{ $proximaEtapaAttr }}"
-                                                        data-percentual="{{ $percentualAttr }}"
-                                                        data-concluidas="{{ $concluidasAttr }}"
-                                                        data-total-etapas="{{ $totalEtapasAttr }}"
+                                                        data-id-agendamento="{{ $agendamento->id_agendamento }}"
+                                                        data-pode-avancar="{{ $podeAvancarAttr ? '1' : '' }}"
+                                                        data-percentual="{{ $resumoAttr['percentual'] }}"
+                                                        data-concluidas="{{ $resumoAttr['concluidas'] }}"
+                                                        data-total-etapas="{{ $resumoAttr['total'] }}"
                                                         data-etapas="{{ json_encode($etapasAttr) }}">
 
                                                         <i class="bi bi-eye"></i>
@@ -1640,13 +1643,13 @@
 
                 <p class="section-description">
 
-                    Acompanhamento em tempo real da esteira de atendimento, igual ao app do
-                    cliente. Se o cartão RFID do pet não for lido, clique na etapa correta
-                    para atualizar manualmente.
+                    Agendamentos de hoje. Clique em "Fazer check-in" quando o pet chegar e
+                    avance as etapas conforme o serviço anda. Se o cartão RFID do pet não for
+                    lido, clique direto na etapa correta para atualizar manualmente.
 
                 </p>
 
-                @if ($atendimentosEmAndamento->isEmpty())
+                @if ($agendamentosEsteira->isEmpty())
 
                     <div class="dashboard-card">
 
@@ -1660,14 +1663,14 @@
 
                             <h4>
 
-                                Nenhum atendimento em andamento
+                                Nenhum atendimento para hoje
 
                             </h4>
 
                             <p>
 
-                                Assim que um pet iniciar o check-in (via RFID ou pelo aplicativo), o
-                                atendimento aparecerá aqui para acompanhamento das etapas.
+                                Os agendamentos de hoje aguardando check-in ou em atendimento
+                                aparecerão aqui para acompanhamento das etapas.
 
                             </p>
 
@@ -1677,26 +1680,48 @@
                 @else
                     <div class="row g-4">
 
-                        @foreach ($atendimentosEmAndamento as $atendimento)
+                        @foreach ($agendamentosEsteira as $agendamento)
+                            @php
+                                $esteira = $agendamento->esteira();
+                                $resumo = \App\Models\Agendamento::resumoEsteira($esteira);
+                                $indiceAtual = collect($esteira)->search(fn ($e) => $e['status'] === 'current');
+                                $etapaAtual = $indiceAtual === false ? null : $esteira[$indiceAtual];
+                                $proxima = $indiceAtual === false ? null : ($esteira[$indiceAtual + 1] ?? null);
+                                $pendente = $agendamento->status_agendamento === 'Pendente';
+
+                                if ($pendente) {
+                                    $textoBotao = 'Fazer check-in';
+                                    $iconeBotao = 'fa-solid fa-clipboard-check';
+                                } elseif ($proxima && $proxima['chave'] === 'finalizado') {
+                                    $textoBotao = 'Finalizar atendimento';
+                                    $iconeBotao = 'fa-solid fa-circle-check';
+                                } else {
+                                    $textoBotao = 'Avançar para ' . ($proxima['label'] ?? 'próxima etapa');
+                                    $iconeBotao = 'fa-solid fa-forward';
+                                }
+                            @endphp
                             <div class="col-12 col-lg-6 col-xxl-4">
 
-                                <div class="attendance-card" data-id="{{ $atendimento->id_atendimento }}">
+                                <div class="attendance-card" data-id="{{ $agendamento->id_agendamento }}">
 
                                     <div class="attendance-header">
 
                                         <div class="attendance-avatar">
 
                                             <i
-                                                class="fa-solid {{ ($atendimento->pet->especie ?? '') == 'Gato' ? 'fa-cat' : 'fa-dog' }}">
+                                                class="fa-solid {{ ($agendamento->pet->especie ?? '') == 'Gato' ? 'fa-cat' : 'fa-dog' }}">
                                             </i>
 
                                         </div>
 
                                         <div class="attendance-title">
 
-                                            <strong>{{ $atendimento->pet->nome ?? '-' }}</strong>
+                                            <strong>{{ $agendamento->pet->nome ?? '-' }}</strong>
 
-                                            <span>{{ $atendimento->servico->nome ?? '-' }}</span>
+                                            <span>
+                                                {{ $agendamento->servico->nome ?? '-' }} ·
+                                                {{ substr((string) $agendamento->horario, 0, 5) }}
+                                            </span>
 
                                         </div>
 
@@ -1707,19 +1732,16 @@
                                         <div class="attendance-progress-info">
 
                                             <span>
-                                                {{ $atendimento->etapasConcluidas() }} de
-                                                {{ count($atendimento->etapasFluxo()) }} etapas concluídas
+                                                {{ $resumo['concluidas'] }} de {{ $resumo['total'] }} etapas concluídas
                                             </span>
 
-                                            <strong
-                                                class="attendance-percent">{{ $atendimento->percentualConcluido() }}%</strong>
+                                            <strong class="attendance-percent">{{ $resumo['percentual'] }}%</strong>
 
                                         </div>
 
                                         <div class="progress-track">
 
-                                            <div class="progress-fill"
-                                                style="width: {{ $atendimento->percentualConcluido() }}%"></div>
+                                            <div class="progress-fill" style="width: {{ $resumo['percentual'] }}%"></div>
 
                                         </div>
 
@@ -1727,19 +1749,26 @@
 
                                     <div class="current-stage-pill">
 
-                                        <i
-                                            class="{{ \App\Models\Atendimento::ETAPAS_ICONS[$atendimento->etapa_atual] }}"></i>
-
-                                        {{ \App\Models\Atendimento::ETAPAS_LABELS[$atendimento->etapa_atual] }}
+                                        @if ($etapaAtual)
+                                            <i class="{{ $etapaAtual['icone'] }}"></i>
+                                            {{ $etapaAtual['label'] }}
+                                        @else
+                                            <i class="fa-regular fa-clock"></i>
+                                            Aguardando check-in
+                                        @endif
 
                                     </div>
 
                                     <ul class="stage-timeline">
 
-                                        @foreach ($atendimento->etapasParaExibicao() as $etapa)
-                                            <li class="stage-item stage-{{ $etapa['status'] }}"
-                                                data-etapa="{{ $etapa['chave'] }}" role="button" tabindex="0"
-                                                title="Marcar como etapa atual">
+                                        @foreach ($esteira as $etapa)
+                                            @if ($etapa['id'])
+                                                <li class="stage-item stage-{{ $etapa['status'] }}"
+                                                    data-etapa="{{ $etapa['id'] }}" role="button" tabindex="0"
+                                                    title="Marcar como etapa atual">
+                                            @else
+                                                <li class="stage-item stage-fixa stage-{{ $etapa['status'] }}">
+                                            @endif
 
                                                 <span class="stage-icon">
 
@@ -1763,14 +1792,13 @@
 
                                     </ul>
 
-                                    <button type="button" class="attendance-advance-btn"
-                                        data-id="{{ $atendimento->id_atendimento }}"
-                                        data-proxima-etapa="{{ $atendimento->proximaEtapa() }}"
-                                        {{ $atendimento->proximaEtapa() ? '' : 'disabled' }}>
+                                    <button type="button"
+                                        class="attendance-advance-btn {{ $pendente ? 'is-checkin' : '' }}"
+                                        data-id="{{ $agendamento->id_agendamento }}">
 
-                                        <i class="fa-solid fa-id-card"></i>
+                                        <i class="{{ $iconeBotao }}"></i>
 
-                                        {{ $atendimento->proximaEtapa() ? 'Simular leitura RFID' : 'Atendimento finalizado' }}
+                                        {{ $textoBotao }}
 
                                     </button>
 
@@ -2580,13 +2608,15 @@
         });
 
         /**
-         * Backup manual do RFID: clicar numa etapa do card (ou no botão
-         * "Simular leitura RFID") atualiza a etapa atual do atendimento no
-         * servidor. Como o card inteiro (progresso, pill, esteira) depende
-         * da etapa nova, a página recarrega após confirmar — mais simples e
-         * seguro do que reconstruir esse estado em JS.
+         * Esteira do agendamento no painel. Sem "etapa", faz o check-in ou
+         * avança para a próxima etapa (POST avancar-etapa); com "etapa" (id
+         * de servico_etapas), coloca o agendamento direto nela — backup
+         * manual quando o cartão RFID não é lido. Como o card inteiro
+         * (progresso, pill, esteira) depende da etapa nova, a página
+         * recarrega após confirmar — mais simples e seguro do que
+         * reconstruir esse estado em JS.
          */
-        function atualizarEtapaAtendimento(atendimentoId, etapa) {
+        function atualizarEtapaAgendamento(agendamentoId, etapa = null) {
 
             Swal.fire({
                 title: 'Atualizando etapa...',
@@ -2598,17 +2628,21 @@
                 }
             });
 
-            fetch(`/atendimentos/${atendimentoId}/etapa`, {
-                    method: 'PATCH',
+            const url = etapa ?
+                `/agendamentos/${agendamentoId}/etapa` :
+                `/agendamentos/${agendamentoId}/avancar-etapa`;
+
+            fetch(url, {
+                    method: etapa ? 'PATCH' : 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
                             .getAttribute('content'),
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({
+                    body: JSON.stringify(etapa ? {
                         etapa: etapa
-                    })
+                    } : {})
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -2616,7 +2650,7 @@
                     if (data.success) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Etapa atualizada!',
+                            title: data.title || 'Etapa atualizada!',
                             text: data.message || 'Etapa atualizada com sucesso!',
                             confirmButtonText: 'OK'
                         }).then(() => window.location.reload());
@@ -2642,13 +2676,13 @@
                 });
         }
 
-        document.querySelectorAll('.stage-item').forEach(item => {
+        document.querySelectorAll('.stage-item[data-etapa]').forEach(item => {
 
             const ativarEtapa = () => {
                 const card = item.closest('.attendance-card');
                 if (!card) return;
 
-                atualizarEtapaAtendimento(card.dataset.id, item.dataset.etapa);
+                atualizarEtapaAgendamento(card.dataset.id, item.dataset.etapa);
             };
 
             item.addEventListener('click', ativarEtapa);
@@ -2665,10 +2699,7 @@
         document.querySelectorAll('.attendance-advance-btn').forEach(btn => {
 
             btn.addEventListener('click', function() {
-                const proximaEtapa = this.dataset.proximaEtapa;
-                if (!proximaEtapa) return;
-
-                atualizarEtapaAtendimento(this.dataset.id, proximaEtapa);
+                atualizarEtapaAgendamento(this.dataset.id);
             });
 
         });
@@ -2680,8 +2711,8 @@
             const nomePet = botao.dataset.pet || 'Pet';
             const especie = botao.dataset.especie || '';
             const servico = botao.dataset.servico || 'Serviço';
-            const idAtendimento = botao.dataset.idAtendimento || '';
-            const proximaEtapa = botao.dataset.proximaEtapa || '';
+            const idAgendamento = botao.dataset.idAgendamento || '';
+            const podeAvancar = botao.dataset.podeAvancar === '1';
             const percentual = parseFloat(botao.dataset.percentual || '0');
             const concluidas = parseInt(botao.dataset.concluidas || '0', 10);
             const totalEtapas = parseInt(botao.dataset.totalEtapas || '0', 10);
@@ -2708,9 +2739,8 @@
 
             listaEtapas.innerHTML = '';
 
-            // Esteira: com Atendimento real (RFID) ou sem ele, o servidor já manda
-            // a esteira do serviço pronta (real ou simulada pelo status do
-            // agendamento) — aqui só decide "tem etapas pra mostrar" ou não.
+            // Esteira: o servidor já manda pronta (Agendamento::esteira()) —
+            // aqui só decide "tem etapas pra mostrar" ou não.
             if (etapas.length === 0) {
 
                 document.getElementById('detalhesProgresso').style.display = 'none';
@@ -2749,19 +2779,17 @@
                 });
             }
 
-            // Botão de RFID: só é possível simular a leitura quando existe um
-            // Atendimento real vinculado (é ele que guarda o progresso de
-            // verdade). Esteiras simuladas (sem check-in) não têm o que avançar.
-            if (idAtendimento && proximaEtapa) {
+            // Botão de RFID: faz o check-in (Pendente) ou avança a etapa (Em
+            // atendimento); concluídos/cancelados não têm o que avançar.
+            if (idAgendamento && podeAvancar) {
                 btnRfid.disabled = false;
-                btnRfid.dataset.id = idAtendimento;
-                btnRfid.dataset.proximaEtapa = proximaEtapa;
-                btnRfidTexto.textContent = 'Simular leitura RFID';
+                btnRfid.dataset.id = idAgendamento;
+                btnRfidTexto.textContent = botao.dataset.status === 'Pendente' ?
+                    'Fazer check-in' : 'Simular leitura RFID';
             } else {
                 btnRfid.disabled = true;
                 btnRfid.removeAttribute('data-id');
-                btnRfid.removeAttribute('data-proxima-etapa');
-                btnRfidTexto.textContent = idAtendimento ? 'Atendimento finalizado' : 'Sem check-in registrado';
+                btnRfidTexto.textContent = 'Atendimento finalizado';
             }
 
             const painel = document.getElementById('painelDetalhes');
@@ -2774,12 +2802,11 @@
         }
 
         document.getElementById('btnSimularRfidDetalhes').addEventListener('click', function() {
-            const atendimentoId = this.dataset.id;
-            const proximaEtapa = this.dataset.proximaEtapa;
+            const agendamentoId = this.dataset.id;
 
-            if (!atendimentoId || !proximaEtapa) return;
+            if (!agendamentoId) return;
 
-            atualizarEtapaAtendimento(atendimentoId, proximaEtapa);
+            atualizarEtapaAgendamento(agendamentoId);
         });
 
         function fecharDetalhes() {

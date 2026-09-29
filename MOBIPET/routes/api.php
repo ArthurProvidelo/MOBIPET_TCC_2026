@@ -19,17 +19,13 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/esqueci-senha', [AuthController::class, 'forgotPassword']);
 
-// Leitor RFID/ESP32: recebe {"pet_id": "33"} (id do pet), identifica a etapa
-// atual do atendimento em andamento e avança para a próxima. Sem autenticação.
-Route::post('/atendimentos/avancar-rfid', [AtendimentoController::class, 'avancarPorPet']);
-
 // Cadastro RFID: sketch de cadastro do ESP32 grava o pet_id no cartão e
 // envia {"uid": "...", "pet_id": 33} para vincular os dois. Sem autenticação.
 Route::post('/cartoes', [CartaoController::class, 'store']);
 
 // Leitura RFID: sketch de leitura do ESP32 envia {"pet_id": 33} (lido do
 // cartão). Localiza o agendamento do dia daquele pet ainda não concluído e
-// avança para a próxima etapa (Pendente -> Em atendimento -> Concluido).
+// avança para a próxima etapa (check-in -> etapas do serviço -> Concluido).
 // Sem autenticação.
 Route::post('/agendamentos/avancar-rfid', [AgendamentoController::class, 'avancarPorPet']);
 

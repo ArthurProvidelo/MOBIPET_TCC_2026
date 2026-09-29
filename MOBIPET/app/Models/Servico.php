@@ -62,32 +62,4 @@ class Servico extends Model
     {
         return $this->servicoEtapas->pluck('etapa')->all();
     }
-
-    /**
-     * Esteira de atendimento (RFID) deste serviço: check_in, as etapas "do
-     * meio" configuradas no cadastro (Atendimento::ETAPAS_CONFIGURAVEIS,
-     * ex.: banho, tosa...) e, por fim, pronto_retirada + finalizado.
-     *
-     * Sem etapas configuradas (nenhuma linha em servico_etapas — serviço
-     * sem etapas marcadas no formulário): usa a esteira completa
-     * (Atendimento::ETAPAS), mantendo o comportamento anterior.
-     */
-    public function etapasAtendimento(): array
-    {
-        $configuradas = array_values(array_intersect(
-            Atendimento::ETAPAS_CONFIGURAVEIS,
-            $this->etapas
-        ));
-
-        if (empty($configuradas)) {
-            return Atendimento::ETAPAS;
-        }
-
-        return [
-            Atendimento::ETAPAS[0], // check_in
-            ...$configuradas,
-            'pronto_retirada',
-            'finalizado',
-        ];
-    }
 }
