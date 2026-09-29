@@ -428,64 +428,65 @@
         }
 
         /* ===========================================================
-           SELECT DE STATUS (dropdown)
+           SELO DE STATUS AO VIVO (tabela de últimos agendamentos)
         =========================================================== */
 
-        .status-select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
+        .status-live {
+            gap: 8px;
+            max-width: 100%;
+            white-space: nowrap;
+            transition: background-color .35s, color .35s, border-color .35s;
+        }
 
-            font-family: 'Montserrat', sans-serif;
+        .status-live-icone {
             font-size: 13px;
-            font-weight: 700;
-            letter-spacing: .3px;
-
-            padding: 9px 38px 9px 18px;
-            border-radius: 50px;
-
-            cursor: pointer;
-            transition: .25s;
-
-            background-color: #f8fafc;
-            color: #6b7280;
-            border: 1px solid #e5e7eb;
-
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b7280' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 11px;
         }
 
-        .status-select:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(15, 23, 42, .08);
+        .status-live-texto {
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .status-select:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+        /* Em atendimento: ícone da etapa pulsa, indicando que está ao vivo */
+        .status-live.status-andamento .status-live-icone {
+            animation: status-live-pulso 1.8s ease-in-out infinite;
         }
 
-        .status-select-pendente {
-            background-color: #fff7e6;
-            color: #d97706;
-            border-color: #fde68a;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23d97706' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        @keyframes status-live-pulso {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .45;
+            }
         }
 
-        .status-select-concluido {
-            background-color: #ecfdf5;
-            color: #059669;
-            border-color: #a7f3d0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23059669' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        /* Destaque rápido quando o status muda (RFID, app ou painel) */
+        .status-live.status-live-mudou {
+            animation: status-live-destaque 1.6s ease;
         }
 
-        .status-select-em-atendimento {
-            background-color: #eff6ff;
-            color: #2563eb;
-            border-color: #bfdbfe;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%232563eb' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        @keyframes status-live-destaque {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, .45);
+                transform: scale(1.06);
+            }
+
+            100% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .status-live.status-andamento .status-live-icone,
+            .status-live.status-live-mudou {
+                animation: none;
+            }
         }
 
         /* ===========================================================
@@ -1077,9 +1078,9 @@
                 justify-content: flex-end;
             }
 
-            .table-dashboard .status-select {
-                width: auto;
-                min-width: 150px;
+            .table-dashboard .status-live {
+                white-space: normal;
+                text-align: right;
             }
         }
     </style>
@@ -1428,6 +1429,29 @@
                                                 ['Pendente', 'Em atendimento'],
                                                 true
                                             );
+
+                                            // Selo de status (só leitura), igual ao que o JS redesenha ao vivo
+                                            // em aparenciaStatus().
+                                            $statusAttr = (string) $agendamento->status_agendamento;
+                                            $etapaAtualAttr = collect($etapasAttr)->firstWhere('status', 'current');
+
+                                            if ($statusAttr === 'Em atendimento') {
+                                                $seloClasse = 'status-andamento';
+                                                $seloIcone = $etapaAtualAttr['icone'] ?? 'fa-solid fa-shower';
+                                                $seloTexto = 'Em atendimento' . ($etapaAtualAttr ? ' · ' . $etapaAtualAttr['label'] : '');
+                                            } elseif ($statusAttr === 'Concluido') {
+                                                $seloClasse = 'status-concluido';
+                                                $seloIcone = 'fa-solid fa-circle-check';
+                                                $seloTexto = 'Concluído';
+                                            } elseif (\Illuminate\Support\Str::contains(\Illuminate\Support\Str::lower($statusAttr), 'cancelad')) {
+                                                $seloClasse = 'status-cancelado';
+                                                $seloIcone = 'fa-solid fa-ban';
+                                                $seloTexto = 'Cancelado';
+                                            } else {
+                                                $seloClasse = 'status-pendente';
+                                                $seloIcone = 'fa-regular fa-clock';
+                                                $seloTexto = $statusAttr ?: 'Pendente';
+                                            }
                                         @endphp
                                         <tr>
 
@@ -1513,26 +1537,18 @@
                                             <!-- STATUS -->
                                             <td data-label="Status">
 
-                                                <select name="status"
-                                                    class="status-select status-agendamento status-select-{{ \Illuminate\Support\Str::slug($agendamento->status_agendamento) }}"
-                                                    data-id="{{ $agendamento->id_agendamento }}">
+                                                {{-- Só leitura: acompanha ao vivo a esteira (RFID/app/painel) --}}
+                                                <span class="status-badge status-live {{ $seloClasse }}"
+                                                    data-status-live="{{ $agendamento->id_agendamento }}"
+                                                    data-status="{{ $statusAttr }}"
+                                                    data-assinatura="{{ $statusAttr }}|{{ $etapaAtualAttr['chave'] ?? '' }}"
+                                                    role="status" aria-live="polite">
 
-                                                    <option value="Pendente"
-                                                        {{ $agendamento->status_agendamento == 'Pendente' ? 'selected' : '' }}>
-                                                        Pendente
-                                                    </option>
+                                                    <i class="status-live-icone {{ $seloIcone }}"></i>
 
-                                                    <option value="Em atendimento"
-                                                        {{ $agendamento->status_agendamento == 'Em atendimento' ? 'selected' : '' }}>
-                                                        Em atendimento
-                                                    </option>
+                                                    <span class="status-live-texto">{{ $seloTexto }}</span>
 
-                                                    <option value="Concluido"
-                                                        {{ $agendamento->status_agendamento == 'Concluido' ? 'selected' : '' }}>
-                                                        Concluído
-                                                    </option>
-
-                                                </select>
+                                                </span>
 
                                             </td>
 
@@ -1627,7 +1643,7 @@
 
         </section>
 
-        <!-- =====================================================
+        {{-- <!-- =====================================================
             ETAPAS DO ATENDIMENTO (BACKUP MANUAL DO RFID)
         ====================================================== -->
 
@@ -1813,7 +1829,7 @@
 
             </div>
 
-        </section>
+        </section> --}}
 
         <!-- =====================================================
         AÇÕES RÁPIDAS
@@ -2525,107 +2541,188 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        document.querySelectorAll('.status-agendamento').forEach(select => {
+        /**
+         * Status ao vivo da tabela "Últimos Agendamentos": o selo é só
+         * leitura e acompanha a esteira do agendamento (leitura do cartão
+         * RFID, app mobile ou ações do painel). A cada INTERVALO_STATUS_MS
+         * consulta GET /agendamentos/{id}/esteira — a mesma usada pelo "Ver
+         * detalhes" — apenas dos agendamentos que ainda podem mudar
+         * (Pendente / Em atendimento).
+         */
+        const INTERVALO_STATUS_MS = 5000;
+        const STATUS_QUE_MUDAM = ['Pendente', 'Em atendimento'];
 
-            select.addEventListener('change', function() {
+        /** Mesmo mapeamento do @php da tabela (classe, ícone e texto do selo). */
+        function aparenciaStatus(status, etapaAtual) {
+            if (status === 'Em atendimento') {
+                return {
+                    classe: 'status-andamento',
+                    icone: etapaAtual?.icone || 'fa-solid fa-shower',
+                    texto: 'Em atendimento' + (etapaAtual ? ` · ${etapaAtual.label}` : '')
+                };
+            }
 
-                const agendamentoId = this.dataset.id;
-                const status = this.value;
-                const statusSlug = status.toLowerCase().replace(/\s+/g, '-');
-                const previousClass = Array.from(this.classList).find(c => c.startsWith('status-select-'));
+            if (status === 'Concluido') {
+                return {
+                    classe: 'status-concluido',
+                    icone: 'fa-solid fa-circle-check',
+                    texto: 'Concluído'
+                };
+            }
 
-                this.classList.remove('status-select-pendente', 'status-select-concluido',
-                    'status-select-em-atendimento');
-                this.classList.add(`status-select-${statusSlug}`);
+            if ((status || '').toLowerCase().includes('cancelad')) {
+                return {
+                    classe: 'status-cancelado',
+                    icone: 'fa-solid fa-ban',
+                    texto: 'Cancelado'
+                };
+            }
 
-                Swal.fire({
-                    title: 'Atualizando status...',
-                    text: 'Por favor, aguarde.',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    didOpen: () => {
-                        Swal.showLoading();
+            return {
+                classe: 'status-pendente',
+                icone: 'fa-regular fa-clock',
+                texto: status || 'Pendente'
+            };
+        }
+
+        /**
+         * Avisos no canto da tela (SweetAlert em modo toast): não travam a
+         * página, somem sozinhos e pausam com o mouse em cima — igual às
+         * notificações do app mobile.
+         */
+        const Aviso = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: aviso => {
+                aviso.addEventListener('mouseenter', Swal.stopTimer);
+                aviso.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+
+        // id -> momento em que o próprio funcionário mudou pelo painel; nesses
+        // casos o aviso de sucesso já apareceu, então a sincronização não
+        // repete o aviso de "leitura do cartão".
+        const JANELA_ALTERACAO_LOCAL_MS = 15000;
+        const alteracoesLocais = new Map();
+
+        function foiAlteradoAqui(id) {
+            const momento = alteracoesLocais.get(String(id));
+            return Boolean(momento) && (Date.now() - momento) < JANELA_ALTERACAO_LOCAL_MS;
+        }
+
+        /** Redesenha o selo; retorna true se o status/etapa mudou. */
+        function atualizarSeloStatus(selo, dados) {
+            const etapaAtual = (dados.etapas || []).find(etapa => etapa.status === 'current') || null;
+            const assinatura = `${dados.status}|${etapaAtual?.chave || ''}`;
+
+            if (selo.dataset.assinatura === assinatura) return false;
+
+            const aparencia = aparenciaStatus(dados.status, etapaAtual);
+
+            selo.classList.remove('status-pendente', 'status-andamento', 'status-concluido', 'status-cancelado');
+            selo.classList.add(aparencia.classe);
+            selo.querySelector('.status-live-icone').className = `status-live-icone ${aparencia.icone}`;
+            selo.querySelector('.status-live-texto').textContent = aparencia.texto;
+            selo.dataset.status = dados.status;
+            selo.dataset.assinatura = assinatura;
+
+            // Reinicia a animação de destaque mesmo se mudar duas vezes seguidas.
+            selo.classList.remove('status-live-mudou');
+            void selo.offsetWidth;
+            selo.classList.add('status-live-mudou');
+
+            // Mantém o "Ver detalhes" da mesma linha em dia para a próxima abertura.
+            const botao = selo.closest('tr')?.querySelector('.btn-detalhes');
+            if (botao) {
+                botao.dataset.status = dados.status;
+                botao.dataset.podeAvancar = dados.pode_avancar ? '1' : '';
+                botao.dataset.percentual = dados.resumo.percentual;
+                botao.dataset.concluidas = dados.resumo.concluidas;
+                botao.dataset.totalEtapas = dados.resumo.total;
+                botao.dataset.etapas = JSON.stringify(dados.etapas);
+            }
+
+            return true;
+        }
+
+        /** Busca a esteira de um selo e o atualiza; avisa quando a mudança veio do cartão/app. */
+        function sincronizarSelo(selo) {
+            const id = selo.dataset.statusLive;
+
+            return fetch(`/agendamentos/${id}/esteira`, {
+                    headers: {
+                        'Accept': 'application/json'
                     }
-                });
+                })
+                .then(response => response.ok ? response.json() : null)
+                .then(dados => {
+                    if (!dados || !atualizarSeloStatus(selo, dados) || foiAlteradoAqui(id)) return;
 
-                fetch(`/agendamentos/${agendamentoId}/status`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content'),
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            status: status
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
+                    const pet = selo.closest('tr')?.querySelector('.btn-detalhes')?.dataset.pet || 'Pet';
 
-                        if (data.success) {
-                            console.log(data.message);
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Status atualizado!',
-                                text: data.message || 'Status atualizado com sucesso!',
-                                confirmButtonText: 'OK'
-                            });
-                        } else {
-                            if (previousClass) {
-                                this.classList.remove(`status-select-${statusSlug}`);
-                                this.classList.add(previousClass);
-                            }
-
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Erro',
-                                text: data.message || 'Não foi possível atualizar o status.',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-
-                        if (previousClass) {
-                            this.classList.remove(`status-select-${statusSlug}`);
-                            this.classList.add(previousClass);
-                        }
-
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Erro',
-                            text: 'Erro ao atualizar o status.',
-                            confirmButtonText: 'OK'
-                        });
+                    Aviso.fire({
+                        icon: dados.status === 'Concluido' ? 'success' : 'info',
+                        title: pet,
+                        html: `<i class="fa-solid fa-id-card me-1"></i> ${selo.querySelector('.status-live-texto').textContent}`
                     });
+                })
+                .catch(() => {
+                    // Falha momentânea de rede: tenta de novo no próximo ciclo.
+                });
+        }
 
-            });
+        let sincronizandoStatus = false;
 
+        async function sincronizarStatusTabela() {
+            if (sincronizandoStatus || document.hidden) return;
+            sincronizandoStatus = true;
+
+            const selos = Array.from(document.querySelectorAll('[data-status-live]'))
+                .filter(selo => STATUS_QUE_MUDAM.includes(selo.dataset.status));
+
+            await Promise.all(selos.map(sincronizarSelo));
+
+            sincronizandoStatus = false;
+        }
+
+        /** Depois de uma ação no painel: atualiza o selo (e a gaveta aberta) na hora. */
+        function atualizarAgora(agendamentoId) {
+            alteracoesLocais.set(String(agendamentoId), Date.now());
+
+            const selo = document.querySelector(`[data-status-live="${agendamentoId}"]`);
+            if (selo) sincronizarSelo(selo);
+
+            if (typeof sincronizarDetalhes === 'function' &&
+                botaoDetalhesAberto?.dataset.idAgendamento === String(agendamentoId)) {
+                sincronizarDetalhes(agendamentoId);
+            }
+        }
+
+        setInterval(sincronizarStatusTabela, INTERVALO_STATUS_MS);
+
+        // Ao voltar para a aba, atualiza na hora em vez de esperar o ciclo.
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) sincronizarStatusTabela();
         });
 
         /**
          * Esteira do agendamento no painel. Sem "etapa", faz o check-in ou
          * avança para a próxima etapa (POST avancar-etapa); com "etapa" (id
          * de servico_etapas), coloca o agendamento direto nela — backup
-         * manual quando o cartão RFID não é lido. Como o card inteiro
-         * (progresso, pill, esteira) depende da etapa nova, a página
-         * recarrega após confirmar — mais simples e seguro do que
-         * reconstruir esse estado em JS.
+         * manual quando o cartão RFID não é lido. Tudo ao vivo: o selo da
+         * tabela e a gaveta aberta se atualizam na hora, sem recarregar.
          */
         function atualizarEtapaAgendamento(agendamentoId, etapa = null) {
 
             Swal.fire({
+                toast: true,
+                position: 'top-end',
                 title: 'Atualizando etapa...',
-                text: 'Por favor, aguarde.',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
+                showConfirmButton: false,
+                didOpen: () => Swal.showLoading()
             });
 
             const url = etapa ?
@@ -2648,18 +2745,20 @@
                 .then(data => {
 
                     if (data.success) {
-                        Swal.fire({
+                        atualizarAgora(agendamentoId);
+
+                        Aviso.fire({
                             icon: 'success',
                             title: data.title || 'Etapa atualizada!',
-                            text: data.message || 'Etapa atualizada com sucesso!',
-                            confirmButtonText: 'OK'
-                        }).then(() => window.location.reload());
+                            text: data.message || ''
+                        });
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Erro',
                             text: data.message || 'Não foi possível atualizar a etapa.',
-                            confirmButtonText: 'OK'
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#2563eb'
                         });
                     }
 
@@ -2671,7 +2770,8 @@
                         icon: 'error',
                         title: 'Erro',
                         text: 'Erro ao atualizar a etapa.',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#2563eb'
                     });
                 });
         }
@@ -2705,6 +2805,19 @@
         });
     </script>
     <script>
+        /**
+         * "Ver detalhes" em tempo real: enquanto a gaveta está aberta, busca a
+         * esteira no servidor (GET /agendamentos/{id}/esteira — a mesma que o
+         * app mobile recebe, vinda de servico_etapas + etapa_atual) a cada
+         * INTERVALO_DETALHES_MS. Assim a leitura do cartão RFID ou o avanço
+         * feito pelo app aparecem aqui sem recarregar a página.
+         */
+        const INTERVALO_DETALHES_MS = 5000;
+        let timerDetalhes = null;
+        let botaoDetalhesAberto = null;
+        let assinaturaDetalhes = '';
+        let detalhesMudaram = false;
+
         function abrirDetalhes(botao) {
 
             const idPet = botao.dataset.idPet || '';
@@ -2712,10 +2825,6 @@
             const especie = botao.dataset.especie || '';
             const servico = botao.dataset.servico || 'Serviço';
             const idAgendamento = botao.dataset.idAgendamento || '';
-            const podeAvancar = botao.dataset.podeAvancar === '1';
-            const percentual = parseFloat(botao.dataset.percentual || '0');
-            const concluidas = parseInt(botao.dataset.concluidas || '0', 10);
-            const totalEtapas = parseInt(botao.dataset.totalEtapas || '0', 10);
 
             let etapas = [];
             try {
@@ -2729,6 +2838,78 @@
             document.getElementById('detalhesIconePet').className = especie === 'Gato' ?
                 'fa-solid fa-cat' : 'fa-solid fa-dog';
             document.getElementById('detalhesServico').textContent = servico;
+
+            botaoDetalhesAberto = botao;
+            detalhesMudaram = false;
+
+            renderizarEsteiraDetalhes(idAgendamento, {
+                status: botao.dataset.status || 'Pendente',
+                pode_avancar: botao.dataset.podeAvancar === '1',
+                etapas: etapas,
+                resumo: {
+                    percentual: parseFloat(botao.dataset.percentual || '0'),
+                    concluidas: parseInt(botao.dataset.concluidas || '0', 10),
+                    total: parseInt(botao.dataset.totalEtapas || '0', 10),
+                },
+            });
+
+            clearInterval(timerDetalhes);
+            if (idAgendamento) {
+                timerDetalhes = setInterval(() => sincronizarDetalhes(idAgendamento), INTERVALO_DETALHES_MS);
+            }
+
+            const painel = document.getElementById('painelDetalhes');
+            const fundo = document.getElementById('fundoDetalhes');
+
+            painel.classList.add('aberto');
+            fundo.classList.add('aberto');
+            painel.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function sincronizarDetalhes(idAgendamento) {
+            fetch(`/agendamentos/${idAgendamento}/esteira`, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.ok ? response.json() : null)
+                .then(dados => {
+                    if (!dados || botaoDetalhesAberto?.dataset.idAgendamento !== String(idAgendamento)) return;
+
+                    if (renderizarEsteiraDetalhes(idAgendamento, dados)) {
+                        detalhesMudaram = true;
+
+                        // Mantém o botão da tabela em dia para a próxima abertura.
+                        const botao = botaoDetalhesAberto;
+                        botao.dataset.status = dados.status;
+                        botao.dataset.podeAvancar = dados.pode_avancar ? '1' : '';
+                        botao.dataset.percentual = dados.resumo.percentual;
+                        botao.dataset.concluidas = dados.resumo.concluidas;
+                        botao.dataset.totalEtapas = dados.resumo.total;
+                        botao.dataset.etapas = JSON.stringify(dados.etapas);
+                    }
+                })
+                .catch(() => {
+                    // Falha momentânea de rede: tenta de novo no próximo ciclo.
+                });
+        }
+
+        /**
+         * Desenha progresso, esteira e botão de RFID da gaveta. Retorna true
+         * se algo mudou desde o último desenho (para não piscar à toa).
+         */
+        function renderizarEsteiraDetalhes(idAgendamento, dados) {
+
+            const etapas = dados.etapas || [];
+            const assinatura = JSON.stringify([idAgendamento, dados.status, etapas.map(e => e.status)]);
+            if (assinatura === assinaturaDetalhes) return false;
+            assinaturaDetalhes = assinatura;
+
+            const podeAvancar = dados.pode_avancar;
+            const percentual = dados.resumo.percentual;
+            const concluidas = dados.resumo.concluidas;
+            const totalEtapas = dados.resumo.total;
 
             const etapasTexto = document.getElementById('detalhesEtapas');
             const porcentagemTexto = document.getElementById('detalhesPorcentagem');
@@ -2784,7 +2965,7 @@
             if (idAgendamento && podeAvancar) {
                 btnRfid.disabled = false;
                 btnRfid.dataset.id = idAgendamento;
-                btnRfidTexto.textContent = botao.dataset.status === 'Pendente' ?
+                btnRfidTexto.textContent = dados.status === 'Pendente' ?
                     'Fazer check-in' : 'Simular leitura RFID';
             } else {
                 btnRfid.disabled = true;
@@ -2792,13 +2973,7 @@
                 btnRfidTexto.textContent = 'Atendimento finalizado';
             }
 
-            const painel = document.getElementById('painelDetalhes');
-            const fundo = document.getElementById('fundoDetalhes');
-
-            painel.classList.add('aberto');
-            fundo.classList.add('aberto');
-            painel.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
+            return true;
         }
 
         document.getElementById('btnSimularRfidDetalhes').addEventListener('click', function() {
@@ -2818,6 +2993,16 @@
             fundo.classList.remove('aberto');
             painel.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+
+            clearInterval(timerDetalhes);
+            timerDetalhes = null;
+            botaoDetalhesAberto = null;
+            assinaturaDetalhes = '';
+            detalhesMudaram = false;
+
+            // Sem recarregar: o selo da tabela já acompanha ao vivo; só
+            // sincroniza agora para refletir o que a gaveta mostrou.
+            sincronizarStatusTabela();
         }
 
         document.addEventListener('keydown', function(event) {

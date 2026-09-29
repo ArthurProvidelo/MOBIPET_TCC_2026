@@ -44,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/servicos', [ServicoController::class, 'index']);
     Route::get('/funcionarios', [FuncionarioController::class, 'index']);
+    Route::get('/horarios', [AgendamentoController::class, 'horarios']);
 
     Route::get('/agendamentos', [AgendamentoController::class, 'index']);
     Route::get('/agendamentos/atual', [AgendamentoController::class, 'atual']);

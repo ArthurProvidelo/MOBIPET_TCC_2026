@@ -50,6 +50,62 @@ class Agendamento extends Model
     }
 
     /**
+     * Regra de conflito da agenda: o mesmo profissional não pode ter dois
+     * agendamentos ativos na mesma data e horário (cancelados liberam a
+     * vaga). Usada pelo formulário web e pela API do app mobile.
+     */
+    public function scopeAtivosDoProfissionalNaData($query, $idFuncionario, string $data)
+    {
+        return $query->where('data_agendamento', $data)
+            ->where('fk_id_funcionario', $idFuncionario)
+            ->where(function ($q) {
+                $q->whereNull('status_agendamento')
+                  ->orWhereRaw('LOWER(status_agendamento) NOT LIKE ?', ['%cancelad%']);
+            });
+    }
+
+    public static function horarioOcupado($idFuncionario, string $data, string $horario): bool
+    {
+        return self::ativosDoProfissionalNaData($idFuncionario, $data)
+            ->where('horario', 'like', substr($horario, 0, 5) . '%')
+            ->exists();
+    }
+
+    /**
+     * Grade de horários (07:00-18:00, de 30 em 30 min) de um profissional
+     * numa data, marcando os já ocupados e os que já passaram (hoje).
+     *
+     * @return array<int, array{hora: string, disponivel: bool, motivo: ?string}>
+     */
+    public static function gradeHorarios($idFuncionario, \Carbon\Carbon $data): array
+    {
+        $data = $data->copy()->startOfDay();
+
+        if ($data->lt(\Carbon\Carbon::today())) {
+            return [];
+        }
+
+        $ocupados = self::ativosDoProfissionalNaData($idFuncionario, $data->toDateString())
+            ->pluck('horario')
+            ->map(fn ($h) => substr((string) $h, 0, 5))
+            ->all();
+
+        $agora = \Carbon\Carbon::now();
+        $ehHoje = $data->isToday();
+
+        return array_map(function ($hora) use ($ocupados, $ehHoje, $agora, $data) {
+            $passou = $ehHoje && $data->copy()->setTimeFromTimeString($hora)->lte($agora);
+            $ocupado = in_array($hora, $ocupados, true);
+
+            return [
+                'hora'       => $hora,
+                'disponivel' => !$passou && !$ocupado,
+                'motivo'     => $passou ? 'passou' : ($ocupado ? 'ocupado' : null),
+            ];
+        }, self::horariosDisponiveis());
+    }
+
+    /**
      * Sempre que a esteira anda, o status do pet reflete o ponto em que ele
      * está, para telas que mostram só o Pet (ex.: app mobile).
      */
@@ -264,6 +320,29 @@ class Agendamento extends Model
 
         // Em atendimento sem etapa (serviço sem etapas): acabou de fazer o check-in.
         return 0;
+    }
+
+    /**
+     * Carrega as etapas do serviço e inclui no JSON a mesma esteira do
+     * painel (etapas_esteira + resumo_etapas). Usado pela API do app mobile
+     * e pelo "Ver detalhes" do painel, para os dois mostrarem exatamente o
+     * que está em servico_etapas / etapa_atual.
+     */
+    public function comEsteira(): static
+    {
+        $this->loadMissing('servico.servicoEtapas');
+
+        return $this->append(['etapas_esteira', 'resumo_etapas']);
+    }
+
+    public function getEtapasEsteiraAttribute(): array
+    {
+        return $this->esteira();
+    }
+
+    public function getResumoEtapasAttribute(): array
+    {
+        return self::resumoEsteira($this->esteira());
     }
 
     /**

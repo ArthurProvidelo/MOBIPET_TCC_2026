@@ -127,16 +127,7 @@ public function resetar($id)
         // Verificação de conflito: o mesmo profissional não pode ter dois
         // agendamentos ativos na mesma data e horário (agendamentos cancelados
         // liberam a vaga).
-        $jaExiste = Agendamento::where('data_agendamento', $request->data_agendamento)
-            ->where('horario', $request->horario)
-            ->where('fk_id_funcionario', $request->fk_id_funcionario)
-            ->where(function ($q) {
-                $q->whereNull('status_agendamento')
-                  ->orWhereRaw('LOWER(status_agendamento) NOT LIKE ?', ['%cancelad%']);
-            })
-            ->exists();
-
-        if ($jaExiste) {
+        if (Agendamento::horarioOcupado($request->fk_id_funcionario, $request->data_agendamento, $request->horario)) {
             return back()
                 ->withInput()
                 ->withErrors(['horario' => 'Este profissional já tem um agendamento nesta data e horário. Escolha outro horário.']);
@@ -174,36 +165,8 @@ public function resetar($id)
             'data'        => 'required|date',
         ]);
 
-        $data = Carbon::parse($dados['data'])->startOfDay();
-
-        if ($data->lt(Carbon::today())) {
-            return response()->json(['horarios' => []]);
-        }
-
-        // Horários já reservados (agendamentos ativos) desse profissional na data.
-        $ocupados = Agendamento::where('data_agendamento', $data->toDateString())
-            ->where('fk_id_funcionario', $dados['funcionario'])
-            ->where(function ($q) {
-                $q->whereNull('status_agendamento')
-                  ->orWhereRaw('LOWER(status_agendamento) NOT LIKE ?', ['%cancelad%']);
-            })
-            ->pluck('horario')
-            ->map(fn ($h) => substr((string) $h, 0, 5))
-            ->all();
-
-        $agora = Carbon::now();
-        $ehHoje = $data->isToday();
-
-        $horarios = collect(Agendamento::horariosDisponiveis())->map(function ($hora) use ($ocupados, $ehHoje, $agora, $data) {
-            $passou = $ehHoje && $data->copy()->setTimeFromTimeString($hora)->lte($agora);
-            $ocupado = in_array($hora, $ocupados, true);
-
-            return [
-                'hora'       => $hora,
-                'disponivel' => !$passou && !$ocupado,
-                'motivo'     => $passou ? 'passou' : ($ocupado ? 'ocupado' : null),
-            ];
-        });
+        // Mesma grade usada pela API do app mobile (Agendamento::gradeHorarios).
+        $horarios = Agendamento::gradeHorarios($dados['funcionario'], Carbon::parse($dados['data']));
 
         return response()->json(['horarios' => $horarios]);
     }
@@ -412,6 +375,22 @@ public function resetar($id)
         }
 
         return $this->respostaEtapa($agendamento, 'Etapa atualizada!');
+    }
+
+    /**
+     * (AJAX) Esteira do agendamento (servico_etapas + etapa_atual), no mesmo
+     * formato que o app mobile recebe. Consultada pelo "Ver detalhes".
+     */
+    public function esteira($id)
+    {
+        $agendamento = Agendamento::findOrFail($id)->comEsteira();
+
+        return response()->json([
+            'status' => $agendamento->status_agendamento,
+            'pode_avancar' => in_array($agendamento->status_agendamento, ['Pendente', 'Em atendimento'], true),
+            'etapas' => $agendamento->etapas_esteira,
+            'resumo' => $agendamento->resumo_etapas,
+        ]);
     }
 
     private function respostaEtapa(Agendamento $agendamento, string $titulo)

@@ -126,6 +126,13 @@ Route::patch('/agendamentos/{agendamento}/etapa', [AgendamentoController::class,
     ->middleware('staff')
     ->name('agendamentos.definirEtapa');
 
+// (AJAX) Esteira atual do agendamento, consultada pelo "Ver detalhes" do
+// painel enquanto está aberto — reflete as leituras do RFID e as ações do
+// app mobile sem recarregar a página.
+Route::get('/agendamentos/{agendamento}/esteira', [AgendamentoController::class, 'esteira'])
+    ->middleware('staff')
+    ->name('agendamentos.esteira');
+
 // Rota para logout (tanto para clientes quanto para funcionários)
 Route::get('/logout', [AuthController::class, 'logout'])
     ->name('logout');

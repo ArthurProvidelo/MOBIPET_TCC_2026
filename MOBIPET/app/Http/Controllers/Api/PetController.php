@@ -54,11 +54,11 @@ class PetController extends Controller
 
         $agendamento = Agendamento::where('fk_id_pet', $pet->id_pet)
             ->where('status_agendamento', 'Em atendimento')
-            ->with(['servico', 'funcionario'])
+            ->with(['servico.servicoEtapas', 'funcionario'])
             ->latest('id_agendamento')
             ->first();
 
-        return response()->json(['agendamento' => $agendamento]);
+        return response()->json(['agendamento' => $agendamento?->comEsteira()]);
     }
 
     private function validarDados(Request $request): array
