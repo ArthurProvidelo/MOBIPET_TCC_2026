@@ -94,7 +94,8 @@
             background: currentColor;
         }
 
-        /* Fundo da página */
+        /* Fundo da página — foto + véu claro + "bolhas" azuis desfocadas
+           à deriva (modo claro, o sistema é branco e azul). */
         body.inner-page {
             background-image: url('{{ asset('assets/img/fundo_login.png') }}');
             background-size: cover;
@@ -104,12 +105,62 @@
             position: relative;
         }
 
-        body.inner-page::before {
-            content: "";
+        .lg-bubbles {
             position: fixed;
             inset: 0;
-            background-color: rgba(247, 249, 255, .18);
             z-index: -1;
+            overflow: hidden;
+            background: rgba(247, 249, 255, .42);
+        }
+
+        .lg-bubble {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .65;
+            will-change: transform;
+        }
+
+        .lg-bubble--1 {
+            width: 48vw;
+            height: 48vw;
+            top: -14%;
+            left: -10%;
+            background: radial-gradient(circle at 30% 30%, #5b93fb, transparent 70%);
+            animation: lgFloat1 24s ease-in-out infinite;
+        }
+
+        .lg-bubble--2 {
+            width: 40vw;
+            height: 40vw;
+            bottom: -16%;
+            right: -8%;
+            background: radial-gradient(circle at 60% 40%, #175cdd, transparent 70%);
+            animation: lgFloat2 28s ease-in-out infinite;
+        }
+
+        .lg-bubble--3 {
+            width: 32vw;
+            height: 32vw;
+            top: 38%;
+            left: 58%;
+            background: radial-gradient(circle at 50% 50%, #8fb8ff, transparent 72%);
+            animation: lgFloat3 20s ease-in-out infinite;
+        }
+
+        @keyframes lgFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6%, 8%) scale(1.08); }
+        }
+
+        @keyframes lgFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-7%, -6%) scale(1.06); }
+        }
+
+        @keyframes lgFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-6%, 6%) scale(1.12); }
         }
 
         /* =========================================================
@@ -169,10 +220,13 @@
             position: relative;
             width: 100%;
             max-width: 980px;
-            background: #fff;
+            background: rgba(255, 255, 255, .72);
+            border: 1px solid rgba(255, 255, 255, .6);
             border-radius: var(--lg-radius);
             overflow: hidden;
             box-shadow: var(--lg-shadow);
+            -webkit-backdrop-filter: blur(22px) saturate(140%);
+            backdrop-filter: blur(22px) saturate(140%);
             display: grid;
             grid-template-columns: .82fr 1.18fr;
         }
@@ -250,7 +304,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: #fff;
+            background: transparent;
         }
 
         .lg-panel h2 {
@@ -353,72 +407,16 @@
                 transition: none !important;
             }
         }
-
-        /* ---- Footer criativo (padrão do site) ---- */
-        .footer-16 {
-            position: relative;
-            overflow: visible;
-            padding-bottom: 90px;
-        }
-
-        .footer-16 .footer-main {
-            margin-bottom: 0;
-        }
-
-        .footer-16::before {
-            content: "";
-            position: absolute;
-            top: -1px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), #22c55e, var(--accent-color), transparent);
-            background-size: 200% 100%;
-            animation: footerGradientMove 6s linear infinite;
-        }
-
-        @keyframes footerGradientMove {
-            0% { background-position: 0% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .footer-badge {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-color), #1d4ed8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(23, 92, 221, 0.35);
-            z-index: 2;
-            transition: transform 0.4s ease;
-        }
-
-        .footer-badge i {
-            color: #fff;
-            font-size: 26px;
-        }
-
-        .footer-badge:hover {
-            transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
-        }
-
-        .footer-16 .brand-section {
-            max-width: 380px;
-        }
-
-        .footer-16 .contact-info {
-            margin-top: 24px;
-        }
     </style>
 </head>
 
 <body class="inner-page">
+
+    <div class="lg-bubbles" aria-hidden="true">
+        <div class="lg-bubble lg-bubble--1"></div>
+        <div class="lg-bubble lg-bubble--2"></div>
+        <div class="lg-bubble lg-bubble--3"></div>
+    </div>
 
     @include('partials.preloader')
 
@@ -430,6 +428,7 @@
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
                     <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
+                    <span class="logo-wordmark">Mobi<span class="logo-wordmark__pet">Pet</span></span>
                 </a>
 
                 <nav id="navmenu" class="navmenu">
@@ -622,8 +621,6 @@
         </div>
 
     </main>
-
-    @include('partials.footer')
 
     <a href="#" id="scroll-top"
         class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"

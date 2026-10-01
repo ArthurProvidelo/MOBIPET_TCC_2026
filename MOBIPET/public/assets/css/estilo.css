@@ -1045,3 +1045,364 @@ dd,
         width: 100%;
     }
 }
+
+/* ==========================================================================
+   CABEÇALHO — visual "glass header" (blur/elevação ao rolar), links em
+   pílula e ações em destaque (Entrar / Cadastre-se / Sair como botões).
+   Sobrepõe o cabeçalho padrão do template (main.css) sem alterá-lo.
+   ========================================================================== */
+.header {
+    background-color: color-mix(in srgb, var(--background-color), transparent 25%) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid transparent;
+    box-shadow: none !important;
+    transition: background-color .35s ease, backdrop-filter .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+
+.scrolled .header {
+    background-color: color-mix(in srgb, var(--background-color), transparent 5%) !important;
+    border-bottom-color: color-mix(in srgb, var(--default-color), transparent 90%);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .08) !important;
+}
+
+/* Links comuns do menu em formato de pílula, com animação suave no hover
+   (fundo entra + a aba "levanta" levemente com uma sombra em degradê) e um
+   estado "active" que se destaca de verdade: pílula cheia + texto em negrito
+   + um pontinho aceso embaixo, pra ficar óbvio em que página o usuário está. */
+@media (min-width: 1200px) {
+    .navmenu > ul > li {
+        padding-top: 15px;
+        padding-bottom: 23px;
+    }
+
+    .navmenu > ul > li > a.nav-link-pill {
+        position: relative;
+        border-radius: 999px;
+        padding: 8px 16px;
+        transition: background-color .3s ease, color .3s ease, transform .3s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease, font-weight 0s;
+    }
+
+    .navmenu > ul > li > a.nav-link-pill:before {
+        display: none;
+    }
+
+    .navmenu > ul > li > a.nav-link-pill:hover,
+    .navmenu > ul > li > a.nav-link-pill:focus-visible {
+        background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+        color: var(--nav-hover-color);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px -8px color-mix(in srgb, var(--accent-color), transparent 55%);
+    }
+
+    .navmenu > ul > li > a.nav-link-pill:active {
+        transform: translateY(-1px) scale(.97);
+    }
+
+    .navmenu > ul > li > a.nav-link-pill.active {
+        background-color: color-mix(in srgb, var(--accent-color), transparent 85%);
+        color: var(--nav-hover-color) !important;
+        font-weight: 700;
+        box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent-color), transparent 55%);
+    }
+
+    /* Pontinho aceso embaixo do item ativo, com um leve pulso respirando */
+    .navmenu > ul > li > a.nav-link-pill.active::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -11px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        transform: translateX(-50%);
+        animation: navActivePulse 2.4s ease-in-out infinite;
+    }
+}
+
+@keyframes navActivePulse {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color), transparent 55%); }
+    50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%); }
+}
+
+/* Ações em destaque: Entrar (contorno) e Cadastre-se (sólido), como no
+   par de botões "Sign In / Get Started" do header de referência. */
+.navmenu .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-weight: 600;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.navmenu .nav-btn:before {
+    display: none;
+}
+
+.navmenu .nav-btn-outline {
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 72%);
+    color: var(--heading-color);
+    background-color: transparent;
+}
+
+.navmenu .nav-btn-outline:hover,
+.navmenu .nav-btn-outline:focus-visible {
+    background-color: color-mix(in srgb, var(--default-color), transparent 94%);
+    color: var(--heading-color);
+    border-color: color-mix(in srgb, var(--accent-color), transparent 40%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 18px -10px rgba(15, 23, 42, .25);
+}
+
+.navmenu .nav-btn-outline:active {
+    transform: translateY(-1px) scale(.97);
+}
+
+.navmenu .nav-btn-outline.active {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 88%);
+    border-color: color-mix(in srgb, var(--accent-color), transparent 35%);
+    color: var(--nav-hover-color) !important;
+    font-weight: 700;
+}
+
+.navmenu .nav-btn-solid {
+    background-color: var(--accent-color);
+    color: var(--contrast-color) !important;
+    border: 1px solid var(--accent-color);
+}
+
+.navmenu .nav-btn-solid:hover,
+.navmenu .nav-btn-solid:focus-visible,
+.navmenu .nav-btn-solid.active,
+.navmenu .nav-btn-solid.active:focus {
+    background-color: color-mix(in srgb, var(--accent-color), black 12%);
+    color: var(--contrast-color) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 22px -8px color-mix(in srgb, var(--accent-color), transparent 40%);
+}
+
+.navmenu .nav-btn-solid:active {
+    transform: translateY(-1px) scale(.97);
+}
+
+/* "Entrar" vira um menu com as duas portas de acesso (cliente / equipe).
+   Seletores prefixados com .navmenu de propósito: o CSS do template
+   (main.css) estiliza qualquer <ul>/<a> dentro de .navmenu de forma
+   genérica (inclusive display:flex nos <ul>), e isso precisa perder para
+   o comportamo padrão do dropdown do Bootstrap (fechado = display:none). */
+.navmenu .nav-entry {
+    position: relative;
+}
+
+.navmenu .nav-entry .dropdown-toggle::after {
+    margin-left: 8px;
+    vertical-align: .1em;
+    transition: transform .25s ease;
+}
+
+.navmenu .nav-entry.show .dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+.navmenu .nav-entry-menu {
+    display: none !important;
+    min-width: 270px;
+    padding: 8px !important;
+    margin: 12px 0 0 !important;
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 24px 48px -18px rgba(15, 23, 42, .28) !important;
+    background-color: var(--background-color) !important;
+}
+
+.navmenu .nav-entry-menu.show {
+    display: block !important;
+    animation: mp-menu-in .2s ease both;
+}
+
+.navmenu .nav-entry-item {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start !important;
+    gap: 12px;
+    padding: 10px 12px !important;
+    border-radius: 12px;
+    white-space: normal !important;
+    font-size: .9rem !important;
+    transition: background-color .2s ease;
+}
+
+.navmenu .nav-entry-item:hover,
+.navmenu .nav-entry-item:focus-visible {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
+}
+
+.navmenu .nav-entry-item.active,
+.navmenu .nav-entry-item.active:hover,
+.navmenu .nav-entry-item.active:focus {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 88%) !important;
+    color: inherit !important;
+}
+
+.navmenu .nav-entry-item__icon {
+    width: 38px;
+    height: 38px;
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent-color), transparent 88%);
+    color: var(--accent-color);
+    font-size: 1.05rem;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.navmenu .nav-entry-item.active .nav-entry-item__icon {
+    background: var(--accent-color);
+    color: var(--contrast-color);
+}
+
+.navmenu .nav-entry-item strong {
+    display: block;
+    font-size: .88rem;
+    font-weight: 700;
+    color: var(--heading-color);
+}
+
+.navmenu .nav-entry-item small {
+    display: block;
+    font-size: .74rem;
+    color: color-mix(in srgb, var(--default-color), transparent 35%);
+}
+
+@media (max-width: 1199px) {
+    .navmenu .nav-entry-menu {
+        position: static !important;
+        inset: auto !important;
+        transform: none !important;
+        width: 100%;
+        box-shadow: none !important;
+        border-color: color-mix(in srgb, var(--default-color), transparent 92%) !important;
+    }
+}
+
+/* ==========================================================================
+   MARCA "MobiPet" ao lado do escudo — reaproveita as cores oficiais do logo
+   (Mobi em navy, Pet em azul), com o "P" maiúsculo.
+   ========================================================================== */
+.header .logo {
+    gap: 6px;
+}
+
+.logo-wordmark {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--heading-color);
+    transition: color .2s ease;
+}
+
+.logo-wordmark__pet {
+    color: var(--accent-color);
+}
+
+@media (max-width: 420px) {
+    .logo-wordmark {
+        display: none;
+    }
+}
+
+/* Botão de menu (mobile): vira um botão com borda, como um ícone shadcn */
+@media (max-width: 1199px) {
+    .mobile-nav-toggle {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid color-mix(in srgb, var(--default-color), transparent 75%);
+        border-radius: 10px;
+        transition: background-color .2s ease, border-color .2s ease, transform .3s ease;
+    }
+
+    .mobile-nav-toggle:hover {
+        background-color: color-mix(in srgb, var(--default-color), transparent 94%);
+    }
+
+    .mobile-nav-toggle.bi-x {
+        transform: rotate(90deg);
+    }
+
+    /* Painel do menu mobile: vidro fosco (blur) no lugar do overlay escuro */
+    .mobile-nav-active .navmenu {
+        background: color-mix(in srgb, var(--background-color), transparent 4%);
+        -webkit-backdrop-filter: saturate(180%) blur(18px);
+        backdrop-filter: saturate(180%) blur(18px);
+    }
+
+    .mobile-nav-active .navmenu > ul {
+        background-color: var(--background-color);
+        border-color: color-mix(in srgb, var(--default-color), transparent 90%);
+        animation: mp-menu-in .25s ease both;
+    }
+
+    .mobile-nav-active .mobile-nav-toggle {
+        color: var(--heading-color) !important;
+        background-color: var(--background-color);
+        border-color: color-mix(in srgb, var(--default-color), transparent 75%);
+    }
+
+    .navmenu > ul > li > a.nav-link-pill {
+        position: relative;
+        border-radius: 10px;
+        transition: background-color .2s ease, color .2s ease, padding-left .2s ease;
+    }
+
+    .navmenu > ul > li > a.nav-link-pill:hover {
+        background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
+        padding-left: 26px;
+    }
+
+    /* No mobile, o item ativo ganha uma barrinha de destaque à esquerda
+       em vez do pontinho (que só cabe no menu horizontal). */
+    .navmenu > ul > li > a.nav-link-pill.active {
+        background-color: color-mix(in srgb, var(--accent-color), transparent 88%);
+        color: var(--nav-hover-color) !important;
+        font-weight: 700;
+    }
+
+    .navmenu > ul > li > a.nav-link-pill.active::before {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 50%;
+        width: 4px;
+        height: 60%;
+        transform: translateY(-50%);
+        border-radius: 999px;
+        background: var(--accent-color);
+    }
+
+    .navmenu .nav-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@keyframes mp-menu-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

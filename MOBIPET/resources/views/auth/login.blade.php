@@ -102,7 +102,9 @@
         }
 
         /* =========================================================
-           FUNDO DA PÁGINA
+           FUNDO DA PÁGINA — a foto de sempre, com um véu claro e
+           "bolhas" azuis desfocadas à deriva por cima, num looping
+           lento (modo claro — o sistema é branco e azul).
            ========================================================= */
         body.inner-page {
             background-image: url('{{ asset('assets/img/fundo_login.png') }}');
@@ -113,12 +115,62 @@
             position: relative;
         }
 
-        body.inner-page::before {
-            content: "";
+        .lg-bubbles {
             position: fixed;
             inset: 0;
-            background-color: rgba(247, 249, 255, .18);
             z-index: -1;
+            overflow: hidden;
+            background: rgba(247, 249, 255, .42);
+        }
+
+        .lg-bubble {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .65;
+            will-change: transform;
+        }
+
+        .lg-bubble--1 {
+            width: 48vw;
+            height: 48vw;
+            top: -14%;
+            left: -10%;
+            background: radial-gradient(circle at 30% 30%, #5b93fb, transparent 70%);
+            animation: lgFloat1 24s ease-in-out infinite;
+        }
+
+        .lg-bubble--2 {
+            width: 40vw;
+            height: 40vw;
+            bottom: -16%;
+            right: -8%;
+            background: radial-gradient(circle at 60% 40%, #175cdd, transparent 70%);
+            animation: lgFloat2 28s ease-in-out infinite;
+        }
+
+        .lg-bubble--3 {
+            width: 32vw;
+            height: 32vw;
+            top: 38%;
+            left: 58%;
+            background: radial-gradient(circle at 50% 50%, #8fb8ff, transparent 72%);
+            animation: lgFloat3 20s ease-in-out infinite;
+        }
+
+        @keyframes lgFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6%, 8%) scale(1.08); }
+        }
+
+        @keyframes lgFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-7%, -6%) scale(1.06); }
+        }
+
+        @keyframes lgFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-6%, 6%) scale(1.12); }
         }
 
         /* =========================================================
@@ -132,7 +184,7 @@
             font-family: "Montserrat", sans-serif;
             font-weight: 600;
             font-size: .97rem;
-            padding: 14px 26px;
+            padding: 11px 26px;
             border-radius: 999px;
             border: 1.5px solid transparent;
             text-decoration: none;
@@ -167,12 +219,14 @@
         }
 
         /* =========================================================
-           CARD (login + cadastro com painel deslizante)
+           CARD — login de um lado, convite pra criar conta do outro
+           (layout estático, igual ao das outras telas de auth; a
+           conta é criada na própria página /cadastro, já existente).
            ========================================================= */
         .lg-wrapper {
             display: flex;
             justify-content: center;
-            padding: 2rem 1rem 4rem;
+            padding: 1rem 1rem 1.5rem;
         }
 
         .lg-card {
@@ -180,53 +234,92 @@
             width: 100%;
             max-width: 900px;
             min-height: 480px;
-            height: 580px;
-            background: #fff;
+            background: rgba(255, 255, 255, .72);
+            border: 1px solid rgba(255, 255, 255, .6);
             border-radius: var(--lg-radius);
             overflow: hidden;
             box-shadow: var(--lg-shadow);
+            -webkit-backdrop-filter: blur(22px) saturate(140%);
+            backdrop-filter: blur(22px) saturate(140%);
             font-family: "Roboto", sans-serif;
-            transition: height .5s cubic-bezier(.65, 0, .35, 1);
-        }
-
-        /* =========================================================
-           ÁREA DOS FORMULÁRIOS
-           ========================================================= */
-        .lg-forms {
-            position: absolute;
-            inset: 0;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
         }
 
         .lg-panel {
-            width: 50%;
-            height: 100%;
-            padding: 50px 55px;
+            padding: 32px 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            overflow: hidden;
+            background: transparent;
+        }
+
+        /* =========================================================
+           TROCA CLIENTE / FUNCIONÁRIO — deixa óbvio, direto no card,
+           que existem as duas portas de entrada (sem depender só do
+           menu do cabeçalho).
+           ========================================================= */
+        .lg-role-switch {
+            display: inline-flex;
+            align-self: flex-start;
+            padding: 4px;
+            gap: 2px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .55);
+            border: 1px solid var(--lg-line);
+            margin-bottom: 14px;
+        }
+
+        .lg-role-switch a,
+        .lg-role-switch span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 16px;
+            border-radius: 999px;
+            font-family: "Lato", sans-serif;
+            font-size: .78rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--lg-muted);
+            transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+        }
+
+        .lg-role-switch .is-active {
+            background: var(--lg-accent);
+            color: #fff;
+            box-shadow: 0 6px 14px -6px rgba(23, 92, 221, .6);
+        }
+
+        .lg-role-switch a:not(.is-active):hover {
             background: #fff;
+            color: var(--lg-ink);
         }
 
         .lg-panel h2 {
             font-weight: 800;
-            font-size: clamp(1.6rem, 3vw, 2rem);
-            margin: 0 0 6px;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            margin: 0 0 4px;
+            color: var(--lg-ink);
         }
 
         .lg-panel .lg-sub {
             font-size: .92rem;
             color: var(--lg-muted);
-            margin-bottom: 26px;
+            margin-bottom: 16px;
         }
 
-        .lg-form-signin {
-            order: 1;
+        /* Formulário de login — ritmo vertical uniforme entre os campos,
+           em vez dos espaçamentos avulsos (mb-2/mb-3/mb-4) de antes. */
+        .lg-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
-        .lg-form-register {
-            order: 2;
+        .lg-field {
+            display: flex;
+            flex-direction: column;
         }
 
         /* Campos */
@@ -241,26 +334,31 @@
         }
 
         .lg-panel .input-group-text {
-            background: var(--lg-bg);
+            background: rgba(255, 255, 255, .6);
             border: 1px solid var(--lg-line);
             color: var(--lg-muted);
         }
 
         .lg-panel .form-control {
-            height: 50px;
+            height: 46px;
+            background: rgba(255, 255, 255, .55);
             border: 1px solid var(--lg-line);
+            color: var(--lg-ink);
             box-shadow: none;
-            transition: border-color .25s ease, box-shadow .25s ease;
+            transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease;
+        }
+
+        .lg-panel .form-control::placeholder {
+            color: var(--lg-muted);
         }
 
         .lg-panel .form-control:focus {
+            background: #fff;
             border-color: var(--lg-accent);
             box-shadow: 0 0 0 4px var(--lg-accent-soft);
+            color: var(--lg-ink);
         }
 
-        .lg-form-register .form-control {
-            height: 44px;
-        }
         /* =========================================================
            RECUPERAR SENHA
            ========================================================= */
@@ -281,46 +379,75 @@
             text-decoration: underline;
         }
 
+        /* =========================================================
+           DIVISOR "OU CONTINUE COM" + BOTÃO GOOGLE
+           ========================================================= */
+        .lg-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 14px 0 12px;
+        }
+
+        .lg-divider::before,
+        .lg-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--lg-line);
+        }
+
+        .lg-divider span {
+            font-family: "Lato", sans-serif;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--lg-muted);
+            white-space: nowrap;
+        }
+
+        .lg-btn--google {
+            width: 100%;
+            background: #fff;
+            color: #1f2937;
+            border-color: var(--lg-line);
+        }
+
+        .lg-btn--google:hover {
+            background: #fff;
+            color: #1f2937;
+            transform: translateY(-3px);
+            box-shadow: 0 14px 26px -12px rgba(15, 27, 52, .18);
+        }
+
+        /* Seta do botão principal: desliza levemente no hover */
+        .lg-btn--primary .lg-btn-arrow {
+            transition: transform .25s ease;
+        }
+
+        .lg-btn--primary:hover .lg-btn-arrow {
+            transform: translateX(4px);
+        }
+
 
         /* =========================================================
-           PAINEL AZUL DESLIZANTE
+           PAINEL DE CONVITE (estático) — "ainda não tem conta?"
            ========================================================= */
-        .lg-overlay-container {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 100;
-            transition: transform .7s cubic-bezier(.77, 0, .175, 1);
-        }
-
-        .lg-overlay {
-            position: relative;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            display: flex;
-            color: #fff;
-            background:
-                radial-gradient(46% 130% at 100% 0%, rgba(255, 255, 255, .16), transparent 60%),
-                linear-gradient(135deg, var(--lg-accent), var(--lg-accent-dark));
-            transition: transform .7s cubic-bezier(.77, 0, .175, 1);
-        }
-
-        .lg-overlay-panel {
-            width: 50%;
-            height: 100%;
-            padding: 40px;
+        .lg-promo {
+            padding: 48px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+            color: #fff;
+            background:
+                radial-gradient(46% 130% at 100% 0%, rgba(255, 255, 255, .16), transparent 60%),
+                linear-gradient(135deg, var(--lg-accent), var(--lg-accent-dark));
         }
 
-        .lg-overlay-panel h2 {
+        .lg-promo h2 {
             color: #fff;
             font-family: "Montserrat", sans-serif;
             font-size: clamp(1.5rem, 3.4vw, 2.1rem);
@@ -328,23 +455,12 @@
             margin-bottom: 14px;
         }
 
-        .lg-overlay-panel p {
+        .lg-promo p {
             max-width: 320px;
             margin-bottom: 28px;
             font-size: .95rem;
             line-height: 1.65;
             color: rgba(255, 255, 255, .85);
-        }
-
-        /* Estados do card:
-           - padrão            -> mostra formulário de LOGIN + CTA "Cadastrar"
-           - .lg-register-active -> mostra formulário de CADASTRO + CTA "Entrar" */
-        .lg-card.lg-register-active .lg-overlay-container {
-            transform: translateX(-100%);
-        }
-
-        .lg-card.lg-register-active .lg-overlay {
-            transform: translateX(50%);
         }
 
         /* =========================================================
@@ -362,79 +478,31 @@
 
         @media (max-width: 700px) {
             .lg-card {
-                min-height: 720px;
+                grid-template-columns: 1fr;
                 max-width: 520px;
             }
 
-            /* Painel azul vira faixa fixa no topo; só o texto interno troca */
-            .lg-overlay-container {
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 190px;
-            }
-
-            .lg-card.lg-register-active .lg-overlay-container {
-                transform: none;
-            }
-
-            .lg-overlay {
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 200%;
-                flex-direction: column;
-                transform: translateY(-50%);
-            }
-
-            .lg-card.lg-register-active .lg-overlay {
-                transform: translateY(0);
-            }
-
-            .lg-overlay-panel {
-                width: 100%;
-                height: 50%;
-                padding: 20px;
-            }
-
-            /* Em telas pequenas só o formulário ativo ocupa espaço */
-            .lg-panel {
-                display: none;
-                width: 100%;
-                height: calc(100% - 190px);
-                margin-top: 190px;
+            .lg-promo {
+                order: -1;
                 padding: 30px 25px;
             }
 
-            .lg-card:not(.lg-register-active) .lg-form-signin,
-            .lg-card.lg-register-active .lg-form-register {
-                display: flex;
+            .lg-promo p {
+                font-size: .85rem;
             }
 
-            .lg-overlay-panel p {
-                font-size: .85rem;
-                margin-bottom: 14px;
+            .lg-panel {
+                padding: 35px 25px;
             }
         }
 
         @media (max-width: 480px) {
             .lg-card {
-                min-height: 700px;
                 border-radius: 20px;
             }
 
-            .lg-overlay-container {
-                height: 175px;
-            }
-
             .lg-panel {
-                height: calc(100% - 175px);
-                margin-top: 175px;
-                padding: 25px 20px;
-            }
-
-            .lg-overlay-panel p {
-                display: none;
+                padding: 30px 20px;
             }
         }
 
@@ -447,72 +515,16 @@
                 transition: none !important;
             }
         }
-
-        /* ---- Footer criativo (padrão do site) ---- */
-        .footer-16 {
-            position: relative;
-            overflow: visible;
-            padding-bottom: 90px;
-        }
-
-        .footer-16 .footer-main {
-            margin-bottom: 0;
-        }
-
-        .footer-16::before {
-            content: "";
-            position: absolute;
-            top: -1px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), #22c55e, var(--accent-color), transparent);
-            background-size: 200% 100%;
-            animation: footerGradientMove 6s linear infinite;
-        }
-
-        @keyframes footerGradientMove {
-            0% { background-position: 0% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .footer-badge {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-color), #1d4ed8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(23, 92, 221, 0.35);
-            z-index: 2;
-            transition: transform 0.4s ease;
-        }
-
-        .footer-badge i {
-            color: #fff;
-            font-size: 26px;
-        }
-
-        .footer-badge:hover {
-            transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
-        }
-
-        .footer-16 .brand-section {
-            max-width: 380px;
-        }
-
-        .footer-16 .contact-info {
-            margin-top: 24px;
-        }
     </style>
 </head>
 
 <body class="inner-page">
+
+    <div class="lg-bubbles" aria-hidden="true">
+        <div class="lg-bubble lg-bubble--1"></div>
+        <div class="lg-bubble lg-bubble--2"></div>
+        <div class="lg-bubble lg-bubble--3"></div>
+    </div>
 
     @include('partials.preloader')
 
@@ -527,6 +539,7 @@
 
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
                     <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
+                    <span class="logo-wordmark">Mobi<span class="logo-wordmark__pet">Pet</span></span>
                 </a>
 
                 <nav id="navmenu" class="navmenu">
@@ -546,7 +559,7 @@
 
     </header>
 
-    <main class="main lg-page" style="margin-top: 120px;">
+    <main class="main lg-page" style="margin-top: 100px;">
 
         <!-- ================= ALERTAS GLOBAIS ================= -->
         <div class="container" data-aos="fade-up">
@@ -574,218 +587,94 @@
             </div>
         </div>
 
-        <!-- ================= CARD LOGIN / CADASTRO ================= -->
+        <!-- ================= CARD LOGIN ================= -->
         <div class="lg-wrapper" data-aos="fade-up" data-aos-delay="100">
             <div class="lg-card">
 
-                <!-- ---------- ÁREA DOS FORMULÁRIOS ---------- -->
-                <div class="lg-forms">
+                <!-- ---------- LOGIN ---------- -->
+                <div class="lg-panel">
 
-                    <!-- LOGIN -->
-                    <div class="lg-panel lg-form-signin">
-
-
-                        <h2>Entrar</h2>
-                        <p class="lg-sub">É um prazer ter você de volta conosco!</p>
-
-                        <form method="POST" action="{{ route('login.autenticar') }}">
-                            @csrf
-
-                            <div class="mb-3">
-                                <label class="form-label">E-mail</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-envelope"></i>
-                                    </span>
-                                    <input type="email" name="email"
-                                        class="form-control rounded-end-3"
-                                        placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required>
-                                </div>
-                            </div>
-
-                            <div class="mb-2">
-                                <label class="form-label">Senha</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-lock"></i>
-                                    </span>
-                                    <input type="password" name="senha" id="loginSenha"
-                                        class="form-control"
-                                        placeholder="Sua senha" required>
-                                    <span class="input-group-text toggle-senha rounded-end-3" data-target="loginSenha"
-                                        role="button" tabindex="0" aria-label="Mostrar senha">
-                                        <i class="bi bi-eye"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- RECUPERAR SENHA -->
-                            <div class="text-end mb-4">
-                                <a href="{{ route('senha.recuperar') }}" class="lg-forgot-password">
-                                    <i class="bi bi-key me-1"></i>
-                                    Esqueci minha senha
-                                </a>
-                            </div>
-
-                            <button type="submit" class="lg-btn lg-btn--primary">
-                                <i class="bi bi-box-arrow-in-right"></i>
-                                Entrar
-                            </button>
-
-                        </form>
-
+                    <div class="lg-role-switch">
+                        <span class="is-active"><i class="bi bi-person"></i> Cliente</span>
+                        <a href="{{ route('login.funcionario') }}"><i class="bi bi-briefcase"></i> Funcionário</a>
                     </div>
 
-                    <!-- CADASTRO DO CLIENTE -->
-                    <div class="lg-panel lg-form-register">
+                    <h2>Entrar</h2>
+                    <p class="lg-sub">É um prazer ter você de volta conosco!</p>
 
+                    <form method="POST" action="{{ route('login.autenticar') }}" class="lg-form">
+                        @csrf
 
-                        <h2>Criar cadastro</h2>
-                        <p class="lg-sub">Preencha seus dados para criar sua conta no Mobipet.</p>
-
-                        <form method="POST" action="{{ route('cadastro.salvar') }}" id="cadastroForm">
-                            @csrf
-
-                            <!-- NOME -->
-                            <div class="mb-2">
-                                <label class="form-label">Nome Completo</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="fa-solid fa-user small"></i>
-                                    </span>
-                                    <input type="text" name="nome" class="form-control"
-                                        placeholder="Seu nome completo" value="{{ old('nome', request('nome')) }}"
-                                        required>
-                                </div>
+                        <div class="lg-field">
+                            <label class="form-label">E-mail</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input type="email" name="email"
+                                    class="form-control rounded-end-3"
+                                    placeholder="seuemail@exemplo.com" value="{{ old('email') }}" required>
                             </div>
+                        </div>
 
-                            <!-- CPF + TELEFONE -->
-                            <div class="row g-2 mb-2">
-                                <div class="col-6">
-                                    <label class="form-label">CPF</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <i class="fa-solid fa-id-card small"></i>
-                                        </span>
-                                        <input type="text" id="cpf" name="cpf" maxlength="14"
-                                            inputmode="numeric" autocomplete="off" class="form-control"
-                                            placeholder="000.000.000-00" value="{{ old('cpf') }}" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-6">
-                                    <label class="form-label">Telefone</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <i class="bi bi-telephone"></i>
-                                        </span>
-                                        <input type="text" id="telefone" name="telefone" maxlength="15"
-                                            inputmode="numeric" autocomplete="off" class="form-control"
-                                            placeholder="(19) 99999-8888" value="{{ old('telefone') }}" required>
-                                    </div>
-                                </div>
+                        <div class="lg-field">
+                            <label class="form-label">Senha</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password" name="senha" id="loginSenha"
+                                    class="form-control"
+                                    placeholder="Sua senha" required>
+                                <span class="input-group-text toggle-senha rounded-end-3" data-target="loginSenha"
+                                    role="button" tabindex="0" aria-label="Mostrar senha">
+                                    <i class="bi bi-eye"></i>
+                                </span>
                             </div>
+                        </div>
 
-                            <!-- CEP + ENDEREÇO -->
-                            <div class="row g-2 mb-2">
-                                <div class="col-12 col-sm-5">
-                                    <label class="form-label">CEP</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <i class="bi bi-mailbox"></i>
-                                        </span>
-                                        <input type="text" name="cep" id="cadCep" maxlength="9"
-                                            inputmode="numeric" autocomplete="postal-code" class="form-control"
-                                            placeholder="00000-000" value="{{ old('cep') }}"
-                                            data-cep data-endereco-alvo="cadEndereco" data-cep-status="cadCepStatus">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-7">
-                                    <label class="form-label">Endereço Residencial</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <i class="bi bi-geo-alt"></i>
-                                        </span>
-                                        <input type="text" name="endereco" id="cadEndereco" class="form-control"
-                                            placeholder="Rua, Número, Bairro - Cidade" value="{{ old('endereco') }}"
-                                            required>
-                                    </div>
-                                </div>
-                                <small class="cep-status" id="cadCepStatus" aria-live="polite"></small>
-                            </div>
+                        <!-- RECUPERAR SENHA -->
+                        <div class="text-end">
+                            <a href="{{ route('senha.recuperar') }}" class="lg-forgot-password">
+                                <i class="bi bi-key me-1"></i>
+                                Esqueci minha senha
+                            </a>
+                        </div>
 
-                            <!-- EMAIL -->
-                            <div class="mb-2">
-                                <label class="form-label">E-mail</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-envelope"></i>
-                                    </span>
-                                    <input type="email" name="email" class="form-control"
-                                        placeholder="seuemail@exemplo.com"
-                                        value="{{ old('email', request('email')) }}" required>
-                                </div>
-                            </div>
+                        <button type="submit" class="lg-btn lg-btn--primary">
+                            Entrar
+                            <i class="bi bi-arrow-right lg-btn-arrow"></i>
+                        </button>
 
-                            <!-- SENHA -->
-                            <div class="mb-3">
-                                <label class="form-label">Senha</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-lock"></i>
-                                    </span>
-                                    <input type="password" name="senha" id="cadSenha" class="form-control"
-                                        placeholder="Crie uma senha segura"
-                                        value="{{ old('senha', request('senha')) }}" required>
-                                    <span class="input-group-text toggle-senha" data-target="cadSenha"
-                                        role="button" tabindex="0" aria-label="Mostrar senha">
-                                        <i class="bi bi-eye"></i>
-                                    </span>
-                                </div>
-                            </div>
+                    </form>
 
-                            <button type="submit" class="lg-btn lg-btn--primary">
-                                <i class="bi bi-check-circle"></i>
-                                Finalizar Cadastro
-                            </button>
+                    <div class="lg-divider"><span>ou continue com</span></div>
 
-                        </form>
-
-                    </div>
+                    <a href="{{ route('google.login') }}" class="lg-btn lg-btn--google">
+                        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+                            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+                            <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+                            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+                            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+                        </svg>
+                        Entrar com o Google
+                    </a>
 
                 </div>
 
-                <!-- ---------- PAINEL AZUL DESLIZANTE ---------- -->
-                <div class="lg-overlay-container">
-                    <div class="lg-overlay">
-
-                        <!-- CTA -> voltar para LOGIN -->
-                        <div class="lg-overlay-panel">
-                            <h2>Bem-vindo de volta!</h2>
-                            <p>Já possui uma conta? Entre com seus dados para acessar o Mobipet.</p>
-                            <button type="button" id="lgGoLogin" class="lg-btn lg-btn--ghost">
-                                Entrar
-                            </button>
-                        </div>
-
-                        <!-- CTA -> ir para CADASTRO -->
-                        <div class="lg-overlay-panel">
-                            <h2>Olá, amigo!</h2>
-                            <p>Ainda não possui uma conta? Cadastre-se para aproveitar todos os recursos do Mobipet.</p>
-                            <button type="button" id="lgGoRegister" class="lg-btn lg-btn--ghost">
-                                Cadastrar
-                            </button>
-                        </div>
-
-                    </div>
+                <!-- ---------- CONVITE PARA CRIAR CONTA (página própria) ---------- -->
+                <div class="lg-promo">
+                    <h2>Olá, amigo!</h2>
+                    <p>Ainda não possui uma conta? Cadastre-se para aproveitar todos os recursos do Mobipet.</p>
+                    <a href="{{ route('cadastro') }}" class="lg-btn lg-btn--ghost">
+                        Cadastrar
+                    </a>
                 </div>
 
             </div>
         </div>
 
     </main>
-
-    @include('partials.footer')
 
     <a href="#" id="scroll-top"
         class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"
@@ -821,155 +710,6 @@
             window.addEventListener('resize', update);
             update();
         })();
-    </script>
-
-    <!-- Painel deslizante login/cadastro + máscaras -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const card = document.querySelector('.lg-card');
-            const signinPanel = document.querySelector('.lg-form-signin');
-            const registerPanel = document.querySelector('.lg-form-register');
-            const goRegister = document.getElementById('lgGoRegister');
-            const goLogin = document.getElementById('lgGoLogin');
-            const overlay = document.querySelector('.lg-overlay');
-
-            const mobileQuery = window.matchMedia('(max-width: 700px)');
-            const smallQuery = window.matchMedia('(max-width: 480px)');
-
-            // Mede a altura REAL do conteúdo do painel, não a altura já
-            // renderizada. Sem isso, com o painel de login ativo o scrollHeight
-            // devolvia a própria altura do card e cada clique somava +4px,
-            // fazendo o card crescer sem parar quando o usuário clica várias vezes.
-            function measureContent(panel) {
-                if (!panel) return 0;
-                const prev = panel.style.height;
-                panel.style.height = 'auto';
-                const h = panel.scrollHeight;
-                panel.style.height = prev;
-                return h;
-            }
-
-            // Ajusta a altura do card ao conteúdo do painel ativo,
-            // para o cadastro (com mais campos) nunca ficar cortado ou com scroll.
-            // Coalescido em um rAF para aguentar rajadas de cliques sem thrash.
-            let syncScheduled = false;
-            function syncCardHeight() {
-                if (!card || syncScheduled) return;
-                syncScheduled = true;
-
-                requestAnimationFrame(function () {
-                    syncScheduled = false;
-
-                    const activePanel = card.classList.contains('lg-register-active')
-                        ? registerPanel
-                        : signinPanel;
-
-                    const contentHeight = measureContent(activePanel) + 4;
-
-                    if (mobileQuery.matches) {
-                        const bannerHeight = smallQuery.matches ? 175 : 190;
-                        card.style.height = (bannerHeight + contentHeight) + 'px';
-                    } else {
-                        card.style.height = Math.max(contentHeight, 480) + 'px';
-                    }
-                });
-            }
-
-            // Troca de painel. Idempotente: clicar repetidamente no mesmo botão
-            // não reprocessa nada; cliques alternados rápidos apenas retomam a
-            // transição do CSS, que interpola suavemente a partir da posição atual.
-            function setMode(registerActive) {
-                if (!card) return;
-                if (card.classList.contains('lg-register-active') === registerActive) return;
-                card.classList.toggle('lg-register-active', registerActive);
-                syncCardHeight();
-            }
-
-            if (goRegister) {
-                goRegister.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    setMode(true);
-                });
-            }
-
-            if (goLogin) {
-                goLogin.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    setMode(false);
-                });
-            }
-
-            // Ao terminar o deslize do painel azul, reajusta a altura — cobre
-            // qualquer diferença de layout após uma sequência de cliques.
-            if (overlay) {
-                overlay.addEventListener('transitionend', function (e) {
-                    if (e.propertyName === 'transform') syncCardHeight();
-                });
-            }
-
-            window.addEventListener('resize', syncCardHeight);
-            window.addEventListener('load', syncCardHeight);
-            syncCardHeight();
-
-            // Se o formulário de cadastro voltou com erros, abre já no cadastro
-            @if ($errors->any() && old('nome'))
-                setMode(true);
-            @endif
-
-            // =========================================
-            // MÁSCARAS DE CPF E TELEFONE
-            // =========================================
-            const cpfInput = document.getElementById('cpf');
-            const telefoneInput = document.getElementById('telefone');
-
-            function maskCPF(value) {
-                return value
-                    .replace(/\D/g, '')
-                    .slice(0, 11)
-                    .replace(/(\d{3})(\d)/, '$1.$2')
-                    .replace(/(\d{3})(\d)/, '$1.$2')
-                    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-            }
-
-            function maskTelefone(value) {
-                const digits = value.replace(/\D/g, '').slice(0, 11);
-
-                if (digits.length > 10) {
-                    // Celular: (00) 00000-0000
-                    return digits
-                        .replace(/(\d{2})(\d)/, '($1) $2')
-                        .replace(/(\d{5})(\d)/, '$1-$2');
-                }
-
-                // Fixo: (00) 0000-0000
-                return digits
-                    .replace(/(\d{2})(\d)/, '($1) $2')
-                    .replace(/(\d{4})(\d{1,4})$/, '$1-$2');
-            }
-
-            if (cpfInput) {
-                cpfInput.addEventListener('input', function () {
-                    cpfInput.value = maskCPF(cpfInput.value);
-                });
-            }
-
-            if (telefoneInput) {
-                telefoneInput.addEventListener('input', function () {
-                    telefoneInput.value = maskTelefone(telefoneInput.value);
-                });
-            }
-
-            // Antes de enviar, remove a máscara para gravar só os números no banco
-            const cadastroForm = document.getElementById('cadastroForm');
-            if (cadastroForm) {
-                cadastroForm.addEventListener('submit', function () {
-                    if (cpfInput) cpfInput.value = cpfInput.value.replace(/\D/g, '');
-                    if (telefoneInput) telefoneInput.value = telefoneInput.value.replace(/\D/g, '');
-                });
-            }
-
-        });
     </script>
 
     @include('partials.logout-confirm')

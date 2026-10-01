@@ -2,6 +2,8 @@
 
 // Web Routes -> Importação das controllers necessários
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\AtendimentoController;
 use App\Http\Controllers\AuthController;
@@ -56,8 +58,32 @@ Route::get('/funcionario', function () {
 })->middleware('admin')->name('funcionario');
 
 // Rota para exibir a página de desenvolvedores
+// Os 5 commits mostrados no terminal vêm direto do GitHub (repo ArthurProvidelo/MOBIPET_TCC_2026),
+// com cache de 5 minutos: a página sempre reflete o histórico real, sem precisar redeploy
+// a cada commit, e sem martelar a API do GitHub a cada visita.
 Route::get('/devs', function () {
-    return view('devs');
+    $commits = Cache::remember('mobipet_github_commits', now()->addMinutes(5), function () {
+        try {
+            $response = Http::withHeaders(['Accept' => 'application/vnd.github+json'])
+                ->timeout(3)
+                ->get('https://api.github.com/repos/ArthurProvidelo/MOBIPET_TCC_2026/commits', [
+                    'per_page' => 5,
+                ]);
+
+            if (! $response->successful()) {
+                return null;
+            }
+
+            return collect($response->json())->map(fn ($commit) => [
+                'sha'     => substr($commit['sha'], 0, 7),
+                'message' => strtok($commit['commit']['message'], "\n"),
+            ])->all();
+        } catch (\Throwable $e) {
+            return null;
+        }
+    });
+
+    return view('devs', ['commits' => $commits]);
 })->name('devs');
 
 // Rota para exibir a página de FAQ

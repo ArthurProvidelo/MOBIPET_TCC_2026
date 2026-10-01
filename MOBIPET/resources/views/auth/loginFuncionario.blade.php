@@ -94,7 +94,8 @@
             background: currentColor;
         }
 
-        /* Fundo da página */
+        /* Fundo da página — foto + véu claro + "bolhas" azuis desfocadas
+           à deriva (modo claro, o sistema é branco e azul). */
         body.inner-page {
             background-image: url('{{ asset('assets/img/fundo_login.png') }}');
             background-size: cover;
@@ -104,12 +105,62 @@
             position: relative;
         }
 
-        body.inner-page::before {
-            content: "";
+        .lg-bubbles {
             position: fixed;
             inset: 0;
-            background-color: rgba(247, 249, 255, .18);
             z-index: -1;
+            overflow: hidden;
+            background: rgba(247, 249, 255, .42);
+        }
+
+        .lg-bubble {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .65;
+            will-change: transform;
+        }
+
+        .lg-bubble--1 {
+            width: 48vw;
+            height: 48vw;
+            top: -14%;
+            left: -10%;
+            background: radial-gradient(circle at 30% 30%, #5b93fb, transparent 70%);
+            animation: lgFloat1 24s ease-in-out infinite;
+        }
+
+        .lg-bubble--2 {
+            width: 40vw;
+            height: 40vw;
+            bottom: -16%;
+            right: -8%;
+            background: radial-gradient(circle at 60% 40%, #175cdd, transparent 70%);
+            animation: lgFloat2 28s ease-in-out infinite;
+        }
+
+        .lg-bubble--3 {
+            width: 32vw;
+            height: 32vw;
+            top: 38%;
+            left: 58%;
+            background: radial-gradient(circle at 50% 50%, #8fb8ff, transparent 72%);
+            animation: lgFloat3 20s ease-in-out infinite;
+        }
+
+        @keyframes lgFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6%, 8%) scale(1.08); }
+        }
+
+        @keyframes lgFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-7%, -6%) scale(1.06); }
+        }
+
+        @keyframes lgFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-6%, 6%) scale(1.12); }
         }
 
         /* =========================================================
@@ -123,7 +174,7 @@
             font-family: "Montserrat", sans-serif;
             font-weight: 600;
             font-size: .97rem;
-            padding: 14px 26px;
+            padding: 11px 26px;
             border-radius: 999px;
             border: 1.5px solid transparent;
             text-decoration: none;
@@ -162,24 +213,27 @@
         .lg-wrapper {
             display: flex;
             justify-content: center;
-            padding: 2rem 1rem 4rem;
+            padding: 1rem 1rem 1.5rem;
         }
 
         .lg-card {
             position: relative;
             width: 100%;
             max-width: 940px;
-            background: #fff;
+            background: rgba(255, 255, 255, .72);
+            border: 1px solid rgba(255, 255, 255, .6);
             border-radius: var(--lg-radius);
             overflow: hidden;
             box-shadow: var(--lg-shadow);
+            -webkit-backdrop-filter: blur(22px) saturate(140%);
+            backdrop-filter: blur(22px) saturate(140%);
             display: grid;
             grid-template-columns: 1.05fr 1fr;
         }
 
         /* Painel de marca (lado esquerdo) */
         .lg-media {
-            padding: 54px 48px;
+            padding: 36px 44px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -266,23 +320,61 @@
 
         /* Painel do formulário (lado direito) */
         .lg-panel {
-            padding: 54px 52px;
+            padding: 32px 48px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            background: transparent;
+        }
+
+        /* Troca Cliente / Funcionário — mesma peça do login do cliente */
+        .lg-role-switch {
+            display: inline-flex;
+            align-self: flex-start;
+            padding: 4px;
+            gap: 2px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .55);
+            border: 1px solid var(--lg-line);
+            margin-bottom: 14px;
+        }
+
+        .lg-role-switch a,
+        .lg-role-switch span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 16px;
+            border-radius: 999px;
+            font-family: "Lato", sans-serif;
+            font-size: .78rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--lg-muted);
+            transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+        }
+
+        .lg-role-switch .is-active {
+            background: var(--lg-accent);
+            color: #fff;
+            box-shadow: 0 6px 14px -6px rgba(23, 92, 221, .6);
+        }
+
+        .lg-role-switch a:not(.is-active):hover {
             background: #fff;
+            color: var(--lg-ink);
         }
 
         .lg-panel h2 {
             font-weight: 800;
-            font-size: clamp(1.6rem, 3vw, 2rem);
-            margin: 0 0 6px;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            margin: 0 0 4px;
         }
 
         .lg-panel .lg-sub {
             font-size: .92rem;
             color: var(--lg-muted);
-            margin-bottom: 26px;
+            margin-bottom: 16px;
         }
 
         .lg-panel .form-label {
@@ -302,7 +394,7 @@
         }
 
         .lg-panel .form-control {
-            height: 50px;
+            height: 46px;
             border: 1px solid var(--lg-line);
             box-shadow: none;
             transition: border-color .25s ease, box-shadow .25s ease;
@@ -373,72 +465,16 @@
                 transition: none !important;
             }
         }
-
-        /* ---- Footer criativo (padrão do site) ---- */
-        .footer-16 {
-            position: relative;
-            overflow: visible;
-            padding-bottom: 90px;
-        }
-
-        .footer-16 .footer-main {
-            margin-bottom: 0;
-        }
-
-        .footer-16::before {
-            content: "";
-            position: absolute;
-            top: -1px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), #22c55e, var(--accent-color), transparent);
-            background-size: 200% 100%;
-            animation: footerGradientMove 6s linear infinite;
-        }
-
-        @keyframes footerGradientMove {
-            0% { background-position: 0% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .footer-badge {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-color), #1d4ed8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(23, 92, 221, 0.35);
-            z-index: 2;
-            transition: transform 0.4s ease;
-        }
-
-        .footer-badge i {
-            color: #fff;
-            font-size: 26px;
-        }
-
-        .footer-badge:hover {
-            transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
-        }
-
-        .footer-16 .brand-section {
-            max-width: 380px;
-        }
-
-        .footer-16 .contact-info {
-            margin-top: 24px;
-        }
     </style>
 </head>
 
 <body class="inner-page">
+
+    <div class="lg-bubbles" aria-hidden="true">
+        <div class="lg-bubble lg-bubble--1"></div>
+        <div class="lg-bubble lg-bubble--2"></div>
+        <div class="lg-bubble lg-bubble--3"></div>
+    </div>
 
     @include('partials.preloader')
 
@@ -450,6 +486,7 @@
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
                     <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
+                    <span class="logo-wordmark">Mobi<span class="logo-wordmark__pet">Pet</span></span>
                 </a>
 
                 <nav id="navmenu" class="navmenu">
@@ -463,7 +500,7 @@
         </div>
     </header>
 
-    <main class="main lg-page" style="margin-top: 120px;">
+    <main class="main lg-page" style="margin-top: 100px;">
 
         <!-- ================= ALERTAS GLOBAIS ================= -->
         <div class="container" data-aos="fade-up">
@@ -506,13 +543,18 @@
                 <!-- ---------- FORMULÁRIO ---------- -->
                 <div class="lg-panel">
 
+                    <div class="lg-role-switch">
+                        <a href="{{ route('login') }}"><i class="bi bi-person"></i> Cliente</a>
+                        <span class="is-active"><i class="bi bi-briefcase"></i> Funcionário</span>
+                    </div>
+
                     <h2>Entrar como funcionário</h2>
                     <p class="lg-sub">Use o e-mail e a senha cadastrados pela administração.</p>
 
                     <form method="POST" action="{{ route('login.autenticarFuncionario') }}">
                         @csrf
 
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label class="form-label">E-mail</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
@@ -521,7 +563,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label class="form-label">Senha</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
@@ -547,8 +589,6 @@
         </div>
 
     </main>
-
-    @include('partials.footer')
 
     <a href="#" id="scroll-top"
         class="scroll-top d-flex align-items-center justify-content-center text-white bg-primary rounded-circle shadow"

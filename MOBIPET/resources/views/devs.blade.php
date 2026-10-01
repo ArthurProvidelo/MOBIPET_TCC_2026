@@ -748,6 +748,7 @@
 
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
                     <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
+                    <span class="logo-wordmark">Mobi<span class="logo-wordmark__pet">Pet</span></span>
                 </a>
 
                 <nav id="navmenu" class="navmenu">
@@ -802,11 +803,11 @@
                         </div>
                         <div class="dv-term-body">
                             <div class="dv-cmd">git log --oneline -5</div>
-                            <div><span class="dv-hash">2b9391b</span> <span class="dv-msg">Nova página inicial e rodapé no padrão do site</span></div>
-                            <div><span class="dv-hash">06081b1</span> <span class="dv-msg">Atualização do footer</span></div>
-                            <div><span class="dv-hash">7aacca2</span> <span class="dv-msg">Atualização do nível de acesso do Admin</span></div>
-                            <div><span class="dv-hash">7c05fa2</span> <span class="dv-msg">Atualização das views Início/Sobre/Serviços/Devs</span></div>
-                            <div><span class="dv-hash">846458a</span> <span class="dv-msg">Setup do ambiente nesta máquina</span></div>
+                            @forelse (($commits ?? []) as $commit)
+                                <div><span class="dv-hash">{{ $commit['sha'] }}</span> <span class="dv-msg">{{ $commit['message'] }}</span></div>
+                            @empty
+                                <div><span class="dv-msg" style="color:#6b7a99;">não foi possível carregar os commits do GitHub agora</span></div>
+                            @endforelse
                             <div class="dv-cmd">git status <span class="dv-cur"></span></div>
                         </div>
                     </div>
