@@ -210,6 +210,10 @@ iframe {
    transparente em volta do escudo (ele ocupa ~57% da imagem), então a imagem
    é ampliada com transform: aumenta o escudo sem mudar a altura do cabeçalho.
    O transform-origin à esquerda mantém o escudo alinhado com o container. */
+.header .logo {
+    position: relative;
+}
+
 .header .logo .logo-marca {
     width: 52px;
     height: 52px;
@@ -219,11 +223,81 @@ iframe {
     object-fit: contain;
     transform: scale(1.55);
     transform-origin: 30% 50%;
-    transition: transform .2s ease;
+    transition: transform .25s ease, filter .25s ease;
 }
 
+/* Saudação ao passar o mouse: UM pulo só, coreografado — escudo, a
+   sombra embaixo dele, a marca "MobiPet" inteira e a patinha que aparece
+   em cima sobem e aterrissam juntos, todos com a mesma duração (.7s) e a
+   mesma curva "elástica", em vez de cada peça se mexer no seu próprio
+   tempo. Corre uma vez só ao entrar o hover — sem loop, sem distrair. */
 .header .logo:hover .logo-marca {
-    transform: scale(1.6) rotate(-3deg);
+    animation: mp-jump-icon .7s cubic-bezier(.34, 1.56, .64, 1);
+    filter: drop-shadow(0 10px 14px color-mix(in srgb, var(--accent-color), transparent 45%));
+}
+
+@keyframes mp-jump-icon {
+    0%   { transform: scale(1.55) rotate(0deg)   translateY(0); }
+    15%  { transform: scale(1.5)  rotate(-2deg)  translateY(2px); }
+    42%  { transform: scale(1.74) rotate(-12deg) translateY(-10px); }
+    65%  { transform: scale(1.65) rotate(9deg)   translateY(-3px); }
+    82%  { transform: scale(1.58) rotate(-5deg)  translateY(1px); }
+    100% { transform: scale(1.6)  rotate(-3deg)  translateY(0); }
+}
+
+/* Sombra de contato: encolhe e clareia no instante do salto (como se o
+   escudo tivesse saído do chão) e volta cheia na aterrissagem — dá peso
+   e physicality ao movimento, em vez de um transform solto no ar. */
+.header .logo::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: 1px;
+    width: 34px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, color-mix(in srgb, var(--accent-color), transparent 35%), transparent 72%);
+    filter: blur(2.5px);
+    opacity: 0;
+    transition: opacity .25s ease;
+    pointer-events: none;
+}
+
+.header .logo:hover::before {
+    animation: mp-jump-shadow .7s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+@keyframes mp-jump-shadow {
+    0%   { opacity: .3; transform: scaleX(1); }
+    42%  { opacity: .08; transform: scaleX(.5); }
+    100% { opacity: .3; transform: scaleX(1); }
+}
+
+/* Patinha: "carimba" exatamente no auge do salto (42%, igual ao escudo e
+   à marca) e se desfaz enquanto tudo aterrissa — sincronizada por inteiro
+   com a mesma animação, não um elemento correndo por conta própria. */
+.header .logo::after {
+    content: "🐾";
+    position: absolute;
+    top: -2px;
+    left: 32px;
+    font-size: .95rem;
+    line-height: 1;
+    opacity: 0;
+    transform: scale(.4) rotate(-25deg) translateY(6px);
+    pointer-events: none;
+}
+
+.header .logo:hover::after {
+    animation: mp-jump-paw .7s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+@keyframes mp-jump-paw {
+    0%   { opacity: 0; transform: scale(.4) rotate(-25deg) translateY(6px); }
+    30%  { opacity: 0; transform: scale(.4) rotate(-25deg) translateY(6px); }
+    42%  { opacity: 1; transform: scale(1.08) rotate(-14deg) translateY(-11px); }
+    65%  { opacity: 1; transform: scale(1) rotate(-10deg) translateY(-8px); }
+    100% { opacity: 0; transform: scale(.75) rotate(-6deg) translateY(-4px); }
 }
 
 @media (max-width: 575.98px) {
@@ -236,6 +310,12 @@ iframe {
 @media (prefers-reduced-motion: reduce) {
     .header .logo .logo-marca {
         transition: none;
+        animation: none;
+    }
+
+    .header .logo::after,
+    .header .logo::before {
+        display: none;
     }
 }
 
@@ -1052,16 +1132,32 @@ dd,
    Sobrepõe o cabeçalho padrão do template (main.css) sem alterá-lo.
    ========================================================================== */
 .header {
-    background-color: color-mix(in srgb, var(--background-color), transparent 25%) !important;
-    -webkit-backdrop-filter: saturate(180%) blur(10px);
-    backdrop-filter: saturate(180%) blur(10px);
-    border-bottom: 1px solid transparent;
-    box-shadow: none !important;
+    background-color: color-mix(in srgb, var(--background-color), transparent 62%) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(6px);
+    backdrop-filter: saturate(180%) blur(6px);
+    /* Borda e sombra sempre presentes (bem sutis) — o vidro precisa ter uma
+       borda visível pra se "ler" como vidro em QUALQUER página, mesmo nas
+       que não têm nada colorido por trás do cabeçalho. Sem isso, sobre um
+       fundo claro o efeito de blur fica praticamente invisível e passa a
+       impressão de que a transparência simplesmente não está ligada ali. */
+    border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 93%);
+    box-shadow: 0 1px 0 rgba(15, 23, 42, .03), 0 12px 30px -20px rgba(15, 23, 42, .18) !important;
     transition: background-color .35s ease, backdrop-filter .35s ease, border-color .35s ease, box-shadow .35s ease;
 }
 
+/* Navegadores sem suporte a backdrop-filter (ou com ele desligado): cai
+   pra um branco quase opaco, pra nunca ficar com um cabeçalho "lavado"
+   e ilegível por falta do blur. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .header {
+        background-color: color-mix(in srgb, var(--background-color), transparent 8%) !important;
+    }
+}
+
 .scrolled .header {
-    background-color: color-mix(in srgb, var(--background-color), transparent 5%) !important;
+    background-color: color-mix(in srgb, var(--background-color), transparent 15%) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    backdrop-filter: saturate(180%) blur(14px);
     border-bottom-color: color-mix(in srgb, var(--default-color), transparent 90%);
     box-shadow: 0 8px 24px rgba(15, 23, 42, .08) !important;
 }
@@ -1305,16 +1401,46 @@ dd,
     line-height: 1;
     white-space: nowrap;
     color: var(--heading-color);
-    transition: color .2s ease;
+}
+
+.logo-wordmark__mobi,
+.logo-wordmark__pet {
+    display: inline-block;
+    transition: transform .25s ease;
 }
 
 .logo-wordmark__pet {
     color: var(--accent-color);
 }
 
+/* "MobiPet" salta junto com o escudo — mesma duração (.7s), mesma curva
+   elástica e os mesmos instantes de antecipação/auge/pouso (15% / 42% /
+   100%) das animações do ícone, da sombra e da patinha logo acima. É um
+   pulo só, em uníssono, não três elementos cada um no seu próprio ritmo. */
+@keyframes mp-jump-word {
+    0%   { transform: translateY(0)    scale(1); }
+    15%  { transform: translateY(1px)  scale(.98); }
+    42%  { transform: translateY(-9px) scale(1.06); }
+    65%  { transform: translateY(-3px) scale(1.02); }
+    82%  { transform: translateY(1px)  scale(.99); }
+    100% { transform: translateY(0)    scale(1); }
+}
+
+.header .logo:hover .logo-wordmark__mobi,
+.header .logo:hover .logo-wordmark__pet {
+    animation: mp-jump-word .7s cubic-bezier(.34, 1.56, .64, 1);
+}
+
 @media (max-width: 420px) {
     .logo-wordmark {
         display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header .logo:hover .logo-wordmark__mobi,
+    .header .logo:hover .logo-wordmark__pet {
+        animation: none;
     }
 }
 

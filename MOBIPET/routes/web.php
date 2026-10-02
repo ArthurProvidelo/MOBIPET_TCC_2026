@@ -17,7 +17,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\GoogleFuncionarioController;
 use App\Http\Controllers\SenhaController;
 
-Route::get('/pets/atualizar-tabela', 
+Route::get('/pets/atualizar-tabela',
 [PetController::class, 'atualizarTabela'])
     ->name('pets.atualizarTabela');
 

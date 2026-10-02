@@ -233,6 +233,13 @@
         navigating = true;
         hidden = false;
         loader.classList.remove('is-hidden');
+
+        // Rearma o failsafe toda vez que a tela é mostrada: se o clique que
+        // chamou show() não resultar numa navegação de verdade (ex.: um
+        // link de âncora "#algo" dispara popstate sem recarregar a página),
+        // ninguém fica preso na tela de carregamento pra sempre.
+        if (failsafeTimer) clearTimeout(failsafeTimer);
+        failsafeTimer = window.setTimeout(() => hide(), FAILSAFE_MS);
     };
 
     /* ------------------------------------------------------------------
@@ -257,7 +264,19 @@
         if (event.persisted) hide();
     });
 
+    // Alguns navegadores (Chrome incluso) disparam popstate também para um
+    // simples clique em link de âncora ("#secao") na MESMA página — sem
+    // nenhuma navegação real acontecendo. Sem esse filtro, show() é chamado
+    // e a tela de carregamento nunca mais é escondida (nada dispara load).
+    let lastLocation = window.location.pathname + window.location.search;
+
     window.addEventListener('popstate', () => {
+        const current = window.location.pathname + window.location.search;
+        const mudouDePagina = current !== lastLocation;
+        lastLocation = current;
+
+        if (!mudouDePagina) return;
+
         navigating = false;
         show();
     });

@@ -486,7 +486,7 @@
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ route('index') }}" class="logo d-flex align-items-center">
                     <img src="{{ asset('assets/img/logo_oficial_mobipet.png') }}" alt="Mobipet" class="logo-marca" width="56" height="56">
-                    <span class="logo-wordmark">Mobi<span class="logo-wordmark__pet">Pet</span></span>
+                    <span class="logo-wordmark"><span class="logo-wordmark__mobi">Mobi</span><span class="logo-wordmark__pet">Pet</span></span>
                 </a>
 
                 <nav id="navmenu" class="navmenu">
