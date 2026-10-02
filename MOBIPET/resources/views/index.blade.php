@@ -1063,40 +1063,266 @@
             margin-top: 48px;
         }
 
+        /* Cada card tem a própria identidade de cor — facilita escanear os
+           seis recursos de relance em vez de um bloco azul homogêneo. */
+        .mp-card:nth-child(1) { --card-accent: var(--mp-accent); --card-accent-soft: var(--mp-accent-soft); }
+        .mp-card:nth-child(2) { --card-accent: var(--mp-green); --card-accent-soft: var(--mp-green-soft); }
+        .mp-card:nth-child(3) { --card-accent: var(--mp-amber); --card-accent-soft: #fef3e2; }
+        .mp-card:nth-child(4) { --card-accent: #6d5bd0; --card-accent-soft: #efecfb; }
+        .mp-card:nth-child(5) { --card-accent: #0ea5a3; --card-accent-soft: #e3f8f7; }
+        .mp-card:nth-child(6) { --card-accent: #e0558a; --card-accent-soft: #fdeaf1; }
+
         .mp-card {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            display: block;
             background: var(--mp-surface);
             border: 1px solid var(--mp-border);
             border-radius: var(--mp-radius);
-            padding: 30px;
-            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            padding: 32px 28px 52px;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: transform .4s cubic-bezier(.34, 1.56, .64, 1), box-shadow .4s ease, border-color .3s ease;
+        }
+
+        /* Numerozão fantasma no canto — dá organização visual e profundidade
+           (some sutilmente por trás do ícone/texto, só decorativo). */
+        .mp-card-index {
+            position: absolute;
+            top: 2px;
+            right: 18px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 800;
+            font-size: 3.4rem;
+            line-height: 1;
+            color: var(--card-accent-soft);
+            z-index: 0;
+            transition: transform .45s cubic-bezier(.34, 1.56, .64, 1);
+            pointer-events: none;
+        }
+
+        .mp-card:hover .mp-card-index {
+            transform: translateY(-5px) scale(1.08);
+        }
+
+        /* Barrinha de destaque no topo, que "enche" da esquerda pra direita */
+        .mp-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--card-accent);
+            transition: width .45s cubic-bezier(.34, 1.56, .64, 1);
+            z-index: 2;
+        }
+
+        .mp-card:hover::after {
+            width: 100%;
+        }
+
+        /* Holofote suave que acompanha o mouse dentro do card (--mx/--my
+           atualizados via JS). Puro floreio, mas é o tipo de detalhe que
+           faz a seção parecer premium em vez de um grid de cards genérico. */
+        .mp-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--card-accent), transparent 88%), transparent 70%);
+            opacity: 0;
+            transition: opacity .35s ease;
+            z-index: 0;
+        }
+
+        .mp-card:hover::before {
+            opacity: 1;
         }
 
         .mp-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--mp-shadow);
-            border-color: transparent;
+            transform: translateY(-10px);
+            box-shadow: 0 28px 54px -26px color-mix(in srgb, var(--card-accent), transparent 45%);
+            border-color: color-mix(in srgb, var(--card-accent), transparent 60%);
         }
 
         .mp-card .mp-ico {
+            position: relative;
+            z-index: 1;
             width: 54px;
             height: 54px;
             display: grid;
             place-items: center;
             border-radius: 15px;
             font-size: 1.5rem;
-            background: var(--mp-accent-soft);
-            color: var(--mp-accent);
+            background: var(--card-accent-soft);
+            color: var(--card-accent);
             margin-bottom: 18px;
+            transition: transform .4s cubic-bezier(.34, 1.56, .64, 1), background-color .3s ease, color .3s ease;
         }
 
-        .mp-card:nth-child(2) .mp-ico {
-            background: var(--mp-green-soft);
-            color: var(--mp-green);
+        .mp-card:hover .mp-ico {
+            background: var(--card-accent);
+            color: #fff;
         }
 
-        .mp-card:nth-child(3) .mp-ico {
-            background: #fef3e2;
-            color: var(--mp-amber);
+        /* =====================================================
+           ANIMAÇÕES TEMÁTICAS — cada card se move de um jeito que
+           remete ao que ele representa, não um hover genérico repetido
+           seis vezes. Os pseudo-elementos ficam no .mp-ico (diferente
+           dos ::before/::after do .mp-card, já usados no holofote e na
+           barrinha de topo), então não há conflito entre eles.
+           ===================================================== */
+
+        /* 1 · Acompanhamento ao vivo — pulso de sinal "ao vivo", como um
+           radar/transmissão, ecoando pra fora do ícone. */
+        .mp-ico-ping {
+            position: absolute;
+            inset: 0;
+            border-radius: 15px;
+            border: 2px solid var(--card-accent);
+            opacity: 0;
+        }
+
+        .mp-card:nth-child(1):hover .mp-ico {
+            transform: scale(1.1);
+        }
+
+        .mp-card:nth-child(1):hover .mp-ico-ping {
+            animation: mp-ping 1.3s cubic-bezier(.2, .7, .3, 1) infinite;
+        }
+
+        .mp-card:nth-child(1):hover .mp-ico-ping--2 {
+            animation-delay: .5s;
+        }
+
+        @keyframes mp-ping {
+            0%   { transform: scale(.85); opacity: .65; }
+            100% { transform: scale(1.9); opacity: 0; }
+        }
+
+        /* 2 · Avisos automáticos — o sino "toca" balançando, e um
+           pontinho de notificação estala no canto. */
+        .mp-card:nth-child(2):hover .mp-ico {
+            transform-origin: 50% 6%;
+            animation: mp-bell .7s ease-in-out;
+        }
+
+        @keyframes mp-bell {
+            0%, 100% { transform: rotate(0); }
+            15%      { transform: rotate(-17deg); }
+            32%      { transform: rotate(14deg); }
+            48%      { transform: rotate(-10deg); }
+            64%      { transform: rotate(6deg); }
+            80%      { transform: rotate(-3deg); }
+            92%      { transform: rotate(1deg); }
+        }
+
+        .mp-ico-dot {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--card-accent);
+            box-shadow: 0 0 0 3px #fff;
+            transform: scale(0);
+            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1) .35s;
+        }
+
+        .mp-card:nth-child(2):hover .mp-ico-dot {
+            transform: scale(1);
+        }
+
+        /* 3 · Agendamento simples — "carimba" a confirmação: afunda e
+           salta de volta, como um check sendo batido no calendário. */
+        .mp-card:nth-child(3):hover .mp-ico {
+            animation: mp-stamp .55s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        @keyframes mp-stamp {
+            0%   { transform: scale(1) rotate(0); }
+            35%  { transform: scale(.82, .78) rotate(-3deg); }
+            65%  { transform: scale(1.14) rotate(2deg); }
+            100% { transform: scale(1.06) rotate(0); }
+        }
+
+        /* 4 · Histórico do pet — o relógio "rebobina" o tempo, girando
+           ao contrário enquanto o mouse estiver em cima. */
+        .mp-card:nth-child(4):hover .mp-ico {
+            animation: mp-rewind 1.8s linear infinite;
+        }
+
+        @keyframes mp-rewind {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(-360deg); }
+        }
+
+        /* 5 · Painel para o petshop — um brilho varre o ícone de cima a
+           baixo, como uma tela de dados sendo atualizada/escaneada. */
+        .mp-card:nth-child(5) .mp-ico {
+            overflow: hidden;
+        }
+
+        .mp-ico-scan {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -60%;
+            height: 55%;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, .8), transparent);
+        }
+
+        .mp-card:nth-child(5):hover .mp-ico {
+            transform: scale(1.08);
+        }
+
+        .mp-card:nth-child(5):hover .mp-ico-scan {
+            animation: mp-scan .9s ease-in-out;
+        }
+
+        @keyframes mp-scan {
+            from { top: -60%; }
+            to   { top: 140%; }
+        }
+
+        /* 6 · Acessível a todos — um aceno caloroso: balança suave pros
+           dois lados, como um "oi" de boas-vindas, com um halo macio. */
+        .mp-card:nth-child(6):hover .mp-ico {
+            animation: mp-wave .9s ease-in-out;
+        }
+
+        @keyframes mp-wave {
+            0%, 100% { transform: rotate(0) scale(1); }
+            25%      { transform: rotate(-10deg) scale(1.08); }
+            50%      { transform: rotate(8deg) scale(1.12); }
+            75%      { transform: rotate(-5deg) scale(1.08); }
+        }
+
+        .mp-ico-halo {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: var(--card-accent-soft);
+            opacity: 0;
+            transform: scale(.6);
+        }
+
+        .mp-card:nth-child(6):hover .mp-ico-halo {
+            animation: mp-halo .9s ease-out;
+        }
+
+        @keyframes mp-halo {
+            0%   { opacity: .9; transform: scale(.5); }
+            100% { opacity: 0; transform: scale(1.5); }
+        }
+
+        .mp-card h3,
+        .mp-card p {
+            position: relative;
+            z-index: 1;
         }
 
         .mp-card h3 {
@@ -1108,6 +1334,56 @@
             margin: 0;
             font-size: .96rem;
             color: var(--mp-body);
+        }
+
+        /* "Saiba mais" — some por padrão, desliza e aparece no hover,
+           deixando claro que o card é clicável e leva pra algum lugar. */
+        .mp-card-more {
+            position: absolute;
+            left: 28px;
+            bottom: 24px;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: .85rem;
+            color: var(--card-accent);
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .3s ease, transform .3s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .mp-card-more i {
+            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .mp-card:hover .mp-card-more {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mp-card:hover .mp-card-more i {
+            transform: translateX(4px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .mp-card,
+            .mp-card .mp-ico,
+            .mp-card-index,
+            .mp-card-more,
+            .mp-card-more i {
+                transition: none;
+            }
+
+            .mp-card:hover .mp-ico,
+            .mp-ico-ping,
+            .mp-ico-dot,
+            .mp-ico-scan,
+            .mp-ico-halo {
+                animation: none !important;
+            }
         }
 
         /* ---------- FAQ ---------- */
@@ -1424,7 +1700,7 @@
                         que o tutor vê no celular enquanto o petshop trabalha &mdash; sem
                         precisar ligar para perguntar "já está pronto?".
                     </p>
-                    <span class="mp-demo-hint"><i class="bi bi-arrow-down-circle"></i> Interaja com o painel ao lado</span>
+                    <span class="mp-demo-hint">Interaja com o painel ao lado <i class="bi bi-arrow-right-circle"></i></span>
                 </div>
 
                 <div class="mp-panel" data-aos="fade-left" data-aos-delay="120">
@@ -1569,36 +1845,61 @@
                 </div>
 
                 <div class="mp-cards">
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="mp-ico"><i class="bi bi-broadcast"></i></div>
+                    <a href="{{ route('sobre') }}#sb-turn" class="mp-card" data-aos="fade-up" data-aos-delay="0">
+                        <span class="mp-card-index">01</span>
+                        <div class="mp-ico">
+                            <i class="bi bi-broadcast"></i>
+                            <span class="mp-ico-ping mp-ico-ping--1"></span>
+                            <span class="mp-ico-ping mp-ico-ping--2"></span>
+                        </div>
                         <h3>Acompanhamento ao vivo</h3>
                         <p>Você vê em que etapa o pet está sem precisar ligar nem sair de casa.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="80">
-                        <div class="mp-ico"><i class="bi bi-bell-fill"></i></div>
+                        <span class="mp-card-more">Saber mais <i class="bi bi-arrow-right"></i></span>
+                    </a>
+                    <a href="{{ route('sobre') }}#sb-turn" class="mp-card" data-aos="fade-up" data-aos-delay="80">
+                        <span class="mp-card-index">02</span>
+                        <div class="mp-ico">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="mp-ico-dot"></span>
+                        </div>
                         <h3>Avisos automáticos</h3>
                         <p>Uma notificação a cada mudança de etapa e quando o pet está pronto.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="160">
+                        <span class="mp-card-more">Saber mais <i class="bi bi-arrow-right"></i></span>
+                    </a>
+                    <a href="{{ route('agendamento') }}" class="mp-card" data-aos="fade-up" data-aos-delay="160">
+                        <span class="mp-card-index">03</span>
                         <div class="mp-ico"><i class="bi bi-calendar-check-fill"></i></div>
                         <h3>Agendamento simples</h3>
                         <p>Poucos toques para marcar. Sem ligação, sem fila, sem confusão de horário.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="0">
+                        <span class="mp-card-more">Agendar agora <i class="bi bi-arrow-right"></i></span>
+                    </a>
+                    <a href="{{ route('sobre') }}#sb-turn" class="mp-card" data-aos="fade-up" data-aos-delay="0">
+                        <span class="mp-card-index">04</span>
                         <div class="mp-ico"><i class="bi bi-clock-history"></i></div>
                         <h3>Histórico do pet</h3>
                         <p>Tudo o que já foi feito fica registrado para consultar quando quiser.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="80">
-                        <div class="mp-ico"><i class="bi bi-clipboard2-data-fill"></i></div>
+                        <span class="mp-card-more">Saber mais <i class="bi bi-arrow-right"></i></span>
+                    </a>
+                    <a href="{{ route('sobre') }}#sb-aud" class="mp-card" data-aos="fade-up" data-aos-delay="80">
+                        <span class="mp-card-index">05</span>
+                        <div class="mp-ico">
+                            <i class="bi bi-clipboard2-data-fill"></i>
+                            <span class="mp-ico-scan"></span>
+                        </div>
                         <h3>Painel para o petshop</h3>
                         <p>Clientes, pets e agenda organizados, com menos ligações no balcão.</p>
-                    </div>
-                    <div class="mp-card" data-aos="fade-up" data-aos-delay="160">
-                        <div class="mp-ico"><i class="bi bi-universal-access-circle"></i></div>
+                        <span class="mp-card-more">Saber mais <i class="bi bi-arrow-right"></i></span>
+                    </a>
+                    <a href="{{ route('sobre') }}#sb-values" class="mp-card" data-aos="fade-up" data-aos-delay="160">
+                        <span class="mp-card-index">06</span>
+                        <div class="mp-ico">
+                            <span class="mp-ico-halo"></span>
+                            <i class="bi bi-universal-access-circle"></i>
+                        </div>
                         <h3>Acessível a todos</h3>
                         <p>Interface clara e tradução automática para Libras (VLibras) integrada.</p>
-                    </div>
+                        <span class="mp-card-more">Saber mais <i class="bi bi-arrow-right"></i></span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -1876,6 +2177,20 @@
                         var dir = e.key === 'ArrowRight' ? 1 : -1;
                         selectTab(tabs[(idx + dir + tabs.length) % tabs.length], true);
                     }
+                });
+            });
+        })();
+    </script>
+
+    <!-- Holofote que acompanha o mouse nos cards de "Pensado para facilitar a sua vida" -->
+    <script>
+        (function () {
+            var cards = document.querySelectorAll('.mp-card');
+            cards.forEach(function (card) {
+                card.addEventListener('mousemove', function (e) {
+                    var r = card.getBoundingClientRect();
+                    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+                    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
                 });
             });
         })();

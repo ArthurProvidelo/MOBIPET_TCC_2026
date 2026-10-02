@@ -284,13 +284,26 @@
         .sv-dash-avatar {
             width: 56px;
             height: 56px;
-            border-radius: 16px;
+            border-radius: 50%;
             display: grid;
             place-items: center;
             font-size: 1.6rem;
             background: var(--sv-accent-soft);
             color: var(--sv-accent);
             flex: none;
+            overflow: hidden;
+            /* Moldura: anel branco + um fio na cor da marca, como um avatar de verdade */
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px var(--sv-accent-soft), var(--sv-shadow-sm);
+        }
+
+        .sv-dash-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Zoom só no rosto do cachorro — a foto original é corpo inteiro */
+            transform: scale(2.3);
+            transform-origin: 50% 18%;
         }
 
         .sv-dash-top b {
@@ -1313,7 +1326,7 @@
 
                     <div class="sv-dash" data-aos="fade-left" data-aos-delay="150">
                         <div class="sv-dash-top">
-                            <span class="sv-dash-avatar"><i class="bi bi-heart-fill"></i></span>
+                            <span class="sv-dash-avatar"><img src="{{ asset('assets/img/rex.jpg') }}" alt="Rex"></span>
                             <div>
                                 <b>Rex &middot; Banho &amp; Tosa</b>
                                 <span>Hoje, 09:00</span>
@@ -1430,7 +1443,7 @@
 
        
         <!-- ================= NOTIFICAÇÕES ================= -->
-        <section class="sv-notif">
+        <!-- <section class="sv-notif">
             <div class="sv-wrap">
                 <div class="sv-notif-grid">
 
@@ -1468,7 +1481,7 @@
 
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- ================= DIFERENCIAIS ================= -->
         <section class="sv-diff">
@@ -1506,15 +1519,11 @@
         <section class="sv-cta">
             <div class="sv-wrap">
                 <div class="sv-cta-card" data-aos="zoom-in">
-                    <h2>Escolha um serviço e acompanhe do início ao fim</h2>
-                    <p>Agende em segundos e receba o aviso quando o seu pet estiver pronto.</p>
+                    <h2>Escolha um serviço <br>e acompanhe do início ao fim</h2>
+                    <p>Agende em segundos e receba o aviso quando <br> seu pet estiver pronto.</p>
                     <div class="sv-cta-actions">
                         <a href="{{ route('agendamento') }}" class="sv-btn sv-btn--light">
                             Agendar agora <i class="bi bi-arrow-right"></i>
-                        </a>
-                        <a href="https://wa.me/5519989432384" class="sv-btn sv-btn--ghost"
-                            style="color:#fff;border-color:rgba(255,255,255,.4);" target="_blank" rel="noopener">
-                            <i class="bi bi-whatsapp"></i> Falar no WhatsApp
                         </a>
                     </div>
                 </div>

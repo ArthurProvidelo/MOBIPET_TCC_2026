@@ -1330,7 +1330,7 @@
         </section>
 
         <!-- ================= A VIRADA ================= -->
-        <section class="sb-turn">
+        <section class="sb-turn" id="sb-turn">
             <div class="sb-wrap">
                 <div class="sb-narrow" style="margin-inline:0;" data-aos="fade-up">
                     <h2 class="sb-h2">A mesma rotina, agora sob controle.</h2>
@@ -1365,7 +1365,7 @@
 
 
         <!-- ================= VALORES ================= -->
-        <section class="sb-values">
+        <section class="sb-values" id="sb-values">
             <div class="sb-wrap">
                 <div class="sb-values-grid">
 
@@ -1413,7 +1413,7 @@
         </section>
 
         <!-- ================= PÚBLICO ================= -->
-        <section class="sb-aud">
+        <section class="sb-aud" id="sb-aud">
             <div class="sb-wrap">
                 <div data-aos="fade-up" style="max-width:640px;">
                     <h2 class="sb-h2">Os dois lados do balcão, no mesmo sistema.</h2>
