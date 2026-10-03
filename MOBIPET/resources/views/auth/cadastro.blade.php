@@ -229,6 +229,119 @@
             backdrop-filter: blur(22px) saturate(140%);
             display: grid;
             grid-template-columns: .9fr 1.1fr;
+            transition: opacity .28s ease, transform .28s cubic-bezier(.4, 0, .2, 1), filter .28s ease;
+        }
+
+        /* Transição de saída ao trocar pra Entrar — o card encolhe e
+           desfoca levemente antes da navegação de verdade acontecer. */
+        .lg-card.is-leaving {
+            opacity: 0;
+            transform: scale(.96) translateY(10px);
+            filter: blur(2px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lg-card {
+                transition: none;
+            }
+        }
+
+        /* =========================================================
+           ALERTAS DE ERRO — vidro líquido em tom vermelho
+           ========================================================= */
+        .lg-alert {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 44px 16px 18px;
+            margin-bottom: 14px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(254, 226, 226, .6), rgba(255, 255, 255, .4));
+            border: 1px solid rgba(220, 38, 38, .25);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            backdrop-filter: blur(18px) saturate(180%);
+            box-shadow: 0 18px 40px -20px rgba(220, 38, 38, .38), inset 0 1px 0 rgba(255, 255, 255, .5);
+            animation: lg-alert-in .5s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        @keyframes lg-alert-in {
+            0%   { opacity: 0; transform: translateY(-10px) scale(.95); }
+            50%  { opacity: 1; transform: translateX(-4px); }
+            70%  { transform: translateX(3px); }
+            85%  { transform: translateX(-1px); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        .lg-alert-icon {
+            flex: none;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(220, 38, 38, .14);
+            color: #dc2626;
+            font-size: 1.05rem;
+        }
+
+        .lg-alert-body {
+            flex: 1;
+            padding-top: 3px;
+            font-size: .92rem;
+            line-height: 1.5;
+            color: #7f1d1d;
+        }
+
+        .lg-alert-body strong {
+            display: block;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: .86rem;
+            color: #991b1b;
+            margin-bottom: 2px;
+        }
+
+        .lg-alert-body ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .lg-alert-body li {
+            margin-bottom: 2px;
+        }
+
+        .lg-alert-body li:last-child {
+            margin-bottom: 0;
+        }
+
+        .lg-alert-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 26px;
+            height: 26px;
+            display: grid;
+            place-items: center;
+            border: none;
+            background: transparent;
+            color: #991b1b;
+            opacity: .55;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: .85rem;
+            transition: opacity .2s ease, background-color .2s ease;
+        }
+
+        .lg-alert-close:hover {
+            opacity: 1;
+            background: rgba(220, 38, 38, .14);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lg-alert {
+                animation: none;
+            }
         }
 
         /* Painel de marca (lado esquerdo) */
@@ -267,35 +380,7 @@
             color: #fff;
             font-size: clamp(1.3rem, 2.6vw, 1.7rem);
             font-weight: 800;
-            margin: 0 0 8px;
-        }
-
-        .lg-media > p {
-            color: rgba(255, 255, 255, .85);
-            font-size: .92rem;
-            line-height: 1.55;
-            max-width: 340px;
-            margin: 0 0 14px;
-        }
-
-        .lg-media ul {
-            list-style: none;
-            margin: 0 0 16px;
-            padding: 0;
-        }
-
-        .lg-media li {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: .88rem;
-            color: rgba(255, 255, 255, .9);
-        }
-
-        .lg-media li i {
-            margin-top: 2px;
-            color: #4ade80;
+            margin: 0 0 22px;
         }
 
         .lg-media .lg-btn--ghost {
@@ -389,10 +474,6 @@
                 padding: 40px 36px;
             }
 
-            .lg-media ul {
-                display: none;
-            }
-
             .lg-panel {
                 padding: 40px 34px;
             }
@@ -460,20 +541,29 @@
             <div class="row justify-content-center">
                 <div class="col-md-10" style="max-width:960px;">
                     @if (session('erro'))
-                        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-3"
-                            role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <div class="lg-alert" role="alert">
+                            <span class="lg-alert-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                            <div class="lg-alert-body">
+                                <strong>Ops, não foi dessa vez</strong>
+                                {{ session('erro') }}
+                            </div>
+                            <button type="button" class="lg-alert-close" aria-label="Fechar">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
                         </div>
                     @endif
 
                     @if ($errors->any())
-                        <div class="alert alert-danger border-0 shadow-sm rounded-4 p-3 mb-3 small" role="alert">
-                            <ul class="mb-0 ps-3">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                        <div class="lg-alert" role="alert">
+                            <span class="lg-alert-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                            <div class="lg-alert-body">
+                                <strong>Confira os dados abaixo</strong>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -487,14 +577,8 @@
                 <!-- ---------- PAINEL DE MARCA ---------- -->
                 <div class="lg-media">
                     <div class="lg-media-icon"><i class="bi bi-heart-pulse"></i></div>
-                    <h2>Cuidar do seu pet ficou mais simples</h2>
-                    <p>Crie sua conta e tenha tudo em um só lugar.</p>
-                    <ul>
-                        <li><i class="bi bi-check-circle-fill"></i> Agende serviços em poucos toques</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Acompanhe o atendimento em tempo real</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Guarde o histórico de cada pet</li>
-                    </ul>
-                    <a href="{{ route('login') }}" class="lg-btn lg-btn--ghost">
+                    <h2>Bem-vindo ao Mobipet</h2>
+                    <a href="{{ route('login') }}" class="lg-btn lg-btn--ghost lg-switch-link" data-no-loader>
                         Já tenho conta
                     </a>
                 </div>
@@ -589,17 +673,12 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="lg-btn lg-btn--primary">
+                        <button type="submit" class="lg-btn lg-btn--primary mt-3">
                             <i class="bi bi-check-circle"></i>
                             Finalizar Cadastro
                         </button>
 
                     </form>
-
-                    <div class="lg-foot">
-                        Já tem uma conta?
-                        <a href="{{ route('login') }}">Entrar</a>
-                    </div>
 
                 </div>
 
@@ -695,6 +774,34 @@
                 });
             }
 
+        });
+    </script>
+
+    <!-- Transição suave ao trocar para Entrar -->
+    <script>
+        (function () {
+            var card = document.querySelector('.lg-card');
+            if (!card) return;
+
+            document.querySelectorAll('.lg-switch-link').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                    e.preventDefault();
+                    var href = link.href;
+                    card.classList.add('is-leaving');
+                    setTimeout(function () { window.location.href = href; }, 260);
+                });
+            });
+        })();
+    </script>
+
+    <!-- Fechar os alertas de erro -->
+    <script>
+        document.addEventListener('click', function (e) {
+            var btn = e.target.closest('.lg-alert-close');
+            if (!btn) return;
+            var alert = btn.closest('.lg-alert');
+            if (alert) alert.remove();
         });
     </script>
 

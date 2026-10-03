@@ -1,3 +1,11 @@
+/* Troca a fonte do menu (Lato, do template) por Montserrat — já carregada
+   via Google Fonts em todas as páginas (usada nos títulos) e aplicada aqui
+   através da custom property --nav-font que o main.css já usa em todo o
+   menu, então um único override cobre o menu desktop e o mobile juntos. */
+:root {
+    --nav-font: "Montserrat", sans-serif;
+}
+
 .sitename{
     width: 400px !important;
 }
@@ -1132,9 +1140,6 @@ dd,
    Sobrepõe o cabeçalho padrão do template (main.css) sem alterá-lo.
    ========================================================================== */
 .header {
-    background-color: color-mix(in srgb, var(--background-color), transparent 62%) !important;
-    -webkit-backdrop-filter: saturate(180%) blur(6px);
-    backdrop-filter: saturate(180%) blur(6px);
     /* Borda e sombra sempre presentes (bem sutis) — o vidro precisa ter uma
        borda visível pra se "ler" como vidro em QUALQUER página, mesmo nas
        que não têm nada colorido por trás do cabeçalho. Sem isso, sobre um
@@ -1142,84 +1147,111 @@ dd,
        impressão de que a transparência simplesmente não está ligada ali. */
     border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 93%);
     box-shadow: 0 1px 0 rgba(15, 23, 42, .03), 0 12px 30px -20px rgba(15, 23, 42, .18) !important;
-    transition: background-color .35s ease, backdrop-filter .35s ease, border-color .35s ease, box-shadow .35s ease;
+    transition: border-color .35s ease, box-shadow .35s ease;
+}
+
+/* O fundo + blur do "vidro" ficam num ::before, não direto no .header.
+   Motivo: backdrop-filter (igual transform/filter) cria um novo
+   "containing block" pra qualquer descendente position:fixed — e o
+   .header tem descendentes fixed de verdade (o botão #scroll-top, o
+   painel do menu mobile). Com o blur no .header, esses elementos ficavam
+   "presos" dentro da altura de ~65px do cabeçalho em vez de ocupar a
+   viewport inteira (o botão de voltar ao topo aparecia perto do topo da
+   página, colado no menu, em vez de fixo no canto inferior direito). O
+   ::before cobre a mesma área visualmente (inset:0) mas, por não ser o
+   .header em si, não afeta o containing block dos filhos fixed. */
+.header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: color-mix(in srgb, var(--background-color), transparent 62%) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(6px);
+    backdrop-filter: saturate(180%) blur(6px);
+    transition: background-color .35s ease, backdrop-filter .35s ease;
 }
 
 /* Navegadores sem suporte a backdrop-filter (ou com ele desligado): cai
    pra um branco quase opaco, pra nunca ficar com um cabeçalho "lavado"
    e ilegível por falta do blur. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .header {
+    .header::before {
         background-color: color-mix(in srgb, var(--background-color), transparent 8%) !important;
     }
 }
 
 .scrolled .header {
-    background-color: color-mix(in srgb, var(--background-color), transparent 15%) !important;
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
-    backdrop-filter: saturate(180%) blur(14px);
     border-bottom-color: color-mix(in srgb, var(--default-color), transparent 90%);
     box-shadow: 0 8px 24px rgba(15, 23, 42, .08) !important;
 }
 
-/* Links comuns do menu em formato de pílula, com animação suave no hover
-   (fundo entra + a aba "levanta" levemente com uma sombra em degradê) e um
-   estado "active" que se destaca de verdade: pílula cheia + texto em negrito
-   + um pontinho aceso embaixo, pra ficar óbvio em que página o usuário está. */
+.scrolled .header::before {
+    background-color: color-mix(in srgb, var(--background-color), transparent 15%) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    backdrop-filter: saturate(180%) blur(14px);
+}
+
+/* Links comuns do menu: só o texto, sem pílula/fundo/sombra — a única
+   marcação é a barrinha azul embaixo, que funciona como uma barra de
+   carregamento (cresce da esquerda pra direita ao passar o mouse, encolhe
+   de volta ao tirar) e fica permanentemente cheia no item da página atual. */
 @media (min-width: 1200px) {
     .navmenu > ul > li {
+        position: relative;
         padding-top: 15px;
         padding-bottom: 23px;
     }
 
     .navmenu > ul > li > a.nav-link-pill {
         position: relative;
-        border-radius: 999px;
-        padding: 8px 16px;
-        transition: background-color .3s ease, color .3s ease, transform .3s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease, font-weight 0s;
+        padding: 8px 2px;
+        transition: color .25s ease;
     }
 
+    /* Anima "width" direto (em vez de transform:scaleX) — cresce da
+       esquerda pra direita ao passar o mouse, encolhe de volta pro mesmo
+       lado ao tirar, ancorada em left:0 o tempo todo. */
     .navmenu > ul > li > a.nav-link-pill:before {
-        display: none;
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 4px;
+        width: 0%;
+        height: 2.5px;
+        border-radius: 999px;
+        background: var(--accent-color);
+        /* ease-in (lento no início, rápido no fim) pra saída: com a mesma
+           curva de desaceleração do crescimento, o encolhimento (que
+           percorre a curva ao contrário) perderia quase toda a largura já
+           nos primeiros instantes e pareceria um "sumiço" instantâneo em
+           vez de um recuo visível da direita pra esquerda. */
+        transition: width .3s cubic-bezier(.64, 0, .78, 0);
+        pointer-events: none;
+        z-index: 3;
+    }
+
+    .navmenu > ul > li > a.nav-link-pill:hover:before,
+    .navmenu > ul > li > a.nav-link-pill:focus-visible:before {
+        width: 100%;
+        /* expo-out só na entrada: cresce rápido e desacelera suave até
+           preencher, como uma barra de carregamento terminando. */
+        transition: width .4s cubic-bezier(.22, 1, .36, 1);
     }
 
     .navmenu > ul > li > a.nav-link-pill:hover,
     .navmenu > ul > li > a.nav-link-pill:focus-visible {
-        background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
         color: var(--nav-hover-color);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px -8px color-mix(in srgb, var(--accent-color), transparent 55%);
     }
 
-    .navmenu > ul > li > a.nav-link-pill:active {
-        transform: translateY(-1px) scale(.97);
-    }
-
+    /* Item da página atual: texto em destaque + barra já cheia (sem
+       animação), pra ficar óbvio onde o usuário está mesmo sem hover. */
     .navmenu > ul > li > a.nav-link-pill.active {
-        background-color: color-mix(in srgb, var(--accent-color), transparent 85%);
         color: var(--nav-hover-color) !important;
         font-weight: 700;
-        box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent-color), transparent 55%);
     }
 
-    /* Pontinho aceso embaixo do item ativo, com um leve pulso respirando */
-    .navmenu > ul > li > a.nav-link-pill.active::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: -11px;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: var(--accent-color);
-        transform: translateX(-50%);
-        animation: navActivePulse 2.4s ease-in-out infinite;
+    .navmenu > ul > li > a.nav-link-pill.active:before {
+        width: 100%;
     }
-}
-
-@keyframes navActivePulse {
-    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color), transparent 55%); }
-    50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%); }
 }
 
 /* Ações em destaque: Entrar (contorno) e Cadastre-se (sólido), como no
@@ -1441,6 +1473,10 @@ dd,
     .header .logo:hover .logo-wordmark__mobi,
     .header .logo:hover .logo-wordmark__pet {
         animation: none;
+    }
+
+    .navmenu > ul > li > a.nav-link-pill:before {
+        transition: none;
     }
 }
 

@@ -229,6 +229,119 @@
             backdrop-filter: blur(22px) saturate(140%);
             display: grid;
             grid-template-columns: 1.05fr 1fr;
+            transition: opacity .28s ease, transform .28s cubic-bezier(.4, 0, .2, 1), filter .28s ease;
+        }
+
+        /* Transição de saída ao trocar pra Cliente — o card encolhe e
+           desfoca levemente antes da navegação de verdade acontecer. */
+        .lg-card.is-leaving {
+            opacity: 0;
+            transform: scale(.96) translateY(10px);
+            filter: blur(2px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lg-card {
+                transition: none;
+            }
+        }
+
+        /* =========================================================
+           ALERTAS DE ERRO — vidro líquido em tom vermelho
+           ========================================================= */
+        .lg-alert {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 44px 16px 18px;
+            margin-bottom: 14px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(254, 226, 226, .6), rgba(255, 255, 255, .4));
+            border: 1px solid rgba(220, 38, 38, .25);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            backdrop-filter: blur(18px) saturate(180%);
+            box-shadow: 0 18px 40px -20px rgba(220, 38, 38, .38), inset 0 1px 0 rgba(255, 255, 255, .5);
+            animation: lg-alert-in .5s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        @keyframes lg-alert-in {
+            0%   { opacity: 0; transform: translateY(-10px) scale(.95); }
+            50%  { opacity: 1; transform: translateX(-4px); }
+            70%  { transform: translateX(3px); }
+            85%  { transform: translateX(-1px); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        .lg-alert-icon {
+            flex: none;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(220, 38, 38, .14);
+            color: #dc2626;
+            font-size: 1.05rem;
+        }
+
+        .lg-alert-body {
+            flex: 1;
+            padding-top: 3px;
+            font-size: .92rem;
+            line-height: 1.5;
+            color: #7f1d1d;
+        }
+
+        .lg-alert-body strong {
+            display: block;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: .86rem;
+            color: #991b1b;
+            margin-bottom: 2px;
+        }
+
+        .lg-alert-body ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .lg-alert-body li {
+            margin-bottom: 2px;
+        }
+
+        .lg-alert-body li:last-child {
+            margin-bottom: 0;
+        }
+
+        .lg-alert-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 26px;
+            height: 26px;
+            display: grid;
+            place-items: center;
+            border: none;
+            background: transparent;
+            color: #991b1b;
+            opacity: .55;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: .85rem;
+            transition: opacity .2s ease, background-color .2s ease;
+        }
+
+        .lg-alert-close:hover {
+            opacity: 1;
+            background: rgba(220, 38, 38, .14);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lg-alert {
+                animation: none;
+            }
         }
 
         /* Painel de marca (lado esquerdo) */
@@ -507,20 +620,29 @@
             <div class="row justify-content-center">
                 <div class="col-md-10" style="max-width:940px;">
                     @if (session('erro'))
-                        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 p-3 mb-3"
-                            role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('erro') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <div class="lg-alert" role="alert">
+                            <span class="lg-alert-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                            <div class="lg-alert-body">
+                                <strong>Ops, não foi dessa vez</strong>
+                                {{ session('erro') }}
+                            </div>
+                            <button type="button" class="lg-alert-close" aria-label="Fechar">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
                         </div>
                     @endif
 
                     @if ($errors->any())
-                        <div class="alert alert-danger border-0 shadow-sm rounded-4 p-3 mb-3 small" role="alert">
-                            <ul class="mb-0 ps-3">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                        <div class="lg-alert" role="alert">
+                            <span class="lg-alert-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                            <div class="lg-alert-body">
+                                <strong>Confira os dados abaixo</strong>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -544,7 +666,7 @@
                 <div class="lg-panel">
 
                     <div class="lg-role-switch">
-                        <a href="{{ route('login') }}"><i class="bi bi-person"></i> Cliente</a>
+                        <a href="{{ route('login') }}" class="lg-switch-link" data-no-loader><i class="bi bi-person"></i> Cliente</a>
                         <span class="is-active"><i class="bi bi-briefcase"></i> Funcionário</span>
                     </div>
 
@@ -624,6 +746,34 @@
             window.addEventListener('resize', update);
             update();
         })();
+    </script>
+
+    <!-- Transição suave ao trocar para Cliente -->
+    <script>
+        (function () {
+            var card = document.querySelector('.lg-card');
+            if (!card) return;
+
+            document.querySelectorAll('.lg-switch-link').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                    e.preventDefault();
+                    var href = link.href;
+                    card.classList.add('is-leaving');
+                    setTimeout(function () { window.location.href = href; }, 260);
+                });
+            });
+        })();
+    </script>
+
+    <!-- Fechar os alertas de erro -->
+    <script>
+        document.addEventListener('click', function (e) {
+            var btn = e.target.closest('.lg-alert-close');
+            if (!btn) return;
+            var alert = btn.closest('.lg-alert');
+            if (alert) alert.remove();
+        });
     </script>
 
     @include('partials.logout-confirm')

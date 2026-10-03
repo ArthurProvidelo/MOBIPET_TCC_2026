@@ -350,17 +350,36 @@
         }
 
         .dv-member {
+            position: relative;
             background: var(--dv-bg);
             border: 1px solid var(--dv-line);
             border-radius: var(--dv-radius);
             overflow: hidden;
-            transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+            /* cubic-bezier(.22,1,.36,1) = "expo-out": desacelera suave até o
+               fim, sem o solavanco de um ease com overshoot — é o que dá a
+               sensação de fluidez pedida, em vez de um "salto" brusco.
+               !important necessário: a regra de entrada do AOS
+               (`html:not(.no-js) [data-aos^="fade"]`) tem especificidade
+               maior (um ancestral + dois atributos) e redefine
+               `transition-property: opacity, transform`, derrubando
+               border-color/box-shadow da lista — sem isso eles "pulam"
+               direto pro valor final em vez de acompanhar a expansão. */
+            transition: opacity .6s ease, transform .45s cubic-bezier(.22, 1, .36, 1), box-shadow .45s cubic-bezier(.22, 1, .36, 1), border-color .4s cubic-bezier(.22, 1, .36, 1) !important;
         }
 
-        .dv-member:hover {
-            transform: translateY(-10px);
+        /* Expande o card inteiro no hover (sem empurrar os vizinhos — é um
+           transform, não muda o espaço reservado no grid) junto com a
+           borda azul, deixando óbvio qual card está em foco. */
+        .dv-member:hover,
+        .dv-member:focus-within {
+            /* !important necessário: a animação de entrada do AOS
+               (`[data-aos^="fade"].aos-animate { transform: none }`) tem
+               especificidade maior que `.dv-member:hover` e, sem isso,
+               continua "ganhando" mesmo depois do card já ter aparecido. */
+            transform: translateY(-10px) scale(1.045) !important;
             box-shadow: var(--dv-shadow);
-            border-color: transparent;
+            border-color: var(--dv-accent);
+            z-index: 2;
         }
 
         .dv-member-photo {
@@ -376,11 +395,16 @@
             display: block;
             object-fit: cover;
             object-position: center center;
-            transition: transform .5s ease;
         }
 
-        .dv-member:hover .dv-member-photo img {
-            transform: scale(1.06);
+        /* Ajuste fino da foto do Arthur Barbosa: centraliza o rosto e corta
+           a marca d'água do canto (a foto gerada por IA traz um "✦" no
+           rodapé). O transform-origin não é o centro do recorte — é o ponto
+           que fica fixo durante o zoom — por isso fica perto do topo da
+           cabeça. É um ajuste fixo de enquadramento, não uma animação. */
+        .dv-member:nth-child(1) .dv-member-photo img {
+            transform: scale(1.47);
+            transform-origin: 50% 6%;
         }
 
         .dv-member-body {
@@ -420,10 +444,21 @@
             margin: 0 0 8px;
         }
 
+        /* A descrição fica "apagada" em repouso — a grade de 6 cards não
+           pede pra ler seis parágrafos de uma vez, só mostrar quem é quem.
+           O texto ganha nitidez só no card que o usuário parar pra olhar,
+           tornando a navegação mais leve e confortável. */
         .dv-member-body p {
             margin: 0;
             font-size: .93rem;
             color: var(--dv-body);
+            opacity: .38;
+            transition: opacity .3s ease;
+        }
+
+        .dv-member:hover .dv-member-body p,
+        .dv-member:focus-within .dv-member-body p {
+            opacity: 1;
         }
 
         /* ===================== DISCIPLINAS ===================== */
@@ -817,87 +852,7 @@
         </section>
 
         <!-- ================= TIME ================= -->
-        <section class="dv-team" id="dv-time">
-            <div class="dv-wrap">
-                <div data-aos="fade-up" style="max-width:640px;">
-                    <h2 class="dv-h2">Seis pessoas, uma plataforma</h2>
-                    <p class="dv-lead" style="margin-top:18px;">
-                        Cada integrante cuida de uma parte do Mobipet &mdash; da tela que o tutor
-                        vê ao banco de dados que guarda cada atendimento.
-                    </p>
-                </div>
-
-                <div class="dv-team-grid">
-
-                    <article class="dv-member" data-aos="fade-up" data-aos-delay="0">
-                        <div class="dv-member-photo">
-                            <img src="{{ asset('assets/img/arthur_novo.png') }}" alt="Arthur Barbosa">
-                        </div>
-                        <div class="dv-member-body">
-                            <span class="dv-role dv-role--front"><i class="bi bi-window"></i> Front-end</span>
-                            <h3>Arthur Barbosa</h3>
-                            <p>Responsável pela interface do usuário e pela experiência de navegação.</p>
-                        </div>
-                    </article>
-
-                    <article class="dv-member" data-aos="fade-up" data-aos-delay="80">
-                        <div class="dv-member-photo">
-                            <img src="{{ asset('assets/img/arthurprovidelo.png') }}" alt="Arthur Providelo">
-                        </div>
-                        <div class="dv-member-body">
-                            <span class="dv-role dv-role--full"><i class="bi bi-layers"></i> Full Stack</span>
-                            <h3>Arthur Providelo</h3>
-                            <p>Atua no front-end e no back-end, conectando as duas pontas do sistema.</p>
-                        </div>
-                    </article>
-
-                    <article class="dv-member" data-aos="fade-up" data-aos-delay="160">
-                        <div class="dv-member-photo">
-                            <img src="{{ asset('assets/img/kailasilva.png') }}" alt="Kaila Silva">
-                        </div>
-                        <div class="dv-member-body">
-                            <span class="dv-role dv-role--back"><i class="bi bi-hdd-stack"></i> Back-end</span>
-                            <h3>Kaila Silva</h3>
-                            <p>Cuida da integração com o banco de dados e da persistência dos agendamentos.</p>
-                        </div>
-                    </article>
-
-                    <article class="dv-member" data-aos="fade-up" data-aos-delay="0">
-                        <div class="dv-member-photo">
-                            <img src="{{ asset('assets/img/kauanferreira.png') }}" alt="Kauan Ferreira">
-                        </div>
-                        <div class="dv-member-body">
-                            <span class="dv-role dv-role--front"><i class="bi bi-window"></i> Front-end</span>
-                            <h3>Kauan Ferreira</h3>
-                            <p>Focado em usabilidade e design, deixando cada fluxo simples de usar.</p>
-                        </div>
-                    </article>
-
-                    <article class="dv-member" data-aos="fade-up" data-aos-delay="80">
-                        <div class="dv-member-photo">
-                            <img src="{{ asset('assets/img/lorenaprofissional.png') }}" alt="Lorena Thomaz">
-                        </div>
-                        <div class="dv-member-body">
-                            <span class="dv-role dv-role--front"><i class="bi bi-window"></i> Front-end</span>
-                            <h3>Lorena Thomaz</h3>
-                            <p>Trabalha a experiência visual do sistema e a consistência das telas.</p>
-                        </div>
-                    </article>
-
-                    <article class="dv-member" data-aos="fade-up" data-aos-delay="160">
-                        <div class="dv-member-photo">
-                            <img src="{{ asset('assets/img/mariafernanda.png') }}" alt="Maria Fernanda Galdino">
-                        </div>
-                        <div class="dv-member-body">
-                            <span class="dv-role dv-role--back"><i class="bi bi-hdd-stack"></i> Back-end</span>
-                            <h3>Maria Fernanda Galdino</h3>
-                            <p>Responsável pelo funcionamento interno da aplicação e pelas regras de negócio.</p>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
+        <section class="dv-team" id="dv-time"> <div class="dv-wrap"> <div data-aos="fade-up" style="max-width:640px;"> <h2 class="dv-h2">Seis pessoas, uma plataforma</h2> <p class="dv-lead" style="margin-top:18px;"> Cada integrante contribui em uma etapa essencial do Mobipet — unindo interface, experiência, regras de negócio, dados e infraestrutura. </p> </div> <div class="dv-team-grid"> <article class="dv-member" data-aos="fade-up" data-aos-delay="0"> <div class="dv-member-photo"> <img src="{{ asset('assets/img/arthur_novo.png') }}" alt="Arthur Barbosa"> </div> <div class="dv-member-body"> <span class="dv-role dv-role--front"> <i class="bi bi-window"></i> Desenvolvedor Front-end </span> <h3>Arthur Barbosa</h3> <p>Transformo funcionalidades do Mobipet em interfaces responsivas e acessíveis, com componentização e boas práticas de UX.</p> </div> </article> <article class="dv-member" data-aos="fade-up" data-aos-delay="80"> <div class="dv-member-photo"> <img src="{{ asset('assets/img/arthurprovidelo.png') }}" alt="Arthur Providelo"> </div> <div class="dv-member-body"> <span class="dv-role dv-role--full"> <i class="bi bi-layers"></i> Desenvolvedor Full Stack </span> <h3>Arthur Providelo</h3> <p>Conecto front-end e back-end com APIs bem projetadas, traduzindo cada necessidade em soluções completas e integradas.</p> </div> </article> <article class="dv-member" data-aos="fade-up" data-aos-delay="160"> <div class="dv-member-photo"> <img src="{{ asset('assets/img/kailasilva.png') }}" alt="Kaila Silva"> </div> <div class="dv-member-body"> <span class="dv-role dv-role--back"> <i class="bi bi-hdd-stack"></i> Desenvolvedor Back-end </span> <h3>Kaila Silva</h3> <p>Modelo a camada de dados do sistema, com consultas eficientes e integridade referencial a cada agendamento salvo.</p> </div> </article> <article class="dv-member" data-aos="fade-up" data-aos-delay="0"> <div class="dv-member-photo"> <img src="{{ asset('assets/img/kauanferreira.png') }}" alt="Kauan Ferreira"> </div> <div class="dv-member-body"> <span class="dv-role dv-role--front"> <i class="bi bi-window"></i> Desenvolvedor Front-end </span> <h3>Kauan Ferreira</h3> <p>Desenho fluxos de navegação centrados no usuário, simplificando interações até restarem só os cliques essenciais.</p> </div> </article> <article class="dv-member" data-aos="fade-up" data-aos-delay="80"> <div class="dv-member-photo"> <img src="{{ asset('assets/img/lorenaprofissional.png') }}" alt="Lorena Thomaz"> </div> <div class="dv-member-body"> <span class="dv-role dv-role--front"> <i class="bi bi-window"></i> Desenvolvedor Front-end </span> <h3>Lorena Thomaz</h3> <p>Mantenho a consistência visual do Mobipet, padronizando componentes para que cada tela pareça a mesma experiência.</p> </div> </article> <article class="dv-member" data-aos="fade-up" data-aos-delay="160"> <div class="dv-member-photo"> <img src="{{ asset('assets/img/mariafernanda.png') }}" alt="Maria Fernanda Galdino"> </div> <div class="dv-member-body"> <span class="dv-role dv-role--back"> <i class="bi bi-hdd-stack"></i> Desenvolvedor Back-end </span> <h3>Maria Fernanda Galdino</h3> <p>Implemento as regras de negócio do sistema, validando dados para manter consistência em cada operação realizada.</p> </div> </article> </div> </div> </section>
 
         <!-- ================= DISCIPLINAS ================= -->
         <section class="dv-areas">
