@@ -382,66 +382,280 @@
         }
 
         /* ---------- COMO FUNCIONA (4 passos) ---------- */
+        /* Linha do tempo: cada passo tem um nó (ícone) ligado ao próximo por um
+           trilho. Ao entrar na tela (.is-in, via JS) o trilho se preenche passo a
+           passo; no hover, o progresso para no passo apontado. */
         .mp-how {
-            background: #fff;
+            background:
+                radial-gradient(45% 60% at 50% 0%, var(--mp-accent-soft) 0%, transparent 70%),
+                #fff;
         }
 
         .mp-steps-grid {
+            --step-gap: 24px;
+            --step-delay: 240ms;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-top: 52px;
-            position: relative;
+            gap: var(--step-gap);
+            margin-top: 56px;
         }
 
-        .mp-steps-grid::before {
-            content: "";
-            position: absolute;
-            top: 26px;
-            left: 12%;
-            right: 12%;
-            height: 2px;
-            background: repeating-linear-gradient(90deg, var(--mp-border) 0 10px, transparent 10px 20px);
-            z-index: 0;
+        .mp-steps-grid.is-ready {
+            --step-delay: 50ms;
         }
 
         .mp-step {
+            --c: var(--mp-accent);
+            --c-soft: var(--mp-accent-soft);
+            --d: calc(var(--i) * var(--step-delay));
             position: relative;
-            z-index: 1;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .mp-step .mp-num {
-            width: 54px;
-            height: 54px;
-            margin: 0 auto 18px;
+        .mp-step:last-child {
+            --c: var(--mp-green);
+            --c-soft: var(--mp-green-soft);
+        }
+
+        /* Trilho até o próximo passo: ::before = tracejado, ::after = preenchimento */
+        .mp-step:not(:last-child)::before,
+        .mp-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 31px;
+            left: 50%;
+            width: calc(100% + var(--step-gap));
+            height: 3px;
+            border-radius: 3px;
+        }
+
+        .mp-step:not(:last-child)::before {
+            background: repeating-linear-gradient(90deg, var(--mp-border) 0 8px, transparent 8px 16px);
+        }
+
+        .mp-step:not(:last-child)::after {
+            background: linear-gradient(90deg, var(--mp-accent), #4f8cff);
+            transform: scaleX(0);
+            transform-origin: left top;
+            transition: transform .5s ease var(--d);
+        }
+
+        .mp-step:nth-last-child(2)::after {
+            background: linear-gradient(90deg, var(--mp-accent), var(--mp-green));
+        }
+
+        /* ----- Nó ----- */
+        .mp-node {
+            position: relative;
+            z-index: 2;
+            flex-shrink: 0;
             display: grid;
             place-items: center;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: #fff;
             border: 2px solid var(--mp-border);
-            font-family: "Montserrat", sans-serif;
-            font-weight: 700;
-            color: var(--mp-accent);
-            transition: .25s ease;
+            color: var(--mp-muted);
+            font-size: 1.5rem;
+            transition: background-color .3s ease var(--d), border-color .3s ease var(--d),
+                color .3s ease var(--d), transform .3s ease, box-shadow .3s ease;
         }
 
-        .mp-step:hover .mp-num {
-            background: var(--mp-accent);
-            border-color: var(--mp-accent);
-            color: #fff;
-            transform: translateY(-4px);
+        .mp-node i {
+            line-height: 1;
+        }
+
+        /* ----- Card ----- */
+        .mp-step-card {
+            position: relative;
+            flex: 1;
+            width: 100%;
+            margin-top: 26px;
+            padding: 28px 22px 24px;
+            text-align: center;
+            background: var(--mp-bg);
+            border: 1px solid var(--mp-border);
+            border-radius: var(--mp-radius);
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease, background-color .3s ease;
+        }
+
+        /* Setinha apontando para o nó */
+        .mp-step-card::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            width: 14px;
+            height: 14px;
+            margin-left: -7px;
+            background: inherit;
+            border: 1px solid;
+            border-color: inherit;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            border-top-left-radius: 4px;
+            transform: rotate(45deg);
+        }
+
+        /* Barra inferior que cresce no hover */
+        .mp-step-card::after {
+            content: "";
+            position: absolute;
+            left: 22px;
+            right: 22px;
+            bottom: 0;
+            height: 3px;
+            border-radius: 3px 3px 0 0;
+            background: var(--c);
+            transform: scaleX(0);
+            transition: transform .35s ease;
+        }
+
+        /* Número grande ao fundo */
+        .mp-step-ghost {
+            position: absolute;
+            top: 8px;
+            right: 14px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 800;
+            font-size: 3.6rem;
+            line-height: 1;
+            color: color-mix(in srgb, var(--c) 8%, transparent);
+            pointer-events: none;
+            user-select: none;
+            transition: color .3s ease, transform .4s ease;
+        }
+
+        .mp-step .mp-num {
+            position: relative;
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 50px;
+            background: #fff;
+            border: 1px solid var(--mp-border);
+            font-family: "Montserrat", sans-serif;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--mp-muted);
+            transition: background-color .3s ease, border-color .3s ease, color .3s ease;
         }
 
         .mp-step h3 {
-            font-size: 1.05rem;
-            margin-bottom: 6px;
+            position: relative;
+            font-size: 1.1rem;
+            margin: 14px 0 8px;
         }
 
         .mp-step p {
-            font-size: .92rem;
+            position: relative;
+            font-size: .93rem;
+            line-height: 1.55;
             margin: 0;
             color: var(--mp-body);
+        }
+
+        .mp-step-tag {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            font-family: "Montserrat", sans-serif;
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--c);
+            opacity: .75;
+            transition: opacity .3s ease, transform .3s ease;
+        }
+
+        /* ----- Passo alcançado (depois de entrar na tela) ----- */
+        .mp-steps-grid.is-in .mp-step::after {
+            transform: none;
+        }
+
+        .mp-steps-grid.is-in .mp-node {
+            border-color: var(--c);
+            background: var(--c-soft);
+            color: var(--c);
+        }
+
+        /* ----- Hover: o progresso para no passo apontado ----- */
+        .mp-steps-grid.is-in .mp-step:hover::after,
+        .mp-steps-grid.is-in .mp-step:hover~.mp-step::after {
+            transform: scale(0);
+            transition-delay: 0s;
+        }
+
+        .mp-steps-grid.is-in .mp-step:hover~.mp-step .mp-node {
+            border-color: var(--mp-border);
+            background: #fff;
+            color: var(--mp-muted);
+            transition-delay: 0s;
+        }
+
+        .mp-steps-grid.is-in .mp-step:hover .mp-node {
+            background: var(--c);
+            border-color: var(--c);
+            color: #fff;
+            transform: scale(1.1);
+            transition-delay: 0s;
+            animation: mp-node-ring 1.5s ease-out infinite;
+        }
+
+        .mp-step:hover .mp-node i {
+            animation: mp-node-wiggle .6s ease;
+        }
+
+        .mp-step:hover .mp-step-card {
+            transform: translateY(-8px);
+            background: #fff;
+            border-color: color-mix(in srgb, var(--c) 40%, var(--mp-border));
+            box-shadow: 0 26px 50px -28px color-mix(in srgb, var(--c) 75%, transparent);
+        }
+
+        .mp-step:hover .mp-step-card::after {
+            transform: scaleX(1);
+        }
+
+        .mp-step:hover .mp-step-ghost {
+            color: color-mix(in srgb, var(--c) 18%, transparent);
+            transform: translate(-4px, 4px) scale(1.08);
+        }
+
+        .mp-step:hover .mp-num {
+            background: var(--c);
+            border-color: var(--c);
+            color: #fff;
+        }
+
+        .mp-step:hover .mp-step-tag {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        @keyframes mp-node-ring {
+            0% {
+                box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 45%, transparent);
+            }
+
+            100% {
+                box-shadow: 0 0 0 16px transparent;
+            }
+        }
+
+        @keyframes mp-node-wiggle {
+            30% {
+                transform: rotate(-14deg) scale(1.15);
+            }
+
+            60% {
+                transform: rotate(10deg) scale(1.15);
+            }
         }
 
         /* ---------- DEMO INTERATIVA ---------- */
@@ -1485,11 +1699,53 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            /* Passos viram linha do tempo vertical: nó à esquerda, card à direita */
             .mp-steps-grid {
-                grid-template-columns: repeat(2, 1fr);
+                --step-gap: 20px;
+                grid-template-columns: 1fr;
+                margin-top: 40px;
             }
 
-            .mp-steps-grid::before,
+            .mp-step {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .mp-step:not(:last-child)::before,
+            .mp-step:not(:last-child)::after {
+                top: 32px;
+                left: 31px;
+                width: 3px;
+                height: calc(100% + var(--step-gap));
+            }
+
+            .mp-step:not(:last-child)::before {
+                background: repeating-linear-gradient(180deg, var(--mp-border) 0 8px, transparent 8px 16px);
+            }
+
+            .mp-step:not(:last-child)::after {
+                background: linear-gradient(180deg, var(--mp-accent), #4f8cff);
+                transform: scaleY(0);
+            }
+
+            .mp-step:nth-last-child(2)::after {
+                background: linear-gradient(180deg, var(--mp-accent), var(--mp-green));
+            }
+
+            .mp-step-card {
+                margin-top: 0;
+                padding: 22px 20px;
+                text-align: left;
+            }
+
+            .mp-step-card::before {
+                top: 25px;
+                left: -8px;
+                margin-left: 0;
+                transform: rotate(-45deg);
+            }
+
             .mp-start-grid::before {
                 display: none;
             }
@@ -1517,9 +1773,28 @@
         @media (max-width: 575px) {
 
             .mp-cards,
-            .mp-steps-grid,
             .mp-start-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .mp-step {
+                gap: 14px;
+            }
+
+            .mp-node {
+                width: 52px;
+                height: 52px;
+                font-size: 1.25rem;
+            }
+
+            .mp-step:not(:last-child)::before,
+            .mp-step:not(:last-child)::after {
+                top: 26px;
+                left: 25px;
+            }
+
+            .mp-step-card::before {
+                top: 19px;
             }
 
             .mp-float--status {
@@ -1664,26 +1939,46 @@
                     <p>Nenhum passo tem segredo. Você faz tudo pelo celular ou pelo computador.</p>
                 </div>
 
-                <div class="mp-steps-grid">
-                    <div class="mp-step" data-aos="fade-up" data-aos-delay="0">
-                        <div class="mp-num">01</div>
-                        <h3>Escolha o serviço</h3>
-                        <p>Banho, tosa ou consulta, direto na tela inicial.</p>
+                <div class="mp-steps-grid" id="mpSteps">
+                    <div class="mp-step" style="--i:0" data-aos="fade-up" data-aos-delay="0">
+                        <div class="mp-node"><i class="bi bi-scissors" aria-hidden="true"></i></div>
+                        <div class="mp-step-card">
+                            <span class="mp-step-ghost" aria-hidden="true">01</span>
+                            <span class="mp-num">Passo 01</span>
+                            <h3>Escolha o serviço</h3>
+                            <p>Banho, tosa ou consulta, direto na tela de agendamento.</p>
+                            <span class="mp-step-tag"><i class="bi bi-hand-index-thumb" aria-hidden="true"></i> Tudo na tela de agendamento</span>
+                        </div>
                     </div>
-                    <div class="mp-step" data-aos="fade-up" data-aos-delay="80">
-                        <div class="mp-num">02</div>
-                        <h3>Agende online</h3>
-                        <p>Selecione o dia e o horário que forem melhores para você.</p>
+                    <div class="mp-step" style="--i:1" data-aos="fade-up" data-aos-delay="80">
+                        <div class="mp-node"><i class="bi bi-calendar2-check" aria-hidden="true"></i></div>
+                        <div class="mp-step-card">
+                            <span class="mp-step-ghost" aria-hidden="true">02</span>
+                            <span class="mp-num">Passo 02</span>
+                            <h3>Agende online</h3>
+                            <p>Selecione o dia e o horário que forem melhores para você.</p>
+                            <span class="mp-step-tag"><i class="bi bi-clock" aria-hidden="true"></i> Dia e horário à sua escolha</span>
+                        </div>
                     </div>
-                    <div class="mp-step" data-aos="fade-up" data-aos-delay="160">
-                        <div class="mp-num">03</div>
-                        <h3>Acompanhe em tempo real</h3>
-                        <p>Veja cada etapa avançar e receba avisos automáticos.</p>
+                    <div class="mp-step" style="--i:2" data-aos="fade-up" data-aos-delay="160">
+                        <div class="mp-node"><i class="bi bi-bell" aria-hidden="true"></i></div>
+                        <div class="mp-step-card">
+                            <span class="mp-step-ghost" aria-hidden="true">03</span>
+                            <span class="mp-num">Passo 03</span>
+                            <h3>Acompanhe em tempo real</h3>
+                            <p>Veja cada etapa avançar e receba avisos automáticos.</p>
+                            <span class="mp-step-tag"><i class="bi bi-broadcast" aria-hidden="true"></i> Avisos automáticos</span>
+                        </div>
                     </div>
-                    <div class="mp-step" data-aos="fade-up" data-aos-delay="240">
-                        <div class="mp-num">04</div>
-                        <h3>Retire seu pet</h3>
-                        <p>Você recebe o aviso de "pronto" e o histórico fica salvo.</p>
+                    <div class="mp-step" style="--i:3" data-aos="fade-up" data-aos-delay="240">
+                        <div class="mp-node"><i class="bi bi-house-heart" aria-hidden="true"></i></div>
+                        <div class="mp-step-card">
+                            <span class="mp-step-ghost" aria-hidden="true">04</span>
+                            <span class="mp-num">Passo 04</span>
+                            <h3>Retire seu pet</h3>
+                            <p>Você recebe o aviso de "pronto" e o histórico fica salvo.</p>
+                            <span class="mp-step-tag"><i class="bi bi-check2-circle" aria-hidden="true"></i> Histórico salvo</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2179,6 +2474,26 @@
                     }
                 });
             });
+        })();
+    </script>
+
+    <!-- "4 passos": preenche a linha do tempo quando a seção entra na tela -->
+    <script>
+        (function () {
+            var steps = document.getElementById('mpSteps');
+            if (!steps) return;
+            var start = function () {
+                steps.classList.add('is-in');
+                // Depois da entrada, o hover responde sem o atraso em cascata.
+                setTimeout(function () { steps.classList.add('is-ready'); }, 1800);
+            };
+            if (!('IntersectionObserver' in window)) return start();
+            var io = new IntersectionObserver(function (entries) {
+                if (!entries[0].isIntersecting) return;
+                io.disconnect();
+                setTimeout(start, 350);
+            }, { threshold: 0.35 });
+            io.observe(steps);
         })();
     </script>
 

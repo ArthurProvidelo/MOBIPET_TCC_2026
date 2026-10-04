@@ -518,37 +518,107 @@
             background: #fff;
         }
 
-        .dv-chips {
+        .dv-stack-head {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px 64px;
+            align-items: end;
+        }
+
+        .dv-stack-head .dv-lead {
+            margin: 0;
+        }
+
+        .dv-tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 56px;
+        }
+
+        /* --c = cor da marca de cada tecnologia */
+        .dv-tech {
+            --c: var(--dv-accent);
+            position: relative;
             display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-top: 48px;
-        }
-
-        .dv-tchip {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 22px;
-            border-radius: var(--dv-radius-sm);
-            background: var(--dv-bg);
+            flex-direction: column;
+            padding: 26px 24px 24px;
+            border-radius: var(--dv-radius);
+            background: #fff;
             border: 1px solid var(--dv-line);
+            overflow: hidden;
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+
+        .dv-tech::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 3px;
+            background: var(--c);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .3s ease;
+        }
+
+        .dv-tech:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 50px -28px color-mix(in srgb, var(--c) 70%, transparent);
+            border-color: color-mix(in srgb, var(--c) 40%, var(--dv-line));
+        }
+
+        .dv-tech:hover::before {
+            transform: scaleX(1);
+        }
+
+        .dv-tech-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: fit-content;
+            min-width: 60px;
+            height: 60px;
+            padding: 0 13px;
+            border-radius: var(--dv-radius-sm);
+            background: color-mix(in srgb, var(--c) 10%, #fff);
+            border: 1px solid color-mix(in srgb, var(--c) 18%, #fff);
+            margin-bottom: 22px;
+        }
+
+        .dv-tech-logo img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+
+        .dv-tech-logo i {
+            font-size: 1.7rem;
+            line-height: 1;
+            color: var(--c);
+        }
+
+        .dv-tech-tag {
             font-family: "Montserrat", sans-serif;
-            font-weight: 600;
-            font-size: .95rem;
-            color: var(--dv-ink);
-            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--dv-muted);
         }
 
-        .dv-tchip:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--dv-shadow-sm);
-            border-color: color-mix(in srgb, var(--dv-accent) 35%, transparent);
-        }
-
-        .dv-tchip i {
-            color: var(--dv-accent);
+        .dv-tech h3 {
             font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--dv-ink);
+            margin: 6px 0 8px;
+        }
+
+        .dv-tech p {
+            font-size: .92rem;
+            line-height: 1.55;
+            color: var(--dv-body);
+            margin: 0;
         }
 
         /* ===================== JORNADA (timeline) ===================== */
@@ -679,11 +749,43 @@
             .dv-team-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .dv-stack-head {
+                grid-template-columns: 1fr;
+            }
+
+            .dv-tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+                margin-top: 40px;
+            }
         }
 
         @media (max-width: 575px) {
             .dv-team-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .dv-tech-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .dv-tech {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                column-gap: 16px;
+                align-items: center;
+                padding: 18px;
+            }
+
+            .dv-tech-logo {
+                grid-row: 1 / span 3;
+                align-self: start;
+                margin-bottom: 0;
+            }
+
+            .dv-tech h3 {
+                margin: 2px 0 4px;
             }
         }
 
@@ -905,23 +1007,87 @@
         <!-- ================= STACK ================= -->
         <section class="dv-stack">
             <div class="dv-wrap">
-                <div data-aos="fade-up" style="max-width:640px;">
+                <div class="dv-stack-head" data-aos="fade-up">
                     <h2 class="dv-h2">A stack que move o Mobipet</h2>
-                    <p class="dv-lead" style="margin-top:18px;">
-                        Tecnologias escolhidas para dar conta da web, da API e do aplicativo
+                    <p class="dv-lead">
+                        Estas são as tecnologias escolhidas para dar conta da web, da API e do aplicativo
                         com o mesmo time.
                     </p>
                 </div>
 
-                <div class="dv-chips" data-aos="fade-up">
-                    <span class="dv-tchip"><i class="bi bi-git"></i> Laravel</span>
-                    <span class="dv-tchip"><i class="bi bi-filetype-php"></i> PHP</span>
-                    <span class="dv-tchip"><i class="bi bi-code-slash"></i> Blade</span>
-                    <span class="dv-tchip"><i class="bi bi-bootstrap"></i> Bootstrap</span>
-                    <span class="dv-tchip"><i class="bi bi-filetype-js"></i> JavaScript</span>
-                    <span class="dv-tchip"><i class="bi bi-database"></i> MySQL</span>
-                    <span class="dv-tchip"><i class="bi bi-phone"></i> Flutter</span>
-                    <span class="dv-tchip"><i class="bi bi-github"></i> Git &amp; GitHub</span>
+                <div class="dv-tech-grid" data-aos="fade-up">
+                    <article class="dv-tech" style="--c:#f0513f;">
+                        <div class="dv-tech-logo">
+                            <img src="{{ asset('assets/img/stack/laravel.svg') }}" alt="Logo do Laravel" loading="lazy">
+                        </div>
+                        <span class="dv-tech-tag">Back-end</span>
+                        <h3>Laravel</h3>
+                        <p>Framework que organiza rotas, regras de negócio e a API do projeto.</p>
+                    </article>
+
+                    <article class="dv-tech" style="--c:#777bb3;">
+                        <div class="dv-tech-logo">
+                            <img src="{{ asset('assets/img/stack/php.svg') }}" alt="Logo do PHP" loading="lazy">
+                        </div>
+                        <span class="dv-tech-tag">Back-end</span>
+                        <h3>PHP</h3>
+                        <p>Linguagem que roda no servidor e sustenta toda a aplicação.</p>
+                    </article>
+
+                    <article class="dv-tech" style="--c:#00618a;">
+                        <div class="dv-tech-logo">
+                            <img src="{{ asset('assets/img/stack/mysql.svg') }}" alt="Logo do MySQL" loading="lazy">
+                        </div>
+                        <span class="dv-tech-tag">Banco de dados</span>
+                        <h3>MySQL</h3>
+                        <p>Onde ficam guardados clientes, pets, serviços e agendamentos.</p>
+                    </article>
+
+                    <article class="dv-tech" style="--c:#f0513f;">
+                        <div class="dv-tech-logo">
+                            <i class="bi bi-braces" aria-hidden="true"></i>
+                        </div>
+                        <span class="dv-tech-tag">Front-end</span>
+                        <h3>Blade</h3>
+                        <p>Motor de templates do Laravel que monta as páginas do site.</p>
+                    </article>
+
+                    <article class="dv-tech" style="--c:#7952b3;">
+                        <div class="dv-tech-logo">
+                            <img src="{{ asset('assets/img/stack/bootstrap.svg') }}" alt="Logo do Bootstrap" loading="lazy">
+                        </div>
+                        <span class="dv-tech-tag">Front-end</span>
+                        <h3>Bootstrap</h3>
+                        <p>Grid e componentes que deixam o layout responsivo em qualquer tela.</p>
+                    </article>
+
+                    <article class="dv-tech" style="--c:#e5b800;">
+                        <div class="dv-tech-logo">
+                            <img src="{{ asset('assets/img/stack/javascript.svg') }}" alt="Logo do JavaScript" loading="lazy">
+                        </div>
+                        <span class="dv-tech-tag">Front-end</span>
+                        <h3>JavaScript</h3>
+                        <p>Interações, animações e validações direto no navegador.</p>
+                    </article>
+
+                    <article class="dv-tech" style="--c:#02569b;">
+                        <div class="dv-tech-logo">
+                            <img src="{{ asset('assets/img/stack/flutter.svg') }}" alt="Logo do Flutter" loading="lazy">
+                        </div>
+                        <span class="dv-tech-tag">Mobile</span>
+                        <h3>Flutter</h3>
+                        <p>Aplicativo do Mobipet, consumindo a mesma API usada pela web.</p>
+                    </article>
+
+                    <article class="dv-tech" style="--c:#f34f29;">
+                        <div class="dv-tech-logo">
+                            <img src="{{ asset('assets/img/stack/git.svg') }}" alt="Logo do Git" loading="lazy">
+                            <img src="{{ asset('assets/img/stack/github.svg') }}" alt="Logo do GitHub" loading="lazy">
+                        </div>
+                        <span class="dv-tech-tag">Versionamento</span>
+                        <h3>Git &amp; GitHub</h3>
+                        <p>Histórico do código e trabalho em equipe por branches e pull requests.</p>
+                    </article>
                 </div>
             </div>
         </section>
