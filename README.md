@@ -23,14 +23,6 @@
 
 **Um ecossistema tecnológico que conecta petshops, tutores, pets e dispositivos IoT.**
 
-[Sobre](#-sobre-o-projeto) •
-[Funcionalidades](#-principais-funcionalidades) •
-[Arquitetura](#%EF%B8%8F-arquitetura) •
-[IoT / RFID](#-camada-iot--rfid) •
-[Instalação](#%EF%B8%8F-como-executar) •
-[Roadmap](#%EF%B8%8F-roadmap) •
-[Autor](#-autor)
-
 </div>
 
 ---
@@ -108,25 +100,6 @@ stateDiagram-v2
     Concluido: Concluído ✅
 ```
 
-<details>
-<summary><b>📖 Visão do tutor (exemplo de etapas exibidas no app)</b></summary>
-
-<br>
-
-```text
-🕐 Atendimento agendado
-        ↓
-⏳ Aguardando atendimento
-        ↓
-🛁 Banho em andamento
-        ↓
-✂️ Tosa em andamento
-        ↓
-✅ Serviço concluído
-```
-
-</details>
-
 ---
 
 ## 🏗️ Arquitetura
@@ -186,28 +159,6 @@ sequenceDiagram
 ```
 
 <details>
-<summary><b>🔌 Ligação ESP32 ↔ RC522 (SPI)</b></summary>
-
-<br>
-
-| RC522 | ESP32 |
-|:--:|:--:|
-| SDA (SS) | GPIO 5 |
-| SCK | GPIO 18 |
-| MOSI | GPIO 23 |
-| MISO | GPIO 19 |
-| RST | GPIO 22 |
-| 3.3V | 3V3 |
-| GND | GND |
-
-> [!WARNING]
-> O RC522 opera em **3.3V**. Ligá-lo em 5V pode danificar o módulo.
-
-</details>
-
-<details>
-<summary><b>🪪 Cadastro de pet pelo ESP32</b></summary>
-
 <br>
 
 O funcionário pode cadastrar um pet diretamente pelo **Monitor Serial**, informando os dados do animal e o **ID do cliente**. Em seguida, aproxima um cartão novo, que fica vinculado ao pet recém-criado.
@@ -225,89 +176,7 @@ MobiPet/
 ├── 📁 iot/            # Firmware do ESP32 (RC522)
 └── 📄 README.md
 ```
-
-> [!TIP]
-> Ajuste a árvore acima para refletir os nomes reais das pastas do repositório.
-
 ---
-
-## ⚙️ Como executar
-
-### ✅ Pré-requisitos
-
-![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white)
-![Composer](https://img.shields.io/badge/Composer-2.x-885630?style=flat-square&logo=composer&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=flat-square&logo=flutter&logoColor=white)
-![Arduino IDE](https://img.shields.io/badge/Arduino%20IDE-2.x-00878F?style=flat-square&logo=arduino&logoColor=white)
-
-<details open>
-<summary><b>🐘 Backend (Laravel)</b></summary>
-
-```bash
-# Clone o repositório
-git clone https://github.com/SEU-USUARIO/MobiPet.git
-cd MobiPet/backend
-
-# Instale as dependências
-composer install
-
-# Configure o ambiente
-cp .env.example .env
-php artisan key:generate
-
-# Configure DB_DATABASE, DB_USERNAME e DB_PASSWORD no .env e rode:
-php artisan migrate --seed
-
-# Inicie o servidor (acessível na rede local para o ESP32 e o app)
-php artisan serve --host=0.0.0.0 --port=8000
-```
-
-</details>
-
-<details>
-<summary><b>💙 Mobile (Flutter)</b></summary>
-
-```bash
-cd MobiPet/mobile
-flutter pub get
-
-# Aponte a URL base da API para o IP da sua máquina (ex.: http://192.168.0.10:8000)
-flutter run
-```
-
-</details>
-
-<details>
-<summary><b>📡 IoT (ESP32)</b></summary>
-
-1. Instale o pacote de placas **ESP32** na Arduino IDE.
-2. Instale a biblioteca **MFRC522**.
-3. No firmware, configure:
-   ```cpp
-   const char* WIFI_SSID     = "SUA_REDE";
-   const char* WIFI_PASSWORD = "SUA_SENHA";
-   const char* API_URL       = "http://192.168.0.10:8000/api/...";
-   ```
-4. Faça o upload para a placa e abra o **Monitor Serial** (115200 baud).
-
-</details>
-
-> [!CAUTION]
-> Nunca faça commit do arquivo `.env` nem de senhas de Wi-Fi no firmware.
-
----
-
-## 🗺️ Roadmap
-
-```mermaid
-timeline
-    title Evolução do MobiPet
-    Base       : Modelagem do banco : API Laravel : Painel web
-    Mobile     : App Flutter : Cadastro de pets : Agendamentos
-    IoT        : ESP32 + RC522 : Vínculo cartão ↔ pet : Avanço de status por RFID
-    Próximos   : Notificações push : Dashboard com indicadores : Deploy em nuvem
-```
 
 ---
 
@@ -323,11 +192,12 @@ timeline
 
 <div align="center">
 
-<a href="https://github.com/SEU-USUARIO">
-  <img src="https://github.com/SEU-USUARIO.png" width="110" style="border-radius:50%" alt="Arthur"/>
+<a href="https://github.com/ArthurProvielo">
+  <img src="https://github.com/ArthurProvidelo.png" width="110" style="border-radius:50%" alt="Arthur"/>
 </a>
 
 **Arthur**
+<br>
 Estudante de Análise e Desenvolvimento de Sistemas · SENAI
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/SEU-USUARIO)
@@ -340,7 +210,7 @@ Estudante de Análise e Desenvolvimento de Sistemas · SENAI
 
 <div align="center">
 
-**Feito com 💙 e muito ☕ como Trabalho de Conclusão de Curso.**
+**Este é o meu Trabalho de Conclusão de Curso.**
 
 ⭐ Se este projeto te ajudou ou te inspirou, deixe uma estrela!
 
