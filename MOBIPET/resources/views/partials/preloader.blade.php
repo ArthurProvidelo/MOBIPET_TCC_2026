@@ -5,9 +5,10 @@
      Uso:
          @include('partials.preloader')   (logo após a tag <body>)
 
-     Conceito: um círculo com a pata do Mobipet. Cada dedo da pata
-     "afunda" em sequência, como uma patinha pressionando a superfície,
-     enquanto a página carrega. Sem porcentagem, sem spinner, sem texto.
+     Conceito (no estilo dos loaders CSS do uiverse.io): um cachorrinho
+     correndo atrás da bolinha — patas, orelha, rabo e língua animados,
+     chão passando por baixo. Embaixo, um osso que "enche" como barra de
+     progresso e uma frase que muda conforme a página de destino.
 
      Autossuficiente: HTML + CSS + JS vanilla + SVG inline.
      Não depende de main.css, main.js, estilo.css, npm ou bibliotecas.
@@ -25,6 +26,10 @@
         --mp-light: #EAF1FE;
         --mp-soft: #DCE8FB;
         --mp-teal: #23C9B5;
+        --mp-pink: #FF6B8B;
+        --mp-muted: #5B6B86;
+
+        --mp-run: .46s;   /* duração de uma passada */
 
         position: fixed;
         inset: 0;
@@ -37,8 +42,10 @@
         width: 100%;
         height: 100%;
         min-height: 100dvh;
+        overflow: hidden;
 
-        background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+        background: linear-gradient(180deg, #ffffff 0%, #f1f6ff 100%);
+        font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
 
         opacity: 1;
         visibility: visible;
@@ -57,11 +64,19 @@
         pointer-events: none;
     }
 
+    /* Com o loader escondido nada fica animando por baixo da página. */
+    #mp-loader.is-hidden .mp-loader__scene *,
+    #mp-loader.is-hidden .mp-loader__bone * {
+        animation-play-state: paused;
+    }
+
     /* =================================================================
-       CÍRCULO + PATA
+       PALCO
        ================================================================= */
     #mp-loader .mp-loader__box {
-        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         opacity: 0;
         transform: translateY(10px);
@@ -72,45 +87,158 @@
         animation: mpLoaderExit 300ms cubic-bezier(.4, 0, .2, 1) forwards;
     }
 
-    #mp-loader .mp-loader__mark {
-        position: relative;
-        width: 124px;
-        height: 124px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 50%;
-        background: #ffffff;
-        box-shadow:
-            0 14px 40px rgba(17, 35, 68, .10),
-            inset 0 0 0 2.5px var(--mp-soft);
-    }
-
-    #mp-loader .mp-loader__paw {
-        width: 58px;
-        height: 58px;
+    /* =================================================================
+       CENA — cachorrinho correndo
+       ================================================================= */
+    #mp-loader .mp-loader__scene {
+        display: block;
+        width: min(270px, 72vw);
+        height: auto;
         overflow: visible;
     }
 
-    /* superfície onde os dedos afundam */
-    #mp-loader .mp-loader__ground {
-        fill: var(--mp-soft);
-        opacity: .5;
-    }
-
-    /* palma */
-    #mp-loader .mp-loader__pad {
-        fill: var(--mp-primary);
-    }
-
-    /* dedos — cada um afunda na sua vez */
-    #mp-loader .mp-loader__toe {
-        fill: var(--mp-primary);
+    /* tudo que gira usa a própria caixa como referência */
+    #mp-loader .mp-loader__scene * {
         transform-box: fill-box;
-        transform-origin: 50% 45%;
-        animation: mpToeSink 2.6s cubic-bezier(.45, 0, .3, 1) infinite;
-        animation-delay: calc(var(--i) * .32s);
+    }
+
+    /* chão passando */
+    #mp-loader .mp-loader__dash {
+        fill: var(--mp-soft);
+        animation: mpGround .9s linear infinite;
+        animation-delay: calc(var(--i) * -.3s);
+    }
+
+    #mp-loader .mp-loader__shadow {
+        fill: var(--mp-navy);
+        opacity: .12;
+        transform-origin: 50% 50%;
+        animation: mpShadow var(--mp-run) ease-in-out infinite alternate;
+    }
+
+    /* corpo inteiro quica a cada passada */
+    #mp-loader .mp-loader__dog {
+        animation: mpBounce var(--mp-run) ease-in-out infinite alternate;
+    }
+
+    #mp-loader .mp-loader__body,
+    #mp-loader .mp-loader__head,
+    #mp-loader .mp-loader__snout,
+    #mp-loader .mp-loader__tail,
+    #mp-loader .mp-loader__leg { fill: var(--mp-primary); }
+
+    #mp-loader .mp-loader__leg--far,
+    #mp-loader .mp-loader__ear { fill: var(--mp-primary-dark); }
+
+    #mp-loader .mp-loader__belly { fill: var(--mp-light); }
+    #mp-loader .mp-loader__collar { fill: var(--mp-teal); }
+    #mp-loader .mp-loader__nose,
+    #mp-loader .mp-loader__pupil { fill: var(--mp-navy); }
+    #mp-loader .mp-loader__eye { fill: #ffffff; }
+    #mp-loader .mp-loader__tongue { fill: var(--mp-pink); }
+
+    /* patas: giram a partir do quadril/ombro, em fases opostas */
+    #mp-loader .mp-loader__leg {
+        transform-origin: 50% 12%;
+        animation: mpLeg var(--mp-run) ease-in-out infinite alternate;
+    }
+
+    #mp-loader .mp-loader__leg--b { animation-direction: alternate-reverse; }
+
+    #mp-loader .mp-loader__tail {
+        transform-origin: 50% 92%;
+        animation: mpTail .26s ease-in-out infinite alternate;
+    }
+
+    #mp-loader .mp-loader__headgroup {
+        transform-origin: 20% 90%;
+        animation: mpHead var(--mp-run) ease-in-out infinite alternate;
+    }
+
+    #mp-loader .mp-loader__ear {
+        transform-origin: 50% 8%;
+        animation: mpEar var(--mp-run) ease-in-out infinite alternate;
+    }
+
+    #mp-loader .mp-loader__tongue {
+        transform-origin: 50% 0%;
+        animation: mpTongue .3s ease-in-out infinite alternate;
+    }
+
+    #mp-loader .mp-loader__blink {
+        transform-origin: 50% 50%;
+        animation: mpBlink 3.2s linear infinite;
+    }
+
+    /* bolinha quicando na frente */
+    #mp-loader .mp-loader__ball {
+        animation: mpBall .62s cubic-bezier(.3, 0, .7, 1) infinite alternate;
+    }
+
+    #mp-loader .mp-loader__ball circle { fill: var(--mp-teal); }
+
+    #mp-loader .mp-loader__ball path {
+        fill: none;
+        stroke: #ffffff;
+        stroke-width: 1.4;
+        stroke-linecap: round;
+    }
+
+    #mp-loader .mp-loader__ballspin {
+        transform-origin: 50% 50%;
+        animation: mpSpin .9s linear infinite;
+    }
+
+    /* risquinhos de velocidade atrás do cachorro */
+    #mp-loader .mp-loader__wind {
+        fill: var(--mp-teal);
+        opacity: 0;
+        animation: mpWind .7s ease-out infinite;
+        animation-delay: calc(var(--i) * -.23s);
+    }
+
+    /* =================================================================
+       OSSO — barra de progresso
+       ================================================================= */
+    #mp-loader .mp-loader__bone {
+        display: block;
+        width: min(190px, 54vw);
+        height: auto;
+        margin-top: 18px;
+    }
+
+    #mp-loader .mp-loader__bone-bg { fill: var(--mp-soft); }
+
+    #mp-loader .mp-loader__bone-fill {
+        animation: mpBoneFill 1.5s cubic-bezier(.5, 0, .3, 1) infinite;
+    }
+
+    /* =================================================================
+       FRASE
+       ================================================================= */
+    #mp-loader .mp-loader__msg {
+        min-height: 20px;
+        margin: 14px 0 0;
+        padding: 0 16px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        text-align: center;
+        color: var(--mp-muted);
+
+        transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    #mp-loader .mp-loader__msg.is-swapping {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    #mp-loader .mp-loader__dots i {
+        display: inline-block;
+        font-style: normal;
+        animation: mpDot 1.2s ease-in-out infinite;
+        animation-delay: calc(var(--i) * .16s);
     }
 
     /* =================================================================
@@ -122,22 +250,91 @@
     }
 
     @keyframes mpLoaderExit {
-        to { opacity: 0; transform: translateY(-8px); }
+        from { opacity: 1; transform: translateY(0) scale(1); }
+        to   { opacity: 0; transform: translateY(-8px) scale(.96); }
     }
 
-    @keyframes mpToeSink {
-        0%           { transform: translateY(0) scale(1); fill: var(--mp-primary); }
-        9%           { transform: translateY(4px) scale(1.08, .72); fill: var(--mp-primary-dark); }
-        24%          { transform: translateY(0) scale(1); fill: var(--mp-primary); }
-        100%         { transform: translateY(0) scale(1); fill: var(--mp-primary); }
+    @keyframes mpGround {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-75px); }
+    }
+
+    @keyframes mpBounce {
+        from { transform: translateY(0); }
+        to   { transform: translateY(-6px); }
+    }
+
+    @keyframes mpShadow {
+        from { transform: scaleX(1); }
+        to   { transform: scaleX(.82); }
+    }
+
+    @keyframes mpLeg {
+        from { transform: rotate(34deg); }
+        to   { transform: rotate(-34deg); }
+    }
+
+    @keyframes mpTail {
+        from { transform: rotate(-38deg); }
+        to   { transform: rotate(4deg); }
+    }
+
+    @keyframes mpHead {
+        from { transform: rotate(-4deg); }
+        to   { transform: rotate(5deg); }
+    }
+
+    @keyframes mpEar {
+        from { transform: rotate(-8deg); }
+        to   { transform: rotate(46deg); }
+    }
+
+    @keyframes mpTongue {
+        from { transform: scaleY(.7); }
+        to   { transform: scaleY(1.15); }
+    }
+
+    @keyframes mpBlink {
+        0%, 92%, 100% { transform: scaleY(1); }
+        96%           { transform: scaleY(.1); }
+    }
+
+    @keyframes mpBall {
+        from { transform: translateY(0); }
+        to   { transform: translateY(-34px); }
+    }
+
+    @keyframes mpSpin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes mpWind {
+        0%   { opacity: 0; transform: translateX(14px); }
+        30%  { opacity: .7; }
+        100% { opacity: 0; transform: translateX(-16px); }
+    }
+
+    @keyframes mpBoneFill {
+        0%   { transform: translateX(-100%); }
+        60%  { transform: translateX(0); }
+        100% { transform: translateX(100%); }
+    }
+
+    @keyframes mpDot {
+        0%, 60%, 100% { opacity: .25; transform: translateY(0); }
+        30%           { opacity: 1; transform: translateY(-3px); }
     }
 
     /* =================================================================
        RESPONSIVO
        ================================================================= */
     @media (max-width: 480px) {
-        #mp-loader .mp-loader__mark { width: 108px; height: 108px; }
-        #mp-loader .mp-loader__paw { width: 50px; height: 50px; }
+        #mp-loader .mp-loader__msg { font-size: 13px; }
+    }
+
+    @media (max-height: 380px) {
+        #mp-loader .mp-loader__scene { width: min(190px, 60vw); }
+        #mp-loader .mp-loader__bone { display: none; }
     }
 
     @supports (padding: max(0px)) {
@@ -151,25 +348,16 @@
     }
 
     /* =================================================================
-       REDUÇÃO DE MOVIMENTO — pata parada, apenas o fade
+       REDUÇÃO DE MOVIMENTO
+       A animação NÃO é desligada aqui de propósito: com os "Efeitos de
+       animação" do Windows desativados (comum nos PCs do laboratório) o
+       navegador entra neste modo e o loader ficava totalmente parado.
+       Mantemos a corrida, só mais calma e sem os elementos extras.
        ================================================================= */
     @media (prefers-reduced-motion: reduce) {
-        #mp-loader {
-            transition: opacity 200ms linear, visibility 200ms linear;
-        }
+        #mp-loader { --mp-run: .7s; }
 
-        #mp-loader .mp-loader__box {
-            animation: none;
-            opacity: 1;
-            transform: none;
-        }
-
-        #mp-loader.is-hidden .mp-loader__box { animation: none; }
-
-        #mp-loader .mp-loader__toe {
-            animation: none !important;
-            transform: none !important;
-        }
+        #mp-loader .mp-loader__wind { display: none; }
     }
 
     /* =================================================================
@@ -183,19 +371,81 @@
     <style>#mp-loader { display: none !important; }</style>
 </noscript>
 
-<div id="mp-loader" class="mp-loader" role="status" aria-live="polite" aria-label="Carregando">
-    <div class="mp-loader__box">
-        <div class="mp-loader__mark">
-            <svg class="mp-loader__paw" viewBox="0 0 72 72" aria-hidden="true">
-                <ellipse class="mp-loader__ground" cx="36" cy="55" rx="21" ry="4" />
-                <path class="mp-loader__pad"
-                    d="M36 30c-10.6 0-19 7.9-19 17.4 0 6.7 4.6 10.6 11.4 10.6 3.8 0 6-1.6 7.6-1.6s3.8 1.6 7.6 1.6c6.8 0 11.4-3.9 11.4-10.6C55 37.9 46.6 30 36 30z" />
-                <ellipse class="mp-loader__toe" style="--i:0" cx="16" cy="30" rx="6.6" ry="8.8" transform="rotate(-24 16 30)" />
-                <ellipse class="mp-loader__toe" style="--i:1" cx="29" cy="19" rx="6.6" ry="9"  transform="rotate(-8 29 19)" />
-                <ellipse class="mp-loader__toe" style="--i:2" cx="43" cy="19" rx="6.6" ry="9"  transform="rotate(8 43 19)" />
-                <ellipse class="mp-loader__toe" style="--i:3" cx="56" cy="30" rx="6.6" ry="8.8" transform="rotate(24 56 30)" />
-            </svg>
-        </div>
+<div id="mp-loader" class="mp-loader" role="status" aria-label="Carregando">
+    <div class="mp-loader__box" aria-hidden="true">
+
+        <svg class="mp-loader__scene" viewBox="0 0 220 120">
+            {{-- chão --}}
+            <rect class="mp-loader__dash" style="--i:0" x="20"  y="103" width="34" height="4" rx="2" />
+            <rect class="mp-loader__dash" style="--i:1" x="95"  y="103" width="22" height="4" rx="2" />
+            <rect class="mp-loader__dash" style="--i:2" x="170" y="103" width="34" height="4" rx="2" />
+
+            {{-- vento --}}
+            <rect class="mp-loader__wind" style="--i:0" x="14" y="52" width="20" height="3" rx="1.5" />
+            <rect class="mp-loader__wind" style="--i:1" x="6"  y="64" width="26" height="3" rx="1.5" />
+            <rect class="mp-loader__wind" style="--i:2" x="16" y="76" width="16" height="3" rx="1.5" />
+
+            <ellipse class="mp-loader__shadow" cx="96" cy="103" rx="42" ry="4" />
+
+            <g class="mp-loader__dog">
+                {{-- patas de trás (lado de lá) --}}
+                <rect class="mp-loader__leg mp-loader__leg--far mp-loader__leg--b" x="62"  y="68" width="9" height="32" rx="4.5" />
+                <rect class="mp-loader__leg mp-loader__leg--far"                    x="108" y="68" width="9" height="32" rx="4.5" />
+
+                <rect class="mp-loader__tail" x="50" y="34" width="8" height="28" rx="4" />
+
+                <rect class="mp-loader__body" x="50" y="48" width="78" height="32" rx="16" />
+                <rect class="mp-loader__belly" x="66" y="68" width="46" height="10" rx="5" />
+
+                {{-- patas da frente (lado de cá) --}}
+                <rect class="mp-loader__leg"                    x="58"  y="68" width="9" height="32" rx="4.5" />
+                <rect class="mp-loader__leg mp-loader__leg--b"  x="112" y="68" width="9" height="32" rx="4.5" />
+
+                <g class="mp-loader__headgroup">
+                    <rect class="mp-loader__head" x="112" y="24" width="36" height="34" rx="14" />
+                    <rect class="mp-loader__snout" x="136" y="38" width="24" height="16" rx="8" />
+                    <rect class="mp-loader__tongue" x="145" y="52" width="7" height="11" rx="3.5" />
+                    <rect class="mp-loader__nose" x="154" y="39" width="8" height="7" rx="3.5" />
+                    <g class="mp-loader__blink">
+                        <ellipse class="mp-loader__eye" cx="135" cy="36" rx="3.6" ry="3.8" />
+                        <ellipse class="mp-loader__pupil" cx="136" cy="36" rx="1.9" ry="2.1" />
+                    </g>
+                    <rect class="mp-loader__ear" x="116" y="22" width="12" height="26" rx="6" />
+                    <rect class="mp-loader__collar" x="112" y="54" width="18" height="6" rx="3" />
+                </g>
+            </g>
+
+            {{-- bolinha --}}
+            <g class="mp-loader__ball">
+                <g class="mp-loader__ballspin">
+                    <circle cx="194" cy="94" r="8" />
+                    <path d="M188.5 88.5c3 3 3 8 0 11M199.5 88.5c-3 3-3 8 0 11" />
+                </g>
+            </g>
+        </svg>
+
+        {{-- osso de progresso --}}
+        <svg class="mp-loader__bone" viewBox="0 0 180 28">
+            <defs>
+                <clipPath id="mp-loader-bone">
+                    <rect x="12" y="8" width="156" height="12" rx="6" />
+                    <circle cx="11" cy="8" r="8" /><circle cx="11" cy="20" r="8" />
+                    <circle cx="169" cy="8" r="8" /><circle cx="169" cy="20" r="8" />
+                </clipPath>
+                <linearGradient id="mp-loader-grad" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0" stop-color="#175CDE" />
+                    <stop offset="1" stop-color="#23C9B5" />
+                </linearGradient>
+            </defs>
+            <g clip-path="url(#mp-loader-bone)">
+                <rect class="mp-loader__bone-bg" x="0" y="0" width="180" height="28" />
+                <rect class="mp-loader__bone-fill" x="0" y="0" width="180" height="28" fill="url(#mp-loader-grad)" />
+            </g>
+        </svg>
+
+        <p class="mp-loader__msg">
+            <span class="mp-loader__text">Carregando</span><span class="mp-loader__dots"><i style="--i:0">.</i><i style="--i:1">.</i><i style="--i:2">.</i></span>
+        </p>
     </div>
 </div>
 
@@ -211,6 +461,36 @@
        ------------------------------------------------------------------ */
     const FAILSAFE_MS = 7000;   // nunca prender o usuário
     const REVEAL_MS = 60;       // margem contra flash visual
+    const MIN_VISIBLE_MS = 900; // tempo mínimo na tela (0 = some assim que carregar)
+    const ROTATE_MS = 1900;     // troca de frase enquanto espera
+
+    // Frase de abertura conforme a página de destino (primeira que casar).
+    const ROUTE_MESSAGES = [
+        [/^\/login\/funcionario|^\/funcionario/, 'Abrindo a área da equipe'],
+        [/^\/login|^\/auth\//,                   'Abrindo a portinha pra você'],
+        [/^\/cadastro/,                          'Preparando sua ficha de tutor'],
+        [/^\/(recuperar|redefinir)-senha/,       'Cuidando da sua senha'],
+        [/^\/agendamento/,                       'Abrindo a agenda'],
+        [/^\/pets/,                              'Chamando seus pets'],
+        [/^\/perfil/,                            'Buscando o seu perfil'],
+        [/^\/painel-controle/,                   'Montando o painel'],
+        [/^\/servi(ces|cos?)/,                   'Separando nossos serviços'],
+        [/^\/sobre/,                             'Contando a nossa história'],
+        [/^\/faq/,                               'Juntando as respostas'],
+        [/^\/devs/,                              'Chamando quem fez o Mobipet'],
+        [/^\/$/,                                 'Voltando pra casa'],
+    ];
+
+    // Depois da abertura, estas se revezam.
+    const IDLE_MESSAGES = [
+        'Farejando o caminho',
+        'Abanando o rabinho',
+        'Buscando a bolinha',
+        'Quase lá',
+    ];
+
+    const msgEl = loader.querySelector('.mp-loader__msg');
+    const textEl = loader.querySelector('.mp-loader__text');
 
     /* ------------------------------------------------------------------
        Estado
@@ -218,6 +498,42 @@
     let hidden = false;
     let navigating = false;
     let failsafeTimer = null;
+    let rotateTimer = null;
+    let idleIndex = 0;
+
+    /* ------------------------------------------------------------------
+       Frases
+       ------------------------------------------------------------------ */
+    const messageFor = (pathname) => {
+        const match = ROUTE_MESSAGES.find(([pattern]) => pattern.test(pathname));
+        return match ? match[1] : 'Carregando';
+    };
+
+    const setMessage = (text, animate) => {
+        if (!textEl || !msgEl) return;
+        if (!animate) { textEl.textContent = text; return; }
+
+        msgEl.classList.add('is-swapping');
+        window.setTimeout(() => {
+            textEl.textContent = text;
+            msgEl.classList.remove('is-swapping');
+        }, 180);
+    };
+
+    const stopRotation = () => {
+        if (rotateTimer) { clearInterval(rotateTimer); rotateTimer = null; }
+    };
+
+    const startRotation = () => {
+        stopRotation();
+        rotateTimer = window.setInterval(() => {
+            setMessage(IDLE_MESSAGES[idleIndex % IDLE_MESSAGES.length], true);
+            idleIndex += 1;
+        }, ROTATE_MS);
+    };
+
+    setMessage(messageFor(window.location.pathname), false);
+    startRotation();
 
     /* ------------------------------------------------------------------
        Esconder / mostrar
@@ -226,12 +542,15 @@
         if (hidden) return;
         hidden = true;
         if (failsafeTimer) { clearTimeout(failsafeTimer); failsafeTimer = null; }
+        stopRotation();
         loader.classList.add('is-hidden');
     };
 
-    const show = () => {
+    const show = (message) => {
         navigating = true;
         hidden = false;
+        setMessage(message || 'Só um instante', false);
+        startRotation();
         loader.classList.remove('is-hidden');
 
         // Rearma o failsafe toda vez que a tela é mostrada: se o clique que
@@ -245,14 +564,19 @@
     /* ------------------------------------------------------------------
        Carregamento inicial — assim que a página fica interativa
        ------------------------------------------------------------------ */
-    const finishInitialLoad = () => window.setTimeout(() => hide(), REVEAL_MS);
+    // Em página rápida o loader sumiria antes de dar tempo de ver a
+    // animação: segura até completar MIN_VISIBLE_MS desde o início da página.
+    const finishInitialLoad = () => window.setTimeout(
+        () => hide(),
+        Math.max(REVEAL_MS, MIN_VISIBLE_MS - performance.now())
+    );
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', finishInitialLoad, { once: true });
     } else {
         finishInitialLoad();
     }
-    window.addEventListener('load', () => window.setTimeout(() => hide(), REVEAL_MS), { once: true });
+    window.addEventListener('load', finishInitialLoad, { once: true });
 
     /* Failsafe: se algum recurso travar, some mesmo assim. */
     failsafeTimer = window.setTimeout(() => hide(), FAILSAFE_MS);
@@ -278,7 +602,7 @@
         if (!mudouDePagina) return;
 
         navigating = false;
-        show();
+        show(messageFor(window.location.pathname));
     });
 
     document.addEventListener('visibilitychange', () => {
@@ -339,7 +663,7 @@
         const link = event.target.closest ? event.target.closest('a') : null;
         if (shouldIgnoreLink(event, link)) return;
         if (navigating) return;   // dedupe: cliques sucessivos
-        show();
+        show(messageFor(new URL(link.href, window.location.href).pathname));
     }, true);
 
     /* ------------------------------------------------------------------

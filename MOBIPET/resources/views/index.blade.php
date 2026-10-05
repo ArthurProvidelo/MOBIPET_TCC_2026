@@ -2192,7 +2192,7 @@
                             <i class="bi bi-universal-access-circle"></i>
                         </div>
                         <h3>Acessível a todos</h3>
-                        <p>Interface clara e tradução automática para Libras (VLibras) integrada.</p>
+                        <p>Ajuste de texto, alto contraste, leitor de tela e tradução para Libras (VLibras) em todas as páginas.</p>
                         <span class="mp-card-more">Saber mais <i class="bi bi-arrow-right"></i></span>
                     </a>
                 </div>
