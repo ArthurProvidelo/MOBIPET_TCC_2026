@@ -689,6 +689,7 @@
                 </div>
 
                 <small class="d-block mt-2" style="color: var(--pt-muted);">
+                  Os horários riscados já foram ocupados ou já passaram.<br>
                   Atendimentos das 07:00 às 18:00, de 30 em 30 minutos.
                 </small>
 
